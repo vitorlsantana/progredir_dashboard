@@ -256,7 +256,7 @@ app.layout = html.Div(
 
 @app.callback(
     Output("tab-content", "children"),
-    Input("tabs", "active_tab"),
+    [Input("tabs", "active_tab")]
 )
 def render_tab_content(active_tab):
     """
