@@ -480,8 +480,8 @@ def toggle_modal(n1, n2, is_open):
         Output('bolsa_familia', 'children'),
         # Output('card_num6', 'children')
     ],
-    [Input('w_municipios', 'value')],
-    [Input('w_municipios1', 'value')],
+    [Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')],
     [State('w_municipios1', 'value')])
 def display_cadunico(w_municipios, w_municipios1):
     pessoas_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
