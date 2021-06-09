@@ -83,100 +83,100 @@ def toggle_navbar_collapse(n, is_open):
 # LAYOUT
 # Dropdwon
 
-# state = df['uf'].unique()
+state = df['uf'].unique()
+
+sidebar = dbc.Container(
+    [
+        html.P('Selecione a UF', style={'display': True, "width": "20rem", 'color': '#1E3248', 'fontWeight': 'bold'},
+               className='mt-3'),
+        dcc.Dropdown(
+            id='w_municipios',
+            multi=False,
+            clearable=True,
+            disabled=False,
+            options=[{'label': i, 'value': i} for i in state],
+            value='Alagoas',
+            placeholder="Selecione a UF",
+            style={'display': True, "width": "18rem", 'height': '40px'}
+        ),
+        html.Br(),
+        html.P('Selecione o Município', style={'color': '#1E3248', 'fontWeight': 'bold'}),
+        dcc.Dropdown(
+            id='w_municipios1',
+            multi=False,
+            clearable=True,
+            disabled=False,
+            value='',
+            placeholder='Selecione o município',
+            options=[],
+            style={'display': True, "width": "18rem", 'height': '40px'}
+        ),
+        html.Br(),
+        # dbc.Card(children=[
+        #     dbc.CardBody(children=[
+        #         html.H6('População'),
+        #         html.H4(id="populacao"),
+        #         html.Br(),
+        #         html.H6('PIB'),
+        #         html.H4(id="pib_total"),
+        #         html.Br(),
+        #         html.H6('IDHM'),
+        #         html.H4(id="idhm"),
+        #     ]
+        #     ),
+        # ],
+        #     id='data-box',
+        #     color="dark", inverse=True,
+        #     style={"width": "18rem"}
+        # ),
+        html.Br(),
+        dbc.Button(
+            "Saiba mais sobre o painel",
+            id="collapse-button",
+            className="mr-5",
+            outline=True,
+            color="dark",
+            style={"width": "18rem", 'fontWeight': 'bold'}
+        ),
+        dbc.Collapse(
+            dbc.Card(dbc.CardBody(
+                "O Painel da Inclusão Produtiva Urbana tem por objetivo reunir informações que possibilitem uma "
+                "compreensão ampla do cenário social e econômico nos níveis estadual e municipal.\n\nCom isso, espera-se auxiliar gestores públicos em nível local e parceiros do setor empresarial e da sociedade civil a "
+                "desenharem estratégias de inclusão produtiva para a população de baixa renda, em especial daquela localizada no meio urbano."
+                "Para isso, foram agregados em uma única plataforma dados sobre o contexto social -- população, serviços e ações disponíveis, "
+                "a atividade econômica, empreendedorismo, microcrédito, dentre outras, obtidos a partir de um conjunto de bases públicas "
+                "governamentais.\n\nA ferramenta foi desenvolvida pelo Departamento de Inclusão Produtiva Urbana da Secretaria Nacional de "
+                "Inclusão Social e Produtiva, vinculada à Secretaria Especial do Desenvolvimento Social do Ministério da Cidadania."),
+                     style={"width": "18rem", 'whiteSpace': 'pre-wrap'}
+                     ),
+            id="collapse2",
+        ),
+    ], fluid=True
+)
+
+@app.callback(
+    Output("collapse2", "is_open"),
+    [Input("collapse-button", "n_clicks")],
+    [State("collapse2", "is_open")],
+)
+def toggle_collapse2(n, is_open):
+    if n:
+        return not is_open
+    return is_open
 #
-# sidebar = dbc.Container(
-#     [
-#         html.P('Selecione a UF', style={'display': True, "width": "20rem", 'color': '#1E3248', 'fontWeight': 'bold'},
-#                className='mt-3'),
-#         dcc.Dropdown(
-#             id='w_municipios',
-#             multi=False,
-#             clearable=True,
-#             disabled=False,
-#             options=[{'label': i, 'value': i} for i in state],
-#             value='Alagoas',
-#             placeholder="Selecione a UF",
-#             style={'display': True, "width": "18rem", 'height': '40px'}
-#         ),
-#         html.Br(),
-#         html.P('Selecione o Município', style={'color': '#1E3248', 'fontWeight': 'bold'}),
-#         dcc.Dropdown(
-#             id='w_municipios1',
-#             multi=False,
-#             clearable=True,
-#             disabled=False,
-#             value='',
-#             placeholder='Selecione o município',
-#             options=[],
-#             style={'display': True, "width": "18rem", 'height': '40px'}
-#         ),
-#         html.Br(),
-#         dbc.Card(children=[
-#             dbc.CardBody(children=[
-#                 html.H6('População'),
-#                 html.H4(id="populacao"),
-#                 html.Br(),
-#                 html.H6('PIB'),
-#                 html.H4(id="pib_total"),
-#                 html.Br(),
-#                 html.H6('IDHM'),
-#                 html.H4(id="idhm"),
-#             ]
-#             ),
-#         ],
-#             id='data-box',
-#             color="dark", inverse=True,
-#             style={"width": "18rem"}
-#         ),
-#         html.Br(),
-#         dbc.Button(
-#             "Saiba mais sobre o painel",
-#             id="collapse-button",
-#             className="mr-5",
-#             outline=True,
-#             color="dark",
-#             style={"width": "18rem", 'fontWeight': 'bold'}
-#         ),
-#         dbc.Collapse(
-#             dbc.Card(dbc.CardBody(
-#                 "O Painel da Inclusão Produtiva Urbana tem por objetivo reunir informações que possibilitem uma "
-#                 "compreensão ampla do cenário social e econômico nos níveis estadual e municipal.\n\nCom isso, espera-se auxiliar gestores públicos em nível local e parceiros do setor empresarial e da sociedade civil a "
-#                 "desenharem estratégias de inclusão produtiva para a população de baixa renda, em especial daquela localizada no meio urbano."
-#                 "Para isso, foram agregados em uma única plataforma dados sobre o contexto social -- população, serviços e ações disponíveis, "
-#                 "a atividade econômica, empreendedorismo, microcrédito, dentre outras, obtidos a partir de um conjunto de bases públicas "
-#                 "governamentais.\n\nA ferramenta foi desenvolvida pelo Departamento de Inclusão Produtiva Urbana da Secretaria Nacional de "
-#                 "Inclusão Social e Produtiva, vinculada à Secretaria Especial do Desenvolvimento Social do Ministério da Cidadania."),
-#                      style={"width": "18rem", 'whiteSpace': 'pre-wrap'}
-#                      ),
-#             id="collapse2",
-#         ),
-#     ], fluid=True
-# )
-#
-# @app.callback(
-#     Output("collapse2", "is_open"),
-#     [Input("collapse-button", "n_clicks")],
-#     [State("collapse2", "is_open")],
-# )
-# def toggle_collapse2(n, is_open):
-#     if n:
-#         return not is_open
-#     return is_open
-#
-# # SELEÇÃO DE UF E MUNICÍPIO
-# @app.callback(
-#     Output('w_municipios1', 'options'),
-#     Input('w_municipios', 'value'))
-# def get_municipios_options(w_municipios):
-#     def1 = df[df['uf'] == w_municipios]
-#     return [{'label': i, 'value': i} for i in def1['municipio'].unique()]
-#
-# @app.callback(
-#     Output('w_municipios1', 'value'),
-#     Input('w_municipios1', 'options'))
-# def get_municipios_value(w_municipios1):
-#     return [k['value'] for k in w_municipios1][0]
+# SELEÇÃO DE UF E MUNICÍPIO
+@app.callback(
+    Output('w_municipios1', 'options'),
+    Input('w_municipios', 'value'))
+def get_municipios_options(w_municipios):
+    def1 = df[df['uf'] == w_municipios]
+    return [{'label': i, 'value': i} for i in def1['municipio'].unique()]
+
+@app.callback(
+    Output('w_municipios1', 'value'),
+    Input('w_municipios1', 'options'))
+def get_municipios_value(w_municipios1):
+    return [k['value'] for k in w_municipios1][0]
 #
 # # POPULAÇÃO, PIB TOTAL E IDHM
 # @app.callback(
