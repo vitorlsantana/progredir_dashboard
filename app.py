@@ -7,7 +7,8 @@ import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+# suppress_callback_exceptions=True
 server = app.server
 
 # CARREGAR DADOS
@@ -176,7 +177,7 @@ def get_municipios_options(w_municipios):
 @app.callback(
     Output('w_municipios1', 'value'),
     [Input('w_municipios1', 'options')],
-    [State('w_municipios1', 'value')]
+    [State('w_municipios1', 'options')]
 )
 def get_municipios_value(w_municipios1):
     return [k['value'] for k in w_municipios1][0]
