@@ -167,14 +167,16 @@ def toggle_collapse2(n, is_open):
 # SELEÇÃO DE UF E MUNICÍPIO
 @app.callback(
     Output('w_municipios1', 'options'),
-    Input[('w_municipios', 'value')])
+    Input[('w_municipios', 'value')],
+)
 def get_municipios_options(w_municipios):
     def1 = df[df['uf'] == w_municipios]
     return [{'label': i, 'value': i} for i in def1['municipio'].unique()]
 
 @app.callback(
     Output('w_municipios1', 'value'),
-    Input[('w_municipios1', 'options')])
+    Input[('w_municipios1', 'options')],
+)
 def get_municipios_value(w_municipios1):
     return [k['value'] for k in w_municipios1][0]
 #
