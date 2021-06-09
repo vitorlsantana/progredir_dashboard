@@ -11,8 +11,8 @@ app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_e
 server = app.server
 
 # CARREGAR DADOS
-data = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/base_painel_inclus%C3%A3o_produtiva.csv'
-df = pd.read_csv(data, sep=';', encoding='latin1', error_bad_lines=False)
+data = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/base_painel_inclus%C3%A3o_produtiva.csv'
+df = pd.read_csv(data, sep=';', encoding='latin1')
 
 # data1 = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/vinculos_ativos_ocupacao_subgruposprincipais_2015_2019.csv'
 # df_caged = pd.read_csv(data1, sep=';', encoding='latin1')
