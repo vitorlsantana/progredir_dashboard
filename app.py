@@ -240,14 +240,14 @@ def toggle_navbar_collapse(n, is_open):
 #         ], style={"border": "1px #EBEBEB solid"}, width=10)
 #     ], justify="center", no_gutters=True)
 # ])
-#
-# app.layout = html.Div(
-#     [
-#         navbar,
-#         grid,
-#     ],
-#     style={"border": "1px #EBEBEB solid"}
-# )
+
+app.layout = html.Div(
+    [
+        navbar,
+        # grid,
+    ],
+    style={"border": "1px #EBEBEB solid"}
+)
 #
 # @app.callback(
 #     Output("tab-content", "children"),
