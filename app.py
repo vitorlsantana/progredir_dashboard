@@ -175,7 +175,8 @@ def get_municipios_options(w_municipios):
 
 @app.callback(
     Output('w_municipios1', 'value'),
-    [Input('w_municipios1', 'options')]
+    [Input('w_municipios1', 'options')],
+    [State('w_municipios1', 'value')]
 )
 def get_municipios_value(w_municipios1):
     return [k['value'] for k in w_municipios1][0]
