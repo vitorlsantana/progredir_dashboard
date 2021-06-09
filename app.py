@@ -112,23 +112,23 @@ sidebar = dbc.Container(
             style={'display': True, "width": "18rem", 'height': '40px'}
         ),
         html.Br(),
-        # dbc.Card(children=[
-        #     dbc.CardBody(children=[
-        #         html.H6('População'),
-        #         html.H4(id="populacao"),
-        #         html.Br(),
-        #         html.H6('PIB'),
-        #         html.H4(id="pib_total"),
-        #         html.Br(),
-        #         html.H6('IDHM'),
-        #         html.H4(id="idhm"),
-        #     ]
-        #     ),
-        # ],
-        #     id='data-box',
-        #     color="dark", inverse=True,
-        #     style={"width": "18rem"}
-        # ),
+        dbc.Card(children=[
+            dbc.CardBody(children=[
+                html.H6('População'),
+                html.H4(id="populacao"),
+                html.Br(),
+                html.H6('PIB'),
+                html.H4(id="pib_total"),
+                html.Br(),
+                html.H6('IDHM'),
+                html.H4(id="idhm"),
+            ]
+            ),
+        ],
+            id='data-box',
+            color="dark", inverse=True,
+            style={"width": "18rem"}
+        ),
         html.Br(),
         dbc.Button(
             "Saiba mais sobre o painel",
@@ -167,46 +167,46 @@ def toggle_collapse2(n, is_open):
 # SELEÇÃO DE UF E MUNICÍPIO
 @app.callback(
     Output('w_municipios1', 'options'),
-    Input('w_municipios', 'value'))
+    Input[('w_municipios', 'value')])
 def get_municipios_options(w_municipios):
     def1 = df[df['uf'] == w_municipios]
     return [{'label': i, 'value': i} for i in def1['municipio'].unique()]
 
 @app.callback(
     Output('w_municipios1', 'value'),
-    Input('w_municipios1', 'options'))
+    Input[('w_municipios1', 'options')])
 def get_municipios_value(w_municipios1):
     return [k['value'] for k in w_municipios1][0]
 #
-# # POPULAÇÃO, PIB TOTAL E IDHM
-# @app.callback(
-#     [
-#         Output('populacao', 'children'),
-#         Output('pib_total', 'children'),
-#         Output('idhm', 'children'),
-#     ],
-#     [Input('w_municipios', 'value')],
-#     [Input('w_municipios1', 'value')])
-# def display_content(w_municipios, w_municipios1):
-#     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
-#     populacao1 = f'{populacao:_.0f}'.replace('_', '.')
-#     df['pib_total'] = df['pib_total'].astype(float)
-#     pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum() / 1000000
-#     pib1 = f'R$ {pib:_.2f} Bi'.replace('.', ',').replace('_', '.')
-#     idhm = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['idhm'].sum()
-#
-#     return populacao1 + ' habitantes', pib1, idhm
-#
-# # MODAL SOBRE O PAINEL
-# @app.callback(
-#     Output("modal-centered", "is_open"),
-#     [Input("open-centered", "n_clicks"), Input("close-centered", "n_clicks")],
-#     [State("modal-centered", "is_open")],
-# )
-# def toggle_modal(n1, n2, is_open):
-#     if n1 or n2:
-#         return not is_open
-#     return is_open
+# POPULAÇÃO, PIB TOTAL E IDHM
+@app.callback(
+    [
+        Output('populacao', 'children'),
+        Output('pib_total', 'children'),
+        Output('idhm', 'children'),
+    ],
+    [Input('w_municipios', 'value')],
+    [Input('w_municipios1', 'value')])
+def display_content(w_municipios, w_municipios1):
+    populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
+    populacao1 = f'{populacao:_.0f}'.replace('_', '.')
+    df['pib_total'] = df['pib_total'].astype(float)
+    pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum() / 1000000
+    pib1 = f'R$ {pib:_.2f} Bi'.replace('.', ',').replace('_', '.')
+    idhm = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['idhm'].sum()
+
+    return populacao1 + ' habitantes', pib1, idhm
+
+# MODAL SOBRE O PAINEL
+@app.callback(
+    Output("modal-centered", "is_open"),
+    [Input("open-centered", "n_clicks"), Input("close-centered", "n_clicks")],
+    [State("modal-centered", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
 #
 # # CONFIGURAÇÃO DE TABS
 # tabs_styles = dict(height='40px', color='dark', fontColor='dark', alignItems='center', justifyContent='center',
