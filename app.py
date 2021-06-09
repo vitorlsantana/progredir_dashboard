@@ -213,43 +213,43 @@ def toggle_modal(n1, n2, is_open):
         return not is_open
     return is_open
 #
-# # CONFIGURAÇÃO DE TABS
-# tabs_styles = dict(height='40px', color='dark', fontColor='dark', alignItems='center', justifyContent='center',
-#                    textAlign='center')
+# CONFIGURAÇÃO DE TABS
+tabs_styles = dict(height='40px', color='dark', fontColor='dark', alignItems='center', justifyContent='center',
+                   textAlign='center')
+
+tab_style = dict(padding='2px', height='40px', width='275px', fontWeight='bold', fontFamily='Arial', color='dark',
+                 fontColor='dark', alignItems='center', justifyContent='center', textAlign='center')
+
+tab_selected_style = dict(borderTop='light', borderBottom='white', backgroundColor='light',
+                          color='light', height='40px', width='275px', padding='2px', textAlign='center')
 #
-# tab_style = dict(padding='2px', height='40px', width='275px', fontWeight='bold', fontFamily='Arial', color='dark',
-#                  fontColor='dark', alignItems='center', justifyContent='center', textAlign='center')
-#
-# tab_selected_style = dict(borderTop='light', borderBottom='white', backgroundColor='light',
-#                           color='light', height='40px', width='275px', padding='2px', textAlign='center')
-#
-# grid = html.Div(children=[
-#     dbc.Row(children=[
-#         dbc.Col(children=[
-#             sidebar,
-#         ], style={"border": "1px #EBEBEB solid"}, width=2),
-#         dbc.Col(children=[
-#             dbc.Tabs(
-#                 [
-#                     dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style,
-#                             active_tab_style=tab_selected_style),
-#                     dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho", tab_style=tab_style,
-#                             active_tab_style=tab_selected_style),
-#                     dbc.Tab(label="Serviços", tab_id="servicos", tab_style=tab_style,
-#                             active_tab_style=tab_selected_style),
-#                 ],
-#                 id="tabs",
-#                 active_tab="social", className="p-2"
-#             ),
-#             html.Div(id="tab-content", className="p-4"),
-#         ], style={"border": "1px #EBEBEB solid"}, width=10)
-#     ], justify="center", no_gutters=True)
-# ])
+grid = html.Div(children=[
+    dbc.Row(children=[
+        dbc.Col(children=[
+            sidebar,
+        ], style={"border": "1px #EBEBEB solid"}, width=2),
+        dbc.Col(children=[
+            dbc.Tabs(
+                [
+                    dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style,
+                            active_tab_style=tab_selected_style),
+                    dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho", tab_style=tab_style,
+                            active_tab_style=tab_selected_style),
+                    dbc.Tab(label="Serviços", tab_id="servicos", tab_style=tab_style,
+                            active_tab_style=tab_selected_style),
+                ],
+                id="tabs",
+                active_tab="social", className="p-2"
+            ),
+            html.Div(id="tab-content", className="p-4"),
+        ], style={"border": "1px #EBEBEB solid"}, width=10)
+    ], justify="center", no_gutters=True)
+])
 
 app.layout = html.Div(
     [
         navbar,
-        # grid,
+        grid,
     ],
     style={"border": "1px #EBEBEB solid"}
 )
