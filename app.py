@@ -11,24 +11,24 @@ app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_e
 server = app.server
 
 # CARREGAR DADOS
-data = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\base_painel_inclusão_produtiva.csv'
+data = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/base_painel_inclus%C3%A3o_produtiva.csv'
 df = pd.read_csv(data, sep=';', encoding='latin1')
 
-data1 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\vinculos_ativos_ocupacao_subgruposprincipais_2015_2019.csv'
+data1 = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/vinculos_ativos_ocupacao_subgruposprincipais_2015_2019.csv'
 df_caged = pd.read_csv(data1, sep=';', encoding='latin1')
 df_caged_melted = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
                                 var_name="ocupation",
                                 value_name="vinculos")
 ocupations = df_caged_melted['ocupation'].unique()
 
-data2 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\evolucao_pessoas_cad_pbf.csv'
+data2 = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/evolucao_pessoas_cad_pbf.csv'
 df_cad = pd.read_csv(data2, sep=';', encoding='latin1')
 
-data3 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
+data3 = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
 df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1')
 
-data4 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\cnes localizacao e regiao saude.csv'
-df5 = pd.read_csv(data4, sep=',', error_bad_lines=False)
+# data4 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\cnes localizacao e regiao saude.csv'
+# df5 = pd.read_csv(data4, sep=',', error_bad_lines=False)
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
