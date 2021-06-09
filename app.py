@@ -191,7 +191,7 @@ def get_municipios_value(w_municipios1):
     ],
     [Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')],
-    [State('w_municipios1', 'value')])
+    [State('populacao', 'children')])
 def display_content(w_municipios, w_municipios1):
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
     populacao1 = f'{populacao:_.0f}'.replace('_', '.')
