@@ -253,244 +253,244 @@ app.layout = html.Div(
     ],
     style={"border": "1px #EBEBEB solid"}
 )
+
+@app.callback(
+    Output("tab-content", "children"),
+    Input("tabs", "active_tab"),
+)
+def render_tab_content(active_tab):
+    """
+    This callback takes the 'active_tab' property as input, as well as the
+    stored graphs, and renders the tab content depending on what the value of
+    'active_tab' is.
+    """
+    if active_tab:
+        if active_tab == "social":
+            return dbc.Container(children=[
+                dbc.Row(children=
+                [
+                    dbc.Col([dbc.Card(children=
+                    [dbc.CardBody(children=
+                    [
+                        html.H5("Cadastro Único", className="card-title"),
+                        html.H3(id='cadunico'),
+                        html.Br(),
+                        html.H5('Programa Bolsa Família', className="card-title"),
+                        html.H3(id='bolsa_familia'),
+                        html.Br(),
+                        dbc.Button("Saiba Mais sobre o Cadastro Único", id='open1', color="primary"),
+                        dbc.Modal(
+                            [
+                                dbc.ModalHeader("Cadastro Único"),
+                                dbc.ModalBody(
+                                    "O Cadastro Único para Programas Sociais do Governo Federal (Cadastro Único) é um instrumento "
+                                    "que identifica e caracteriza as famílias de baixa renda, "
+                                    "permitindo que o governo conheça melhor a realidade socioeconômica dessa população.\n\n"
+                                    "Nele são registradas informações como: características da residência, identificação "
+                                    "de cada pessoa, escolaridade, situação de trabalho e renda, entre outras."),
+                                dbc.ModalFooter(
+                                    dbc.Button("Fechar", id="close1", className="ml-auto")
+                                ),
+                            ],
+                            id="modal1",
+                            centered=True,
+                            style={"width":"50rem", 'whiteSpace': 'pre-wrap'},
+                        ),
+                    ]), ], color="#E2EBF3", outline=True, style={"width": "20rem", 'border':'white'}
+                    )], width=3),
+                    dbc.Col(dcc.Graph(id='cad_pbf'), width=9),
+                ],
+                    align='center'
+                ),
+                html.Br(),
+                dbc.Row(
+                    [
+                        dbc.Col(dcc.Graph(id='domicilio_sexo', config={'displayModeBar': 'hover'}), width=6),
+                        dbc.Col(dcc.Graph(id='faixa_etaria'), width=6),
+                        dbc.Col(dcc.Graph(id='escolaridade'), width=6),
+                        dbc.Col(dcc.Graph(id='pib_setorial'), width=6),
+                    ],
+                ),
+                # html.Div(dcc.Graph(figure=fig10))
+            ], fluid=True
+            )
+        elif active_tab == "trabalho":
+            return dbc.Container(children=[
+                dbc.Row(children=
+                [
+                    dbc.Col(dcc.Graph(id='evolucao_empregos'), width=8),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardBody(
+                                [
+                                    html.H5("Pessoal Ocupado", className="card-title"),
+                                    html.H3(id='empregos', className="card-text")
+                                ]
+                            ),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Vagas abertas no SINE", className="card-title"),
+                                    html.H3(id='sine', className="card-text"),
+                                    html.Br(),
+                                    dbc.Button("Buscar vagas no SINE", color="primary",
+                                               href='https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], color="#E2EBF3", outline=True, style={"width": "20rem", 'border':'white'}),
+                    ], width=4),
+                ],
+                    align='center', justify="center", no_gutters=True
+                ),
+                html.Br(),
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            [
+                                dcc.Graph(id='estoque_empregos'),
+                                html.Br(),
+                                html.H5(id='var_emprego'),
+                            ], style={'textAlign': 'center'}, width=6),
+                        dbc.Col(
+                            [
+                                html.H4(id='empresas_total'),
+                                dcc.Graph(id='empresas_setorial'),
+                            ], style={'textAlign': 'center'}, width=6),
+                        dbc.Col(dcc.Graph(id='top_vinculos'), width=6),
+                        dbc.Col(dcc.Graph(id='remuneracao'), width=6),
+                        dbc.Col(dcc.Graph(id='mei'), width=6)
+                    ]
+                ),
+                # html.Div([
+                #     html.Div([
+                #         dcc.Dropdown(
+                #             id='ocupacao',
+                #             options=[{'label': i, 'value': i} for i in ocupations],
+                #             value=''
+                #         ),
+                #         dcc.Graph(id='bar_chart2'),
+                #         # dcc.RadioItems(
+                #         #     id='crossfilter-xaxis-type',
+                #         #     options=[{'label': i, 'value': i} for i in ['Remuneração média', 'Vínculos ativos']],
+                #         #     value='Vínculos ativos',
+                #         #     labelStyle={'display': 'inline-block'}
+                #         # )
+                #     ],
+                #         style={'width': '49%', 'display': 'inline-block'}),
+                #
+                # ], style={
+                #     'borderBottom': 'thin lightgrey solid',
+                #     'backgroundColor': 'rgb(250, 250, 250)',
+                #     'padding': '10px 5px'
+                # }),
+            ], fluid=True
+            )
+        elif active_tab == "servicos":
+            return dbc.Container(children=[
+                dbc.Row(children=
+                [
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="https://www.seduc.ce.gov.br/wp-content/uploads/sites/37/2020/02/Novos-Caminhos-Preto-1200x813.jpg"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Painel de Demandas por Qualificação Profissional", className="card-title"),
+                                    html.P(
+                                        "Apresenta sugestões de oferta de cursos técnicos e de qualificação profissional, por unidades"
+                                        "da federação e respectivas mesorregiões, nos formatos painel interativo e relatórios em pdf.\n\n"
+                                        "A ferramenta foi desenvolvida pelo Ministério da Educação em parceria com o Governo do Estao de Minas Gerais",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse o painel", color="primary",
+                                               href='http://novoscaminhos.mec.gov.br/painel-de-demandas/demandas',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "25rem"}),
+                    ], width=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fHlvdW5ncyUyMGxlYXJuaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Cursos de jovem aprendiz",
+                                            className="card-title"),
+                                    html.P(
+                                        "Aprendizagem Profissional é o programa de qualificação profissional e inserção no mercado de trabalho voltado para"
+                                        " jovens de 14 a 24 anos, e para pessoas com deficiência sem limite de idade.\n\n Trata-se de uma política que pode criar "
+                                        "oportunidades tanto para os jovens, especialmente no que se refere à inserção no mercado de trabalho, quanto para "
+                                        "as empresas, que têm a possibilidade de formar mão-de-obra qualificada.",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse a lista de instituições", color="primary",
+                                               href='http://blog.mds.gov.br/redesuas/plano-progredir-divulga-lista-de-instituicoes-que-podem-ofertar-curso-de-jovem-aprendiz/',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "25rem"}),
+                    ], width=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="https://www.gov.br/pt-br/apps/mei/view/++widget++form.widgets.imagem/@@download/MEI.png",
+                                style={'height': "350px"}),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Informações sobre o MEI",
+                                            className="card-title"),
+                                    html.P(
+                                        "O governo federal disponibiliza um portal com informações para quem deseja se formalizar como microeempreendedor"
+                                        "individual, para quem já está formalizado e deseja o acesso digital a produtos e serviços financeiros.\n\n Além"
+                                        "disso, o portal apresenta a legislação aplicada, estatísticas e cursos gratuitos para quem pretende se formalizar",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse o site", color="primary",
+                                               href='https://www.gov.br/empresas-e-negocios/pt-br/empreendedor',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "25rem"}),
+                    ], width=4
+                    ),
+                ],
+                ),
+            ], fluid=True
+            )
+    return "No tab selected"
+
+# MODAL CADASTRO ÚNICO
+@app.callback(
+    Output("modal1", "is_open"),
+    [Input("open1", "n_clicks"), Input("close1", "n_clicks")],
+    [State("modal1", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
 #
-# @app.callback(
-#     Output("tab-content", "children"),
-#     Input("tabs", "active_tab"),
-# )
-# def render_tab_content(active_tab):
-#     """
-#     This callback takes the 'active_tab' property as input, as well as the
-#     stored graphs, and renders the tab content depending on what the value of
-#     'active_tab' is.
-#     """
-#     if active_tab:
-#         if active_tab == "social":
-#             return dbc.Container(children=[
-#                 dbc.Row(children=
-#                 [
-#                     dbc.Col([dbc.Card(children=
-#                     [dbc.CardBody(children=
-#                     [
-#                         html.H5("Cadastro Único", className="card-title"),
-#                         html.H3(id='cadunico'),
-#                         html.Br(),
-#                         html.H5('Programa Bolsa Família', className="card-title"),
-#                         html.H3(id='bolsa_familia'),
-#                         html.Br(),
-#                         dbc.Button("Saiba Mais sobre o Cadastro Único", id='open1', color="primary"),
-#                         dbc.Modal(
-#                             [
-#                                 dbc.ModalHeader("Cadastro Único"),
-#                                 dbc.ModalBody(
-#                                     "O Cadastro Único para Programas Sociais do Governo Federal (Cadastro Único) é um instrumento "
-#                                     "que identifica e caracteriza as famílias de baixa renda, "
-#                                     "permitindo que o governo conheça melhor a realidade socioeconômica dessa população.\n\n"
-#                                     "Nele são registradas informações como: características da residência, identificação "
-#                                     "de cada pessoa, escolaridade, situação de trabalho e renda, entre outras."),
-#                                 dbc.ModalFooter(
-#                                     dbc.Button("Fechar", id="close1", className="ml-auto")
-#                                 ),
-#                             ],
-#                             id="modal1",
-#                             centered=True,
-#                             style={"width":"50rem", 'whiteSpace': 'pre-wrap'},
-#                         ),
-#                     ]), ], color="#E2EBF3", outline=True, style={"width": "20rem", 'border':'white'}
-#                     )], width=3),
-#                     dbc.Col(dcc.Graph(id='cad_pbf'), width=9),
-#                 ],
-#                     align='center'
-#                 ),
-#                 html.Br(),
-#                 dbc.Row(
-#                     [
-#                         dbc.Col(dcc.Graph(id='domicilio_sexo', config={'displayModeBar': 'hover'}), width=6),
-#                         dbc.Col(dcc.Graph(id='faixa_etaria'), width=6),
-#                         dbc.Col(dcc.Graph(id='escolaridade'), width=6),
-#                         dbc.Col(dcc.Graph(id='pib_setorial'), width=6),
-#                     ],
-#                 ),
-#                 # html.Div(dcc.Graph(figure=fig10))
-#             ], fluid=True
-#             )
-#         elif active_tab == "trabalho":
-#             return dbc.Container(children=[
-#                 dbc.Row(children=
-#                 [
-#                     dbc.Col(dcc.Graph(id='evolucao_empregos'), width=8),
-#                     dbc.Col([dbc.Card(
-#                         [
-#                             dbc.CardBody(
-#                                 [
-#                                     html.H5("Pessoal Ocupado", className="card-title"),
-#                                     html.H3(id='empregos', className="card-text")
-#                                 ]
-#                             ),
-#                             dbc.CardBody(
-#                                 [
-#                                     html.H5("Vagas abertas no SINE", className="card-title"),
-#                                     html.H3(id='sine', className="card-text"),
-#                                     html.Br(),
-#                                     dbc.Button("Buscar vagas no SINE", color="primary",
-#                                                href='https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine',
-#                                                target="_blank"),
-#                                 ]
-#                             ),
-#                         ], color="#E2EBF3", outline=True, style={"width": "20rem", 'border':'white'}),
-#                     ], width=4),
-#                 ],
-#                     align='center', justify="center", no_gutters=True
-#                 ),
-#                 html.Br(),
-#                 dbc.Row(
-#                     [
-#                         dbc.Col(
-#                             [
-#                                 dcc.Graph(id='estoque_empregos'),
-#                                 html.Br(),
-#                                 html.H5(id='var_emprego'),
-#                             ], style={'textAlign': 'center'}, width=6),
-#                         dbc.Col(
-#                             [
-#                                 html.H4(id='empresas_total'),
-#                                 dcc.Graph(id='empresas_setorial'),
-#                             ], style={'textAlign': 'center'}, width=6),
-#                         dbc.Col(dcc.Graph(id='top_vinculos'), width=6),
-#                         dbc.Col(dcc.Graph(id='remuneracao'), width=6),
-#                         dbc.Col(dcc.Graph(id='mei'), width=6)
-#                     ]
-#                 ),
-#                 # html.Div([
-#                 #     html.Div([
-#                 #         dcc.Dropdown(
-#                 #             id='ocupacao',
-#                 #             options=[{'label': i, 'value': i} for i in ocupations],
-#                 #             value=''
-#                 #         ),
-#                 #         dcc.Graph(id='bar_chart2'),
-#                 #         # dcc.RadioItems(
-#                 #         #     id='crossfilter-xaxis-type',
-#                 #         #     options=[{'label': i, 'value': i} for i in ['Remuneração média', 'Vínculos ativos']],
-#                 #         #     value='Vínculos ativos',
-#                 #         #     labelStyle={'display': 'inline-block'}
-#                 #         # )
-#                 #     ],
-#                 #         style={'width': '49%', 'display': 'inline-block'}),
-#                 #
-#                 # ], style={
-#                 #     'borderBottom': 'thin lightgrey solid',
-#                 #     'backgroundColor': 'rgb(250, 250, 250)',
-#                 #     'padding': '10px 5px'
-#                 # }),
-#             ], fluid=True
-#             )
-#         elif active_tab == "servicos":
-#             return dbc.Container(children=[
-#                 dbc.Row(children=
-#                 [
-#                     dbc.Col([dbc.Card(
-#                         [
-#                             dbc.CardImg(
-#                                 src="https://www.seduc.ce.gov.br/wp-content/uploads/sites/37/2020/02/Novos-Caminhos-Preto-1200x813.jpg"),
-#                             dbc.CardBody(
-#                                 [
-#                                     html.H5("Painel de Demandas por Qualificação Profissional", className="card-title"),
-#                                     html.P(
-#                                         "Apresenta sugestões de oferta de cursos técnicos e de qualificação profissional, por unidades"
-#                                         "da federação e respectivas mesorregiões, nos formatos painel interativo e relatórios em pdf.\n\n"
-#                                         "A ferramenta foi desenvolvida pelo Ministério da Educação em parceria com o Governo do Estao de Minas Gerais",
-#                                         className="card-text",
-#                                     ),
-#                                     dbc.Button("Acesse o painel", color="primary",
-#                                                href='http://novoscaminhos.mec.gov.br/painel-de-demandas/demandas',
-#                                                target="_blank"),
-#                                 ]
-#                             ),
-#                         ], style={"width": "25rem"}),
-#                     ], width=4
-#                     ),
-#                     dbc.Col([dbc.Card(
-#                         [
-#                             dbc.CardImg(
-#                                 src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fHlvdW5ncyUyMGxlYXJuaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"),
-#                             dbc.CardBody(
-#                                 [
-#                                     html.H5("Cursos de jovem aprendiz",
-#                                             className="card-title"),
-#                                     html.P(
-#                                         "Aprendizagem Profissional é o programa de qualificação profissional e inserção no mercado de trabalho voltado para"
-#                                         " jovens de 14 a 24 anos, e para pessoas com deficiência sem limite de idade.\n\n Trata-se de uma política que pode criar "
-#                                         "oportunidades tanto para os jovens, especialmente no que se refere à inserção no mercado de trabalho, quanto para "
-#                                         "as empresas, que têm a possibilidade de formar mão-de-obra qualificada.",
-#                                         className="card-text",
-#                                     ),
-#                                     dbc.Button("Acesse a lista de instituições", color="primary",
-#                                                href='http://blog.mds.gov.br/redesuas/plano-progredir-divulga-lista-de-instituicoes-que-podem-ofertar-curso-de-jovem-aprendiz/',
-#                                                target="_blank"),
-#                                 ]
-#                             ),
-#                         ], style={"width": "25rem"}),
-#                     ], width=4
-#                     ),
-#                     dbc.Col([dbc.Card(
-#                         [
-#                             dbc.CardImg(
-#                                 src="https://www.gov.br/pt-br/apps/mei/view/++widget++form.widgets.imagem/@@download/MEI.png",
-#                                 style={'height': "350px"}),
-#                             dbc.CardBody(
-#                                 [
-#                                     html.H5("Informações sobre o MEI",
-#                                             className="card-title"),
-#                                     html.P(
-#                                         "O governo federal disponibiliza um portal com informações para quem deseja se formalizar como microeempreendedor"
-#                                         "individual, para quem já está formalizado e deseja o acesso digital a produtos e serviços financeiros.\n\n Além"
-#                                         "disso, o portal apresenta a legislação aplicada, estatísticas e cursos gratuitos para quem pretende se formalizar",
-#                                         className="card-text",
-#                                     ),
-#                                     dbc.Button("Acesse o site", color="primary",
-#                                                href='https://www.gov.br/empresas-e-negocios/pt-br/empreendedor',
-#                                                target="_blank"),
-#                                 ]
-#                             ),
-#                         ], style={"width": "25rem"}),
-#                     ], width=4
-#                     ),
-#                 ],
-#                 ),
-#             ], fluid=True
-#             )
-#     return "No tab selected"
-#
-# # MODAL CADASTRO ÚNICO
-# @app.callback(
-#     Output("modal1", "is_open"),
-#     [Input("open1", "n_clicks"), Input("close1", "n_clicks")],
-#     [State("modal1", "is_open")],
-# )
-# def toggle_modal(n1, n2, is_open):
-#     if n1 or n2:
-#         return not is_open
-#     return is_open
-#
-# # NÚMEROS CADASTRO ÚNICO E BOLSA FAMÍLIA
-# @app.callback(
-#     [
-#         Output('cadunico', 'children'),
-#         Output('bolsa_familia', 'children'),
-#         # Output('card_num6', 'children')
-#     ],
-#     [Input('w_municipios', 'value')],
-#     [Input('w_municipios1', 'value')])
-# def display_cadunico(w_municipios, w_municipios1):
-#     pessoas_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
-#     pessoas_cad = f'{pessoas_cad:_.0f}'.replace('.', ',').replace('_', '.')
-#     pessoas_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_pbf'].sum()
-#     pessoas_pbf = f'{pessoas_pbf:_.0f}'.replace('.', ',').replace('_', '.')
-#     # pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
-#     # pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
-#
-#     return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas'
+# NÚMEROS CADASTRO ÚNICO E BOLSA FAMÍLIA
+@app.callback(
+    [
+        Output('cadunico', 'children'),
+        Output('bolsa_familia', 'children'),
+        # Output('card_num6', 'children')
+    ],
+    [Input('w_municipios', 'value')],
+    [Input('w_municipios1', 'value')])
+def display_cadunico(w_municipios, w_municipios1):
+    pessoas_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
+    pessoas_cad = f'{pessoas_cad:_.0f}'.replace('.', ',').replace('_', '.')
+    pessoas_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_pbf'].sum()
+    pessoas_pbf = f'{pessoas_pbf:_.0f}'.replace('.', ',').replace('_', '.')
+    # pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
+    # pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
+
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas'
 #
 # # EVOLUÇÃO DO CADUNICO E DO PBF
 # @app.callback(Output('cad_pbf', 'figure'),
