@@ -551,8 +551,8 @@ def display_ev_cadunico(w_municipios, w_municipios1):
 #
 # POPULAÇÃO DO CADUNICO POR SITUAÇÃO DO DOMICÍLIO E SEXO
 @app.callback(Output('domicilio_sexo', 'figure'),
-              [Input('w_municipios', 'value')],
-              [Input('w_municipios1', 'value')],
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
               [State('w_municipios1', 'value')])
 def display_domicilio_sexo(w_municipios, w_municipios1):
     urbano = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_urbano'].sum()
