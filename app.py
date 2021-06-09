@@ -22,8 +22,8 @@ df = pd.read_csv(data, sep=';', encoding='latin1')
 #                                 value_name="vinculos")
 # ocupations = df_caged_melted['ocupation'].unique()
 
-# data2 = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/evolucao_pessoas_cad_pbf.csv'
-# df_cad = pd.read_csv(data2, sep=';', encoding='latin1')
+data2 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/evolucao_pessoas_cad_pbf.csv'
+df_cad = pd.read_csv(data2, sep=';', encoding='latin1')
 #
 # data3 = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
 # df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1')
@@ -492,61 +492,62 @@ def display_cadunico(w_municipios, w_municipios1):
     # pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
 
     return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas'
-#
-# # EVOLUÇÃO DO CADUNICO E DO PBF
-# @app.callback(Output('cad_pbf', 'figure'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
-# def display_ev_cadunico(w_municipios, w_municipios1):
-#     result = pd.concat([df, df_cad], ignore_index=True, sort=False)
-#     df1 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)]
-#     fig = go.Figure()
-#     fig.add_trace(go.Scatter(x=df1['mês_ano'], y=df1['pessoas_pbf'], name='Bolsa Família', mode='lines+markers',
-#                              marker=dict(size=10, color='black')))
-#     fig.add_trace(go.Bar(x=df1['mês_ano'], y=df1['pessoas_cad'], name='Cadastro Único'))
-#     fig.update_layout(bargap=0.3, bargroupgap=0.15)
-#     fig.update_layout(
-#         xaxis=dict(
-#             showline=True,
-#             showgrid=False,
-#             showticklabels=True,
-#             linecolor='rgb(204, 204, 204)',
-#             linewidth=1,
-#             ticks='outside',
-#             tickfont=dict(
-#                 family='Arial',
-#                 size=11,
-#                 color='rgb(82, 82, 82)',
-#             ),
-#         ),
-#         yaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             showticklabels=False,
-#         ),
-#         autosize=True,
-#         margin=dict(autoexpand=True),
-#         showlegend=True,
-#         plot_bgcolor='white'
-#     )
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.05,
-#                             xanchor='left', yanchor='bottom',
-#                             text='Evolução do nº de pessoas inscritas no CadÚnico e de beneficiárias do Bolsa Família (2018-2021)',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: Ministério da Cidadania/Cadastro Único',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#     fig.update_layout(annotations=annotations)
-#
-#     return fig
+
+# EVOLUÇÃO DO CADUNICO E DO PBF
+@app.callback(Output('cad_pbf', 'figure'),
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
+              [State('w_municipios1', 'value')])
+def display_ev_cadunico(w_municipios, w_municipios1):
+    result = pd.concat([df, df_cad], ignore_index=True, sort=False)
+    df1 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df1['mês_ano'], y=df1['pessoas_pbf'], name='Bolsa Família', mode='lines+markers',
+                             marker=dict(size=10, color='black')))
+    fig.add_trace(go.Bar(x=df1['mês_ano'], y=df1['pessoas_cad'], name='Cadastro Único'))
+    fig.update_layout(bargap=0.3, bargroupgap=0.15)
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=1,
+            ticks='outside',
+            tickfont=dict(
+                family='Arial',
+                size=11,
+                color='rgb(82, 82, 82)',
+            ),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=True,
+        margin=dict(autoexpand=True),
+        showlegend=True,
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.05,
+                            xanchor='left', yanchor='bottom',
+                            text='Evolução do nº de pessoas inscritas no CadÚnico e de beneficiárias do Bolsa Família (2018-2021)',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Cadastro Único',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+    fig.update_layout(annotations=annotations)
+
+    return fig
 #
 # # POPULAÇÃO DO CADUNICO POR SITUAÇÃO DO DOMICÍLIO E SEXO
 # @app.callback(Output('domicilio_sexo', 'figure'),
