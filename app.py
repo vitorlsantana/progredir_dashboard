@@ -549,60 +549,61 @@ def display_ev_cadunico(w_municipios, w_municipios1):
 
     return fig
 #
-# # POPULAÇÃO DO CADUNICO POR SITUAÇÃO DO DOMICÍLIO E SEXO
-# @app.callback(Output('domicilio_sexo', 'figure'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
-# def display_domicilio_sexo(w_municipios, w_municipios1):
-#     urbano = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_urbano'].sum()
-#     rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_rural'].sum()
-#     masc_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_masculino'].sum()
-#     fem_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_feminino'].sum()
-#
-#     fig = make_subplots(rows=1, cols=2, specs=[[{'type': 'bar'}, {'type': 'domain'}]])
-#
-#     fig.add_trace(go.Bar(x=['Masculino', 'Feminino'], y=[masc_cad, fem_cad], showlegend=False, text=[masc_cad, fem_cad],
-#                          textposition='auto', name='Sexo'), row=1, col=1)
-#     fig.add_trace(go.Pie(labels=['Urbano', 'Rural'], values=[urbano, rural], showlegend=True, name='Domicílio'), row=1, col=2)
-#
-#     fig.update_layout(
-#         xaxis=dict(
-#             showline=True,
-#             showgrid=False,
-#             showticklabels=True,
-#             linecolor='rgb(204, 204, 204)',
-#             linewidth=2,
-#             ticks='outside',
-#             tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
-#         ),
-#         yaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             showticklabels=True,
-#         ),
-#         autosize=False,
-#         margin=dict(autoexpand=True),
-#         plot_bgcolor='white'
-#     )
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-#                             xanchor='left', yanchor='bottom',
-#                             text='População do CadÚnico, por situação do domicílio e sexo',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: Ministério da Cidadania/Cadastro Único',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#
-#     fig.update_layout(annotations=annotations)
-#
-#     return fig
+# POPULAÇÃO DO CADUNICO POR SITUAÇÃO DO DOMICÍLIO E SEXO
+@app.callback(Output('domicilio_sexo', 'figure'),
+              [Input('w_municipios', 'value')],
+              [Input('w_municipios1', 'value')],
+              [State('w_municipios1', 'value')])
+def display_domicilio_sexo(w_municipios, w_municipios1):
+    urbano = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_urbano'].sum()
+    rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_rural'].sum()
+    masc_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_masculino'].sum()
+    fem_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_feminino'].sum()
+
+    fig = make_subplots(rows=1, cols=2, specs=[[{'type': 'bar'}, {'type': 'domain'}]])
+
+    fig.add_trace(go.Bar(x=['Masculino', 'Feminino'], y=[masc_cad, fem_cad], showlegend=False, text=[masc_cad, fem_cad],
+                         textposition='auto', name='Sexo'), row=1, col=1)
+    fig.add_trace(go.Pie(labels=['Urbano', 'Rural'], values=[urbano, rural], showlegend=True, name='Domicílio'), row=1, col=2)
+
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=True,
+        ),
+        autosize=False,
+        margin=dict(autoexpand=True),
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='População do CadÚnico, por situação do domicílio e sexo',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Cadastro Único',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+
+    return fig
 #
 # # POPULAÇÃO DO CADUNICO POR FAIXA ETÁRIA
 # @app.callback(Output('faixa_etaria', 'figure'),
