@@ -974,7 +974,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     funcao_principal = ['Autônomo', 'Temporário na Área Rural', 'Emprego sem Carteira', 'Emprego com Carteira', 'Trabalho Doméstico sem Carteira',
              'Trabalho Doméstico com Carteira', 'Trabalho não Remunerado', 'Militar/Servidor Público', 'Empregador', 'Estagiário', 'Aprendiz']
     trab_autonomo = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_autonomo'].sum()
-    trab_temp_area_rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_temp_area_rural'].sum()
+    trab_temp_area_rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_temp_area_rura'].sum()
     emprego_sem_carteira = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['emprego_sem_carteira'].sum()
     emprego_com_carteira = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['emprego_com_carteira'].sum()
     trab_domestico_sem_carteira = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_domestico_sem_carteira'].sum()
