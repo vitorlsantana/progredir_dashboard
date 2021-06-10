@@ -991,7 +991,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_semana_passada'].sum()
     nao_trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_semana_passada'].sum()
 
-    fig = make_subplots(rows=1, cols=3, specs=[[{'type': 'bar'}, {'type': 'domain'}, {'type': 'domain'}]])
+    fig = make_subplots(rows=1, cols=2, specs=[[{'type': 'bar'}, {'type': 'domain'}]])
 
     fig.add_trace(go.Bar(x=[trab_autonomo, trab_temp_area_rural, emprego_sem_carteira, emprego_com_carteira, trab_domestico_sem_carteira,
                             trab_domestico_com_carteira, trabalhador_nao_remunerado, militar_servidor_publico, empregador, estagiario, aprendiz],
@@ -999,8 +999,8 @@ def display_escolaridade(w_municipios, w_municipios1):
                          name='Função Principal'), row=1, col=1)
     fig.add_trace(go.Pie(labels=['Trabalhou nos últimos 12 meses', 'Não trabalhou nos últimos 12 meses'], values=[trab_12_meses, nao_trab_12_meses], showlegend=False,
                          name='Escolaridade'), row=1, col=2)
-    fig.add_trace(go.Pie(labels=['Trabalhou última semana', 'Não trabalhou última semana'], values=[trab_last_week, nao_trab_last_week], showlegend=True,
-                         name='Escolaridade'), row=1, col=3)
+    # fig.add_trace(go.Pie(labels=['Trabalhou última semana', 'Não trabalhou última semana'], values=[trab_last_week, nao_trab_last_week], showlegend=True,
+    #                      name='Escolaridade'), row=1, col=3)
     fig.update_layout(bargap=0.25, bargroupgap=0.2)
     fig.update_layout(
         xaxis=dict(
@@ -1041,7 +1041,6 @@ def display_escolaridade(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
 
     return fig
-
 
 # EVOLUÇÃO DA REMUNERAÇÃO TOTAL
 @app.callback(Output('remuneracao', 'figure'),
