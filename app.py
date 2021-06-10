@@ -177,7 +177,6 @@ def get_municipios_options(w_municipios):
 @app.callback(
     Output('w_municipios1', 'value'),
     [Input('w_municipios1', 'options')],
-    # [State('w_municipios1', 'value')]
 )
 def get_municipios_value(w_municipios1):
     return [k['value'] for k in w_municipios1][0]
@@ -473,14 +472,12 @@ def toggle_modal(n1, n2, is_open):
 #
 # NÚMEROS CADASTRO ÚNICO E BOLSA FAMÍLIA
 @app.callback(
-    [
-        Output('cadunico', 'children'),
-        Output('bolsa_familia', 'children'),
+    Output('cadunico', 'children'),
+    Output('bolsa_familia', 'children'),
         # Output('card_num6', 'children')
-    ],
-    [Input('w_municipios', 'value'),
-    Input('w_municipios1', 'value')],
-    [State('cadunico', 'children')])
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
 def display_cadunico(w_municipios, w_municipios1):
     pessoas_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
     pessoas_cad = f'{pessoas_cad:_.0f}'.replace('.', ',').replace('_', '.')
@@ -493,9 +490,9 @@ def display_cadunico(w_municipios, w_municipios1):
 
 # EVOLUÇÃO DO CADUNICO E DO PBF
 @app.callback(Output('cad_pbf', 'figure'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('cad_pbf', 'figure')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_ev_cadunico(w_municipios, w_municipios1):
     result = pd.concat([df, df_cad], ignore_index=True, sort=False)
     df1 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)]
