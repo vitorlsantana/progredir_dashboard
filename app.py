@@ -543,12 +543,12 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
 
     return fig
-#
+
 # POPULAÇÃO DO CADUNICO POR SITUAÇÃO DO DOMICÍLIO E SEXO
 @app.callback(Output('domicilio_sexo', 'figure'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('w_municipios1', 'value')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_domicilio_sexo(w_municipios, w_municipios1):
     urbano = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_urbano'].sum()
     rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_rural'].sum()
@@ -602,9 +602,9 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
 
 # POPULAÇÃO DO CADUNICO POR FAIXA ETÁRIA
 @app.callback(Output('faixa_etaria', 'figure'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('faixa_etaria', 'figure')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_age(w_municipios, w_municipios1):
     faixa = ['16 a 17', '18 a 24', '25 a 34', '35 a 39', '40 a 44', '45 a 49', '50 a 54', '55 a 59', '60 a 64']
     faixa16_17 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_16_17_anos'].sum()
@@ -662,9 +662,9 @@ def display_age(w_municipios, w_municipios1):
 
 # POPULAÇÃO DO CADUNICO POR ESCOLARIDADE
 @app.callback(Output('escolaridade', 'figure'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('escolaridade', 'figure')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_escolaridade(w_municipios, w_municipios1):
     nivel = ['Sem instrução', 'Fundamental incompleto', 'Fundamental completo', 'Ensino médio incompleto',
              'Ensino médio completo', 'Superior completo ou incompleto']
@@ -720,13 +720,11 @@ def display_escolaridade(w_municipios, w_municipios1):
 
 # NÚMEROS SOBRE EMPRESAS E ESTOQUE DE EMPREGOS
 @app.callback(
-    [
-        Output('empresas_total', 'children'),
-        Output('empregos', 'children'),
-    ],
-    [Input('w_municipios', 'value'),
-    Input('w_municipios1', 'value')],
-    [State('w_municipios1', 'value')])
+    Output('empresas_total', 'children'),
+    Output('empregos', 'children'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
 def display_content(w_municipios, w_municipios1):
     empresas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_total'].sum()
     empresas1 = f'{empresas:_.0f}'.replace('_', '.')
@@ -737,9 +735,9 @@ def display_content(w_municipios, w_municipios1):
 
 # PIB POR SETOR DE ATIVIDADE ECONÔMICA
 @app.callback(Output('pib_setorial', 'figure'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('w_municipios1', 'value')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_content(w_municipios, w_municipios1):
     agropecuaria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]["pib_agropecuaria"].sum()
     # agropecuaria = f'{agropecuaria:_.0f}'.replace('.', ',').replace('_', '.')
@@ -771,9 +769,9 @@ def display_content(w_municipios, w_municipios1):
 
 # NÚMERO DE EMPRESAS POR SETOR DE ATIVIDADE ECONÔMICA
 @app.callback(Output('empresas_setorial', 'figure'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('w_municipios1', 'value')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_content(w_municipios, w_municipios1):
     setores = ['Agropecuária', 'Indústria Extrativa', 'Indústria de Transformação', 'Eletricidade e Gás',
                'Saneamento Básico', 'Construção', 'Comérico', 'Transporte', 'Alojamento e Alimentação', 'Informação e Comunicação',
@@ -823,22 +821,20 @@ def display_content(w_municipios, w_municipios1):
 
 # VAGAS ABERTAS NO SINE
 @app.callback(Output('sine', 'children'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('w_municipios1', 'value')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_content(w_municipios, w_municipios1):
     vagas_sine = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['vagas_sine'].sum()
     return vagas_sine
 
 # SALDO E VARIAÇÃO DE EMPREGOS
 @app.callback(
-    [
-        Output('estoque_empregos', 'figure'),
-        Output('var_emprego', 'children'),
-    ],
-    [Input('w_municipios', 'value'),
-    Input('w_municipios1', 'value')],
-    [State('w_municipios1', 'value')])
+    Output('estoque_empregos', 'figure'),
+    Output('var_emprego', 'children'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
 def display_content1(w_municipios, w_municipios1):
     df1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2021'].sum()
     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
@@ -890,9 +886,9 @@ def display_content1(w_municipios, w_municipios1):
 
 # EVOLUÇÃO DO SALDO DE EMPREGOS
 @app.callback(Output('evolucao_empregos', 'figure'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('w_municipios1', 'value')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_content(w_municipios, w_municipios1):
     anos = ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009',
             '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
@@ -963,9 +959,9 @@ def display_content(w_municipios, w_municipios1):
 
 # EVOLUÇÃO DA REMUNERAÇÃO TOTAL
 @app.callback(Output('remuneracao', 'figure'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('w_municipios1', 'value')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_content(w_municipios, w_municipios1):
     result = pd.merge(df_remuneracao, df, on=['uf', 'municipio'])
     df2 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)].copy()
@@ -1017,9 +1013,9 @@ def display_content(w_municipios, w_municipios1):
 
 # EMPREENDEDORISMO
 @app.callback(Output('mei', 'figure'),
-              [Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')],
-              [State('w_municipios1', 'value')])
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
 def display_content(w_municipios, w_municipios1):
     mei_cadunico = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_cadunico'].sum()
     mei_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_pbf'].sum()
@@ -1041,9 +1037,8 @@ def display_content(w_municipios, w_municipios1):
 @app.callback(
     Output('top_vinculos', 'figure'),
     # [Input('dropdown', 'value')],
-    [Input('w_municipios', 'value'),
-    Input('w_municipios1', 'value')],
-    [State('w_municipios1', 'value')]
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
 )
 def update_top_vinculos(w_municipios, w_municipios1):
     df1 = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
