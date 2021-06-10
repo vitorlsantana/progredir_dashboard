@@ -187,8 +187,8 @@ def get_municipios_value(w_municipios1):
     [Output('populacao', 'children'),
     Output('pib_total', 'children'),
     Output('idhm', 'children')],
-    [Input('w_municipios', 'value')],
-    [Input('w_municipios1', 'value')])
+    [Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')])
 def display_content(w_municipios, w_municipios1):
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
     # populacao1 = f'{populacao:_.0f}'.replace('_', '.')
