@@ -184,9 +184,9 @@ def get_municipios_value(w_municipios1):
 #
 # POPULAÇÃO, PIB TOTAL E IDHM
 @app.callback(
-    Output('populacao', 'children'),
+    [Output('populacao', 'children'),
     Output('pib_total', 'children'),
-    Output('idhm', 'children'),
+    Output('idhm', 'children')],
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value'),)
 def display_content(w_municipios, w_municipios1):
