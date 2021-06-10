@@ -7,8 +7,7 @@ import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
-# suppress_callback_exceptions=True
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True, )
 server = app.server
 
 # CARREGAR DADOS
@@ -42,7 +41,7 @@ logo = dbc.Row(
         dbc.Col(html.Img(src=logo_ministerio, height="90px")),
     ],
     no_gutters=True,
-    className="ml-auto flex-nowrap mt-1 mt-md-0",
+    className="ml-auto flex-display mt-1 mt-md-0",
     align="center",
 )
 
@@ -59,13 +58,14 @@ navbar = dbc.Navbar(
                 align="center",
                 no_gutters=True,
             ),
-            className="ml-auto flex-nowrap mt-3 mt-md-0",
+            className="row flex-display",
         ),
         dbc.NavbarToggler(id="navbar-toggler"),
         dbc.Collapse(logo, id="navbar-collapse", navbar=True),
     ],
     color="light",
     dark=True,
+    className="row flex-display",
     style={"border": "1px #EBEBEB solid"}
 )
 
@@ -243,7 +243,17 @@ grid = html.Div(children=[
     ], justify="center", no_gutters=True)
 ])
 
-app.layout = html.Div(
+style_layout = {
+    'container': {
+        'position': 'fixed',
+        'display': 'flex',
+        'flex-direction': 'column',
+        'height': '100%',
+        'width': '100%'
+    },
+}
+
+app.layout = html.Div(style=style_layout['container']
     [
         navbar,
         grid,
