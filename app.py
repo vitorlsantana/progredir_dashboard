@@ -604,364 +604,373 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
 
     return fig
-#
-# # POPULAÇÃO DO CADUNICO POR FAIXA ETÁRIA
-# @app.callback(Output('faixa_etaria', 'figure'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
-# def display_age(w_municipios, w_municipios1):
-#     faixa = ['16 a 17', '18 a 24', '25 a 34', '35 a 39', '40 a 44', '45 a 49', '50 a 54', '55 a 59', '60 a 64']
-#     faixa16_17 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_16_17_anos'].sum()
-#     faixa18_24 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_18_24_anos'].sum()
-#     faixa25_34 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_25_34_anos'].sum()
-#     faixa35_39 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_35_39_anos'].sum()
-#     faixa40_44 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_40_44_anos'].sum()
-#     faixa45_49 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_45_49_anos'].sum()
-#     faixa50_54 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_50_54_anos'].sum()
-#     faixa55_59 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_55_59_anos'].sum()
-#     faixa60_64 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_60_64_anos'].sum()
-#
-#     fig = go.Figure()
-#     fig.add_trace(go.Bar(x=faixa, y=[faixa16_17, faixa18_24, faixa25_34, faixa35_39, faixa40_44, faixa45_49, faixa50_54, faixa55_59, faixa60_64],
-#                          showlegend=False, textposition='auto', name='Faixa Etária'))
-#
-#     fig.update_layout(
-#         xaxis=dict(
-#             showline=True,
-#             showgrid=False,
-#             showticklabels=True,
-#             linecolor='rgb(204, 204, 204)',
-#             linewidth=2,
-#             ticks='outside',
-#             tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
-#         ),
-#         yaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             showticklabels=False,
-#         ),
-#         autosize=False,
-#         margin=dict(autoexpand=True),
-#         plot_bgcolor='white'
-#     )
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-#                             xanchor='left', yanchor='bottom',
-#                             text='População do Cadastro Único, por faixa etária',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: Ministério da Cidadania/Cadastro Único',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#
-#     fig.update_layout(annotations=annotations)
-#
-#     return fig
-#
-# # POPULAÇÃO DO CADUNICO POR ESCOLARIDADE
-# @app.callback(Output('escolaridade', 'figure'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
-# def display_escolaridade(w_municipios, w_municipios1):
-#     nivel = ['Sem instrução', 'Fundamental incompleto', 'Fundamental completo', 'Ensino médio incompleto',
-#              'Ensino médio completo', 'Superior completo ou incompleto']
-#     sem_instrucao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_sem_instrucao'].sum()
-#     fund_incompleto = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_fundamental_incompleto'].sum()
-#     fund_completo = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_fundamental_completo'].sum()
-#     medio_incompleto = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_medio_incompleto'].sum()
-#     medio_completo = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_medio_completo'].sum()
-#     superior = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_superior_completo_incompleto'].sum()
-#
-#     fig = go.Figure()
-#     fig.add_trace(go.Bar(x=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior], y=nivel, orientation='h', textposition='inside'))
-#     fig.update_layout(bargap=0.25, bargroupgap=0.2)
-#     fig.update_layout(
-#         xaxis=dict(
-#             showline=True,
-#             showgrid=False,
-#             showticklabels=True,
-#             linecolor='rgb(204, 204, 204)',
-#             linewidth=2,
-#             ticks='outside',
-#             tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
-#         ),
-#         yaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             showticklabels=True,
-#         ),
-#         autosize=False,
-#         margin=dict(autoexpand=True),
-#         showlegend=False,
-#         plot_bgcolor='white'
-#     )
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-#                             xanchor='left', yanchor='bottom',
-#                             text='População do CadÚnico, por nível de escolaridade',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: Ministério da Cidadania/Cadastro Único',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#
-#     fig.update_layout(annotations=annotations)
-#
-#     return fig
-#
-# # NÚMEROS SOBRE EMPRESAS E ESTOQUE DE EMPREGOS
-# @app.callback(
-#     [
-#         Output('empresas_total', 'children'),
-#         Output('empregos', 'children'),
-#     ],
-#     [Input('w_municipios', 'value')],
-#     [Input('w_municipios1', 'value')])
-# def display_content(w_municipios, w_municipios1):
-#     empresas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_total'].sum()
-#     empresas1 = f'{empresas:_.0f}'.replace('_', '.')
-#     pessoal = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['estoque_empregos_abr2021'].sum()
-#     pessoal = f'{pessoal:_.0f}'.replace('_', '.')
-#
-#     return empresas1 + ' empresas', pessoal
-#
-# # PIB POR SETOR DE ATIVIDADE ECONÔMICA
-# @app.callback(Output('pib_setorial', 'figure'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
-# def display_content(w_municipios, w_municipios1):
-#     agropecuaria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]["pib_agropecuaria"].sum()
-#     # agropecuaria = f'{agropecuaria:_.0f}'.replace('.', ',').replace('_', '.')
-#     industria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_industria'].sum()
-#     servicos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_servicos'].sum()
-#     admpublica = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_admpublica'].sum()
-#
-#     fig = go.Figure()
-#     fig.add_trace(go.Pie(labels=['Agricultura', 'Indústria', 'Serviços', 'Administração'], values=[agropecuaria, industria, servicos, admpublica],
-#                          showlegend=True, name='Setor', hoverinfo='label+value', textinfo='percent', hole=.3, textfont={'family': "Arial", 'size': 15}))
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-#                             xanchor='left', yanchor='bottom',
-#                             text='PIB por setor de atividade econômica',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: IBGE',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#
-#     fig.update_layout(annotations=annotations, hovermode='closest')
-#
-#     return fig
-#
-# # NÚMERO DE EMPRESAS POR SETOR DE ATIVIDADE ECONÔMICA
-# @app.callback(Output('empresas_setorial', 'figure'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
-# def display_content(w_municipios, w_municipios1):
-#     setores = ['Agropecuária', 'Indústria Extrativa', 'Indústria de Transformação', 'Eletricidade e Gás',
-#                'Saneamento Básico', 'Construção', 'Comérico', 'Transporte', 'Alojamento e Alimentação', 'Informação e Comunicação',
-#                'Instituições Financeiras', 'Imobiliárias', 'Atividades Profissionais, Científicas e Técnicas', 'Atividades Administrativas',
-#                'Educação', 'Saúde', 'Arte, Cultura e Esportes', 'Outras Atividades']
-#     agropecuaria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_agropecuaria'].sum()
-#     ind_extrativa = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ind_extrativas'].sum()
-#     ind_transf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ind_transf'].sum()
-#     eletric_gas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_eletric_gas'].sum()
-#     saneamento = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_saneamento'].sum()
-#     construcao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_construcao'].sum()
-#     comercio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_comercio'].sum()
-#     transporte = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_transporte'].sum()
-#     aloj_alimentacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_alojamento_alimentacao'].sum()
-#     info_comunic = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_info_comunic'].sum()
-#     financeiro = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_financeiro'].sum()
-#     imobiliarias = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_imobiliarias'].sum()
-#     ativ_prof = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ativ_profissionais_cient_tecnicas'].sum()
-#     ativ_administrativas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ativ_administrativas'].sum()
-#     educacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_educacao'].sum()
-#     saude = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_saude_servicosocial'].sum()
-#     arte_cultura = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_arte_cultura'].sum()
-#     outras_ativ = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_outras_ativ_servicos'].sum()
-#
-#     fig = go.Figure()
-#     fig.add_trace(go.Pie(labels=setores, values=[agropecuaria, ind_extrativa, ind_transf, eletric_gas, saneamento, construcao, comercio, transporte,
-#                     aloj_alimentacao,info_comunic, financeiro, imobiliarias, ativ_prof, ativ_administrativas, educacao, saude, arte_cultura, outras_ativ],
-#                          showlegend=True, name='Setor', hoverinfo='label+value', textinfo='percent', hole=.3, textfont={'family': "Arial", 'size': 15}))
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-#                             xanchor='left', yanchor='bottom',
-#                             text='Número de empresas, por setor de atividade econômica',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: IBGE/CEMPRE',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#
-#     fig.update_layout(annotations=annotations, hovermode='closest')
-#
-#     return fig
-#
-# # VAGAS ABERTAS NO SINE
-# @app.callback(Output('sine', 'children'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
-# def display_content(w_municipios, w_municipios1):
-#     vagas_sine = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['vagas_sine'].sum()
-#     return vagas_sine
-#
-# # SALDO E VARIAÇÃO DE EMPREGOS
-# @app.callback(
-#     [
-#         Output('estoque_empregos', 'figure'),
-#         Output('var_emprego', 'children'),
-#     ],
-#     [Input('w_municipios', 'value')],
-#     [Input('w_municipios1', 'value')])
-# def display_content1(w_municipios, w_municipios1):
-#     df1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2021'].sum()
-#     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
-#     df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum()
-#
-#     fig = go.Figure()
-#     fig.add_trace(go.Bar(x=['Saldo de empregos em 2021', 'Saldo de empregos em 12 meses'], y=[df1, df2]))
-#     fig.update_layout(bargap=0.25, bargroupgap=0.2)
-#     fig.update_layout(
-#         xaxis=dict(
-#             showline=True,
-#             showgrid=False,
-#             showticklabels=True,
-#             linecolor='rgb(204, 204, 204)',
-#             linewidth=2,
-#             ticks='outside',
-#             tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
-#             ),
-#         ),
-#         yaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             showticklabels=False,
-#         ),
-#         autosize=True,
-#         margin=dict(autoexpand=True),
-#         showlegend=False,
-#         plot_bgcolor='white'
-#     )
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-#                             xanchor='left', yanchor='bottom',
-#                             text='Saldo de empregos em 2021 e em 12 meses',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: Ministério da Economia/CAGED',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#
-#     fig.update_layout(annotations=annotations)
-#
-#     return fig, 'Variação percentual de ' + df3 + '% em 12 meses'
-#
-# # EVOLUÇÃO DO SALDO DE EMPREGOS
-# @app.callback(Output('evolucao_empregos', 'figure'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
-# def display_content(w_municipios, w_municipios1):
-#     anos = ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009',
-#             '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
-#     saldo_empregos2002 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2002'].sum()
-#     saldo_emprego2003 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2003'].sum()
-#     saldo_emprego2004 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2004'].sum()
-#     saldo_emprego2005 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2005'].sum()
-#     saldo_emprego2006 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2006'].sum()
-#     saldo_emprego2007 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2007'].sum()
-#     saldo_emprego2008 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2008'].sum()
-#     saldo_emprego2009 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2009'].sum()
-#     saldo_emprego2010 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2010'].sum()
-#     saldo_emprego2011 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2011'].sum()
-#     saldo_emprego2012 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2012'].sum()
-#     saldo_emprego2013 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2013'].sum()
-#     saldo_emprego2014 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2014'].sum()
-#     saldo_emprego2015 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2015'].sum()
-#     saldo_emprego2016 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2016'].sum()
-#     saldo_emprego2017 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2017'].sum()
-#     saldo_emprego2018 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2018'].sum()
-#     saldo_emprego2019 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2019'].sum()
-#
-#     fig = go.Figure()
-#     fig.add_trace(go.Scatter(x=anos, y=[saldo_empregos2002, saldo_emprego2003, saldo_emprego2004, saldo_emprego2005, saldo_emprego2006,
-#                saldo_emprego2007, saldo_emprego2008, saldo_emprego2009, saldo_emprego2010, saldo_emprego2011, saldo_emprego2012,
-#                saldo_emprego2013, saldo_emprego2014, saldo_emprego2015, saldo_emprego2016, saldo_emprego2017, saldo_emprego2018, saldo_emprego2019]))
-#
-#     fig.update_layout(
-#         xaxis=dict(
-#             showline=True,
-#             showgrid=False,
-#             showticklabels=True,
-#             linecolor='rgb(204, 204, 204)',
-#             linewidth=2,
-#             ticks='outside',
-#             tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
-#             ),
-#         ),
-#         yaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             showticklabels=True,
-#         ),
-#         autosize=True,
-#         margin=dict(autoexpand=True),
-#         showlegend=False,
-#         plot_bgcolor='white'
-#     )
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-#                             xanchor='left', yanchor='bottom',
-#                             text='Evolução do saldo de empregos (2002-2019)',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: Ministério da Economia/CAGED',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#
-#     fig.update_layout(annotations=annotations)
-#
-#     return fig
-#
+
+# POPULAÇÃO DO CADUNICO POR FAIXA ETÁRIA
+@app.callback(Output('faixa_etaria', 'figure'),
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
+              [State('faixa_etaria', 'figure')])
+def display_age(w_municipios, w_municipios1):
+    faixa = ['16 a 17', '18 a 24', '25 a 34', '35 a 39', '40 a 44', '45 a 49', '50 a 54', '55 a 59', '60 a 64']
+    faixa16_17 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_16_17_anos'].sum()
+    faixa18_24 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_18_24_anos'].sum()
+    faixa25_34 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_25_34_anos'].sum()
+    faixa35_39 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_35_39_anos'].sum()
+    faixa40_44 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_40_44_anos'].sum()
+    faixa45_49 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_45_49_anos'].sum()
+    faixa50_54 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_50_54_anos'].sum()
+    faixa55_59 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_55_59_anos'].sum()
+    faixa60_64 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_60_64_anos'].sum()
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=faixa, y=[faixa16_17, faixa18_24, faixa25_34, faixa35_39, faixa40_44, faixa45_49, faixa50_54, faixa55_59, faixa60_64],
+                         showlegend=False, textposition='auto', name='Faixa Etária'))
+
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=False,
+        margin=dict(autoexpand=True),
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='População do Cadastro Único, por faixa etária',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Cadastro Único',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+
+    return fig
+
+# POPULAÇÃO DO CADUNICO POR ESCOLARIDADE
+@app.callback(Output('escolaridade', 'figure'),
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
+              [State('escolaridade', 'figure')])
+def display_escolaridade(w_municipios, w_municipios1):
+    nivel = ['Sem instrução', 'Fundamental incompleto', 'Fundamental completo', 'Ensino médio incompleto',
+             'Ensino médio completo', 'Superior completo ou incompleto']
+    sem_instrucao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_sem_instrucao'].sum()
+    fund_incompleto = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_fundamental_incompleto'].sum()
+    fund_completo = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_fundamental_completo'].sum()
+    medio_incompleto = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_medio_incompleto'].sum()
+    medio_completo = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_medio_completo'].sum()
+    superior = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_superior_completo_incompleto'].sum()
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior], y=nivel, orientation='h', textposition='inside'))
+    fig.update_layout(bargap=0.25, bargroupgap=0.2)
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=True,
+        ),
+        autosize=False,
+        margin=dict(autoexpand=True),
+        showlegend=False,
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='População do CadÚnico, por nível de escolaridade',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Cadastro Único',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+
+    return fig
+
+# NÚMEROS SOBRE EMPRESAS E ESTOQUE DE EMPREGOS
+@app.callback(
+    [
+        Output('empresas_total', 'children'),
+        Output('empregos', 'children'),
+    ],
+    [Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')],
+    [State('w_municipios1', 'value')])
+def display_content(w_municipios, w_municipios1):
+    empresas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_total'].sum()
+    empresas1 = f'{empresas:_.0f}'.replace('_', '.')
+    pessoal = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['estoque_empregos_abr2021'].sum()
+    pessoal = f'{pessoal:_.0f}'.replace('_', '.')
+
+    return empresas1 + ' empresas', pessoal
+
+# PIB POR SETOR DE ATIVIDADE ECONÔMICA
+@app.callback(Output('pib_setorial', 'figure'),
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
+              [State('w_municipios1', 'value')])
+def display_content(w_municipios, w_municipios1):
+    agropecuaria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]["pib_agropecuaria"].sum()
+    # agropecuaria = f'{agropecuaria:_.0f}'.replace('.', ',').replace('_', '.')
+    industria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_industria'].sum()
+    servicos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_servicos'].sum()
+    admpublica = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_admpublica'].sum()
+
+    fig = go.Figure()
+    fig.add_trace(go.Pie(labels=['Agricultura', 'Indústria', 'Serviços', 'Administração'], values=[agropecuaria, industria, servicos, admpublica],
+                         showlegend=True, name='Setor', hoverinfo='label+value', textinfo='percent', hole=.3, textfont={'family': "Arial", 'size': 15}))
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='PIB por setor de atividade econômica',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: IBGE',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations, hovermode='closest')
+
+    return fig
+
+# NÚMERO DE EMPRESAS POR SETOR DE ATIVIDADE ECONÔMICA
+@app.callback(Output('empresas_setorial', 'figure'),
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
+              [State('w_municipios1', 'value')])
+def display_content(w_municipios, w_municipios1):
+    setores = ['Agropecuária', 'Indústria Extrativa', 'Indústria de Transformação', 'Eletricidade e Gás',
+               'Saneamento Básico', 'Construção', 'Comérico', 'Transporte', 'Alojamento e Alimentação', 'Informação e Comunicação',
+               'Instituições Financeiras', 'Imobiliárias', 'Atividades Profissionais, Científicas e Técnicas', 'Atividades Administrativas',
+               'Educação', 'Saúde', 'Arte, Cultura e Esportes', 'Outras Atividades']
+    agropecuaria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_agropecuaria'].sum()
+    ind_extrativa = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ind_extrativas'].sum()
+    ind_transf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ind_transf'].sum()
+    eletric_gas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_eletric_gas'].sum()
+    saneamento = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_saneamento'].sum()
+    construcao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_construcao'].sum()
+    comercio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_comercio'].sum()
+    transporte = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_transporte'].sum()
+    aloj_alimentacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_alojamento_alimentacao'].sum()
+    info_comunic = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_info_comunic'].sum()
+    financeiro = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_financeiro'].sum()
+    imobiliarias = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_imobiliarias'].sum()
+    ativ_prof = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ativ_profissionais_cient_tecnicas'].sum()
+    ativ_administrativas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ativ_administrativas'].sum()
+    educacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_educacao'].sum()
+    saude = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_saude_servicosocial'].sum()
+    arte_cultura = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_arte_cultura'].sum()
+    outras_ativ = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_outras_ativ_servicos'].sum()
+
+    fig = go.Figure()
+    fig.add_trace(go.Pie(labels=setores, values=[agropecuaria, ind_extrativa, ind_transf, eletric_gas, saneamento, construcao, comercio, transporte,
+                    aloj_alimentacao,info_comunic, financeiro, imobiliarias, ativ_prof, ativ_administrativas, educacao, saude, arte_cultura, outras_ativ],
+                         showlegend=True, name='Setor', hoverinfo='label+value', textinfo='percent', hole=.3, textfont={'family': "Arial", 'size': 15}))
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Número de empresas, por setor de atividade econômica',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: IBGE/CEMPRE',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations, hovermode='closest')
+
+    return fig
+
+# VAGAS ABERTAS NO SINE
+@app.callback(Output('sine', 'children'),
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
+              [State('w_municipios1', 'value')])
+def display_content(w_municipios, w_municipios1):
+    vagas_sine = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['vagas_sine'].sum()
+    return vagas_sine
+
+# SALDO E VARIAÇÃO DE EMPREGOS
+@app.callback(
+    [
+        Output('estoque_empregos', 'figure'),
+        Output('var_emprego', 'children'),
+    ],
+    [Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')],
+    [State('w_municipios1', 'value')])
+def display_content1(w_municipios, w_municipios1):
+    df1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2021'].sum()
+    df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
+    df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum()
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=['Saldo de empregos em 2021', 'Saldo de empregos em 12 meses'], y=[df1, df2]))
+    fig.update_layout(bargap=0.25, bargroupgap=0.2)
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
+            ),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=True,
+        margin=dict(autoexpand=True),
+        showlegend=False,
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Saldo de empregos em 2021 e em 12 meses',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Economia/CAGED',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+
+    return fig, 'Variação percentual de ' + df3 + '% em 12 meses'
+
+# EVOLUÇÃO DO SALDO DE EMPREGOS
+@app.callback(Output('evolucao_empregos', 'figure'),
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
+              [State('w_municipios1', 'value')])
+def display_content(w_municipios, w_municipios1):
+    anos = ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009',
+            '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
+    saldo_empregos2002 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2002'].sum()
+    saldo_emprego2003 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2003'].sum()
+    saldo_emprego2004 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2004'].sum()
+    saldo_emprego2005 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2005'].sum()
+    saldo_emprego2006 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2006'].sum()
+    saldo_emprego2007 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2007'].sum()
+    saldo_emprego2008 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2008'].sum()
+    saldo_emprego2009 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2009'].sum()
+    saldo_emprego2010 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2010'].sum()
+    saldo_emprego2011 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2011'].sum()
+    saldo_emprego2012 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2012'].sum()
+    saldo_emprego2013 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2013'].sum()
+    saldo_emprego2014 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2014'].sum()
+    saldo_emprego2015 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2015'].sum()
+    saldo_emprego2016 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2016'].sum()
+    saldo_emprego2017 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2017'].sum()
+    saldo_emprego2018 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2018'].sum()
+    saldo_emprego2019 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2019'].sum()
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=anos, y=[saldo_empregos2002, saldo_emprego2003, saldo_emprego2004, saldo_emprego2005, saldo_emprego2006,
+               saldo_emprego2007, saldo_emprego2008, saldo_emprego2009, saldo_emprego2010, saldo_emprego2011, saldo_emprego2012,
+               saldo_emprego2013, saldo_emprego2014, saldo_emprego2015, saldo_emprego2016, saldo_emprego2017, saldo_emprego2018, saldo_emprego2019]))
+
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
+            ),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=True,
+        ),
+        autosize=True,
+        margin=dict(autoexpand=True),
+        showlegend=False,
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Evolução do saldo de empregos (2002-2019)',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Economia/CAGED',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+
+    return fig
+
 # # EVOLUÇÃO DA REMUNERAÇÃO TOTAL
 # @app.callback(Output('remuneracao', 'figure'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
+#               [Input('w_municipios', 'value'),
+#               Input('w_municipios1', 'value')],
+#               [State('w_municipios1', 'value')])
 # def display_content(w_municipios, w_municipios1):
 #     result = pd.merge(df_remuneracao, df, on=['uf', 'municipio'])
 #     df2 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)].copy()
