@@ -164,7 +164,7 @@ def toggle_collapse2(n, is_open):
     if n:
         return not is_open
     return is_open
-#
+
 # SELEÇÃO DE UF E MUNICÍPIO
 @app.callback(
     Output('w_municipios1', 'options'),
@@ -187,8 +187,9 @@ def get_municipios_value(w_municipios1):
     [Output('populacao', 'children'),
     Output('pib_total', 'children'),
     Output('idhm', 'children')],
-    [Input('w_municipios', 'value'),
-    Input('w_municipios1', 'value')])
+    [Input('w_municipios', 'value')],
+    [Input('w_municipios1', 'value')],
+    [State('w_municipios1', 'options')])
 def display_content(w_municipios, w_municipios1):
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
     # populacao1 = f'{populacao:_.0f}'.replace('_', '.')
