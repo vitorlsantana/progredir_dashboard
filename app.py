@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
 # suppress_callback_exceptions=True
 server = app.server
 
@@ -177,7 +177,7 @@ def get_municipios_options(w_municipios):
 @app.callback(
     Output('w_municipios1', 'value'),
     [Input('w_municipios1', 'options')],
-    [State('w_municipios1', 'value')]
+    # [State('w_municipios1', 'value')]
 )
 def get_municipios_value(w_municipios1):
     return [k['value'] for k in w_municipios1][0]
@@ -189,7 +189,8 @@ def get_municipios_value(w_municipios1):
     Output('idhm', 'children')],
     [Input('w_municipios', 'value')],
     [Input('w_municipios1', 'value')],
-    [State('w_municipios1', 'options')])
+    # [State('w_municipios1', 'options')]
+)
 def display_content(w_municipios, w_municipios1):
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
     # populacao1 = f'{populacao:_.0f}'.replace('_', '.')
