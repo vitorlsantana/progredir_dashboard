@@ -315,6 +315,7 @@ def render_tab_content(active_tab):
             return dbc.Container(children=[
                 dbc.Row(children=
                 [
+                    dbc.Col(dcc.Graph(id='trabalho_cadunico'), width=12),
                     dbc.Col(dcc.Graph(id='evolucao_empregos'), width=8),
                     dbc.Col([dbc.Card(
                         [
@@ -680,8 +681,10 @@ def display_escolaridade(w_municipios, w_municipios1):
 
     fig = make_subplots(rows=1, cols=2, specs=[[{'type': 'bar'}, {'type': 'domain'}]])
 
-    fig.add_trace(go.Bar(x=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior], y=nivel, orientation='h', textposition='inside'), row=1, col=1)
-    fig.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True), row=1, col=2)
+    fig.add_trace(go.Bar(x=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior], y=nivel, orientation='h', textposition='inside',
+                         name='Escolaridade'), row=1, col=1)
+    fig.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True,
+                         name='Escolaridade'), row=1, col=2)
     fig.update_layout(bargap=0.25, bargroupgap=0.2)
     fig.update_layout(
         xaxis=dict(
@@ -961,6 +964,84 @@ def display_content(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
 
     return fig
+
+# POPULAÇÃO DO CADUNICO POR FUNÇÃO PRINCIPAL E TRABALHO
+@app.callback(Output('trabalho_cadunico', 'figure'),
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
+def display_escolaridade(w_municipios, w_municipios1):
+    funcao_principal = ['Autônomo', 'Temporário na Área Rural', 'Emprego sem Carteira', 'Emprego com Carteira', 'Trabalho Doméstico sem Carteira',
+             'Trabalho Doméstico com Carteira', 'Trabalho não Remunerado', 'Militar/Servidor Público', 'Empregador', 'Estagiário', 'Aprendiz']
+    trab_autonomo = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_autonomo'].sum()
+    trab_temp_area_rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_temp_area_rural'].sum()
+    emprego_sem_carteira = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['emprego_sem_carteira'].sum()
+    emprego_com_carteira = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['emprego_com_carteira'].sum()
+    trab_domestico_sem_carteira = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_domestico_sem_carteira'].sum()
+    trab_domestico_com_carteira = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_domestico_com_carteira'].sum()
+    trabalhador_nao_remunerado = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trabalhador_não_remunerado'].sum()
+    militar_servidor_publico = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['militar_servidor_publico'].sum()
+    empregador = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empregador'].sum()
+    estagiario = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['estagiario'].sum()
+    aprendiz = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['aprendiz'].sum()
+
+    trab_12_meses = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_12_meses'].sum()
+    nao_trab_12_meses = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_12_meses'].sum()
+
+    trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_semana_passada'].sum()
+    nao_trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_semana_passada'].sum()
+
+    fig = make_subplots(rows=1, cols=3, specs=[[{'type': 'bar'}, {'type': 'domain'}, {'type': 'domain'}]])
+
+    fig.add_trace(go.Bar(x=[trab_autonomo, trab_temp_area_rural, emprego_sem_carteira, emprego_com_carteira, trab_domestico_sem_carteira,
+                            trab_domestico_com_carteira, trabalhador_nao_remunerado, militar_servidor_publico, empregador, estagiario, aprendiz],
+                         y=funcao_principal, orientation='h', textposition='inside',
+                         name='Função Principal'), row=1, col=1)
+    fig.add_trace(go.Pie(labels=['Trabalhou nos últimos 12 meses', 'Não trabalhou nos últimos 12 meses'], values=[trab_12_meses, nao_trab_12_meses], showlegend=False,
+                         name='Escolaridade'), row=1, col=2)
+    fig.add_trace(go.Pie(labels=['Trabalhou última semana', 'Não trabalhou última semana'], values=[trab_last_week, nao_trab_last_week], showlegend=True,
+                         name='Escolaridade'), row=1, col=3)
+    fig.update_layout(bargap=0.25, bargroupgap=0.2)
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=True,
+        ),
+        autosize=False,
+        margin=dict(autoexpand=True),
+        showlegend=False,
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='População do CadÚnico, por função principal e frequência do trabalho',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Cadastro Único',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+
+    return fig
+
 
 # EVOLUÇÃO DA REMUNERAÇÃO TOTAL
 @app.callback(Output('remuneracao', 'figure'),
