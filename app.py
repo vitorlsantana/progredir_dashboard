@@ -15,8 +15,8 @@ server = app.server
 data = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/base_painel_inclus%C3%A3o_produtiva.csv'
 df = pd.read_csv(data, sep=';', encoding='latin1')
 
-# data1 = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/vinculos_ativos_ocupacao_subgruposprincipais_2015_2019.csv'
-# df_caged = pd.read_csv(data1, sep=';', encoding='latin1')
+data1 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/vinculos_ativos_ocupacao_subgruposprincipais_2015_2019.csv'
+df_caged = pd.read_csv(data1, sep=';', encoding='latin1')
 # df_caged_melted = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
 #                                 var_name="ocupation",
 #                                 value_name="vinculos")
@@ -25,8 +25,8 @@ df = pd.read_csv(data, sep=';', encoding='latin1')
 data2 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/evolucao_pessoas_cad_pbf.csv'
 df_cad = pd.read_csv(data2, sep=';', encoding='latin1')
 #
-# data3 = 'https://github.com/vitorlsantana/progredir_dashboard/blob/ff0df63a3acd93453c376a0a1555714aa7d588c6/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
-# df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1')
+data3 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
+df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1')
 
 # data4 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\cnes localizacao e regiao saude.csv'
 # df5 = pd.read_csv(data4, sep=',', error_bad_lines=False)
@@ -966,150 +966,152 @@ def display_content(w_municipios, w_municipios1):
 
     return fig
 
-# # EVOLUÇÃO DA REMUNERAÇÃO TOTAL
-# @app.callback(Output('remuneracao', 'figure'),
-#               [Input('w_municipios', 'value'),
-#               Input('w_municipios1', 'value')],
-#               [State('w_municipios1', 'value')])
-# def display_content(w_municipios, w_municipios1):
-#     result = pd.merge(df_remuneracao, df, on=['uf', 'municipio'])
-#     df2 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)].copy()
-#     df3 = df2.groupby('ano')['Total'].sum()
-#     df3 = df3.reset_index()
-#
-#     fig = go.Figure()
-#     fig.add_trace(go.Scatter(x=df3['ano'], y=df3['Total']))
-#     fig.update_layout(
-#         xaxis=dict(
-#             showline=True,
-#             showgrid=False,
-#             showticklabels=True,
-#             linecolor='rgb(204, 204, 204)',
-#             linewidth=2,
-#             ticks='outside',
-#             tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
-#             ),
-#         ),
-#         yaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             showticklabels=False,
-#         ),
-#         autosize=True,
-#         margin=dict(autoexpand=True),
-#         showlegend=False,
-#         plot_bgcolor='white'
-#     )
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-#                             xanchor='left', yanchor='bottom',
-#                             text='Evolução da remuneração média mensal (salário mínimo)',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: Ministério da Economia/RAIS, 2020',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#
-#     fig.update_layout(annotations=annotations)
-#
-#     return fig
-#
-# # EMPREENDEDORISMO
-# @app.callback(Output('mei', 'figure'),
-#               [Input('w_municipios', 'value')],
-#               [Input('w_municipios1', 'value')])
-# def display_content(w_municipios, w_municipios1):
-#     mei_cadunico = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_cadunico'].sum()
-#     mei_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_pbf'].sum()
-#
-#     return {
-#         'data': [go.Bar(
-#             x=['Mei no Cadastro Único', 'MEI no Bolsa Família'],
-#             y=[mei_cadunico, mei_pbf],
-#             textfont=dict(
-#                 family="Ariaç",
-#                 size=20,
-#                 color="LightSeaGreen")
-#         )],
-#         'layout': go.Layout(
-#             title={'text': 'MEI no CadÚnico e no Bolsa Família', 'yanchor': 'top', 'xanchor': 'center'},)
-#     }
-#
-# # OCUPAÇÕES COM MAIORES VINCULOS
-# @app.callback(
-#     Output('top_vinculos', 'figure'),
-#     # [Input('dropdown', 'value')],
-#     [Input('w_municipios', 'value')],
-#     [Input('w_municipios1', 'value')],
-# )
-# def update_top_vinculos(w_municipios, w_municipios1):
-#     df1 = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
-#                           var_name="ocupation",
-#                           value_name="vinculos")
-#     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
-#     # df_caged1['ocupation'] = df_caged1['ocupation'].astype('float')
-#     # df1 = pd.concat([df, df_caged1], axis=1)
-#     # df2 = df1[(df1['uf'] == w_municipios) & (df1['municipio'] == w_municipios1) & (df1['ocupation'] == ocupation)]
-#     # mask = df_caged1['uf'] == w_municipios
-#     # mask = df_caged1['municipio'] == w_municipios1
-#     # mask = df_caged1['ocupation'] == ocupation
-#     # fig = px.bar(df_caged1[mask], x='ano', y='vinculos')
-#     #
-#     # result = pd.concat([df_caged11, df], axis=1)
-#     # df1 = result[(result['uf'] == w_municipios) & (result['municipio'] == w_municipios1)]
-#
-#     df3 = df2.nlargest(6, 'vinculos')
-#     df3 = df3.iloc[1: , :]
-#
-#     fig = go.Figure()
-#     fig.add_trace(go.Bar(x=df3['vinculos'], y=df3['ocupation'], orientation='h', textposition='inside'))
-#
-#     fig.update_layout(
-#         xaxis=dict(
-#             showline=True,
-#             showgrid=False,
-#             showticklabels=True,
-#             linecolor='rgb(204, 204, 204)',
-#             linewidth=2,
-#             ticks='outside',
-#             tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
-#             ),
-#         ),
-#         yaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             showticklabels=True,
-#         ),
-#         autosize=True,
-#         margin=dict(autoexpand=True),
-#         showlegend=False,
-#         plot_bgcolor='white'
-#     )
-#
-#     annotations = []
-#     # Title
-#     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-#                             xanchor='left', yanchor='bottom',
-#                             text='Ocupações com maior quantidade de vínculos',
-#                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-#                             showarrow=False))
-#     # Source
-#     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-#                             xanchor='center', yanchor='top',
-#                             text='Fonte: Ministério da Economia/RAIS, 2020',
-#                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-#                             showarrow=False))
-#
-#     fig.update_layout(annotations=annotations)
-#     return fig
-#
+# EVOLUÇÃO DA REMUNERAÇÃO TOTAL
+@app.callback(Output('remuneracao', 'figure'),
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
+              [State('w_municipios1', 'value')])
+def display_content(w_municipios, w_municipios1):
+    result = pd.merge(df_remuneracao, df, on=['uf', 'municipio'])
+    df2 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)].copy()
+    df3 = df2.groupby('ano')['Total'].sum()
+    df3 = df3.reset_index()
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df3['ano'], y=df3['Total']))
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
+            ),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=True,
+        margin=dict(autoexpand=True),
+        showlegend=False,
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Evolução da remuneração média mensal (salário mínimo)',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+
+    return fig
+
+# EMPREENDEDORISMO
+@app.callback(Output('mei', 'figure'),
+              [Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')],
+              [State('w_municipios1', 'value')])
+def display_content(w_municipios, w_municipios1):
+    mei_cadunico = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_cadunico'].sum()
+    mei_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_pbf'].sum()
+
+    return {
+        'data': [go.Bar(
+            x=['Mei no Cadastro Único', 'MEI no Bolsa Família'],
+            y=[mei_cadunico, mei_pbf],
+            textfont=dict(
+                family="Ariaç",
+                size=20,
+                color="LightSeaGreen")
+        )],
+        'layout': go.Layout(
+            title={'text': 'MEI no CadÚnico e no Bolsa Família', 'yanchor': 'top', 'xanchor': 'center'},)
+    }
+
+# OCUPAÇÕES COM MAIORES VINCULOS
+@app.callback(
+    Output('top_vinculos', 'figure'),
+    # [Input('dropdown', 'value')],
+    [Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')],
+    [State('w_municipios1', 'value')]
+)
+def update_top_vinculos(w_municipios, w_municipios1):
+    df1 = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
+                          var_name="ocupation",
+                          value_name="vinculos")
+    df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
+    # df_caged1['ocupation'] = df_caged1['ocupation'].astype('float')
+    # df1 = pd.concat([df, df_caged1], axis=1)
+    # df2 = df1[(df1['uf'] == w_municipios) & (df1['municipio'] == w_municipios1) & (df1['ocupation'] == ocupation)]
+    # mask = df_caged1['uf'] == w_municipios
+    # mask = df_caged1['municipio'] == w_municipios1
+    # mask = df_caged1['ocupation'] == ocupation
+    # fig = px.bar(df_caged1[mask], x='ano', y='vinculos')
+    #
+    # result = pd.concat([df_caged11, df], axis=1)
+    # df1 = result[(result['uf'] == w_municipios) & (result['municipio'] == w_municipios1)]
+
+    df3 = df2.nlargest(6, 'vinculos')
+    df3 = df3.iloc[1: , :]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=df3['vinculos'], y=df3['ocupation'], orientation='h', textposition='inside'))
+
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
+            ),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=True,
+        ),
+        autosize=True,
+        margin=dict(autoexpand=True),
+        showlegend=False,
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Ocupações com maior quantidade de vínculos',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+    return fig
+
 # # EVOLUCAO DOS VINCULOS POR OCUPAÇÃO
 # # @app.callback(
 # #     Output('bar_chart2', 'figure'),
