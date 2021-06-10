@@ -189,8 +189,8 @@ def get_municipios_value(w_municipios1):
         Output('pib_total', 'children'),
         Output('idhm', 'children'),
     ],
-    [Input('w_municipios', 'value')],
-    [Input('w_municipios1', 'value')],
+    [Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')],
     [State('populacao', 'children')])
 def display_content(w_municipios, w_municipios1):
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
@@ -482,7 +482,7 @@ def toggle_modal(n1, n2, is_open):
     ],
     [Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')],
-    [State('w_municipios1', 'value')])
+    [State('cadunico', 'children')])
 def display_cadunico(w_municipios, w_municipios1):
     pessoas_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
     pessoas_cad = f'{pessoas_cad:_.0f}'.replace('.', ',').replace('_', '.')
@@ -497,7 +497,7 @@ def display_cadunico(w_municipios, w_municipios1):
 @app.callback(Output('cad_pbf', 'figure'),
               [Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')],
-              [State('w_municipios1', 'value')])
+              [State('cad_pbf', 'figure')])
 def display_ev_cadunico(w_municipios, w_municipios1):
     result = pd.concat([df, df_cad], ignore_index=True, sort=False)
     df1 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)]
