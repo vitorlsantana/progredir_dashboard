@@ -243,17 +243,7 @@ grid = html.Div(children=[
     ], justify="center", no_gutters=True)
 ])
 
-style_layout = {
-    'container': {
-        'position': 'fixed',
-        'display': 'flex',
-        'flex-direction': 'column',
-        'height': '100%',
-        'width': '100%'
-    },
-}
-
-app.layout = html.Div(style=style_layout['container']
+app.layout = html.Div(
     [
         navbar,
         grid,
