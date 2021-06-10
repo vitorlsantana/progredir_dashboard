@@ -181,22 +181,21 @@ def get_municipios_options(w_municipios):
 )
 def get_municipios_value(w_municipios1):
     return [k['value'] for k in w_municipios1][0]
-#
+
 # POPULAÇÃO, PIB TOTAL E IDHM
 @app.callback(
-    [Output('populacao', 'children'),
+    Output('populacao', 'children'),
     Output('pib_total', 'children'),
-    Output('idhm', 'children')],
-    [Input('w_municipios', 'value')],
-    [Input('w_municipios1', 'value')],
-    # [State('w_municipios1', 'options')]
+    Output('idhm', 'children'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
 )
 def display_content(w_municipios, w_municipios1):
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
-    # populacao1 = f'{populacao:_.0f}'.replace('_', '.')
-    # df['pib_total'] = df['pib_total'].astype(float)
+    populacao = f'{populacao:_.0f}'.replace('_', '.')
+    df['pib_total'] = df['pib_total'].astype(float)
     pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum()
-    # pib1 = f'R$ {pib:_.2f} Bi'.replace('.', ',').replace('_', '.')
+    pib = f'R$ {pib:_.2f} Bi'.replace('.', ',').replace('_', '.')
     idhm = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['idhm'].sum()
 
     return populacao + ' habitantes', pib, idhm
