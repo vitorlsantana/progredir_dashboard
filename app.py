@@ -191,13 +191,13 @@ def get_municipios_value(w_municipios1):
     Input('w_municipios1', 'value'),)
 def display_content(w_municipios, w_municipios1):
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
-    populacao1 = f'{populacao:_.0f}'.replace('_', '.')
-    df['pib_total'] = df['pib_total'].astype(float)
-    pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum() / 1000000
-    pib1 = f'R$ {pib:_.2f} Bi'.replace('.', ',').replace('_', '.')
+    # populacao1 = f'{populacao:_.0f}'.replace('_', '.')
+    # df['pib_total'] = df['pib_total'].astype(float)
+    pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum()
+    # pib1 = f'R$ {pib:_.2f} Bi'.replace('.', ',').replace('_', '.')
     idhm = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['idhm'].sum()
 
-    return populacao1 + ' habitantes', pib1, idhm
+    return populacao + ' habitantes', pib, idhm
 
 # MODAL SOBRE O PAINEL
 @app.callback(
