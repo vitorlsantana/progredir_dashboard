@@ -7,8 +7,6 @@ import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import dash_table
-from dash.exceptions import PreventUpdate
-from dash_extensions import Download
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True, )
 server = app.server
