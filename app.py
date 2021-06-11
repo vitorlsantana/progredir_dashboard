@@ -708,7 +708,7 @@ def display_age(w_municipios, w_municipios1):
 
     fig = go.Figure()
     fig.add_trace(go.Bar(x=faixa, y=[faixa16_17, faixa18_24, faixa25_34, faixa35_39, faixa40_44, faixa45_49, faixa50_54, faixa55_59, faixa60_64],
-                         showlegend=False, textposition='auto', name='Faixa Etária'))
+                         showlegend=False, textposition='auto', name='Faixa Etária', marker=dict(color='#ffb703')))
 
     fig.update_layout(
         xaxis=dict(
@@ -769,7 +769,7 @@ def display_escolaridade(w_municipios, w_municipios1):
 
     fig = make_subplots(rows=1, cols=2, specs=[[{'type': 'bar'}, {'type': 'domain'}]])
 
-    fig.add_trace(go.Bar(x=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior], y=nivel, orientation='h', textposition='inside',
+    fig.add_trace(go.Bar(x=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior], y=nivel, orientation='h',
                          name='Escolaridade'), row=1, col=1)
     fig.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True,
                          name='Escolaridade'), row=1, col=2)
@@ -780,7 +780,7 @@ def display_escolaridade(w_municipios, w_municipios1):
             showgrid=False,
             showticklabels=True,
             linecolor='rgb(204, 204, 204)',
-            linewidth=2,
+            linewidth=1,
             ticks='outside',
             tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
         ),
