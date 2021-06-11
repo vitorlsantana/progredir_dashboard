@@ -6,6 +6,9 @@ import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import dash_table
+from dash.exceptions import PreventUpdate
+from dash_extensions import Download
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True, )
 server = app.server
@@ -16,9 +19,9 @@ df = pd.read_csv(data, sep=';', encoding='latin1')
 
 data1 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/vinculos_ativos_ocupacao_subgruposprincipais_2015_2019.csv'
 df_caged = pd.read_csv(data1, sep=';', encoding='latin1')
-# df_caged_melted = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
-#                                 var_name="ocupation",
-#                                 value_name="vinculos")
+df_caged_melted = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
+                                var_name="ocupation",
+                                value_name="vinculos")
 # ocupations = df_caged_melted['ocupation'].unique()
 
 data2 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/evolucao_pessoas_cad_pbf.csv'
@@ -263,15 +266,16 @@ def render_tab_content(active_tab):
                         [
                             dbc.CardBody(
                                 [
-                                    html.H5("Pessoal Ocupado", className="card-title"),
-                                    html.H3(id='empregos', className="card-text")
+                                    html.H5("Pessoas com carteira assinada", className="card-title mb-10"),
+                                    html.H3(id='empregos', className="card-text"),
+                                    html.H6("Fonte: Ministério da Economia/RAIS, jan/2020", className="card-title"),
                                 ]
                             ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Vagas abertas no SINE", className="card-title"),
-                                    html.H3(id='sine', className="card-text"),
-                                    html.Br(),
+                                    html.H5("Vagas abertas no SINE (jun/2021)", className="card-title"),
+                                    html.H3(id='sine', className="card-text mb-10"),
+                                    # html.Br(),
                                     dbc.Button("Buscar vagas no SINE", color="primary",
                                                href='https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine',
                                                target="_blank"),
@@ -280,7 +284,8 @@ def render_tab_content(active_tab):
                         ], color="#E2EBF3", outline=True, style={"width": "20rem", 'border': 'white'}),
                     ], xs=12, sm=12, md=12, lg=4, xl=4),
                     dbc.Col(dcc.Graph(id='evolucao_empregos'), xs=12, sm=12, md=12, lg=8, xl=8),
-                    dbc.Col(dcc.Graph(id='trabalho_cadunico'), xs=12, sm=12, md=12, lg=12, xl=12),
+                    dbc.Col(dcc.Graph(id='funcao_principal'), xs=12, sm=12, md=12, lg=6, xl=6),
+                    dbc.Col(dcc.Graph(id='trabalhou'), xs=12, sm=12, md=12, lg=6, xl=6),
                 ],
                     align='center', justify="center", no_gutters=True
                 ),
@@ -299,7 +304,8 @@ def render_tab_content(active_tab):
                                 dcc.Graph(id='empresas_setorial'),
                             ], style={'textAlign': 'center'}, xs=12, sm=12, md=12, lg=6, xl=6),
                         dbc.Col(dcc.Graph(id='top_vinculos'), xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col(dcc.Graph(id='remuneracao'), wxs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(html.Div(id="table"), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='remuneracao'), xs=12, sm=12, md=12, lg=6, xl=6),
                         dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=6, xl=6)
                     ]
                 ),
@@ -350,6 +356,7 @@ def render_tab_content(active_tab):
                                 ]
                             ),
                         ], style={"width": "100%"}),
+                        html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
@@ -373,6 +380,7 @@ def render_tab_content(active_tab):
                                 ]
                             ),
                         ], style={"width": "100%"}),
+                        html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
@@ -396,6 +404,7 @@ def render_tab_content(active_tab):
                                 ]
                             ),
                         ], style={"width": "100%"}),
+                        html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                 ],
@@ -910,7 +919,8 @@ def display_content(w_municipios, w_municipios1):
     return fig
 
 # POPULAÇÃO DO CADUNICO POR FUNÇÃO PRINCIPAL E TRABALHO
-@app.callback(Output('trabalho_cadunico', 'figure'),
+@app.callback(Output('funcao_principal', 'figure'),
+              Output('trabalhou', 'figure'),
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
@@ -935,18 +945,13 @@ def display_escolaridade(w_municipios, w_municipios1):
     trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_semana_passada'].sum()
     nao_trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_semana_passada'].sum()
 
-    fig = make_subplots(rows=1, cols=3, specs=[[{'type': 'bar'}, {'type': 'domain'}, {'type': 'domain'}]])
+    fig1 = go.Figure()
 
-    fig.add_trace(go.Bar(x=[trab_autonomo, trab_temp_area_rural, emprego_sem_carteira, emprego_com_carteira, trab_domestico_sem_carteira,
+    fig1.add_trace(go.Bar(x=[trab_autonomo, trab_temp_area_rural, emprego_sem_carteira, emprego_com_carteira, trab_domestico_sem_carteira,
                             trab_domestico_com_carteira, trabalhador_nao_remunerado, militar_servidor_publico, empregador, estagiario, aprendiz],
-                         y=funcao_principal, orientation='h', textposition='inside',
-                         name='Função Principal'), row=1, col=1)
-    fig.add_trace(go.Pie(labels=['Trabalhou nos últimos 12 meses', 'Não trabalhou nos últimos 12 meses'], values=[trab_12_meses, nao_trab_12_meses], showlegend=False,
-                         name='Trabalho'), row=1, col=2)
-    fig.add_trace(go.Pie(labels=['Trabalhou última semana', 'Não trabalhou última semana'], values=[trab_last_week, nao_trab_last_week], showlegend=True,
-                         name='Trabalho'), row=1, col=3)
-    fig.update_layout(bargap=0.25, bargroupgap=0.2)
-    fig.update_layout(
+                         y=funcao_principal, orientation='h', textposition='inside', name='Função Principal'))
+    fig1.update_layout(bargap=0.25, bargroupgap=0.2)
+    fig1.update_layout(
         xaxis=dict(
             showline=True,
             showgrid=False,
@@ -982,9 +987,31 @@ def display_escolaridade(w_municipios, w_municipios1):
                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
                             showarrow=False))
 
-    fig.update_layout(annotations=annotations)
+    fig1.update_layout(annotations=annotations)
 
-    return fig
+    fig2 = go.Figure()
+    fig2.add_trace(go.Bar(
+        y=[trab_12_meses, trab_last_week],
+        x=['Trabalhou nos últimos 12 meses', 'Trabalhou na última semana'],
+        name='Sim',
+        marker=dict(
+            color='rgba(246, 78, 139, 0.6)',
+            line=dict(color='rgba(246, 78, 139, 1.0)', width=3)
+        )
+    ))
+    fig2.add_trace(go.Bar(
+        y=[nao_trab_12_meses, nao_trab_last_week],
+        x=['Trabalhou nos últimos 12 meses', 'Trabalhou na última semana'],
+        name='Não',
+        marker=dict(
+            color='rgba(58, 71, 80, 0.6)',
+            line=dict(color='rgba(58, 71, 80, 1.0)', width=3)
+        )
+    ))
+
+    fig2.update_layout(barmode='stack')
+
+    return fig1, fig2
 
 # EVOLUÇÃO DA REMUNERAÇÃO TOTAL
 @app.callback(Output('remuneracao', 'figure'),
@@ -1059,8 +1086,49 @@ def display_content(w_municipios, w_municipios1):
                 color="LightSeaGreen")
         )],
         'layout': go.Layout(
-            title={'text': 'MEI no CadÚnico e no Bolsa Família', 'yanchor': 'top', 'xanchor': 'center'},)
+            title={'text': 'Quantidade de MEI no CadÚnico e no Bolsa Família<br>(Ministério da Cidadania, julho/2020)', 'yanchor': 'top', 'xanchor': 'center'},
+            xaxis=dict(
+                showline=False,
+                showgrid=False,
+                showticklabels=False,
+                zeroline=False,
+                linecolor='rgb(204, 204, 204)',
+                linewidth=2,
+                ticks='outside',
+                tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
+                              ),
+            ),
+            yaxis=dict(
+                showgrid=False,
+                zeroline=False,
+                showline=False,
+                showticklabels=False,
+            ),
+            autosize=True,
+            margin=dict(autoexpand=True),
+            showlegend=False,
+            plot_bgcolor='white'
+        )
     }
+
+# PLANILHA COM TODOS AS OCUPAÇÕES POR QUANTODADE DE VÍNCULOS
+@app.callback(
+    Output('table', 'children'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
+def update_top_vinculos2(w_municipios, w_municipios1):
+    df1 = df_caged.melt(id_vars=["uf", "municipio", 'ibge6', 'ano'], var_name="ocupation", value_name="vinculos")
+    df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
+    data = df2.to_dict('records')
+    columns = [{"name": i, "id": i,} for i in (df2.columns)]
+    export_format = "xlsx"
+    return dash_table.DataTable(data=data, columns=columns, export_format=export_format, filter_action='native',
+                                page_action = "native", page_current=0, page_size=10, sort_action='native', export_headers="display",
+                                style_as_list_view=True, style_header={'backgroundColor': 'rgb(30, 30, 30)', 'fontWeight': 'bold', 'fontFamily':'Arial', 'fontSize':12},
+                                style_cell={'backgroundColor': 'rgb(50, 50, 50)', 'color': 'white', 'fontFamily':'Arial', 'fonteSize':12,
+                                            'minWidth': 95, 'width': 95, 'maxWidth': 95},
+                                )
 
 # OCUPAÇÕES COM MAIORES VINCULOS
 @app.callback(
@@ -1118,7 +1186,7 @@ def update_top_vinculos(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Ocupações com maior quantidade de vínculos',
+                            text='Ocupações com maior<br>quantidade de vínculos',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
