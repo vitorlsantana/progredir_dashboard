@@ -219,6 +219,7 @@ def render_tab_content(active_tab):
                         html.Br(),
                         html.H5('Programa Bolsa Família', className="card-title"),
                         html.H3(id='bolsa_familia'),
+                        html.H6('Fonte: Ministério da Cidadania, abril/2021', className='mt-10'),
                         html.Br(),
                         dbc.Button("Saiba Mais sobre o Cadastro Único", id='open1', color="primary"),
                         dbc.Modal(
@@ -266,7 +267,7 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Pessoas com carteira assinada", className="card-title mb-10"),
                                     html.H3(id='empregos', className="card-text"),
-                                    html.H6("Fonte: Ministério da Economia/RAIS, jan/2020", className="card-title"),
+                                    html.H6("Fonte: Ministério da Economia (jan/2020)", className="card-title"),
                                 ]
                             ),
                             dbc.CardBody(
@@ -279,9 +280,9 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], color="#E2EBF3", outline=True, style={"width": "20rem", 'border': 'white'}),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4),
-                    dbc.Col(dcc.Graph(id='evolucao_empregos'), xs=12, sm=12, md=12, lg=8, xl=8),
+                        ], color="#E2EBF3", outline=True, style={"width": "100%", 'border': 'white'}),
+                    ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    dbc.Col(dcc.Graph(id='evolucao_empregos'), xs=12, sm=12, md=12, lg=9, xl=9),
                     dbc.Col(dcc.Graph(id='funcao_principal'), xs=12, sm=12, md=12, lg=6, xl=6),
                     dbc.Col(dcc.Graph(id='trabalhou'), xs=12, sm=12, md=12, lg=6, xl=6),
                 ],
@@ -388,7 +389,7 @@ def render_tab_content(active_tab):
                                 style={'height': "350px"}),
                             dbc.CardBody(
                                 [
-                                    html.H5("Informações sobre o MEI",
+                                    html.H5("Microeempreendedorismo Individual (MEI)",
                                             className="card-title"),
                                     html.P(
                                         "O governo federal disponibiliza um portal com informações para quem deseja se formalizar como microeempreendedor"
@@ -396,8 +397,144 @@ def render_tab_content(active_tab):
                                         "disso, o portal apresenta a legislação aplicada, estatísticas e cursos gratuitos para quem pretende se formalizar",
                                         className="card-text",
                                     ),
-                                    dbc.Button("Acesse o site", color="primary",
+                                    dbc.Button("Saiba mais sobre o MEI", color="primary",
                                                href='https://www.gov.br/empresas-e-negocios/pt-br/empreendedor',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "100%"}),
+                        html.Br(),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="http://www.mds.gov.br/webarquivos/cidadania/marca_gov/progredir/Marca_Progredir.png"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Plano Progredir", className="card-title"),
+                                    html.P(
+                                        "É um plano de ações do Governo Federal para gerar emprego, renda e promover a construção da autonomia das pessoas inscritas "
+                                        "no CADASTRO ÚNICO para programas Sociais do Governo Federal. O Progredir possui um aplicativo de internet para as pessoas "
+                                        "inscritas no CADUNICO, que conta com cursos de qualificação profissional, vagas de emprego, uma área para elaboração de currículo, "
+                                        "e a possibilidade de acessar microcrédito para empreender. Todos ofertados por parceiros (empresas ou entes públicos) "
+                                        "em sua região de forma gratuita. ",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse a plataforma do Progredir", color="primary",
+                                               href='http://cidadania.gov.br/progredir',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "100%"}),
+                        html.Br(),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="https://www.gov.br/pt-br/noticias/financas-impostos-e-gestao-publica/2020/03/governo-lanca-plataforma-para-oferta-de-produtos-e-servicos-gratuitos-a-populacao/todos-por-todos_govbr.png/@@images/9ddec400-0381-4d20-a751-28f7f2c1f2b6.png"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Todos por Todos", className="card-title"),
+                                    html.P(
+                                        "A página Todos por Todos é uma campanha do Governo Federal para estimular o movimento solidário, "
+                                        "captando ofertas de serviços à população e propostas de doações aos governos, para o enfrentamento "
+                                        "à pandemia do novo coronavírus.",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Conheça o Todos por Todos", color="primary",
+                                               href='http://www.gov.br/pt-br/todosportodos/cursos-ead',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "100%"}),
+                        html.Br(),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="https://static.wixstatic.com/media/eafbd4_ae1f1ee9b9924e2397246a5e609880bb~mv2.jpg/v1/fit/w_828%2Ch_371%2Cal_c%2Cq_80/file.jpg"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Escola do Trabalhador 4.0", className="card-title"),
+                                    html.P(
+                                        "A Escola do Trabalhador 4.0 é uma iniciativa do Ministério da Economia realizada em parceria com a Microsoft "
+                                        "para promoção de qualificação e inserção profissional."
+                                        "Trata-se de um programa de qualificação profissional que oferece cursos gratuitos em temas de tecnologia e produtividade. "
+                                        "Com o objetivo de ajudar o trabalhador brasileiro a se preparar para o mercado de trabalho.",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse a plataforma", color="primary",
+                                               href='https://empregamais.economia.gov.br/escoladotrabalhador40/',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "100%"}),
+                        html.Br(),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="http://utramig.mg.gov.br/wp-content/uploads/2021/03/Qualifica-_emprega-.png"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Qualifica Emprega +", className="card-title"),
+                                    html.P(
+                                        "Qualifica Mais é uma parceria com o Ministério da Educação para a oferta de cursos de qualificação profissional, "
+                                        "à distância, na área de Tecnologia da Informação e Comunicação. "
+                                        "Acesse o Formulário de seleção e faça a sua inscrição!",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse o formulário e faça sua inscrição", color="primary",
+                                               href='https://www.gov.br/mec/pt-br/acesso-a-informacao/institucional/secretarias/secretaria-de-educacao-profissional/projeto-piloto-qualifica-mais',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "100%"}),
+                        html.Br(),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="https://infosolda.com.br/wp-content/uploads/2021/01/senai.png"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Aprendizagem 4.0 / Mundo SENAI", className="card-title"),
+                                    html.P(
+                                        "O Aprendizagem 4.0 é um programa que busca qualificar jovens de 14 a 24 anos por "
+                                        "meio de um currículo que contempla as competências técnicas e socioemocionais exigidas pela Indústria 4.0, "
+                                        "importantes no mundo do trabalho atual. A iniciativa é uma experiência do SENAI e conta com a "
+                                        "parceria da Secretaria Especial de Produtividade, Emprego e Produtividade do Ministério da Economia, "
+                                        "com o objetivo de estruturar novos modelos de oferta de aprendizagem para a economia 4.0.",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse a plataforma", color="primary",
+                                               href='https://mundosenai.com.br/aprendizagem40/',
+                                               target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "100%"}),
+                        html.Br(),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(src="https://feiraodasoportunidades.com.br/wp-content/uploads/2021/03/plat-300x190.png"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Iniciativa 1 Milhão de Oportunidades", className="card-title"),
+                                    html.P(
+                                        "A iniciativa Um Milhão de Oportunidades é a maior articulação pela juventude do Brasil reunindo Nações Unidas, "
+                                        "empresas, sociedade civil e governos para gerar um milhão de oportunidades de formação e acesso ao mundo do "
+                                        "trabalho para adolescentes e jovens de 14 a 24 anos em situação de vulnerabilidade nos próximos dois anos",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse a plataforma", color="primary",
+                                               href='https://1mio.com.br/',
                                                target="_blank"),
                                 ]
                             ),
@@ -483,7 +620,7 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.05,
                             xanchor='left', yanchor='bottom',
-                            text='Evolução do nº de pessoas inscritas no CadÚnico e de beneficiárias do Bolsa Família (2018-2021)',
+                            text='Evolução do nº de pessoas inscritas no CadÚnico<br>e de beneficiárias do Bolsa Família (2018-2021)',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -538,7 +675,7 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico, por situação do domicílio e sexo',
+                            text='População do CadÚnico, por<br>sexo e situação do domicílio',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -598,7 +735,7 @@ def display_age(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do Cadastro Único, por faixa etária',
+                            text='População do Cadastro Único,<br>por faixa etária',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -663,7 +800,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico, por nível de escolaridade',
+                            text='População do CadÚnico,<br>por nível de escolaridade',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -712,7 +849,7 @@ def display_content(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='PIB por setor de atividade econômica',
+                            text='PIB por setor de<br>atividade econômica',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -758,23 +895,23 @@ def display_content(w_municipios, w_municipios1):
     fig = go.Figure()
     fig.add_trace(go.Pie(labels=setores, values=[agropecuaria, ind_extrativa, ind_transf, eletric_gas, saneamento, construcao, comercio, transporte,
                     aloj_alimentacao,info_comunic, financeiro, imobiliarias, ativ_prof, ativ_administrativas, educacao, saude, arte_cultura, outras_ativ],
-                         showlegend=True, name='Setor', hoverinfo='label+value', textinfo='percent', hole=.3, textfont={'family': "Arial", 'size': 15}))
+                          hoverinfo='label+value', textinfo='percent', hole=.2, textfont={'family': "Arial", 'size': 11}))
 
     annotations = []
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Número de empresas, por setor de atividade econômica',
+                            text='Número de empresas, por setor<br>de atividade econômica',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0.8, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: IBGE/CEMPRE',
                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
                             showarrow=False))
 
-    fig.update_layout(annotations=annotations, hovermode='closest')
+    fig.update_layout(annotations=annotations)
 
     return fig
 
@@ -873,7 +1010,9 @@ def display_content(w_municipios, w_municipios1):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=anos, y=[saldo_empregos2002, saldo_emprego2003, saldo_emprego2004, saldo_emprego2005, saldo_emprego2006,
                saldo_emprego2007, saldo_emprego2008, saldo_emprego2009, saldo_emprego2010, saldo_emprego2011, saldo_emprego2012,
-               saldo_emprego2013, saldo_emprego2014, saldo_emprego2015, saldo_emprego2016, saldo_emprego2017, saldo_emprego2018, saldo_emprego2019]))
+               saldo_emprego2013, saldo_emprego2014, saldo_emprego2015, saldo_emprego2016, saldo_emprego2017, saldo_emprego2018, saldo_emprego2019],
+                             marker=dict(color='#1d3557')
+                             ))
 
     fig.update_layout(
         xaxis=dict(
@@ -881,16 +1020,18 @@ def display_content(w_municipios, w_municipios1):
             showgrid=False,
             showticklabels=True,
             linecolor='rgb(204, 204, 204)',
-            linewidth=2,
+            linewidth=1,
             ticks='outside',
+            zerolinecolor='grey',
             tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
             ),
         ),
         yaxis=dict(
             showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=True,
+            showline=True,
+            showticklabels=False,
+            zerolinecolor='grey',
+            zerolinewidth=0.5
         ),
         autosize=True,
         margin=dict(autoexpand=True),
@@ -902,7 +1043,7 @@ def display_content(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Evolução do saldo de empregos (2002-2019)',
+                            text='Evolução do saldo de empregos formais (2002-2019)',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -973,9 +1114,9 @@ def display_escolaridade(w_municipios, w_municipios1):
 
     annotations = []
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico, por função principal e frequência do trabalho',
+                            text='População do CadÚnico, por função<br>principal e frequência do trabalho',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -990,24 +1131,60 @@ def display_escolaridade(w_municipios, w_municipios1):
     fig2 = go.Figure()
     fig2.add_trace(go.Bar(
         y=[trab_12_meses, trab_last_week],
-        x=['Trabalhou nos últimos 12 meses', 'Trabalhou na última semana'],
+        x=['Trabalhou nos últimos 12 meses', 'Trabalhou na última semana'], textposition='inside',
         name='Sim',
         marker=dict(
-            color='rgba(246, 78, 139, 0.6)',
-            line=dict(color='rgba(246, 78, 139, 1.0)', width=3)
+            color='#5398BE',
+            line=dict(color='white', width=1)
         )
     ))
     fig2.add_trace(go.Bar(
         y=[nao_trab_12_meses, nao_trab_last_week],
-        x=['Trabalhou nos últimos 12 meses', 'Trabalhou na última semana'],
+        x=['Trabalhou nos últimos 12 meses', 'Trabalhou na última semana'], textposition='inside',
         name='Não',
         marker=dict(
-            color='rgba(58, 71, 80, 0.6)',
-            line=dict(color='rgba(58, 71, 80, 1.0)', width=3)
+            color='#e63946',
+            line=dict(color='white', width=1)
         )
     ))
 
-    fig2.update_layout(barmode='stack')
+    fig2.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=False,
+        margin=dict(autoexpand=True),
+        showlegend=False,
+        plot_bgcolor='white',
+        barmode = 'stack'
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Situação de trabalho nos últimos<br>12 meses e na última semana',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Cadastro Único',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig2.update_layout(annotations=annotations)
 
     return fig1, fig2
 
@@ -1039,7 +1216,7 @@ def display_content(w_municipios, w_municipios1):
             showgrid=False,
             zeroline=False,
             showline=False,
-            showticklabels=False,
+            showticklabels=True,
         ),
         autosize=True,
         margin=dict(autoexpand=True),
@@ -1051,7 +1228,7 @@ def display_content(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Evolução da remuneração média mensal (salário mínimo)',
+                            text='Evolução da remuneração média mensal<br>(Em número de salários mínimo)',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1077,7 +1254,7 @@ def display_content(w_municipios, w_municipios1):
     return {
         'data': [go.Bar(
             x=['Mei no Cadastro Único', 'MEI no Bolsa Família'],
-            y=[mei_cadunico, mei_pbf],
+            y=[mei_cadunico, mei_pbf], textposition='inside',
             textfont=dict(
                 family="Ariaç",
                 size=20,
@@ -1182,13 +1359,13 @@ def update_top_vinculos(w_municipios, w_municipios1):
 
     annotations = []
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+    annotations.append(dict(xref='paper', yref='paper', x=-1, y=1,
                             xanchor='left', yanchor='bottom',
-                            text='Ocupações com maior<br>quantidade de vínculos',
+                            text='Ocupações com maior quantidade de vínculos',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
