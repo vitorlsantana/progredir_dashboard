@@ -32,14 +32,45 @@ df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1')
 # df5 = pd.read_csv(data4, sep=',', error_bad_lines=False)
 
 # CONFIGURAÇÃO DE TABS
-tabs_styles = dict(height='40px', color='dark', fontColor='dark', alignItems='center', justifyContent='center',
-                   textAlign='center')
+# tabs_styles = dict(height='40px', color='#d9ed92', fontColor='dark', alignItems='center', justifyContent='center', textAlign='center', padding='2px',
+#                    width='275px', borderColor='black')
+#
+# tab_style = dict(padding='2px', height='40px', width='275px', backgroundColor='#d9ed92', fontWeight='bold', fontFamily='Arial', color='dark',
+#                  fontColor='dark', alignItems='center', justifyContent='center', textAlign='center')
+#
+# tab_selected_style = dict(backgroundColor='#264653', fontColor='dark',
+#                           color='#black', height='40px', width='275px', padding='2px', textAlign='center')
 
-tab_style = dict(padding='2px', height='40px', width='275px', fontWeight='bold', fontFamily='Arial', color='dark',
-                 fontColor='dark', alignItems='center', justifyContent='center', textAlign='center')
+tabs_styles = {
+    'height': '40px',
+    'align-items': 'center',
+    'justifyContent':'center',
+    'textAlign':'center',
+    'width':'275px'
+}
+tab_style = {
+    'borderBottom': '1px solid #d6d6d6',
+    'padding': '4px',
+    'fontWeight': 'bold',
+    'border-radius': '5px',
+    'background-color': '#F2F2F2',
+    'box-shadow': '1px 1px 1px 1px lightgrey',
+    'justifyContent': 'center',
+    'textAlign': 'center',
+    'width':'275px'
+}
 
-tab_selected_style = dict(borderTop='light', borderBottom='white', backgroundColor='light',
-                          color='light', height='40px', width='275px', padding='2px', textAlign='center')
+tab_selected_style = {
+    'borderTop': '1px solid #d6d6d6',
+    'borderBottom': '1px solid #d6d6d6',
+    # 'backgroundColor': '#119DFF',
+    'color': 'white',
+    'padding': '4px',
+    'border-radius': '5px',
+    'justifyContent': 'center',
+    'textAlign': 'center',
+    'width':'275px'
+}
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
