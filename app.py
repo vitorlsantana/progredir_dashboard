@@ -30,10 +30,19 @@ df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1')
 # data4 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\cnes localizacao e regiao saude.csv'
 # df5 = pd.read_csv(data4, sep=',', error_bad_lines=False)
 
+# CONFIGURAÇÃO DE TABS
+tabs_styles = dict(height='40px', color='dark', fontColor='dark', alignItems='center', justifyContent='center',
+                   textAlign='center')
+
+tab_style = dict(padding='2px', height='40px', width='275px', fontWeight='bold', fontFamily='Arial', color='dark',
+                 fontColor='dark', alignItems='center', justifyContent='center', textAlign='center')
+
+tab_selected_style = dict(borderTop='light', borderBottom='white', backgroundColor='light',
+                          color='light', height='40px', width='275px', padding='2px', textAlign='center')
+
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
-logo_progredir = "http://www.mds.gov.br/webarquivos/cidadania/marc" \
-                 "a_gov/progredir/Marca_Progredir.png"
+logo_progredir = "http://www.mds.gov.br/webarquivos/cidadania/marca_gov/progredir/Marca_Progredir.png"
 logo_ministerio = 'http://www.mds.gov.br/webarquivos/cidadania/marca_gov/horizontal/ASSINATURA_CIDADANIA_216X64px.png'
 
 app.layout = dbc.Container([
@@ -130,9 +139,9 @@ app.layout = dbc.Container([
         # TABS
         dbc.Col(children=[
             dbc.Tabs([
-                dbc.Tab(label="Contexto econômico e social", tab_id="social"),
-                dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho"),
-                dbc.Tab(label="Serviços", tab_id="servicos")],
+                dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style, active_tab_style=tab_selected_style),
+                dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho", tab_style=tab_style, active_tab_style=tab_selected_style),
+                dbc.Tab(label="Serviços", tab_id="servicos", tab_style=tab_style, active_tab_style=tab_selected_style)],
                 id="tabs",
                 active_tab="social",
             ),
@@ -185,17 +194,6 @@ def toggle_modal(n1, n2, is_open):
     if n1 or n2:
         return not is_open
     return is_open
-
-# CONFIGURAÇÃO DE TABS
-tabs_styles = dict(height='40px', color='dark', fontColor='dark', alignItems='center', justifyContent='center',
-                   textAlign='center')
-
-tab_style = dict(padding='2px', height='40px', width='275px', fontWeight='bold', fontFamily='Arial', color='dark',
-                 fontColor='dark', alignItems='center', justifyContent='center', textAlign='center')
-
-tab_selected_style = dict(borderTop='light', borderBottom='white', backgroundColor='light',
-                          color='light', height='40px', width='275px', padding='2px', textAlign='center')
-
 
 @app.callback(
     Output("tab-content", "children"),
