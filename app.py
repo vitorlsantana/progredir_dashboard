@@ -36,134 +36,110 @@ logo_progredir = "http://www.mds.gov.br/webarquivos/cidadania/marc" \
                  "a_gov/progredir/Marca_Progredir.png"
 logo_ministerio = 'http://www.mds.gov.br/webarquivos/cidadania/marca_gov/horizontal/ASSINATURA_CIDADANIA_216X64px.png'
 
-logo = dbc.Row(
-    [
-        dbc.Col(html.Img(src=logo_ministerio, height="90px")),
-    ],
-    no_gutters=True,
-    className="ml-auto flex-display mt-1 mt-md-0",
-    align="center",
-)
-
-navbar = dbc.Navbar(
-    [
-        html.Div(
+app.layout = dbc.Container([
+    # Navbar
+    dbc.Navbar([
+        html.A(
             # Use row and col to control vertical alignment of logo / brand
             dbc.Row(
                 [
-                    dbc.Col(html.Img(src=logo_progredir, height="175px")),
-                    dbc.Col(dbc.NavbarBrand("Painel da Inclusão Produtiva Urbana", className="ml-15",
-                                            style={'color': '#1E3248', 'fontSize': 40, 'fontWeight': 'bold'})),
+                    dbc.Col(html.Img(src=logo_progredir, height="125px"), xs=12, sm=12, md=12, lg=2, xl=2),
+                    dbc.Col(html.H1("Painel da Inclusão Produtiva Urbana", className='ml-3', style={'color': '#1E3248'}), xs=12, sm=12, md=12, lg=10, xl=10),
                 ],
-                align="center",
+                align='center',
+                justify='start',
                 no_gutters=True,
             ),
-            className="row flex-display",
+            # href="https://cidadania.gov.br/progredir",
         ),
-        dbc.NavbarToggler(id="navbar-toggler"),
-        dbc.Collapse(logo, id="navbar-collapse", navbar=True),
-    ],
-    color="light",
-    dark=True,
-    className="row flex-display",
-    style={"border": "1px #EBEBEB solid"}
-)
-
-# add callback for toggling the collapse on small screens
-@app.callback(
-    Output("navbar-collapse", "is_open"),
-    [Input("navbar-toggler", "n_clicks")],
-    [State("navbar-collapse", "is_open")],
-)
-def toggle_navbar_collapse(n, is_open):
-    if n:
-        return not is_open
-    return is_open
-
-# ----------------------------------------------------------------------------------------------------------------------
-# LAYOUT
-# Dropdwon
-
-state = df['uf'].unique()
-
-sidebar = dbc.Container(
-    [
-        html.P('Selecione a UF', style={'display': True, "width": "20rem", 'color': '#1E3248', 'fontWeight': 'bold'},
-               className='mt-3'),
-        dcc.Dropdown(
-            id='w_municipios',
-            multi=False,
-            clearable=True,
-            disabled=False,
-            options=[{'label': i, 'value': i} for i in state],
-            value='Alagoas',
-            placeholder="Selecione a UF",
-            style={'display': True, "width": "18rem", 'height': '40px'}
-        ),
-        html.Br(),
-        html.P('Selecione o Município', style={'color': '#1E3248', 'fontWeight': 'bold'}),
-        dcc.Dropdown(
-            id='w_municipios1',
-            multi=False,
-            clearable=True,
-            disabled=False,
-            value='',
-            placeholder='Selecione o município',
-            options=[],
-            style={'display': True, "width": "18rem", 'height': '40px'}
-        ),
-        html.Br(),
-        dbc.Card(children=[
-            dbc.CardBody(children=[
-                html.H6('População'),
-                html.H4(id="populacao"),
-                html.Br(),
-                html.H6('PIB'),
-                html.H4(id="pib_total"),
-                html.Br(),
-                html.H6('IDHM'),
-                html.H4(id="idhm"),
-            ]
+        ]),
+    # Grid
+    dbc.Row([
+        # SIDEBAR
+        dbc.Col([
+            html.P('Selecione a UF', style={'display': True, "width": "100%", 'color': '#1E3248', 'fontWeight': 'bold'},
+                   className='mt-3'),
+            dcc.Dropdown(
+                id='w_municipios',
+                multi=False,
+                clearable=True,
+                disabled=False,
+                options=[{'label': i, 'value': i} for i in sorted(df['uf'].unique())],
+                value='Alagoas',
+                placeholder="Selecione a UF",
+                style={'display': True, "width": "100%", 'height': '40px'}
             ),
-        ],
-            id='data-box',
-            color="dark", inverse=True,
-            style={"width": "18rem"}
+            html.Br(),
+            html.P('Selecione o Município', style={'color': '#1E3248', 'fontWeight': 'bold'}),
+            dcc.Dropdown(
+                id='w_municipios1',
+                multi=False,
+                clearable=True,
+                disabled=False,
+                value='',
+                placeholder='Selecione o município',
+                options=[],
+                style={'display': True, "width": "100%", 'height': '40px'}
+            ),
+            html.Br(),
+            dbc.Card(children=[
+                dbc.CardBody(children=[
+                    html.H6('População'),
+                    html.H4(id="populacao"),
+                    html.Br(),
+                    html.H6('PIB'),
+                    html.H4(id="pib_total"),
+                    html.Br(),
+                    html.H6('IDHM'),
+                    html.H4(id="idhm"),
+                ]),
+            ], id='data-box', color="dark", inverse=True, style={"width": "100%"}),
+            html.Br(),
+            dbc.Button(
+                "Saiba mais sobre o painel",
+                id="open",
+                className="mr-5",
+                outline=True,
+                color="dark",
+                style={"width": "100%", 'fontWeight': 'bold'}
+            ),
+            html.Br(),
+            dbc.Modal(
+                [
+                    dbc.ModalHeader("Sobre o painel"),
+                    dbc.ModalBody(
+                        "O Painel da Inclusão Produtiva Urbana tem por objetivo reunir informações que possibilitem uma "
+                        "compreensão ampla do cenário social e econômico nos níveis estadual e municipal.\n\nCom isso, espera-se auxiliar gestores públicos "
+                        "em nível local e parceiros do setor empresarial e da sociedade civil a "
+                        "desenharem estratégias de inclusão produtiva para a população de baixa renda, em especial daquela localizada no meio urbano."
+                        "Para isso, foram agregados em uma única plataforma dados sobre o contexto social - população, serviços e ações disponíveis, "
+                        "a atividade econômica, empreendedorismo, microcrédito, dentre outras, obtidos a partir de um conjunto de bases públicas "
+                        "governamentais.\n\nA ferramenta foi desenvolvida pelo Departamento de Inclusão Produtiva Urbana da Secretaria Nacional de "
+                        "Inclusão Social e Produtiva, vinculada à Secretaria Especial do Desenvolvimento Social do Ministério da Cidadania."),
+                    dbc.ModalFooter(
+                        dbc.Button("Fechar", id="close", className="ml-auto")
+                    ),
+                ],
+                id="modal",
+                centered=True,
+                style={"width":"100%", 'whiteSpace': 'pre-wrap'},
+            ),
+            html.Br(),
+        ], xs=12, sm=12, md=2, lg=2, xl=2
         ),
-        html.Br(),
-        dbc.Button(
-            "Saiba mais sobre o painel",
-            id="collapse-button",
-            className="mr-5",
-            outline=True,
-            color="dark",
-            style={"width": "18rem", 'fontWeight': 'bold'}
-        ),
-        dbc.Collapse(
-            dbc.Card(dbc.CardBody(
-                "O Painel da Inclusão Produtiva Urbana tem por objetivo reunir informações que possibilitem uma "
-                "compreensão ampla do cenário social e econômico nos níveis estadual e municipal.\n\nCom isso, espera-se auxiliar gestores públicos em nível local e parceiros do setor empresarial e da sociedade civil a "
-                "desenharem estratégias de inclusão produtiva para a população de baixa renda, em especial daquela localizada no meio urbano."
-                "Para isso, foram agregados em uma única plataforma dados sobre o contexto social -- população, serviços e ações disponíveis, "
-                "a atividade econômica, empreendedorismo, microcrédito, dentre outras, obtidos a partir de um conjunto de bases públicas "
-                "governamentais.\n\nA ferramenta foi desenvolvida pelo Departamento de Inclusão Produtiva Urbana da Secretaria Nacional de "
-                "Inclusão Social e Produtiva, vinculada à Secretaria Especial do Desenvolvimento Social do Ministério da Cidadania."),
-                     style={"width": "18rem", 'whiteSpace': 'pre-wrap'}
-                     ),
-            id="collapse2",
-        ),
-    ], fluid=True
-)
-
-@app.callback(
-    Output("collapse2", "is_open"),
-    [Input("collapse-button", "n_clicks")],
-    [State("collapse2", "is_open")],
-)
-def toggle_collapse2(n, is_open):
-    if n:
-        return not is_open
-    return is_open
+        # TABS
+        dbc.Col(children=[
+            dbc.Tabs([
+                dbc.Tab(label="Contexto econômico e social", tab_id="social"),
+                dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho"),
+                dbc.Tab(label="Serviços", tab_id="servicos")],
+                id="tabs",
+                active_tab="social",
+            ),
+            html.Div(id="tab-content", className="p-4"),
+        ], xs=12, sm=12, md=10, lg=10, xl=10),
+    ], justify="center", no_gutters=True),
+], fluid=True)
 
 # SELEÇÃO DE UF E MUNICÍPIO
 @app.callback(
@@ -201,15 +177,15 @@ def display_content(w_municipios, w_municipios1):
 
 # MODAL SOBRE O PAINEL
 @app.callback(
-    Output("modal-centered", "is_open"),
-    [Input("open-centered", "n_clicks"), Input("close-centered", "n_clicks")],
-    [State("modal-centered", "is_open")],
+    Output("modal", "is_open"),
+    [Input("open", "n_clicks"), Input("close", "n_clicks")],
+    [State("modal", "is_open")],
 )
 def toggle_modal(n1, n2, is_open):
     if n1 or n2:
         return not is_open
     return is_open
-#
+
 # CONFIGURAÇÃO DE TABS
 tabs_styles = dict(height='40px', color='dark', fontColor='dark', alignItems='center', justifyContent='center',
                    textAlign='center')
@@ -219,37 +195,7 @@ tab_style = dict(padding='2px', height='40px', width='275px', fontWeight='bold',
 
 tab_selected_style = dict(borderTop='light', borderBottom='white', backgroundColor='light',
                           color='light', height='40px', width='275px', padding='2px', textAlign='center')
-#
-grid = html.Div(children=[
-    dbc.Row(children=[
-        dbc.Col(children=[
-            sidebar,
-        ], style={"border": "1px #EBEBEB solid"}, width=2),
-        dbc.Col(children=[
-            dbc.Tabs(
-                [
-                    dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style,
-                            active_tab_style=tab_selected_style),
-                    dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho", tab_style=tab_style,
-                            active_tab_style=tab_selected_style),
-                    dbc.Tab(label="Serviços", tab_id="servicos", tab_style=tab_style,
-                            active_tab_style=tab_selected_style),
-                ],
-                id="tabs",
-                active_tab="social", className="p-2"
-            ),
-            html.Div(id="tab-content", className="p-4"),
-        ], style={"border": "1px #EBEBEB solid"}, width=10)
-    ], justify="center", no_gutters=True)
-])
 
-app.layout = html.Div(
-    [
-        navbar,
-        grid,
-    ],
-    style={"border": "1px #EBEBEB solid"}
-)
 
 @app.callback(
     Output("tab-content", "children"),
@@ -293,19 +239,19 @@ def render_tab_content(active_tab):
                             centered=True,
                             style={"width":"50rem", 'whiteSpace': 'pre-wrap'},
                         ),
-                    ]), ], color="#E2EBF3", outline=True, style={"width": "20rem", 'border':'white'}
-                    )], width=3),
-                    dbc.Col(dcc.Graph(id='cad_pbf'), width=9),
+                    ]), ], color="#E2EBF3", outline=True, style={"width": "100%", 'border':'white'}
+                    )], xs=12, sm=12, md=12, lg=3, xl=3),
+                    dbc.Col(dcc.Graph(id='cad_pbf'), xs=12, sm=12, md=12, lg=9, xl=9),
                 ],
                     align='center'
                 ),
                 html.Br(),
                 dbc.Row(
                     [
-                        dbc.Col(dcc.Graph(id='domicilio_sexo', config={'displayModeBar': 'hover'}), width=6),
-                        dbc.Col(dcc.Graph(id='faixa_etaria'), width=6),
-                        dbc.Col(dcc.Graph(id='escolaridade'), width=6),
-                        dbc.Col(dcc.Graph(id='pib_setorial'), width=6),
+                        dbc.Col(dcc.Graph(id='domicilio_sexo', config={'displayModeBar': 'hover'}), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='faixa_etaria'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='escolaridade'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='pib_setorial'), xs=12, sm=12, md=12, lg=6, xl=6),
                     ],
                 ),
                 # html.Div(dcc.Graph(figure=fig10))
@@ -315,8 +261,6 @@ def render_tab_content(active_tab):
             return dbc.Container(children=[
                 dbc.Row(children=
                 [
-                    dbc.Col(dcc.Graph(id='trabalho_cadunico'), width=12),
-                    dbc.Col(dcc.Graph(id='evolucao_empregos'), width=8),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardBody(
@@ -335,8 +279,10 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], color="#E2EBF3", outline=True, style={"width": "20rem", 'border':'white'}),
-                    ], width=4),
+                        ], color="#E2EBF3", outline=True, style={"width": "20rem", 'border': 'white'}),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4),
+                    dbc.Col(dcc.Graph(id='evolucao_empregos'), xs=12, sm=12, md=12, lg=8, xl=8),
+                    dbc.Col(dcc.Graph(id='trabalho_cadunico'), xs=12, sm=12, md=12, lg=12, xl=12),
                 ],
                     align='center', justify="center", no_gutters=True
                 ),
@@ -348,15 +294,15 @@ def render_tab_content(active_tab):
                                 dcc.Graph(id='estoque_empregos'),
                                 html.Br(),
                                 html.H5(id='var_emprego'),
-                            ], style={'textAlign': 'center'}, width=6),
+                            ], style={'textAlign': 'center'}, xs=12, sm=12, md=12, lg=6, xl=6),
                         dbc.Col(
                             [
                                 html.H4(id='empresas_total'),
                                 dcc.Graph(id='empresas_setorial'),
-                            ], style={'textAlign': 'center'}, width=6),
-                        dbc.Col(dcc.Graph(id='top_vinculos'), width=6),
-                        dbc.Col(dcc.Graph(id='remuneracao'), width=6),
-                        dbc.Col(dcc.Graph(id='mei'), width=6)
+                            ], style={'textAlign': 'center'}, xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='top_vinculos'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='remuneracao'), wxs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=6, xl=6)
                     ]
                 ),
                 # html.Div([
@@ -405,8 +351,8 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "25rem"}),
-                    ], width=4
+                        ], style={"width": "100%"}),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
@@ -428,8 +374,8 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "25rem"}),
-                    ], width=4
+                        ], style={"width": "100%"}),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
@@ -451,8 +397,8 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "25rem"}),
-                    ], width=4
+                        ], style={"width": "100%"}),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                 ],
                 ),
@@ -470,7 +416,7 @@ def toggle_modal(n1, n2, is_open):
     if n1 or n2:
         return not is_open
     return is_open
-#
+
 # NÚMEROS CADASTRO ÚNICO E BOLSA FAMÍLIA
 @app.callback(
     Output('cadunico', 'children'),
