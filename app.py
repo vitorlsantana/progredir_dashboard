@@ -46,14 +46,16 @@ tabs_styles = {
     'align-items': 'center',
     'justifyContent':'center',
     'textAlign':'center',
-    'width':'275px'
+    'width':'275px',
+    'boxColor':'white'
 }
 tab_style = {
     'borderBottom': '1px solid #d6d6d6',
-    'padding': '4px',
+    'padding': '0px',
     'fontWeight': 'bold',
     'border-radius': '5px',
-    'background-color': '#F2F2F2',
+    'boxColor':'white',
+    'background-color': '#e9edc9',
     'box-shadow': '1px 1px 1px 1px lightgrey',
     'justifyContent': 'center',
     'textAlign': 'center',
@@ -61,11 +63,11 @@ tab_style = {
 }
 
 tab_selected_style = {
-    'borderTop': '1px solid #d6d6d6',
-    'borderBottom': '1px solid #d6d6d6',
+    'borderTop': '0px solid #d6d6d6',
+    'borderBottom': '0px solid #d6d6d6',
     # 'backgroundColor': '#119DFF',
     'color': 'white',
-    'padding': '4px',
+    'padding': '0px',
     'border-radius': '5px',
     'justifyContent': 'center',
     'textAlign': 'center',
