@@ -47,14 +47,12 @@ tabs_styles = {
     'justifyContent':'center',
     'textAlign':'center',
     'width':'275px',
-    'boxColor':'white'
 }
 tab_style = {
     'borderBottom': '1px solid #d6d6d6',
     'padding': '0px',
     'fontWeight': 'bold',
     'border-radius': '5px',
-    'boxColor':'white',
     'background-color': '#e9edc9',
     'box-shadow': '1px 1px 1px 1px lightgrey',
     'justifyContent': 'center',
