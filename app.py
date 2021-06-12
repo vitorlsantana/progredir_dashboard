@@ -98,6 +98,25 @@ app.layout = dbc.Container([
     dbc.Row([
         # SIDEBAR
         dbc.Col([
+            # INCLUIR RADIO BUTTON (SELEÇÃO BRASIL / UF / MUNICIPIO)
+            # BRASIL É O VALOR DEFAULT E APRESENTA A SOMA DE TODAS AS VARIÁVEIS (brasil = df.sum())
+            # CLICANDO EM UF APARECE DROPDOWN PARA SELEÇÃO DAS UFs (brasil = df.groupby('uf', as_index=False).sum()
+            # CLICANDO EM MUNICÍPIO APARECEM AS OPÇÕES ATUAIS
+            dbc.FormGroup(
+                [
+                    dbc.Label("Escolha uma opção de visualização dos dados"),
+                    dbc.RadioItems(
+                        options=[
+                            {"label": "Brasil", "value": "Brasil"},
+                            {"label": "UF", "value": "UF"},
+                            {"label": "Município", "value": "Município"},
+                        ],
+                        value='Brasil',
+                        id="radioitems-inline-input",
+                        inline=True,
+                    ),
+                ]
+            ),
             html.P('Selecione a UF', style={'display': True, "width": "100%", 'color': '#1E3248', 'fontWeight': 'bold'},
                    className='mt-3'),
             dcc.Dropdown(
