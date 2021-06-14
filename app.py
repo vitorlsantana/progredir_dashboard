@@ -8,7 +8,9 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import dash_table
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True, )
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP],
+                meta_tags=[{'name': 'viewport', 'content': 'width=device-width, initial-scale=1.0'}],
+                suppress_callback_exceptions=True, )
 server = app.server
 
 # CARREGAR DADOS
@@ -47,6 +49,7 @@ tabs_styles = {
     'justifyContent':'center',
     'textAlign':'center',
     'width':'275px',
+    'marginRight':'10px'
 }
 tab_style = {
     'borderBottom': '1px solid #d6d6d6',
@@ -58,7 +61,8 @@ tab_style = {
     'box-shadow': '1px 1px 1px 1px lightgrey',
     'justifyContent': 'center',
     'textAlign': 'center',
-    'width':'275px'
+    'width':'275px',
+    'marginRight':'10px'
 }
 
 tab_selected_style = {
@@ -80,8 +84,7 @@ logo_ministerio = 'http://www.mds.gov.br/webarquivos/cidadania/marca_gov/horizon
 
 app.layout = dbc.Container([
     # Navbar
-
-            # Use row and col to control vertical alignment of logo / brand
+        # Use row and col to control vertical alignment of logo / brand
         dbc.Row(
             [
                 dbc.Col(html.Img(src=logo_progredir, height="125px"), xs=12, sm=12, md=12, lg=2, xl=2),
@@ -104,7 +107,7 @@ app.layout = dbc.Container([
             # CLICANDO EM MUNICÍPIO APARECEM AS OPÇÕES ATUAIS
             dbc.FormGroup(
                 [
-                    dbc.Label("Escolha uma opção de visualização dos dados"),
+                    dbc.Label("Escolha uma opção de visualização dos dados", style={'display': True, "width": "100%", 'color': '#1E3248', 'fontWeight': 'bold'}),
                     dbc.RadioItems(
                         options=[
                             {"label": "Brasil", "value": "Brasil"},
@@ -259,6 +262,22 @@ def render_tab_content(active_tab):
     if active_tab:
         if active_tab == "social":
             return dbc.Container(children=[
+                dbc.Row(
+                    [
+                        html.Div(
+                            html.H3(id='cadunico')),
+                        html.Div(
+                            html.H3(id='bolsa_familia')),
+                        html.Div(
+                            html.H3(id='bpc_total')),
+                        html.Div(
+                            html.H3(id='pobreza_extrema')),
+                        html.Div(
+                            html.H3(id='bpc_deficiencia')),
+                        html.Div(
+                            html.H3(id='bpc_idosos'))
+                    ]
+                ),
                 dbc.Row(children=
                 [
                     dbc.Col([dbc.Card(children=
@@ -306,9 +325,16 @@ def render_tab_content(active_tab):
                 html.Br(),
                 dbc.Row([
                         dbc.Col(dcc.Graph(id='escolaridade'), xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col(dcc.Graph(id='pib_setorial'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='analfabetismo'), xs=12, sm=12, md=12, lg=6, xl=6),
                     ]
                 ),
+                html.Br(),
+                dbc.Row(
+                    [
+                        dbc.Col(dcc.Graph(id='pib_setorial'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='empresas_setorial'), xs=12, sm=12, md=12, lg=6, xl=6),
+                    ]
+                )
                 # html.Div(dcc.Graph(figure=fig10))
             ], fluid=True
             )
@@ -345,21 +371,12 @@ def render_tab_content(active_tab):
                     dbc.Col(dcc.Graph(id='funcao_principal'), xs=12, sm=12, md=12, lg=6, xl=6),
                     dbc.Col(dcc.Graph(id='trabalhou'), xs=12, sm=12, md=12, lg=6, xl=6)
                     ],
-                    align='center', justify="center", no_gutters=True
+                    align='center', justify="center",
                 ),
                 html.Br(),
                 dbc.Row(
                     [
-                        dbc.Col(
-                            [
-                                dcc.Graph(id='estoque_empregos'),
-                                html.H5(id='var_emprego'),
-                            ], style={'textAlign': 'center'}, xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col(
-                            [
-                                html.H4(id='empresas_total'),
-                                dcc.Graph(id='empresas_setorial'),
-                            ], style={'textAlign': 'center'}, xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='estoque_empregos'), xs=12, sm=12, md=12, lg=6, xl=6),
                         dbc.Col([
                             dcc.Graph(id='top_vinculos'),
                             dbc.Button(
@@ -373,23 +390,14 @@ def render_tab_content(active_tab):
                                 id="collapse",
                             ),
                         ], xs=12, sm=12, md=12, lg=6, xl=6),
-                        # dbc.Col([
-                        #     dbc.Button(
-                        #         "Open collapse",
-                        #         id="collapse-button",
-                        #         className="mb-3",
-                        #         color="primary",
-                        #     ),
-                        #     dbc.Collapse(
-                        #         html.Div(id="table"),
-                        #         id="collapse",
-                        #     ),
-                        # ], xs=12, sm=12, md=12, lg=6, xl=6),
-                        html.Br(),
+                    ], align='center', justify="center"),
+                html.Br(),
+                dbc.Row(
+                    [
                         dbc.Col(dcc.Graph(id='remuneracao'), xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=6, xl=6)
-                    ]
-                ),
+                        dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        ], align='center', justify="center",
+                    )
                 # html.Div([
                 #     html.Div([
                 #         dcc.Dropdown(
@@ -655,7 +663,10 @@ def toggle_modal(n1, n2, is_open):
 @app.callback(
     Output('cadunico', 'children'),
     Output('bolsa_familia', 'children'),
-        # Output('card_num6', 'children')
+    Output('pobreza_extrema', 'children'),
+    Output('bpc_total', 'children'),
+    Output('bpc_deficiencia', 'children'),
+    Output('bpc_idosos', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
@@ -664,10 +675,16 @@ def display_cadunico(w_municipios, w_municipios1):
     pessoas_cad = f'{pessoas_cad:_.0f}'.replace('.', ',').replace('_', '.')
     pessoas_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_pbf'].sum()
     pessoas_pbf = f'{pessoas_pbf:_.0f}'.replace('.', ',').replace('_', '.')
-    # pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
-    # pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
+    pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
+    pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
+    bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].sum()
+    bpc_total = f'{bpc_total:_.0f}'.replace('.', ',').replace('_', '.')
+    bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].sum()
+    bpc_deficiencia = f'{bpc_deficiencia:_.0f}'.replace('.', ',').replace('_', '.')
+    bpc_idosos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_idoso_ben'].sum()
+    bpc_idosos = f'{bpc_idosos:_.0f}'.replace('.', ',').replace('_', '.')
 
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas'
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', bpc_total, bpc_deficiencia, bpc_idosos
 
 # EVOLUÇÃO DO CADUNICO E DO PBF
 @app.callback(Output('cad_pbf', 'figure'),
@@ -744,7 +761,6 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     fig1.add_trace(go.Bar(x=['Feminino'], y=[fem_cad], name='Feminino', marker=dict(color='#f28482')))
 
     fig1.update_layout(
-        title='População, por sexo',
         xaxis=dict(
             showline=True,
             showgrid=False,
@@ -783,13 +799,28 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
         bargroupgap=0.1  # gap between bars of the same location coordinate.
     )
 
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=-0.2, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='População do CadÚnico,<br>por sexo',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Cadastro Único',
+                            font=dict(family='Arial', size=12, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig1.update_layout(annotations=annotations)
+
     fig2 = go.Figure()
 
     colors = ['#0077b6', '#55a630']
     fig2.add_trace(go.Pie(labels=['Urbano', 'Rural'], values=[urbano, rural], name='Domicílio', marker=dict(colors=colors), textfont={'family': "Arial", 'size': 15}))
 
     fig2.update_layout(
-        title='População, por situação do domicílio',
         xaxis_tickfont_size=14,
         yaxis=dict(
             title='USD (millions)',
@@ -809,19 +840,19 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
 
     annotations = []
     # Title
-    # annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-    #                         xanchor='left', yanchor='bottom',
-    #                         text='População do CadÚnico, por<br>sexo e situação do domicílio',
-    #                         font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-    #                         showarrow=False))
+    annotations.append(dict(xref='paper', yref='paper', x=-0.2, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='População do CadÚnico,<br>situação do domicílio',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania/Cadastro Único',
-                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            font=dict(family='Arial', size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
-    fig1.update_layout(annotations=annotations)
+    fig2.update_layout(annotations=annotations)
 
     return fig1, fig2
 
@@ -887,6 +918,7 @@ def display_age(w_municipios, w_municipios1):
 
 # POPULAÇÃO DO CADUNICO POR ESCOLARIDADE
 @app.callback(Output('escolaridade', 'figure'),
+              Output('analfabetismo', 'figure'),
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
@@ -903,12 +935,9 @@ def display_escolaridade(w_municipios, w_municipios1):
     sabe_ler_escrever = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['sabe_ler_escrever'].sum()
     nao_sabe_ler_escrever = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_sabe_ler_escrever'].sum()
 
-    fig = make_subplots(rows=1, cols=2, specs=[[{'type': 'bar'}, {'type': 'domain'}]])
-
+    fig = go.Figure()
     fig.add_trace(go.Bar(x=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior], y=nivel, orientation='h',
-                         name='Escolaridade'), row=1, col=1)
-    fig.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True,
-                         name='Escolaridade'), row=1, col=2)
+                         name='Escolaridade'))
     fig.update_layout(bargap=0.25, bargroupgap=0.2)
     fig.update_layout(
         xaxis=dict(
@@ -928,7 +957,7 @@ def display_escolaridade(w_municipios, w_municipios1):
         ),
         autosize=False,
         margin=dict(autoexpand=True),
-        showlegend=False,
+        showlegend=True,
         plot_bgcolor='white'
     )
 
@@ -948,22 +977,39 @@ def display_escolaridade(w_municipios, w_municipios1):
 
     fig.update_layout(annotations=annotations)
 
-    return fig
+    fig2 = go.Figure()
+    fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True,
+                         name='Analfabetismo'))
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=-0.2, y=1.1,
+                            xanchor='left', yanchor='bottom',
+                            text='População do CadÚnico, por alfabetização',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Cadastro Único',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig2.update_layout(annotations=annotations)
+
+    return fig, fig2
 
 # NÚMEROS SOBRE EMPRESAS E ESTOQUE DE EMPREGOS
 @app.callback(
-    Output('empresas_total', 'children'),
     Output('empregos', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
 def display_content(w_municipios, w_municipios1):
-    empresas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_total'].sum()
-    empresas1 = f'{empresas:_.0f}'.replace('_', '.')
     pessoal = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['estoque_empregos_abr2021'].sum()
     pessoal = f'{pessoal:_.0f}'.replace('_', '.')
 
-    return empresas1 + ' empresas', pessoal
+    return pessoal
 
 # PIB POR SETOR DE ATIVIDADE ECONÔMICA
 @app.callback(Output('pib_setorial', 'figure'),
@@ -1028,6 +1074,10 @@ def display_content(w_municipios, w_municipios1):
     arte_cultura = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_arte_cultura'].sum()
     outras_ativ = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_outras_ativ_servicos'].sum()
 
+    empresas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_total'].sum()
+    empresas1 = f'{empresas:_.0f}'.replace('_', '.')
+
+
     fig = go.Figure()
     fig.add_trace(go.Pie(labels=setores, values=[agropecuaria, ind_extrativa, ind_transf, eletric_gas, saneamento, construcao, comercio, transporte,
                     aloj_alimentacao,info_comunic, financeiro, imobiliarias, ativ_prof, ativ_administrativas, educacao, saude, arte_cultura, outras_ativ],
@@ -1035,7 +1085,13 @@ def display_content(w_municipios, w_municipios1):
 
     annotations = []
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+    annotations.append(dict(xref='paper', yref='paper', x=1.0, y=1.20,
+                            xanchor='left', yanchor='bottom',
+                            text= empresas1 + ' empresas',
+                            font=dict(family='Arial', size=22, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.00,
                             xanchor='left', yanchor='bottom',
                             text='Número de empresas, por setor<br>de atividade econômica',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
@@ -1063,7 +1119,7 @@ def display_content(w_municipios, w_municipios1):
 # SALDO E VARIAÇÃO DE EMPREGOS
 @app.callback(
     Output('estoque_empregos', 'figure'),
-    Output('var_emprego', 'children'),
+    # Output('var_emprego', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
@@ -1105,6 +1161,12 @@ def display_content1(w_municipios, w_municipios1):
                             text='Saldo de empregos em 2021 e em 12 meses',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
+    # Informação sobre variação do emprego
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=0.1,
+                            xanchor='center', yanchor='top',
+                            text='Variação de ' + df3 + '%<br> em 12 meses',
+                            font=dict(family='Arial', size=15, color='black'),
+                            showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
@@ -1114,7 +1176,7 @@ def display_content1(w_municipios, w_municipios1):
 
     fig.update_layout(annotations=annotations)
 
-    return fig, 'Variação percentual de ' + df3 + '% em 12 meses'
+    return fig
 
 # EVOLUÇÃO DO SALDO DE EMPREGOS
 @app.callback(Output('evolucao_empregos', 'figure'),
