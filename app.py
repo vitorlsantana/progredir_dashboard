@@ -88,7 +88,7 @@ app.layout = dbc.Container([
     html.Br(),
     dbc.Row(
         [
-            dbc.Col(html.Img(src=logo_progredir, height="80px"), xs=12, sm=12, md=12, lg=2, xl=2),
+            dbc.Col(html.Img(src=logo_progredir, style={'height': '125px'}), style={'textAlign': 'center'}, xs=12, sm=12, md=12, lg=2, xl=2),
             dbc.Col(html.H1("Painel da Inclusão Produtiva Urbana", style={'color': '#1E3248'}), xs=12, sm=12, md=12, lg=10, xl=10),
         ],
         align='center',
@@ -107,21 +107,21 @@ app.layout = dbc.Container([
             # BRASIL É O VALOR DEFAULT E APRESENTA A SOMA DE TODAS AS VARIÁVEIS (brasil = df.sum())
             # CLICANDO EM UF APARECE DROPDOWN PARA SELEÇÃO DAS UFs (brasil = df.groupby('uf', as_index=False).sum()
             # CLICANDO EM MUNICÍPIO APARECEM AS OPÇÕES ATUAIS
-            dbc.FormGroup(
-                [
-                    dbc.Label("Escolha uma opção de visualização dos dados", style={'display': True, "width": "100%", 'color': '#1E3248', 'fontWeight': 'bold'}),
-                    dbc.RadioItems(
-                        options=[
-                            {"label": "Brasil", "value": "Brasil"},
-                            {"label": "UF", "value": "UF"},
-                            {"label": "Município", "value": "Município"},
-                        ],
-                        value='Brasil',
-                        id="radioitems-inline-input",
-                        inline=True,
-                    ),
-                ]
-            ),
+            # dbc.FormGroup(
+            #     [
+            #         dbc.Label("Escolha uma opção de visualização dos dados", style={'display': True, "width": "100%", 'color': '#1E3248', 'fontWeight': 'bold'}),
+            #         dbc.RadioItems(
+            #             options=[
+            #                 {"label": "Brasil", "value": "Brasil"},
+            #                 {"label": "UF", "value": "UF"},
+            #                 {"label": "Município", "value": "Município"},
+            #             ],
+            #             value='Brasil',
+            #             id="radioitems-inline-input",
+            #             inline=True,
+            #         ),
+            #     ]
+            # ),
             html.P('Selecione a UF', style={'display': True, "width": "100%", 'color': '#1E3248', 'fontWeight': 'bold'},
                    className='mt-3'),
             dcc.Dropdown(
@@ -1041,7 +1041,7 @@ def display_escolaridade(w_municipios, w_municipios1):
 
     annotations = []
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=-0.2, y=1.1,
+    annotations.append(dict(xref='paper', yref='paper', x=0.2, y=1.1,
                             xanchor='left', yanchor='bottom',
                             text='População do CadÚnico, por nível de escolaridade',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
@@ -1130,7 +1130,7 @@ def display_content(w_municipios, w_municipios1):
               )
 def display_content(w_municipios, w_municipios1):
     setores = ['Agropecuária', 'Indústria Extrativa', 'Indústria de Transformação', 'Eletricidade e Gás',
-               'Saneamento Básico', 'Construção', 'Comérico', 'Transporte', 'Alojamento e Alimentação', 'Informação e Comunicação',
+               'Saneamento Básico', 'Construção', 'Comércio', 'Transporte', 'Alojamento e Alimentação', 'Informação e Comunicação',
                'Instituições Financeiras', 'Imobiliárias', 'Atividades Profissionais, Científicas e Técnicas', 'Atividades Administrativas',
                'Educação', 'Saúde', 'Arte, Cultura e Esportes', 'Outras Atividades']
     agropecuaria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_agropecuaria'].sum()
