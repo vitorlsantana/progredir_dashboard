@@ -79,22 +79,24 @@ tab_selected_style = {
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
-logo_progredir = "http://www.mds.gov.br/webarquivos/cidadania/marca_gov/progredir/Marca_Progredir.png"
+logo_progredir = "https://github.com/vitorlsantana/progredir_dashboard/blob/main/Marca_Progredir.png?raw=true"
 logo_ministerio = 'http://www.mds.gov.br/webarquivos/cidadania/marca_gov/horizontal/ASSINATURA_CIDADANIA_216X64px.png'
 
 app.layout = dbc.Container([
     # Navbar
         # Use row and col to control vertical alignment of logo / brand
-        dbc.Row(
-            [
-                dbc.Col(html.Img(src=logo_progredir, height="125px"), xs=12, sm=12, md=12, lg=2, xl=2),
-                dbc.Col(html.H1("Painel da Inclusão Produtiva Urbana", style={'color': '#1E3248'}), xs=12, sm=12, md=12, lg=10, xl=10),
-            ],
-            align='center',
-            justify='start',
-            # no_gutters=True,
-            style={'backgroundColor':'#FEFBEB'}
-        ),
+    html.Br(),
+    dbc.Row(
+        [
+            dbc.Col(html.Img(src=logo_progredir, height="80px"), xs=12, sm=12, md=12, lg=2, xl=2),
+            dbc.Col(html.H1("Painel da Inclusão Produtiva Urbana", style={'color': '#1E3248'}), xs=12, sm=12, md=12, lg=10, xl=10),
+        ],
+        align='center',
+        justify='start',
+        # no_gutters=True,
+        style={'backgroundColor':'#FEFBEB'}
+    ),
+    html.Br(),
         # href="https://cidadania.gov.br/progredir",
 
     # Grid
