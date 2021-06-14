@@ -194,10 +194,10 @@ app.layout = dbc.Container([
                 centered=True,
                 style={"width":"100%", 'whiteSpace': 'pre-wrap'},
             ),
-            html.Br(),
         ], xs=12, sm=12, md=2, lg=2, xl=2, style={'backgroundColor':'#FEFBEB'}
         ),
         # TABS
+        html.Br(),
         dbc.Col(children=[
             dbc.Tabs([
                 dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style, active_tab_style=tab_selected_style),
@@ -209,6 +209,7 @@ app.layout = dbc.Container([
             html.Div(id="tab-content", className="p-10"),
         ], xs=12, sm=12, md=10, lg=10, xl=10),
     ], justify="center", no_gutters=True),
+    html.Br(),
 ], fluid=True, style={'backgroundColor':'#FEFBEB'})
 
 # SELEÇÃO DE UF E MUNICÍPIO
@@ -278,8 +279,8 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='cadunico', style={'textAlign':'center', 'fontSize':30}),
+                                    html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
+                                    html.P(id='cadunico', style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                                 ]),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border':'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -290,8 +291,8 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='bolsa_familia', style={'textAlign':'center', 'fontSize':30})]
+                                    html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
+                                    html.P(id='bolsa_familia', style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'})]
                                 ),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -303,7 +304,7 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H6("Pobreza e Extrema Pobreza (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='pobreza_extrema', style={'textAlign':'center', 'fontSize':30})]
+                                    html.P(id='pobreza_extrema', style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'})]
                                 ),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -313,9 +314,9 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("BPC (fev/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='bpc_total', style={'textAlign':'center', 'fontSize':30}),
-                                    html.P(id='bpc_idosos_pcd', style={'textAlign':'center', 'fontSize':15})
+                                    html.H6("Benefício de Prestação Continuada (fev/2021)", className="card-title", style={'textAlign':'center'}),
+                                    html.P(id='bpc_total', style={'textAlign':'center', 'fontSize':25, 'fontWeight':'bold'}),
+                                    html.P(id='bpc_idosos_pcd', style={'textAlign':'center', 'fontSize':20})
                                 ]),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -352,6 +353,7 @@ def render_tab_content(active_tab):
             )
         elif active_tab == "trabalho":
             return dbc.Container(children=[
+                html.Br(),
                 dbc.Row(children=
                 [
                     dbc.Col(
@@ -365,7 +367,7 @@ def render_tab_content(active_tab):
                                     html.P(id='empregos', style={'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
                                     html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 15}),
                                 ]),
-                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white'}
+                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -382,7 +384,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                                 ),
-                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white'}
+                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -397,7 +399,7 @@ def render_tab_content(active_tab):
                                     html.P(id='var_emprego', style={'textAlign': 'center', 'fontSize': 15, 'fontWeight': 'bold'}),
                                 ]
                                 ),
-                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white'})
+                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
                         [
@@ -409,7 +411,7 @@ def render_tab_content(active_tab):
                                     html.P(id='mei_cad', style={'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
                                     html.P(id='mei_pbf', style={'textAlign': 'center', 'fontSize': 20})
                                 ]),
-                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white'}
+                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
@@ -484,6 +486,7 @@ def render_tab_content(active_tab):
             )
         elif active_tab == "servicos":
             return dbc.Container(children=[
+                html.Br(),
                 dbc.Row(children=
                 [
                     dbc.Col([dbc.Card(
@@ -504,7 +507,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "100%"}),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -528,7 +531,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "100%"}),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -552,7 +555,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "100%"}),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -576,7 +579,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "100%"}),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -598,7 +601,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "100%"}),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -621,7 +624,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "100%"}),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -643,7 +646,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "100%"}),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -667,7 +670,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "100%"}),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -688,7 +691,7 @@ def render_tab_content(active_tab):
                                                target="_blank"),
                                 ]
                             ),
-                        ], style={"width": "100%"}),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -1186,6 +1189,7 @@ def display_content(w_municipios, w_municipios1):
 def display_content1(w_municipios, w_municipios1):
     # df1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2021'].sum()
     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
+    df2 = f'{df2:_.0f}'.replace('.', ',').replace('_', '.')
     df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum()
 
     return df2, 'Variação de ' + df3 + '% em 12 meses'
@@ -1353,7 +1357,7 @@ def display_escolaridade(w_municipios, w_municipios1):
         x=['Trabalhou nos últimos 12 meses', 'Trabalhou na última semana'], textposition='inside',
         name='Não',
         marker=dict(
-            color='#e63946',
+            color='#f8961e',
             line=dict(color='white', width=1)
         )
     ))
@@ -1461,6 +1465,7 @@ def display_content(w_municipios, w_municipios1):
 def update_top_vinculos2(w_municipios, w_municipios1):
     df1 = df_remuneracao.melt(id_vars=["uf", "municipio", "ano"], var_name="Ocupação", value_name="Remuneração")
     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
+    df2 = df2.iloc[1:, :]
     data = df2.to_dict('records')
     columns = [{"name": i, "id": i,} for i in df2[['Ocupação', 'Remuneração']]]
     export_format = "xlsx"
@@ -1478,8 +1483,10 @@ def update_top_vinculos2(w_municipios, w_municipios1):
               Input('w_municipios1', 'value')
               )
 def display_content(w_municipios, w_municipios1):
-    mei_cadunico = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_cadunico'].sum()
-    mei_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_pbf'].sum()
+    mei_cadunico = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_cadunico'].astype('int').sum()
+    mei_cadunico = f'{mei_cadunico:_.0f}'.replace('.', ',').replace('_', '.')
+    mei_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_pbf'].astype('int').sum()
+    mei_pbf = f'{mei_pbf:_.0f}'.replace('.', ',').replace('_', '.')
 
     return mei_cadunico + ' no Cadastro Único', mei_pbf + ' no Bolsa Família'
 
@@ -1563,6 +1570,7 @@ def update_top_vinculos(w_municipios, w_municipios1):
 def update_top_vinculos2(w_municipios, w_municipios1):
     df1 = df_caged.melt(id_vars=["uf", "municipio", "ano"], var_name="Ocupação", value_name="Quantidade de Vínculos")
     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
+    df2 = df2.iloc[1:, :]
     data = df2.to_dict('records')
     columns = [{"name": i, "id": i,} for i in df2[['Ocupação', 'Quantidade de Vínculos']]]
     export_format = "xlsx"
