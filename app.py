@@ -262,57 +262,77 @@ def render_tab_content(active_tab):
     if active_tab:
         if active_tab == "social":
             return dbc.Container(children=[
-                dbc.Row(
-                    [
-                        html.Div(
-                            html.H3(id='cadunico')),
-                        html.Div(
-                            html.H3(id='bolsa_familia')),
-                        html.Div(
-                            html.H3(id='bpc_total')),
-                        html.Div(
-                            html.H3(id='pobreza_extrema')),
-                        html.Div(
-                            html.H3(id='bpc_deficiencia')),
-                        html.Div(
-                            html.H3(id='bpc_idosos'))
-                    ]
-                ),
                 dbc.Row(children=
                 [
-                    dbc.Col([dbc.Card(children=
-                    [dbc.CardBody(children=
-                    [
-                        html.H5("Cadastro Único", className="card-title"),
-                        html.H3(id='cadunico'),
-                        html.Br(),
-                        html.H5('Programa Bolsa Família', className="card-title"),
-                        html.H3(id='bolsa_familia'),
-                        html.H6('Fonte: Ministério da Cidadania, abril/2021', className='mt-10'),
-                        html.Br(),
-                        dbc.Button("Saiba mais sobre o Cadastro Único", id='open1', color="primary"),
-                        dbc.Modal(
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
                             [
-                                dbc.ModalHeader("Cadastro Único"),
-                                dbc.ModalBody(
-                                    "O Cadastro Único para Programas Sociais do Governo Federal (Cadastro Único) é um instrumento "
-                                    "que identifica e caracteriza as famílias de baixa renda, "
-                                    "permitindo que o governo conheça melhor a realidade socioeconômica dessa população.\n\n"
-                                    "Nele são registradas informações como: características da residência, identificação "
-                                    "de cada pessoa, escolaridade, situação de trabalho e renda, entre outras."),
-                                dbc.ModalFooter(
-                                    dbc.Button("Fechar", id="close1", className="ml-auto")
+                                dbc.CardBody(children=
+                                [
+                                    html.H6("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
+                                    html.P(id='cadunico', style={'textAlign':'center', 'fontSize':30}),
+                                    # dbc.Button("Saiba mais sobre o Cadastro Único", id='open1', color="primary"),
+                                    # dbc.Modal(
+                                    #     [
+                                    #         dbc.ModalHeader("Cadastro Único"),
+                                    #         dbc.ModalBody(
+                                    #             "O Cadastro Único para Programas Sociais do Governo Federal (Cadastro Único) é um instrumento "
+                                    #             "que identifica e caracteriza as famílias de baixa renda, permitindo que o governo conheça melhor a realidade socioeconômica dessa população.\n\n"
+                                    #             "Nele são registradas informações como: características da residência, identificação de cada pessoa, escolaridade, situação de trabalho e renda, entre outras."),
+                                    #         dbc.ModalFooter(
+                                    #             dbc.Button("Fechar", id="close1", className="ml-auto")),
+                                    #     ],
+                                    #     id="modal1",
+                                    #     centered=True,
+                                    #     style={"width":"100%", 'whiteSpace': 'pre-wrap'},
+                                    # ),
+                                ]),
+                            ], color="#ffffff", outline=True, style={"width": "100%", 'border':'white'}
+                            )
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
+                            [
+                                dbc.CardBody(children=
+                                [
+                                    html.H6("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
+                                    html.P(id='bolsa_familia', style={'textAlign':'center', 'fontSize':30})]
                                 ),
-                            ],
-                            id="modal1",
-                            centered=True,
-                            style={"width":"100%", 'whiteSpace': 'pre-wrap'},
-                        ),
-                    ]), ], color="#ffffff", outline=True, style={"width": "100%", 'border':'white'}
-                    )], xs=12, sm=12, md=12, lg=3, xl=3),
-                    dbc.Col(dcc.Graph(id='cad_pbf'), xs=12, sm=12, md=12, lg=9, xl=9),
+                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white'}
+                            )
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
+                            [
+                                dbc.CardBody(children=
+                                [
+                                    html.H6("Pobreza e Extrema Pobreza (abr/2021)", className="card-title", style={'textAlign':'center'}),
+                                    html.P(id='pobreza_extrema', style={'textAlign':'center', 'fontSize':30})]
+                                ),
+                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white'})
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
+                            [
+                                dbc.CardBody(children=
+                                [
+                                    html.H6("BPC (fev/2021)", className="card-title", style={'textAlign':'center'}),
+                                    html.P(id='bpc_total', style={'textAlign':'center', 'fontSize':30}),
+                                    html.P(id='bpc_idosos_pcd', style={'textAlign':'center', 'fontSize':15})
+                                ]),
+                            ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white'}
+                            )
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
                     align='center'
+                ),
+                html.Br(),
+                dbc.Row(
+                    dbc.Col(dcc.Graph(id='cad_pbf'), xs=12, sm=12, md=12, lg=12, xl=12),
                 ),
                 html.Br(),
                 dbc.Row(
@@ -665,8 +685,8 @@ def toggle_modal(n1, n2, is_open):
     Output('bolsa_familia', 'children'),
     Output('pobreza_extrema', 'children'),
     Output('bpc_total', 'children'),
-    Output('bpc_deficiencia', 'children'),
-    Output('bpc_idosos', 'children'),
+    # Output('bpc_deficiencia', 'children'),
+    Output('bpc_idosos_pcd', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
@@ -677,14 +697,14 @@ def display_cadunico(w_municipios, w_municipios1):
     pessoas_pbf = f'{pessoas_pbf:_.0f}'.replace('.', ',').replace('_', '.')
     pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
     pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
-    bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].sum()
+    bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].astype('int').sum()
     bpc_total = f'{bpc_total:_.0f}'.replace('.', ',').replace('_', '.')
-    bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].sum()
+    bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].astype('int').sum()
     bpc_deficiencia = f'{bpc_deficiencia:_.0f}'.replace('.', ',').replace('_', '.')
-    bpc_idosos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_idoso_ben'].sum()
+    bpc_idosos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_idoso_ben'].astype('int').sum()
     bpc_idosos = f'{bpc_idosos:_.0f}'.replace('.', ',').replace('_', '.')
 
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', bpc_total, bpc_deficiencia, bpc_idosos
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', bpc_total + ' pessoas', bpc_deficiencia + ' com deficiência / ' + bpc_idosos + ' idosos'
 
 # EVOLUÇÃO DO CADUNICO E DO PBF
 @app.callback(Output('cad_pbf', 'figure'),
