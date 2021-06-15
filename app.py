@@ -770,7 +770,39 @@ def display_cadunico(w_municipios, w_municipios1):
     bpc_idosos = f'{bpc_idosos:_.0f}'.replace('.', ',').replace('_', '.')
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=['Total de Beneficiários', 'Portador de deficiência', 'Idoso'], y=[bpc_total, bpc_deficiencia, bpc_idosos], name='BPC', marker=dict(color='rgb(55, 83, 109)')))
+    fig.add_trace(go.Bar(x=['Total de Beneficiários'], y=[bpc_total], name='BPC', marker=dict(color='rgb(55, 83, 109)')))
+    fig.add_trace(go.Bar(x=['Portador de deficiência', 'Idoso'],
+                         y=[bpc_deficiencia, bpc_idosos], name='BPC', marker=dict(color='rgb(55, 83, 109)')))
+
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=1,
+            ticks='outside',
+            tickfont=dict(
+                family='Arial',
+                size=11,
+                color='rgb(82, 82, 82)',
+            ),
+        ),
+        yaxis=dict(
+            tickfont=dict(
+                family='Arial',
+                size=11,
+                color='rgb(82, 82, 82)',
+            ),
+            titlefont_size=12,
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        plot_bgcolor='white',
+        # barmode='group',
+    )
 
     annotations = []
     # Title
