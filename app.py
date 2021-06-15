@@ -79,7 +79,7 @@ app.layout = dbc.Container([
     dbc.Row(
         [
             dbc.Col(html.Img(src=logo_progredir, style={'height': '125px'}), style={'textAlign': 'center'}, xs=12, sm=12, md=12, lg=2, xl=2),
-            dbc.Col(html.H1("Painel da Inclusão Produtiva Urbana", style={'color': '#1E3248'}), xs=12, sm=12, md=12, lg=10, xl=10),
+            dbc.Col(html.H1("Painel da Inclusão Produtiva Urbana", style={'color':'#1351B4'}), xs=12, sm=12, md=12, lg=10, xl=10),
         ],
         align='center',
         justify='start',
@@ -138,14 +138,14 @@ app.layout = dbc.Container([
             html.Br(),
             dbc.Card(children=[
                 dbc.CardBody(children=[
-                    html.H6('População'),
-                    html.H4(id="populacao"),
+                    html.H6('População', style={'textAlign':'center'}),
+                    html.H4(id="populacao", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                     html.Br(),
-                    html.H6('PIB'),
-                    html.H4(id="pib_total"),
+                    html.H6('Produto Interno Bruto', style={'textAlign':'center'}),
+                    html.H4(id="pib_total", style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                     html.Br(),
-                    html.H6('IDHM'),
-                    html.H4(id="idhm"),
+                    html.H6('Índice de Desenvolvimento Humano', style={'textAlign':'center'}),
+                    html.H4(id="idhm", style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                 ]),
             ], id='data-box', color="#d4e09b", style={"width": "100%", 'fontColor':'black'}),
             html.Br(),
@@ -280,7 +280,7 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='cadunico', style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                                 ]),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border':'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -292,7 +292,7 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='bolsa_familia', style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'})]
+                                    html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'})]
                                 ),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -304,7 +304,7 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H6("Pobreza e Extrema Pobreza (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='pobreza_extrema', style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'})]
+                                    html.P(id='pobreza_extrema', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'})]
                                 ),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -315,7 +315,7 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H6("Famílias de catadores (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='catadores', style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.P(id='catadores', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                                 ]),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -326,7 +326,7 @@ def render_tab_content(active_tab):
                 html.Br(),
                 dbc.Row(
                     [
-                    dbc.Col(dcc.Graph(id='cad_pbf'), xs=12, sm=12, md=12, lg=12, xl=8),
+                    dbc.Col(dcc.Graph(id='cad_pbf', config={'responsive':True}), xs=12, sm=12, md=12, lg=12, xl=8),
                     dbc.Col(dcc.Graph(id='bpc'), xs=12, sm=12, md=12, lg=12, xl=4),
                         ]
                 ),
@@ -348,7 +348,7 @@ def render_tab_content(active_tab):
                 dbc.Row(
                     [
                         dbc.Col(dcc.Graph(id='pib_setorial'), xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col(dcc.Graph(id='empresas_setorial'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='empresas_setorial', config={'responsive':True}), xs=12, sm=12, md=12, lg=6, xl=6),
                     ]
                 )
             ], fluid=True
@@ -366,7 +366,7 @@ def render_tab_content(active_tab):
                                 [
                                     html.H6("Pessoas com carteira assinada", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='empregos', style={'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
+                                    html.P(id='empregos', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
                                     html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 15}),
                                 ]),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
@@ -380,7 +380,7 @@ def render_tab_content(active_tab):
                                 [
                                     html.H6("Vagas abertas no SINE (jun/2021)", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='sine', style={'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
+                                    html.P(id='sine', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
                                     dbc.Button("Buscar vagas no SINE", outline=True, color="dark", style={"width": "100%"},
                                                href='https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine',
                                                target="_blank"),
@@ -397,7 +397,7 @@ def render_tab_content(active_tab):
                                 [
                                     html.H6("Saldo de emprego em 12 meses", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='saldo_empregos12', style={'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
+                                    html.P(id='saldo_empregos12', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
                                     html.P(id='var_emprego', style={'textAlign': 'center', 'fontSize': 15, 'fontWeight': 'bold'}),
                                 ]
                                 ),
@@ -410,8 +410,8 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H6("Microeempreendedores Individuais (MEI)", className="card-title", style={'textAlign': 'center'}),
-                                    html.P(id='mei_cad', style={'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
-                                    html.P(id='mei_pbf', style={'textAlign': 'center', 'fontSize': 20})
+                                    html.P(id='mei_cad', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
+                                    html.P(id='mei_pbf', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'})
                                 ]),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -791,6 +791,7 @@ def display_cadunico(w_municipios, w_municipios1):
             showticklabels=False,
         ),
         autosize=False,
+        showlegend=False,
         margin=dict(autoexpand=True),
         plot_bgcolor='white'
     )
@@ -846,14 +847,15 @@ def display_ev_cadunico(w_municipios, w_municipios1):
             showticklabels=False,
         ),
         autosize=True,
+        hovermode="x unified",
         margin=dict(autoexpand=True),
         showlegend=True,
-        plot_bgcolor='white'
+        plot_bgcolor='white',
     )
 
     annotations = []
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.05,
+    annotations.append(dict(xref='paper', yref='paper', x=-0.2, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Evolução do nº de pessoas inscritas no CadÚnico<br>e de beneficiárias do Bolsa Família (2018-2021)',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
@@ -1202,13 +1204,13 @@ def display_content(w_municipios, w_municipios1):
 
     annotations = []
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=1.0, y=1.20,
+    annotations.append(dict(xref='paper', yref='paper', x=1.22, y=1.20,
                             xanchor='left', yanchor='bottom',
                             text= empresas1 + ' empresas',
                             font=dict(family='Arial', size=22, color='rgb(37,37,37)'),
                             showarrow=False))
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.00,
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.05,
                             xanchor='left', yanchor='bottom',
                             text='Número de empresas, por setor<br>de atividade econômica',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
@@ -1468,7 +1470,7 @@ def display_content(w_municipios, w_municipios1):
     df3 = df3.reset_index()
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=df3['ano'], y=df3['Total'], marker=dict(color='#386641')))
+    fig.add_trace(go.Scatter(x=df3['ano'], y=df3['Total'], marker=dict(color='#386641')))
     fig.update_layout(
         xaxis=dict(
             showline=True,
