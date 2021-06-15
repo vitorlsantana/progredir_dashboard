@@ -148,7 +148,7 @@ app.layout = dbc.Container([
             html.Br(),
             dbc.Button(
                 "Selecione os dados",
-                id="collapse-button2",
+                id="collapse-button",
                 className="mb-3 mr-5",
                 color="primary",
                 outline=True,
@@ -265,7 +265,7 @@ def get_municipios_value(w_municipios1):
 # COLLAPSE TAB
 @app.callback(
     Output("collapse-tab", "is_open"),
-    [Input("collapse-button2", "n_clicks")],
+    [Input("collapse-button", "n_clicks")],
     [State("collapse-tab", "is_open")],
 )
 def toggle_collapse(n, is_open):
@@ -490,26 +490,26 @@ def render_tab_content(active_tab):
                             dcc.Graph(id='top_vinculos'),
                             dbc.Button(
                                 "Abrir tabela com todas as ocupações",
-                                id="collapse-button",
+                                id="collapse-button2",
                                 className="mt-3",
                                 color="dark",
                             ),
                             dbc.Collapse(
                                 html.Div(id="table"),
-                                id="collapse",
+                                id="collapse2",
                             ),
                         ], xs=12, sm=12, md=12, lg=6, xl=6),
                         dbc.Col([
                             dcc.Graph(id='remuneracao'),
                             dbc.Button(
                                 "Abrir tabela com todas as ocupações",
-                                id="collapse-button2",
+                                id="collapse-button3",
                                 className="mt-3",
                                 color="dark",
                             ),
                             dbc.Collapse(
                                 html.Div(id="table2"),
-                                id="collapse2",
+                                id="collapse3",
                             ),
                         ], xs=12, sm=12, md=12, lg=6, xl=6),
                     ], align='center', justify="center"),
@@ -518,13 +518,13 @@ def render_tab_content(active_tab):
                             dcc.Graph(id='saldo_ocupacao'),
                             dbc.Button(
                                 "Abrir tabela com todas as ocupações",
-                                id="collapse-button",
+                                id="collapse-button4",
                                 className="mt-3",
                                 color="dark",
                             ),
                             dbc.Collapse(
                                 html.Div(id="table3"),
-                                id="collapse",
+                                id="collapse4",
                             ),
                         ], xs=12, sm=12, md=12, lg=6, xl=6)),
                 html.Br(),
@@ -770,9 +770,9 @@ def render_tab_content(active_tab):
     return "No tab selected"
 
 @app.callback(
-    Output("collapse", "is_open"),
-    [Input("collapse-button", "n_clicks")],
-    [State("collapse", "is_open")],
+    Output("collapse2", "is_open"),
+    [Input("collapse-button2", "n_clicks")],
+    [State("collapse2", "is_open")],
 )
 def toggle_collapse(n, is_open):
     if n:
@@ -780,9 +780,19 @@ def toggle_collapse(n, is_open):
     return is_open
 
 @app.callback(
-    Output("collapse2", "is_open"),
-    [Input("collapse-button2", "n_clicks")],
-    [State("collapse2", "is_open")],
+    Output("collapse3", "is_open"),
+    [Input("collapse-button3", "n_clicks")],
+    [State("collapse3", "is_open")],
+)
+def toggle_collapse(n, is_open):
+    if n:
+        return not is_open
+    return is_open
+
+@app.callback(
+    Output("collapse4", "is_open"),
+    [Input("collapse-button4", "n_clicks")],
+    [State("collapse4", "is_open")],
 )
 def toggle_collapse(n, is_open):
     if n:
