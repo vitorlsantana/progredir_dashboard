@@ -389,6 +389,12 @@ def render_tab_content(active_tab):
                         dbc.Col(dcc.Graph(id='analfabetismo', config={'responsive':True}), xs=12, sm=12, md=12, lg=6, xl=5),
                     ]
                 ),
+                dbc.Row(
+                    [
+                        dbc.Col(dcc.Graph(id='evasao')),
+                        dbc.Col(dcc.Graph(id='idade_serie'))
+                    ]
+                ),
                 html.Br(),
                 dbc.Row(
                     [
@@ -1198,6 +1204,28 @@ def display_escolaridade(w_municipios, w_municipios1):
 
     return fig, fig2
 
+# DISTORÇÃO IDADE-SÉRIE, EVASÃO E REMUNERAÇÃO PROFESSORES
+@app.callback(
+    Output('idade_serie', 'figure'),
+    Output('evasao', 'figure'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
+def display_idade_serie(w_municipios, w_municipios1):
+    remuneracao_brasil = df['remuneracao_docente_edbasica'].mean()
+    remuneracao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['remuneracao_docente_edbasica'].astype('float').sum()
+
+    evasao_brasil = df['taxa_evasao_abandono'].mean()
+    evasao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['taxa_evasao_abandono'].astype('float').sum()
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=['Remuneração média nacional', 'Remuneração média na localidade'], y=[remuneracao_brasil, remuneracao_municipio]))
+
+    fig2 = go.Figure()
+    fig2.add_trace((go.Bar(x=['Taxa de evasão nacional', 'Taxa de evasão na localidade'], y=[remuneracao_brasil, remuneracao_municipio])))
+
+    return fig, fig2
+
 # NÚMEROS SOBRE EMPRESAS E ESTOQUE DE EMPREGOS
 @app.callback(
     Output('empregos', 'children'),
@@ -1681,7 +1709,7 @@ def display_content(w_municipios, w_municipios1):
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Ministério da Economia, fev/2021',
+                            text='Fonte: Ministério da Cidadania/Ministério da Economia, jul/2020',
                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
                             showarrow=False))
 
