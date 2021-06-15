@@ -314,7 +314,7 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Famílias de catadores", className="card-title", style={'textAlign':'center'}),
+                                    html.H6("Famílias de catadores (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='catadores', style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                                 ]),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
