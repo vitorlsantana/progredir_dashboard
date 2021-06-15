@@ -314,9 +314,8 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Benefício de Prestação Continuada (fev/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='bpc_total', style={'textAlign':'center', 'fontSize':25, 'fontWeight':'bold'}),
-                                    html.P(id='bpc_idosos_pcd', style={'textAlign':'center', 'fontSize':20})
+                                    html.H6("Famílias de catadores", className="card-title", style={'textAlign':'center'}),
+                                    html.P(id='catadores', style={'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                                 ]),
                             ], color="#ffffff", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -326,7 +325,10 @@ def render_tab_content(active_tab):
                 ),
                 html.Br(),
                 dbc.Row(
-                    dbc.Col(dcc.Graph(id='cad_pbf'), xs=12, sm=12, md=12, lg=12, xl=12),
+                    [
+                    dbc.Col(dcc.Graph(id='cad_pbf'), xs=12, sm=12, md=12, lg=12, xl=8),
+                    dbc.Col(dcc.Graph(id='bpc'), xs=12, sm=12, md=12, lg=12, xl=4),
+                        ]
                 ),
                 html.Br(),
                 dbc.Row(
@@ -737,8 +739,7 @@ def toggle_modal(n1, n2, is_open):
     Output('cadunico', 'children'),
     Output('bolsa_familia', 'children'),
     Output('pobreza_extrema', 'children'),
-    Output('bpc_total', 'children'),
-    Output('bpc_idosos_pcd', 'children'),
+    Output('catadores', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
@@ -749,6 +750,18 @@ def display_cadunico(w_municipios, w_municipios1):
     pessoas_pbf = f'{pessoas_pbf:_.0f}'.replace('.', ',').replace('_', '.')
     pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
     pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
+    catadores = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_catadores_cad '].sum()
+    catadores = f'{catadores:_.0f}'.replace('.', ',').replace('_', '.')
+
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', catadores + ' famílias'
+
+# NÚMEROS CADASTRO ÚNICO E BOLSA FAMÍLIA
+@app.callback(
+    Output('bpc', 'figure'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
+def display_cadunico(w_municipios, w_municipios1):
     bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].astype('int').sum()
     bpc_total = f'{bpc_total:_.0f}'.replace('.', ',').replace('_', '.')
     bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].astype('int').sum()
@@ -756,7 +769,25 @@ def display_cadunico(w_municipios, w_municipios1):
     bpc_idosos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_idoso_ben'].astype('int').sum()
     bpc_idosos = f'{bpc_idosos:_.0f}'.replace('.', ',').replace('_', '.')
 
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', bpc_total + ' pessoas', bpc_deficiencia + ' com deficiência / ' + bpc_idosos + ' idosos'
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=['Total de Beneficiários', 'Portador de deficiência', 'Idoso'], y=[bpc_total, bpc_deficiencia, bpc_idosos], name='BPC', marker=dict(color='rgb(55, 83, 109)')))
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.05,
+                            xanchor='left', yanchor='bottom',
+                            text='Beneficío de Prestação Continuada (fev/2021)',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Cadastro Único',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+    fig.update_layout(annotations=annotations)
+
+    return fig
 
 # EVOLUÇÃO DO CADUNICO E DO PBF
 @app.callback(Output('cad_pbf', 'figure'),
