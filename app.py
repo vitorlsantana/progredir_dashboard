@@ -420,9 +420,9 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Microeempreendedores Individuais (MEI)", className="card-title", style={'textAlign': 'center'}),
-                                    html.P(id='mei_cad', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
-                                    html.P(id='mei_pbf', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'})
+                                    html.H6("Saldo de empregos em 2021", className="card-title", style={'textAlign': 'center'}),
+                                    html.P(id='saldo_empregos2021', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
+                                    html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 15}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -440,7 +440,10 @@ def render_tab_content(active_tab):
                 ),
                 html.Br(),
                 dbc.Row(
-                    dbc.Col(dcc.Graph(id='evolucao_empregos'), xs=12, sm=12, md=12, lg=12, xl=12), align='center', justify="center",
+                    [
+                        dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=4, xl=4),
+                        dbc.Col(dcc.Graph(id='evolucao_empregos'), xs=12, sm=12, md=12, lg=8, xl=8),
+            ], align='center', justify="center",
                 ),
                 html.Br(),
                 dbc.Row(
@@ -1247,17 +1250,19 @@ def display_content(w_municipios, w_municipios1):
 # SALDO E VARIAÇÃO DE EMPREGOS
 @app.callback(
     Output('saldo_empregos12', 'children'),
+    Output('saldo_empregos2021', 'children'),
     Output('var_emprego', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
 def display_content1(w_municipios, w_municipios1):
-    # df1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2021'].sum()
+    df1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2021'].sum()
+    df1 = f'{df1:_.0f}'.replace('.', ',').replace('_', '.')
     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
     df2 = f'{df2:_.0f}'.replace('.', ',').replace('_', '.')
     df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum()
 
-    return df2, 'Variação de ' + df3 + '% em 12 meses'
+    return df2, df1, 'Variação de ' + df3 + '% em 12 meses'
 
 # EVOLUÇÃO DO SALDO DE EMPREGOS
 @app.callback(Output('evolucao_empregos', 'figure'),
@@ -1544,8 +1549,8 @@ def update_top_vinculos2(w_municipios, w_municipios1):
                                 )
 
 # EMPREENDEDORISMO
-@app.callback(Output('mei_cad', 'children'),
-              Output('mei_pbf', 'children'),
+@app.callback(Output('mei', 'figure'),
+              # Output('mei_pbf', 'children'),
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
@@ -1555,7 +1560,52 @@ def display_content(w_municipios, w_municipios1):
     mei_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_pbf'].astype('int').sum()
     mei_pbf = f'{mei_pbf:_.0f}'.replace('.', ',').replace('_', '.')
 
-    return mei_cadunico + ' no Cadastro Único', mei_pbf + ' no Bolsa Família'
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        y=[mei_cadunico, mei_pbf], x=['Cadastro Único', 'Bolsa Família'], textposition='inside', name='MEI',
+        marker=dict(color='#f8961e', line=dict(color='white', width=1)
+        )
+    ))
+
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=True,
+        margin=dict(autoexpand=True),
+        showlegend=False,
+        plot_bgcolor='white',
+    )
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Microeempreendedor Indivudual (MEI)',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania/Ministério da Economia, fev/2021',
+                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+
+
+    return fig
 
 # OCUPAÇÕES COM MAIORES VINCULOS
 @app.callback(
@@ -1585,8 +1635,6 @@ def update_top_vinculos(w_municipios, w_municipios1):
     df5 = df4.iloc[1: , :]
 
     fig = go.Figure()
-    # fig.add_trace(go.Bar(x=df5['vinculos'], y=df5['ocupation'], orientation='h', textposition='inside',
-    #                      marker=dict(color='#ff9100')))
 
     fig.add_trace(go.Pie(labels=df5['ocupation'], values=df5['vinculos'],
                           hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 12}))
@@ -1607,43 +1655,6 @@ def update_top_vinculos(w_municipios, w_municipios1):
                             showarrow=False))
 
 
-    # fig.update_layout(
-    #     xaxis=dict(
-    #         showline=True,
-    #         showgrid=False,
-    #         showticklabels=False,
-    #         linecolor='rgb(204, 204, 204)',
-    #         linewidth=2,
-    #         ticks='outside',
-    #         tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
-    #         ),
-    #     ),
-    #     yaxis=dict(
-    #         showgrid=False,
-    #         zeroline=False,
-    #         showline=False,
-    #         showticklabels=True,
-    #     ),
-    #     autosize=True,
-    #     margin=dict(autoexpand=True),
-    #     showlegend=False,
-    #     plot_bgcolor='white'
-    # )
-
-    # annotations = []
-    # # Title
-    # annotations.append(dict(xref='paper', yref='paper', x=-0.8, y=1.1,
-    #                         xanchor='left', yanchor='bottom',
-    #                         text='Ocupações com maior quantidade de vínculos',
-    #                         font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-    #                         showarrow=False))
-    # # Source
-    # annotations.append(dict(xref='paper', yref='paper', x=-0.2, y=-0.2,
-    #                         xanchor='center', yanchor='top',
-    #                         text='Fonte: Ministério da Economia/RAIS, 2020',
-    #                         font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
-    #                         showarrow=False))
-    #
     fig.update_layout(annotations=annotations)
     return fig
 
