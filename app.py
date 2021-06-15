@@ -128,7 +128,7 @@ app.layout = dbc.Container([
                 options=[{'label': i, 'value': i} for i in sorted(df['uf'].unique())],
                 value='Alagoas',
                 placeholder="Selecione a UF",
-                style={'display': True, "width": "100%", 'height': '40px'}
+                style={'display': True, "width": "100%", 'height': '40px', 'color':'primary', 'outline':True}
             ),
             html.Br(),
             html.P('Selecione o Município', style={'color': '#0C326F', 'fontWeight': 'bold'}),
@@ -141,6 +141,30 @@ app.layout = dbc.Container([
                 placeholder='Selecione o município',
                 options=[],
                 style={'display': True, "width": "100%", 'height': '40px'}
+            ),
+            html.Br(),
+            dbc.Button(
+                "Selecione os dados",
+                id="collapse-button2",
+                className="mb-3 mr-5",
+                color="primary",
+                outline=True,
+                n_clicks=0,
+                style={"width": "100%", 'fontWeight': 'bold'}
+            ),
+            dbc.Collapse(
+                dbc.Tabs([
+                    dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style,
+                            active_tab_style=tab_selected_style),
+                    dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho", tab_style=tab_style,
+                            active_tab_style=tab_selected_style),
+                    dbc.Tab(label="Serviços", tab_id="servicos", tab_style=tab_style,
+                            active_tab_style=tab_selected_style)],
+                    id="tabs",
+                    active_tab="social"
+                ),
+                id="collapse-tab",
+                is_open=False,
             ),
             html.Br(),
             dbc.Card(children=[
@@ -206,13 +230,13 @@ app.layout = dbc.Container([
         # TABS
         html.Br(),
         dbc.Col(children=[
-            dbc.Tabs([
-                dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style, active_tab_style=tab_selected_style),
-                dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho", tab_style=tab_style, active_tab_style=tab_selected_style),
-                dbc.Tab(label="Serviços", tab_id="servicos", tab_style=tab_style, active_tab_style=tab_selected_style)],
-                id="tabs",
-                active_tab="social"
-            ),
+            # dbc.Tabs([
+            #     dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style, active_tab_style=tab_selected_style),
+            #     dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho", tab_style=tab_style, active_tab_style=tab_selected_style),
+            #     dbc.Tab(label="Serviços", tab_id="servicos", tab_style=tab_style, active_tab_style=tab_selected_style)],
+            #     id="tabs",
+            #     active_tab="social"
+            # ),
             html.Div(id="tab-content", className="p-10"),
         ], xs=12, sm=12, md=10, lg=10, xl=10),
     ], justify="center"),
@@ -234,6 +258,17 @@ def get_municipios_options(w_municipios):
 )
 def get_municipios_value(w_municipios1):
     return [k['value'] for k in w_municipios1][0]
+
+# COLLAPSE TAB
+@app.callback(
+    Output("collapse-tab", "is_open"),
+    [Input("collapse-button2", "n_clicks")],
+    [State("collapse-tab", "is_open")],
+)
+def toggle_collapse(n, is_open):
+    if n:
+        return not is_open
+    return is_open
 
 # POPULAÇÃO, PIB TOTAL E IDHM
 @app.callback(
@@ -406,10 +441,10 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Saldo de emprego em 12 meses", className="card-title",
+                                    html.H6("Saldo de empregos formais em 12 meses", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='saldo_empregos12', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
-                                    html.P(id='var_emprego', style={'textAlign': 'center', 'fontSize': 15, 'fontWeight': 'bold'}),
+                                    html.P(id='var_emprego', style={'textAlign': 'center', 'fontSize': 15}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'box-shadow': '1px 1px 1px 1px lightgrey'})
@@ -420,7 +455,7 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Saldo de empregos em 2021", className="card-title", style={'textAlign': 'center'}),
+                                    html.H6("Saldo de empregos formais em 2021", className="card-title", style={'textAlign': 'center'}),
                                     html.P(id='saldo_empregos2021', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
                                     html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 15}),
                                 ]),
@@ -1188,9 +1223,9 @@ def display_content(w_municipios, w_municipios1):
               Input('w_municipios1', 'value')
               )
 def display_content(w_municipios, w_municipios1):
-    setores = ['Agropecuária', 'Indústria Extrativa', 'Indústria de Transformação', 'Construção', 'Comércio', 'Transporte', 'Alojamento e Alimentação', 'Informação e Comunicação',
-               'Atividades Profissionais, Científicas e Técnicas', 'Atividades Administrativas',
-               'Educação', 'Saúde', 'Arte, Cultura e Esportes', 'Outras Atividades']
+    setores = ['Agropecuária', 'Indústria<br>Extrativa', 'Indústria de<br>Transformação', 'Construção', 'Comércio', 'Transporte', 'Alojamento e<br>Alimentação', 'Informação e<br>Comunicação',
+               'Atividades Científicas<br>e Técnicas', 'Atividades< >Administrativas',
+               'Educação', 'Saúde', 'Arte, Cultura e<br>Esportes', 'Outras Atividades']
     agropecuaria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_agropecuaria'].sum()
     ind_extrativa = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ind_extrativas'].sum()
     ind_transf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ind_transf'].sum()
@@ -1213,25 +1248,46 @@ def display_content(w_municipios, w_municipios1):
     empresas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_total'].sum()
     empresas1 = f'{empresas:_.0f}'.replace('_', '.')
 
-
     fig = go.Figure()
-    fig.add_trace(go.Pie(labels=setores, values=[agropecuaria, ind_extrativa, ind_transf, construcao, comercio, transporte,
-                    aloj_alimentacao,info_comunic, ativ_prof, ativ_administrativas, educacao, saude, arte_cultura, outras_ativ],
-                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 12}))
+    fig.add_trace(go.Bar(x=setores, y=[agropecuaria, ind_extrativa, ind_transf, construcao, comercio, transporte,
+                    aloj_alimentacao, info_comunic, ativ_prof, ativ_administrativas, educacao, saude, arte_cultura, outras_ativ],
+                         name='Atividade', marker=dict(color='#2670E8')))
+
+    fig.update_layout(bargap=0.25, bargroupgap=0.2)
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=True,
+        margin=dict(autoexpand=True),
+        plot_bgcolor='white'
+    )
 
     annotations = []
 
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.05,
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Número de empresas, por setor<br>de atividade econômica',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.8, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: IBGE/CEMPRE, 2018',
-                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -1406,7 +1462,7 @@ def display_escolaridade(w_municipios, w_municipios1):
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.28,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.25,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania/Cadastro Único, fev/2021',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
