@@ -780,28 +780,19 @@ def display_cadunico(w_municipios, w_municipios1):
             showgrid=False,
             showticklabels=True,
             linecolor='rgb(204, 204, 204)',
-            linewidth=1,
+            linewidth=2,
             ticks='outside',
-            tickfont=dict(
-                family='Arial',
-                size=11,
-                color='rgb(82, 82, 82)',
-            ),
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
-            tickfont=dict(
-                family='Arial',
-                size=11,
-                color='rgb(82, 82, 82)',
-            ),
-            titlefont_size=12,
             showgrid=False,
             zeroline=False,
             showline=False,
             showticklabels=False,
         ),
-        plot_bgcolor='white',
-        # barmode='group',
+        autosize=False,
+        margin=dict(autoexpand=True),
+        plot_bgcolor='white'
     )
 
     annotations = []
