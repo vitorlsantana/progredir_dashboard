@@ -26,9 +26,12 @@ df_caged_melted = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
 
 data2 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/evolucao_pessoas_cad_pbf.csv'
 df_cad = pd.read_csv(data2, sep=';', encoding='latin1')
-#
+
 data3 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
 df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1')
+
+data4 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/saldo_empregos_ocupacao_subgruposprincipais_2015_2019.csv'
+df_saldo = pd.read_csv(data4, sep=';', encoding='latin1')
 
 # data4 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\cnes localizacao e regiao saude.csv'
 # df5 = pd.read_csv(data4, sep=',', error_bad_lines=False)
@@ -510,6 +513,20 @@ def render_tab_content(active_tab):
                             ),
                         ], xs=12, sm=12, md=12, lg=6, xl=6),
                     ], align='center', justify="center"),
+                dbc.Row(
+                        dbc.Col([
+                            dcc.Graph(id='saldo_ocupacao'),
+                            dbc.Button(
+                                "Abrir tabela com todas as ocupações",
+                                id="collapse-button",
+                                className="mt-3",
+                                color="dark",
+                            ),
+                            dbc.Collapse(
+                                html.Div(id="table3"),
+                                id="collapse",
+                            ),
+                        ], xs=12, sm=12, md=12, lg=6, xl=6)),
                 html.Br(),
                 # html.Div([
                 #     html.Div([
@@ -1733,6 +1750,92 @@ def update_top_vinculos2(w_municipios, w_municipios1):
                                 style_cell={'backgroundColor': 'white', 'color': 'black', 'fontFamily':'Arial', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
+
+
+# OCUPAÇÕES COM MAIORES VINCULOS
+@app.callback(
+    Output('saldo_ocupacao', 'figure'),
+    # [Input('dropdown', 'value')],
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
+def update_top_vinculos(w_municipios, w_municipios1):
+    df2 = df_saldo.melt(id_vars=["uf", "municipio", "ibge", 'ano'],
+                          var_name="ocupation",
+                          value_name="saldo")
+    df2['ocupation'] = df2['ocupation'].str.capitalize()
+    df3 = df2[(df2['municipio'] == w_municipios1) & (df2['uf'] == w_municipios) & (df2['ano'] == 2019)]
+
+    df3 = df3.nlargest(6, 'saldo')
+    df3 = df3.iloc[1: , :]
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        y=df3['saldo'], x=df3['ocupation'], textposition='inside', name='Saldo',
+        marker=dict(color='#f8961e', line=dict(color='white', width=1)
+        )))
+
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=True,
+        margin=dict(autoexpand=True),
+        showlegend=False,
+        plot_bgcolor='white',
+    )
+
+    annotations = []
+
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Ocupações com maior saldo<br>de empregos formais',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+
+    fig.update_layout(annotations=annotations)
+    return fig
+
+# PLANILHA COM TODOS AS OCUPAÇÕES POR QUANTODADE DE VÍNCULOS
+@app.callback(
+    Output('table3', 'children'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
+def update_top_vinculos2(w_municipios, w_municipios1):
+    df1 = df_saldo.melt(id_vars=["uf", "municipio", "ano"], var_name="Ocupação", value_name="Saldo de Empregos")
+    df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
+    df2 = df2.iloc[1:, :]
+    data = df2.to_dict('records')
+    columns = [{"name": i, "id": i,} for i in df2[['Ocupação', 'Saldo de Empregos']]]
+    export_format = "xlsx"
+    return dash_table.DataTable(data=data, columns=columns, export_format=export_format, filter_action='native',
+                                page_action = "native", page_current=0, page_size=10, sort_action='native', export_headers="display",
+                                style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold', 'fontFamily':'Arial', 'fontSize':12},
+                                style_cell={'backgroundColor': 'white', 'color': 'black', 'fontFamily':'Arial', 'fonteSize':12,
+                                            'minWidth': 95, 'width': 95, 'maxWidth': 95},
+                                )
+
 
 # # EVOLUCAO DOS VINCULOS POR OCUPAÇÃO
 # # @app.callback(
