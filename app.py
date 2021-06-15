@@ -40,16 +40,17 @@ tabs_styles = {
     'justifyContent':'center',
     'textAlign':'center',
     'width':'275px',
-    'marginRight':'5px'
+    'marginRight':'5px',
+    # 'borderBottom': '0px solid transparent',
 }
 tab_style = {
-    'borderBottom': '1px solid #d6d6d6',
+    # 'borderBottom': '0px solid #d6d6d6',
     'padding': '0px',
     'color':'#586069',
     'fontWeight': 'bold',
     'border-radius': '5px',
     'background-color': 'white',
-    'box-shadow': '1px 1px 1px 1px lightgrey',
+    'box-shadow': '1px 0px 1px 1px lightgrey',
     'justifyContent': 'center',
     'textAlign': 'center',
     'width':'275px',
@@ -59,7 +60,7 @@ tab_style = {
 tab_selected_style = {
     'borderTop': '2px solid #5992ED',
     'height': '42px',
-    'borderBottom': '0px solid #d6d6d6',
+    # 'borderBottom': '0px solid #d6d6d6',
     'color': '#ffba08',
     'padding': '0px',
     'border-radius': '5px',
@@ -78,7 +79,7 @@ app.layout = dbc.Container([
     dbc.Row(
         [
             dbc.Col([], className='col-3'),
-            dbc.Col(html.H1('Painel da Inclusão Produtiva Urbana', style={'color':'#1351B4', 'textAlign':'center'}),
+            dbc.Col(html.H1('Painel da Inclusão Produtiva Urbana', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':40}),
                     className='col-6', style={'align':'center', 'padding':'30px'}, xs=12, sm=12, md=12, lg=12, xl=12),
             dbc.Col([], className='col-3'),
         ], className='row', align='center', style={'backgroundColor':'#FFFFF', 'box-shadow': '1px 1px 1px 1px lightgrey', 'margin-bottom':'20px'}
@@ -144,16 +145,16 @@ app.layout = dbc.Container([
             html.Br(),
             dbc.Card(children=[
                 dbc.CardBody(children=[
-                    html.H6('População', style={'textAlign':'center'}),
-                    html.H4(id="populacao", style={'color':'#0C326F', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                    html.Br(),
-                    html.H6('Produto Interno Bruto', style={'textAlign':'center'}),
-                    html.H4(id="pib_total", style={'color':'#0C326F', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                    html.Br(),
-                    html.H6('Índice de Desenvolvimento Humano', style={'textAlign':'center'}),
-                    html.H4(id="idhm", style={'color':'#0C326F', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                ]),
-            ], id='data-box', color="#EDEDED", style={"width": "100%"}),
+                    html.H5('População', style={'textAlign':'center', 'margin-top':'10px', }),
+                    html.H4(id="populacao", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
+                    # html.Br(),
+                    html.H5('Produto Interno Bruto', style={'textAlign':'center'}),
+                    html.H4(id="pib_total", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
+                    # html.Br(),
+                    html.H5('Índice de Desenvolvimento Humano', style={'textAlign':'center'}),
+                    html.H4(id="idhm", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'10px'}),
+                ], style={'padding':'0.30rem'}),
+            ], id='data-box', color="#F8F8F8", style={"width": "100%"}),
             html.Br(),
             dbc.Button(
                 "Saiba mais sobre o painel",
@@ -1384,9 +1385,9 @@ def display_escolaridade(w_municipios, w_municipios1):
             showgrid=False,
             zeroline=False,
             showline=False,
-            showticklabels=True,
+            showticklabels=False,
         ),
-        autosize=False,
+        autosize=True,
         margin=dict(autoexpand=True),
         showlegend=False,
         plot_bgcolor='white'
@@ -1400,7 +1401,7 @@ def display_escolaridade(w_municipios, w_municipios1):
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.25,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.28,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania/Cadastro Único, fev/2021',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
