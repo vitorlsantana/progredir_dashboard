@@ -1581,50 +1581,69 @@ def update_top_vinculos(w_municipios, w_municipios1):
     # result = pd.concat([df_caged11, df], axis=1)
     # df1 = result[(result['uf'] == w_municipios) & (result['municipio'] == w_municipios1)]
 
-    df4 = df3.nlargest(11, 'vinculos')
+    df4 = df3.nlargest(6, 'vinculos')
     df5 = df4.iloc[1: , :]
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=df5['vinculos'], y=df5['ocupation'], orientation='h', textposition='inside',
-                         marker=dict(color='#ff9100')))
+    # fig.add_trace(go.Bar(x=df5['vinculos'], y=df5['ocupation'], orientation='h', textposition='inside',
+    #                      marker=dict(color='#ff9100')))
 
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=False,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
-            ),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=True,
-        ),
-        autosize=True,
-        margin=dict(autoexpand=True),
-        showlegend=False,
-        plot_bgcolor='white'
-    )
+    fig.add_trace(go.Pie(labels=df5['ocupation'], values=df5['vinculos'],
+                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 12}))
 
     annotations = []
+
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=-0.8, y=1.1,
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Ocupações com maior quantidade de vínculos',
+                            text='Ocupações com maior quantidade<br>de vínculos',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=-0.2, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
+
+    # fig.update_layout(
+    #     xaxis=dict(
+    #         showline=True,
+    #         showgrid=False,
+    #         showticklabels=False,
+    #         linecolor='rgb(204, 204, 204)',
+    #         linewidth=2,
+    #         ticks='outside',
+    #         tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
+    #         ),
+    #     ),
+    #     yaxis=dict(
+    #         showgrid=False,
+    #         zeroline=False,
+    #         showline=False,
+    #         showticklabels=True,
+    #     ),
+    #     autosize=True,
+    #     margin=dict(autoexpand=True),
+    #     showlegend=False,
+    #     plot_bgcolor='white'
+    # )
+
+    # annotations = []
+    # # Title
+    # annotations.append(dict(xref='paper', yref='paper', x=-0.8, y=1.1,
+    #                         xanchor='left', yanchor='bottom',
+    #                         text='Ocupações com maior quantidade de vínculos',
+    #                         font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+    #                         showarrow=False))
+    # # Source
+    # annotations.append(dict(xref='paper', yref='paper', x=-0.2, y=-0.2,
+    #                         xanchor='center', yanchor='top',
+    #                         text='Fonte: Ministério da Economia/RAIS, 2020',
+    #                         font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+    #                         showarrow=False))
+    #
     fig.update_layout(annotations=annotations)
     return fig
 
