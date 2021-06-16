@@ -15,23 +15,68 @@ server = app.server
 
 # CARREGAR DADOS
 data = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/base_painel_inclus%C3%A3o_produtiva.csv'
-df = pd.read_csv(data, sep=';', encoding='latin1')
+df = pd.read_csv(data, sep=';', encoding='latin1', low_memory=False)
+uf = df.groupby(by=["uf"]).sum().reset_index()
+uf['municipio'] = 'Todos os Municípios'
+regiao = df.groupby(by=['regiao']).sum().reset_index()
+regiao['municipio'] = 'Todos os Municípios'
+regiao['uf'] = regiao['regiao']
+pais = df.groupby(by=["pais"]).sum().reset_index()
+pais['municipio'] = 'Todos os Municípios'
+pais['uf'] = pais['pais']
+df = df.append([uf, regiao, pais], ignore_index=True)
 
 data1 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/vinculos_ativos_ocupacao_subgruposprincipais_2015_2019.csv'
-df_caged = pd.read_csv(data1, sep=';', encoding='latin1')
-df_caged_melted = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
+df_caged = pd.read_csv(data1, sep=';', encoding='latin1', low_memory=False)
+uf1 = df_caged.groupby(by=["uf"]).sum().reset_index()
+uf1['municipio'] = 'Todos os Municípios'
+regiao1 = df_caged.groupby(by=['regiao']).sum().reset_index()
+regiao1['municipio'] = 'Todos os Municípios'
+regiao1['uf'] = regiao['regiao']
+pais1 = df_caged.groupby(by=["pais"]).sum().reset_index()
+pais1['municipio'] = 'Todos os Municípios'
+pais1['uf'] = pais['pais']
+df_caged = df_caged.append([uf1, regiao1, pais1], ignore_index=True)
+df_caged_melted = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'regiao', 'pais', 'ano'],
                                 var_name="ocupation",
                                 value_name="vinculos")
 # ocupations = df_caged_melted['ocupation'].unique()
 
 data2 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/evolucao_pessoas_cad_pbf.csv'
-df_cad = pd.read_csv(data2, sep=';', encoding='latin1')
+df_cad = pd.read_csv(data2, sep=';', encoding='latin1', low_memory=False)
+uf2 = df_cad.groupby(by=["uf"]).sum().reset_index()
+uf2['municipio'] = 'Todos os Municípios'
+regiao2 = df_cad.groupby(by=['regiao']).sum().reset_index()
+regiao2['municipio'] = 'Todos os Municípios'
+regiao2['uf'] = regiao['regiao']
+pais2 = df_cad.groupby(by=["pais"]).sum().reset_index()
+pais2['municipio'] = 'Todos os Municípios'
+pais2['uf'] = pais['pais']
+df_cad = df_cad.append([uf2, regiao2, pais2], ignore_index=True)
 
 data3 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
-df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1')
+df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1', low_memory=False)
+uf3 = df_remuneracao.groupby(by=["uf"]).sum().reset_index()
+uf3['municipio'] = 'Todos os Municípios'
+regiao3 = df_remuneracao.groupby(by=['regiao']).sum().reset_index()
+regiao3['municipio'] = 'Todos os Municípios'
+regiao3['uf'] = regiao['regiao']
+pais3 = df_remuneracao.groupby(by=["pais"]).sum().reset_index()
+pais3['municipio'] = 'Todos os Municípios'
+pais3['uf'] = pais['pais']
+df_remuneracao = df_remuneracao.append([uf3, regiao3, pais3], ignore_index=True)
 
 data4 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/saldo_empregos_ocupacao_subgruposprincipais_2015_2019.csv'
-df_saldo = pd.read_csv(data4, sep=';', encoding='latin1')
+df_saldo = pd.read_csv(data4, sep=';', encoding='latin1', low_memory=False)
+uf4 = df_saldo.groupby(by=["uf"]).sum().reset_index()
+uf4['municipio'] = 'Todos os Municípios'
+regiao4 = df_saldo.groupby(by=['regiao']).sum().reset_index()
+regiao4['municipio'] = 'Todos os Municípios'
+regiao4['uf'] = regiao['regiao']
+pais4 = df_saldo.groupby(by=["pais"]).sum().reset_index()
+pais4['municipio'] = 'Todos os Municípios'
+pais4['uf'] = pais['pais']
+df_saldo = df_saldo.append([uf4, regiao4, pais4], ignore_index=True)
 
 # data4 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\cnes localizacao e regiao saude.csv'
 # df5 = pd.read_csv(data4, sep=',', error_bad_lines=False)
@@ -120,12 +165,12 @@ app.layout = dbc.Container([
             #                 {"label": "Município", "value": "Município"},
             #             ],
             #             value='Brasil',
-            #             id="radioitems-inline-input",
+            #             id="radioitems",
             #             inline=True,
             #         ),
             #     ]
             # ),
-            html.Label('Selecione a UF', style={'display': True, "width": "100%", 'color': '#0C326F', 'fontWeight': 'bold'},
+            html.Label('Selecione a Região', style={'display': True, "width": "100%", 'color': '#0C326F', 'fontWeight': 'bold'},
                    className='mt-3'),
             dcc.Dropdown(
                 id='w_municipios',
@@ -133,8 +178,8 @@ app.layout = dbc.Container([
                 clearable=True,
                 disabled=False,
                 options=[{'label': i, 'value': i} for i in sorted(df['uf'].unique())],
-                value='Alagoas',
-                placeholder="Selecione a UF",
+                value='Brasil',
+                placeholder="Selecione a região",
                 style={'display': True, "width": "100%", 'height': '40px', 'color':'primary', 'outline':True}
             ),
             html.Br(),
@@ -144,7 +189,7 @@ app.layout = dbc.Container([
                 multi=False,
                 clearable=True,
                 disabled=False,
-                value='',
+                value='Todos os Municípios',
                 placeholder='Selecione o município',
                 options=[],
                 style={'display': True, "width": "100%", 'height': '40px'}
@@ -1438,9 +1483,9 @@ def display_saldo_empregos_recente(w_municipios, w_municipios1):
     df1 = f'{df1:_.0f}'.replace('.', ',').replace('_', '.')
     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
     df2 = f'{df2:_.0f}'.replace('.', ',').replace('_', '.')
-    df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum()
+    df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum() / df['municipio'].count()
 
-    return df2, df1, 'Variação de ' + df3 + '% em 12 meses'
+    return df2, df1, df3
 
 # EVOLUÇÃO DO SALDO DE EMPREGOS
 @app.callback(Output('evolucao_empregos', 'figure'),
@@ -1793,9 +1838,10 @@ def display_mei(w_municipios, w_municipios1):
     Input('w_municipios1', 'value')
 )
 def update_top_vinculos(w_municipios, w_municipios1):
-    df2 = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'ano'],
+    df2 = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'regiao', 'pais', 'ano'],
                           var_name="ocupation",
                           value_name="vinculos")
+    df2['vinculos'] = df2['vinculos'].astype('int')
     df2['ocupation'] = df2['ocupation'].str.capitalize()
     df3 = df2[(df2['municipio'] == w_municipios1) & (df2['uf'] == w_municipios) & (df2['ano'] == 2019)]
     # df_caged1['ocupation'] = df_caged1['ocupation'].astype('float')
