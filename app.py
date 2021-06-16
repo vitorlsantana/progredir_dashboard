@@ -15,16 +15,79 @@ server = app.server
 
 # CARREGAR DADOS
 data = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/base_painel_inclus%C3%A3o_produtiva.csv'
-df = pd.read_csv(data, sep=';', encoding='latin1', low_memory=False)
-uf = df.groupby(by=["uf"]).sum().reset_index()
+df1 = pd.read_csv(data, sep=';', encoding='latin1', low_memory=False)
+uf = df1.groupby('uf').agg({'populacao': 'sum', 'pessoas_cad':'sum', 'pes_cad_urbano':'sum', 'pes_cad_rural':'sum', 'cad_feminino':'sum', 'cad_masculino':'sum',
+                                        'pessoas_pbf':'sum','pobreza_extremapob_cad':'sum','bpc_ben':'sum','bpc_pcd_ben':'sum','bpc_idoso_ben':'sum','familias_catadores_cad':'sum',
+                                        'sabe_ler_escrever':'sum', 'não_sabe_ler_escrever':'sum', 'cad_ensino_fundamental_completo':'sum', 'cad_ensino_fundamental_incompleto':'sum',
+                                        'cad_sem_instrucao':'sum', 'cad_ensino_medio_incompleto':'sum', 'cad_superior_completo_incompleto':'sum', 'trab_12_meses':'sum', 'não_trab_12_meses':'sum',
+                                        'trab_semana_passada':'sum', 'não_trab_semana_passada':'sum', 'trab_autonomo':'sum', 'trab_temp_area_rura':'sum', 'emprego_sem_carteira':'sum',
+                                        'emprego_com_carteira':'sum', 'trab_domestico_sem_carteira':'sum', 'trab_domestico_com_carteira':'sum', 'trabalhador_não_remunerado':'sum',
+                                        'militar_servidor_publico':'sum', 'empregador':'sum', 'estagiario':'sum', 'aprendiz':'sum', 'pib_total':'sum', 'pib_agropecuaria':'sum',
+                                        'pib_industria':'sum', 'pib_servicos':'sum', 'pib_admpublica':'sum', 'pessoas_deficiencia':'sum', 'faixa_etaria_pessoas_16_17_anos':'sum',
+                                        'faixa_etaria_pessoas_18_24_anos':'sum', 'faixa_etaria_pessoas_25_34_anos':'sum', 'faixa_etaria_pessoas_35_39_anos':'sum', 'faixa_etaria_pessoas_40_44_anos':'sum',
+                                        'faixa_etaria_pessoas_45_49_anos':'sum', 'faixa_etaria_pessoas_50_54_anos':'sum', 'faixa_etaria_pessoas_55_59_anos':'sum', 'faixa_etaria_pessoas_60_64_anos':'sum',
+                                        'vagas_sine':'sum', 'saldo_empregos2021':'sum', 'saldo_empregos_12meses':'sum', 'estoque_empregos_abr2021':'sum', 'saldo_empregos2002':'sum',
+                                        'saldo_empregos2003':'sum', 'saldo_empregos2004':'sum', 'saldo_empregos2005':'sum', 'saldo_empregos2006':'sum', 'saldo_empregos2007':'sum',
+                                        'saldo_empregos2008':'sum', 'saldo_empregos2009':'sum', 'saldo_empregos2010':'sum', 'saldo_empregos2011':'sum', 'saldo_empregos2012':'sum',
+                                        'saldo_empregos2013':'sum', 'saldo_empregos2014':'sum', 'saldo_empregos2015':'sum', 'saldo_empregos2016':'sum', 'saldo_empregos2017':'sum',
+                                        'saldo_empregos2018':'sum', 'saldo_empregos2019':'sum', 'empresas_total':'sum', 'empresas_agropecuaria':'sum', 'empresas_ind_extrativas':'sum',
+                                        'empresas_ind_transf':'sum', 'empresas_eletric_gas':'sum', 'empresas_saneamento':'sum', 'empresas_construcao':'sum', 'empresas_comercio':'sum',
+                                        'empresas_transporte':'sum', 'empresas_alojamento_alimentacao':'sum', 'empresas_info_comunic':'sum', 'empresas_financeiro':'sum',
+                                        'empresas_imobiliarias':'sum', 'empresas_ativ_profissionais_cient_tecnicas':'sum', 'empresas_ativ_administrativas':'sum', 'empresas_admpublica':'sum',
+                                        'empresas_educacao':'sum', 'empresas_saude_servicosocial':'sum', 'empresas_arte_cultura':'sum', 'empresas_outras_ativ_servicos':'sum',
+                                        'mei_cadunico':'sum', 'mei_pbf':'sum','cad_ensino_medio_completo':'sum', 'distorcao_idade_serie': 'mean', 'taxa_evasao_abandono': 'mean', 'remuneracao_docente_edbasica':'mean',
+                                        'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean'
+                                        }).reset_index()
 uf['municipio'] = 'Todos os Municípios'
-regiao = df.groupby(by=['regiao']).sum().reset_index()
+regiao = df1.groupby(by=['regiao']).agg({'populacao': 'sum', 'pessoas_cad':'sum', 'pes_cad_urbano':'sum', 'pes_cad_rural':'sum', 'cad_feminino':'sum', 'cad_masculino':'sum',
+                                        'pessoas_pbf':'sum','pobreza_extremapob_cad':'sum','bpc_ben':'sum','bpc_pcd_ben':'sum','bpc_idoso_ben':'sum','familias_catadores_cad':'sum',
+                                        'sabe_ler_escrever':'sum', 'não_sabe_ler_escrever':'sum', 'cad_ensino_fundamental_completo':'sum', 'cad_ensino_fundamental_incompleto':'sum',
+                                        'cad_sem_instrucao':'sum', 'cad_ensino_medio_incompleto':'sum', 'cad_superior_completo_incompleto':'sum', 'trab_12_meses':'sum', 'não_trab_12_meses':'sum',
+                                        'trab_semana_passada':'sum', 'não_trab_semana_passada':'sum', 'trab_autonomo':'sum', 'trab_temp_area_rura':'sum', 'emprego_sem_carteira':'sum',
+                                        'emprego_com_carteira':'sum', 'trab_domestico_sem_carteira':'sum', 'trab_domestico_com_carteira':'sum', 'trabalhador_não_remunerado':'sum',
+                                        'militar_servidor_publico':'sum', 'empregador':'sum', 'estagiario':'sum', 'aprendiz':'sum', 'pib_total':'sum', 'pib_agropecuaria':'sum',
+                                        'pib_industria':'sum', 'pib_servicos':'sum', 'pib_admpublica':'sum', 'pessoas_deficiencia':'sum', 'faixa_etaria_pessoas_16_17_anos':'sum',
+                                        'faixa_etaria_pessoas_18_24_anos':'sum', 'faixa_etaria_pessoas_25_34_anos':'sum', 'faixa_etaria_pessoas_35_39_anos':'sum', 'faixa_etaria_pessoas_40_44_anos':'sum',
+                                        'faixa_etaria_pessoas_45_49_anos':'sum', 'faixa_etaria_pessoas_50_54_anos':'sum', 'faixa_etaria_pessoas_55_59_anos':'sum', 'faixa_etaria_pessoas_60_64_anos':'sum',
+                                        'vagas_sine':'sum', 'saldo_empregos2021':'sum', 'saldo_empregos_12meses':'sum', 'estoque_empregos_abr2021':'sum', 'saldo_empregos2002':'sum',
+                                        'saldo_empregos2003':'sum', 'saldo_empregos2004':'sum', 'saldo_empregos2005':'sum', 'saldo_empregos2006':'sum', 'saldo_empregos2007':'sum',
+                                        'saldo_empregos2008':'sum', 'saldo_empregos2009':'sum', 'saldo_empregos2010':'sum', 'saldo_empregos2011':'sum', 'saldo_empregos2012':'sum',
+                                        'saldo_empregos2013':'sum', 'saldo_empregos2014':'sum', 'saldo_empregos2015':'sum', 'saldo_empregos2016':'sum', 'saldo_empregos2017':'sum',
+                                        'saldo_empregos2018':'sum', 'saldo_empregos2019':'sum', 'empresas_total':'sum', 'empresas_agropecuaria':'sum', 'empresas_ind_extrativas':'sum',
+                                        'empresas_ind_transf':'sum', 'empresas_eletric_gas':'sum', 'empresas_saneamento':'sum', 'empresas_construcao':'sum', 'empresas_comercio':'sum',
+                                        'empresas_transporte':'sum', 'empresas_alojamento_alimentacao':'sum', 'empresas_info_comunic':'sum', 'empresas_financeiro':'sum',
+                                        'empresas_imobiliarias':'sum', 'empresas_ativ_profissionais_cient_tecnicas':'sum', 'empresas_ativ_administrativas':'sum', 'empresas_admpublica':'sum',
+                                        'empresas_educacao':'sum', 'empresas_saude_servicosocial':'sum', 'empresas_arte_cultura':'sum', 'empresas_outras_ativ_servicos':'sum',
+                                        'mei_cadunico':'sum', 'mei_pbf':'sum','cad_ensino_medio_completo':'sum', 'distorcao_idade_serie': 'mean', 'taxa_evasao_abandono': 'mean', 'remuneracao_docente_edbasica':'mean',
+                                        'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean'
+                                        }).reset_index()
 regiao['municipio'] = 'Todos os Municípios'
 regiao['uf'] = regiao['regiao']
-pais = df.groupby(by=["pais"]).sum().reset_index()
+pais = df1.groupby(by=["pais"]).agg({'populacao': 'sum', 'pessoas_cad':'sum', 'pes_cad_urbano':'sum', 'pes_cad_rural':'sum', 'cad_feminino':'sum', 'cad_masculino':'sum',
+                                        'pessoas_pbf':'sum','pobreza_extremapob_cad':'sum','bpc_ben':'sum','bpc_pcd_ben':'sum','bpc_idoso_ben':'sum','familias_catadores_cad':'sum',
+                                        'sabe_ler_escrever':'sum', 'não_sabe_ler_escrever':'sum', 'cad_ensino_fundamental_completo':'sum', 'cad_ensino_fundamental_incompleto':'sum',
+                                        'cad_sem_instrucao':'sum', 'cad_ensino_medio_incompleto':'sum', 'cad_superior_completo_incompleto':'sum', 'trab_12_meses':'sum', 'não_trab_12_meses':'sum',
+                                        'trab_semana_passada':'sum', 'não_trab_semana_passada':'sum', 'trab_autonomo':'sum', 'trab_temp_area_rura':'sum', 'emprego_sem_carteira':'sum',
+                                        'emprego_com_carteira':'sum', 'trab_domestico_sem_carteira':'sum', 'trab_domestico_com_carteira':'sum', 'trabalhador_não_remunerado':'sum',
+                                        'militar_servidor_publico':'sum', 'empregador':'sum', 'estagiario':'sum', 'aprendiz':'sum', 'pib_total':'sum', 'pib_agropecuaria':'sum',
+                                        'pib_industria':'sum', 'pib_servicos':'sum', 'pib_admpublica':'sum', 'pessoas_deficiencia':'sum', 'faixa_etaria_pessoas_16_17_anos':'sum',
+                                        'faixa_etaria_pessoas_18_24_anos':'sum', 'faixa_etaria_pessoas_25_34_anos':'sum', 'faixa_etaria_pessoas_35_39_anos':'sum', 'faixa_etaria_pessoas_40_44_anos':'sum',
+                                        'faixa_etaria_pessoas_45_49_anos':'sum', 'faixa_etaria_pessoas_50_54_anos':'sum', 'faixa_etaria_pessoas_55_59_anos':'sum', 'faixa_etaria_pessoas_60_64_anos':'sum',
+                                        'vagas_sine':'sum', 'saldo_empregos2021':'sum', 'saldo_empregos_12meses':'sum', 'estoque_empregos_abr2021':'sum', 'saldo_empregos2002':'sum',
+                                        'saldo_empregos2003':'sum', 'saldo_empregos2004':'sum', 'saldo_empregos2005':'sum', 'saldo_empregos2006':'sum', 'saldo_empregos2007':'sum',
+                                        'saldo_empregos2008':'sum', 'saldo_empregos2009':'sum', 'saldo_empregos2010':'sum', 'saldo_empregos2011':'sum', 'saldo_empregos2012':'sum',
+                                        'saldo_empregos2013':'sum', 'saldo_empregos2014':'sum', 'saldo_empregos2015':'sum', 'saldo_empregos2016':'sum', 'saldo_empregos2017':'sum',
+                                        'saldo_empregos2018':'sum', 'saldo_empregos2019':'sum', 'empresas_total':'sum', 'empresas_agropecuaria':'sum', 'empresas_ind_extrativas':'sum',
+                                        'empresas_ind_transf':'sum', 'empresas_eletric_gas':'sum', 'empresas_saneamento':'sum', 'empresas_construcao':'sum', 'empresas_comercio':'sum',
+                                        'empresas_transporte':'sum', 'empresas_alojamento_alimentacao':'sum', 'empresas_info_comunic':'sum', 'empresas_financeiro':'sum',
+                                        'empresas_imobiliarias':'sum', 'empresas_ativ_profissionais_cient_tecnicas':'sum', 'empresas_ativ_administrativas':'sum', 'empresas_admpublica':'sum',
+                                        'empresas_educacao':'sum', 'empresas_saude_servicosocial':'sum', 'empresas_arte_cultura':'sum', 'empresas_outras_ativ_servicos':'sum',
+                                        'mei_cadunico':'sum', 'mei_pbf':'sum','cad_ensino_medio_completo':'sum', 'distorcao_idade_serie': 'mean', 'taxa_evasao_abandono': 'mean', 'remuneracao_docente_edbasica':'mean',
+                                        'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean'
+                                        }).reset_index()
 pais['municipio'] = 'Todos os Municípios'
 pais['uf'] = pais['pais']
-df = df.append([uf, regiao, pais], ignore_index=True)
+df = df1.append([uf, regiao, pais], ignore_index=True)
 
 data1 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/vinculos_ativos_ocupacao_subgruposprincipais_2015_2019.csv'
 df_caged = pd.read_csv(data1, sep=';', encoding='latin1', low_memory=False)
@@ -56,12 +119,12 @@ df_cad = df_cad.append([uf2, regiao2, pais2], ignore_index=True)
 
 data3 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
 df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1', low_memory=False)
-uf3 = df_remuneracao.groupby(by=["uf"]).sum().reset_index()
+uf3 = df_remuneracao.groupby(by=["uf"]).mean().reset_index()
 uf3['municipio'] = 'Todos os Municípios'
-regiao3 = df_remuneracao.groupby(by=['regiao']).sum().reset_index()
+regiao3 = df_remuneracao.groupby(by=['regiao']).mean().reset_index()
 regiao3['municipio'] = 'Todos os Municípios'
 regiao3['uf'] = regiao['regiao']
-pais3 = df_remuneracao.groupby(by=["pais"]).sum().reset_index()
+pais3 = df_remuneracao.groupby(by=["pais"]).mean().reset_index()
 pais3['municipio'] = 'Todos os Municípios'
 pais3['uf'] = pais['pais']
 df_remuneracao = df_remuneracao.append([uf3, regiao3, pais3], ignore_index=True)
@@ -151,25 +214,6 @@ app.layout = dbc.Container([
     dbc.Row([
         # SIDEBAR
         dbc.Col([
-            # INCLUIR RADIO BUTTON (SELEÇÃO BRASIL / UF / MUNICIPIO)
-            # BRASIL É O VALOR DEFAULT E APRESENTA A SOMA DE TODAS AS VARIÁVEIS (brasil = df.sum())
-            # CLICANDO EM UF APARECE DROPDOWN PARA SELEÇÃO DAS UFs (brasil = df.groupby('uf', as_index=False).sum()
-            # CLICANDO EM MUNICÍPIO APARECEM AS OPÇÕES ATUAIS
-            # dbc.FormGroup(
-            #     [
-            #         dbc.Label("Escolha uma opção de visualização dos dados", style={'display': True, "width": "100%", 'color': '#1E3248', 'fontWeight': 'bold'}),
-            #         dbc.RadioItems(
-            #             options=[
-            #                 {"label": "Brasil", "value": "Brasil"},
-            #                 {"label": "UF", "value": "UF"},
-            #                 {"label": "Município", "value": "Município"},
-            #             ],
-            #             value='Brasil',
-            #             id="radioitems",
-            #             inline=True,
-            #         ),
-            #     ]
-            # ),
             html.Label('Selecione a Região', style={'display': True, "width": "100%", 'color': '#0C326F', 'fontWeight': 'bold'},
                    className='mt-3'),
             dcc.Dropdown(
@@ -922,8 +966,8 @@ def display_bpc(w_municipios, w_municipios1):
               Input('w_municipios1', 'value')
               )
 def display_ev_cadunico(w_municipios, w_municipios1):
-    result = pd.concat([df, df_cad], ignore_index=True, sort=False)
-    df1 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)]
+    # result = pd.concat([df, df_cad], ignore_index=True, sort=False)
+    df1 = df_cad[(df_cad['municipio'] == w_municipios1) & (df_cad['uf'] == w_municipios)]
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=df1['mês_ano'], y=df1['pessoas_pbf'], name='Bolsa Família', mode='lines+markers',
                              marker=dict(size=10, color='black')))
@@ -1021,13 +1065,14 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
             showline=False,
             showticklabels=False,
         ),
-        legend=dict(
-            x=1,
-            y=1.0,
-            bgcolor='rgba(255, 255, 255, 0)',
-            bordercolor='rgba(255, 255, 255, 0)'
-        ),
+        # legend=dict(
+        #     x=1,
+        #     y=1.0,
+        #     bgcolor='rgba(255, 255, 255, 0)',
+        #     bordercolor='rgba(255, 255, 255, 0)'
+        # ),
         plot_bgcolor='white',
+        showlegend=False,
         barmode='group',
     )
 
@@ -1258,7 +1303,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     Input('w_municipios1', 'value')
 )
 def display_idade_serie(w_municipios, w_municipios1):
-    remuneracao_brasil = df['remuneracao_docente_edbasica'].mean()
+    remuneracao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == 'Todos os Municípios')]['remuneracao_docente_edbasica'].sum()
     remuneracao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['remuneracao_docente_edbasica'].sum()
 
     evasao_brasil = df['taxa_evasao_abandono'].mean()
@@ -1483,7 +1528,7 @@ def display_saldo_empregos_recente(w_municipios, w_municipios1):
     df1 = f'{df1:_.0f}'.replace('.', ',').replace('_', '.')
     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
     df2 = f'{df2:_.0f}'.replace('.', ',').replace('_', '.')
-    df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum() / df['municipio'].count()
+    df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum()
 
     return df2, df1, df3
 
@@ -1703,8 +1748,8 @@ def display_cad_funcao(w_municipios, w_municipios1):
               Input('w_municipios1', 'value')
               )
 def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
-    result = pd.merge(df_remuneracao, df, on=['uf', 'municipio'])
-    df2 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)].copy()
+    # result = pd.merge(df_remuneracao, df_geral, on=['uf', 'municipio'])
+    df2 = df_remuneracao[(df_remuneracao['municipio'] == w_municipios1) & (df_remuneracao['uf'] == w_municipios)]
     df3 = df2.groupby('ano')['Total'].sum()
     df3 = df3.reset_index()
 
@@ -1758,7 +1803,7 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     Input('w_municipios1', 'value')
 )
 def update_remuneracao_table(w_municipios, w_municipios1):
-    df1 = df_remuneracao.melt(id_vars=["uf", "municipio", "ano"], var_name="Ocupação", value_name="Remuneração")
+    df1 = df_remuneracao.melt(id_vars=["uf", "municipio", "regiao", "pais", "ano"], var_name="Ocupação", value_name="Remuneração")
     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
     df2 = df2.iloc[1:, :]
     data = df2.to_dict('records')
@@ -1838,7 +1883,7 @@ def display_mei(w_municipios, w_municipios1):
     Input('w_municipios1', 'value')
 )
 def update_top_vinculos(w_municipios, w_municipios1):
-    df2 = df_caged.melt(id_vars=["uf", "municipio", "ibge6", 'regiao', 'pais', 'ano'],
+    df2 = df_caged.melt(id_vars=["uf", "municipio", "ibge6", "regiao", "pais", "ano"],
                           var_name="ocupation",
                           value_name="vinculos")
     df2['vinculos'] = df2['vinculos'].astype('int')
@@ -1889,7 +1934,7 @@ def update_top_vinculos(w_municipios, w_municipios1):
     Input('w_municipios1', 'value')
 )
 def update_top_vinculos_table(w_municipios, w_municipios1):
-    df1 = df_caged.melt(id_vars=["uf", "municipio", "ano"], var_name="Ocupação", value_name="Quantidade de Vínculos")
+    df1 = df_caged.melt(id_vars=["uf", "municipio", "regiao", "pais", "ano"], var_name="Ocupação", value_name="Quantidade de Vínculos")
     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
     df2 = df2.iloc[1:, :]
     data = df2.to_dict('records')
@@ -1910,7 +1955,7 @@ def update_top_vinculos_table(w_municipios, w_municipios1):
     Input('w_municipios1', 'value')
 )
 def update_saldo_vinculos(w_municipios, w_municipios1):
-    df2 = df_saldo.melt(id_vars=["uf", "municipio", "ibge", 'ano'],
+    df2 = df_saldo.melt(id_vars=["uf", "municipio", "ibge", "regiao", "pais", "ano"],
                           var_name="ocupation",
                           value_name="saldo")
     df2['ocupation'] = df2['ocupation'].str.capitalize()
@@ -1973,7 +2018,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     Input('w_municipios1', 'value')
 )
 def update_saldo_vinculos_table(w_municipios, w_municipios1):
-    df1 = df_saldo.melt(id_vars=["uf", "municipio", "ano"], var_name="Ocupação", value_name="Saldo de Empregos")
+    df1 = df_saldo.melt(id_vars=["uf", "municipio", "regiao", "pais", "ano"], var_name="Ocupação", value_name="Saldo de Empregos")
     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
     df2 = df2.iloc[1:, :]
     data = df2.to_dict('records')
