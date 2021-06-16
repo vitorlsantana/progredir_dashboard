@@ -1046,19 +1046,33 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
               )
 def display_age(w_municipios, w_municipios1):
     faixa = ['16 a 17', '18 a 24', '25 a 34', '35 a 39', '40 a 44', '45 a 49', '50 a 54', '55 a 59', '60 a 64']
+    populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
     faixa16_17 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_16_17_anos'].sum()
+    perc_faixa16_17 = (faixa16_17/populacao*100).round(1)
     faixa18_24 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_18_24_anos'].sum()
+    perc_faixa18_24 = (faixa18_24 / populacao * 100).round(1)
     faixa25_34 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_25_34_anos'].sum()
+    perc_faixa25_34 = (faixa25_34 / populacao * 100).round(1)
     faixa35_39 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_35_39_anos'].sum()
+    perc_faixa35_39 = (faixa35_39 / populacao * 100).round(1)
     faixa40_44 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_40_44_anos'].sum()
+    perc_faixa40_44 = (faixa40_44 / populacao * 100).round(1)
     faixa45_49 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_45_49_anos'].sum()
+    perc_faixa45_49 = (faixa45_49 / populacao * 100).round(1)
     faixa50_54 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_50_54_anos'].sum()
+    perc_faixa50_54 = (faixa50_54 / populacao * 100).round(1)
     faixa55_59 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_55_59_anos'].sum()
+    perc_faixa55_59 = (faixa55_59 / populacao * 100).round(1)
     faixa60_64 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_60_64_anos'].sum()
+    perc_faixa60_64 = (faixa60_64 / populacao * 100).round(1)
+
 
     fig = go.Figure()
     fig.add_trace(go.Bar(x=faixa, y=[faixa16_17, faixa18_24, faixa25_34, faixa35_39, faixa40_44, faixa45_49, faixa50_54, faixa55_59, faixa60_64],
-                         showlegend=False, textposition='auto', name='Faixa Etária', marker=dict(color='#1351B4')))
+                         showlegend=False, textposition='auto', name='Faixa Etária', text=[perc_faixa16_17, perc_faixa18_24, perc_faixa25_34,
+                                                                                           perc_faixa35_39, perc_faixa40_44, perc_faixa45_49, perc_faixa50_54,
+                                                                                           perc_faixa55_59, perc_faixa60_64],
+                         marker=dict(color='#1351B4')))
 
     fig.update_layout(
         xaxis=dict(
@@ -1108,19 +1122,27 @@ def display_age(w_municipios, w_municipios1):
 def display_escolaridade(w_municipios, w_municipios1):
     nivel = ['Sem instrução', 'Fundamental<br>incompleto', 'Fundamental<br>completo', 'Ensino médio<br>incompleto',
              'Ensino médio<br>completo', 'Superior completo<br>ou incompleto']
+    populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
     sem_instrucao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_sem_instrucao'].sum()
+    perc_sem_instrucao = (sem_instrucao / populacao * 100).round(1)
     fund_incompleto = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_fundamental_incompleto'].sum()
+    perc_fund_incompleto = (fund_incompleto / populacao * 100).round(1)
     fund_completo = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_fundamental_completo'].sum()
+    perc_fund_completo = (fund_completo / populacao * 100).round(1)
     medio_incompleto = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_medio_incompleto'].sum()
+    perc_medio_incompleto = (medio_incompleto / populacao * 100).round(1)
     medio_completo = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_ensino_medio_completo'].sum()
+    perc_medio_completo = (medio_completo / populacao * 100).round(1)
     superior = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_superior_completo_incompleto'].sum()
+    perc_superior = (superior / populacao * 100).round(1)
 
     sabe_ler_escrever = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['sabe_ler_escrever'].sum()
     nao_sabe_ler_escrever = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_sabe_ler_escrever'].sum()
 
     fig = go.Figure()
     fig.add_trace(go.Bar(x=nivel, y=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior],
-                         name='Escolaridade', marker=dict(color='#2670E8')))
+                         text=[perc_sem_instrucao, perc_fund_incompleto, perc_fund_completo, perc_medio_incompleto, perc_medio_completo,
+                               perc_superior], name='Escolaridade', marker=dict(color='#2670E8'), textposition='auto'))
     fig.update_layout(bargap=0.25, bargroupgap=0.2)
     fig.update_layout(
         xaxis=dict(
