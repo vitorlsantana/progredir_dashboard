@@ -37,39 +37,45 @@ df_saldo = pd.read_csv(data4, sep=';', encoding='latin1')
 # df5 = pd.read_csv(data4, sep=',', error_bad_lines=False)
 
 # CONFIGURAÇÃO DE TABS
+tab_height = '3vh',
 tabs_styles = {
-    'height': '40px',
+    # 'height': '40px',
     'align-items': 'center',
     'justifyContent':'center',
     'textAlign':'center',
-    'width':'275px',
-    'marginRight':'5px',
+    # 'width':'275px',
+    'marginRight':'3px',
     # 'borderBottom': '0px solid transparent',
+    'width': '25%',
+    'font-size': '200%',
+    'height': tab_height
 }
 tab_style = {
     # 'borderBottom': '0px solid #d6d6d6',
-    'padding': '0px',
+    # 'padding': '0.5rem 1.5rem',
     'color':'#586069',
     'fontWeight': 'bold',
-    'border-radius': '5px',
+    'border-radius': '3px',
     'background-color': 'white',
+    'padding': '0','line-height': tab_height,
     'box-shadow': '1px 0px 1px 1px lightgrey',
     'justifyContent': 'center',
     'textAlign': 'center',
-    'width':'275px',
+    # 'width':'275px',
+    'width': '25%',
     'marginRight':'5px'
 }
-
 tab_selected_style = {
     'borderTop': '2px solid #5992ED',
-    'height': '42px',
+    'height': '40px',
     # 'borderBottom': '0px solid #d6d6d6',
     'color': '#ffba08',
-    'padding': '0px',
-    'border-radius': '5px',
+    # 'padding': '0px',
+    'padding': '0','line-height': tab_height,
+    'border-radius': '3px',
     'justifyContent': 'center',
     'textAlign': 'center',
-    'width':'275px'
+    'width':'25%'
 }
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
@@ -88,7 +94,6 @@ app.layout = dbc.Container([
         ], className='row', align='center', style={'backgroundColor':'#FFFFF', 'box-shadow': '1px 1px 1px 1px lightgrey', 'margin-bottom':'20px'}
     ),
     # html.Br(),
-
     # dbc.Row(
     #         dbc.Col(
     #             [
@@ -97,7 +102,6 @@ app.layout = dbc.Container([
     #     align='center',
     #     justify='start',
     #     style={'backgroundColor':'#FFFFF', 'box-shadow': '1px 1px 1px 1px lightgrey'},),
-
     # GRID
     dbc.Row([
         # SIDEBAR
@@ -121,7 +125,7 @@ app.layout = dbc.Container([
             #         ),
             #     ]
             # ),
-            html.P('Selecione a UF', style={'display': True, "width": "100%", 'color': '#0C326F', 'fontWeight': 'bold'},
+            html.Label('Selecione a UF', style={'display': True, "width": "100%", 'color': '#0C326F', 'fontWeight': 'bold'},
                    className='mt-3'),
             dcc.Dropdown(
                 id='w_municipios',
@@ -134,7 +138,7 @@ app.layout = dbc.Container([
                 style={'display': True, "width": "100%", 'height': '40px', 'color':'primary', 'outline':True}
             ),
             html.Br(),
-            html.P('Selecione o Município', style={'color': '#0C326F', 'fontWeight': 'bold'}),
+            html.Label('Selecione o Município', style={'color': '#0C326F', 'fontWeight': 'bold'}),
             dcc.Dropdown(
                 id='w_municipios1',
                 multi=False,
@@ -146,38 +150,12 @@ app.layout = dbc.Container([
                 style={'display': True, "width": "100%", 'height': '40px'}
             ),
             html.Br(),
-            dbc.Button(
-                "Selecione os dados",
-                id="collapse-button",
-                className="mb-3 mr-5",
-                color="primary",
-                outline=True,
-                n_clicks=0,
-                style={"width": "100%", 'fontWeight': 'bold'}
-            ),
-            dbc.Collapse(
-                dbc.Tabs([
-                    dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style,
-                            active_tab_style=tab_selected_style),
-                    dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho", tab_style=tab_style,
-                            active_tab_style=tab_selected_style),
-                    dbc.Tab(label="Serviços", tab_id="servicos", tab_style=tab_style,
-                            active_tab_style=tab_selected_style)],
-                    id="tabs",
-                    active_tab="social"
-                ),
-                id="collapse-tab",
-                is_open=False,
-            ),
-            html.Br(),
             dbc.Card(children=[
                 dbc.CardBody(children=[
                     html.H5('População', style={'textAlign':'center', 'margin-top':'10px', }),
                     html.H4(id="populacao", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
-                    # html.Br(),
                     html.H5('Produto Interno Bruto', style={'textAlign':'center'}),
                     html.H4(id="pib_total", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
-                    # html.Br(),
                     html.H5('Índice de Desenvolvimento Humano', style={'textAlign':'center'}),
                     html.H4(id="idhm", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'10px'}),
                 ], style={'padding':'0.30rem'}),
@@ -233,13 +211,13 @@ app.layout = dbc.Container([
         # TABS
         html.Br(),
         dbc.Col(children=[
-            # dbc.Tabs([
-            #     dbc.Tab(label="Contexto econômico e social", tab_id="social", tab_style=tab_style, active_tab_style=tab_selected_style),
-            #     dbc.Tab(label="Mundo do Trabalho", tab_id="trabalho", tab_style=tab_style, active_tab_style=tab_selected_style),
-            #     dbc.Tab(label="Serviços", tab_id="servicos", tab_style=tab_style, active_tab_style=tab_selected_style)],
-            #     id="tabs",
-            #     active_tab="social"
-            # ),
+            dbc.Tabs([
+                dbc.Tab(label="Perfil das pessoas no Cadastro Único", tab_id="social", tab_style=tab_style, active_tab_style=tab_selected_style),
+                dbc.Tab(label="Situação de emprego", tab_id="trabalho", tab_style=tab_style, active_tab_style=tab_selected_style),
+                dbc.Tab(label="Iniciativas de Inclusão Produtiva", tab_id="servicos", tab_style=tab_style, active_tab_style=tab_selected_style)],
+                id="tabs",
+                active_tab="social"
+            ),
             html.Div(id="tab-content", className="p-10"),
         ], xs=12, sm=12, md=10, lg=10, xl=10),
     ], justify="center"),
@@ -281,7 +259,7 @@ def toggle_collapse(n, is_open):
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
-def display_content(w_municipios, w_municipios1):
+def display_pop_pib_idh(w_municipios, w_municipios1):
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
     populacao = f'{populacao:_.0f}'.replace('_', '.')
     df['pib_total'] = df['pib_total'].astype(float)
@@ -391,8 +369,9 @@ def render_tab_content(active_tab):
                 ),
                 dbc.Row(
                     [
-                        dbc.Col(dcc.Graph(id='evasao')),
-                        dbc.Col(dcc.Graph(id='idade_serie'))
+                        dbc.Col(dcc.Graph(id='evasao'), xs=12, sm=12, md=12, lg=4, xl=4),
+                        dbc.Col(dcc.Graph(id='idade_serie'), xs=12, sm=12, md=12, lg=4, xl=4),
+                        dbc.Col(dcc.Graph(id='remuneracao_docentes'), xs=12, sm=12, md=12, lg=4, xl=4),
                     ]
                 ),
                 html.Br(),
@@ -711,11 +690,10 @@ def render_tab_content(active_tab):
                                     html.H5("Qualifica Emprega +", className="card-title"),
                                     html.P(
                                         "Qualifica Mais é uma parceria com o Ministério da Educação para a oferta de cursos de qualificação profissional, "
-                                        "à distância, na área de Tecnologia da Informação e Comunicação. "
-                                        "Acesse o Formulário de seleção e faça a sua inscrição!",
+                                        "à distância, na área de Tecnologia da Informação e Comunicação.",
                                         className="card-text",
                                     ),
-                                    dbc.Button("Acesse o formulário e faça sua inscrição", color="primary",
+                                    dbc.Button("Acesse o site", color="primary",
                                                href='https://www.gov.br/mec/pt-br/acesso-a-informacao/institucional/secretarias/secretaria-de-educacao-profissional/projeto-piloto-qualifica-mais',
                                                target="_blank"),
                                 ]
@@ -780,7 +758,7 @@ def render_tab_content(active_tab):
     [Input("collapse-button2", "n_clicks")],
     [State("collapse2", "is_open")],
 )
-def toggle_collapse(n, is_open):
+def toggle_collapse2(n, is_open):
     if n:
         return not is_open
     return is_open
@@ -790,7 +768,7 @@ def toggle_collapse(n, is_open):
     [Input("collapse-button3", "n_clicks")],
     [State("collapse3", "is_open")],
 )
-def toggle_collapse(n, is_open):
+def toggle_collapse3(n, is_open):
     if n:
         return not is_open
     return is_open
@@ -800,7 +778,7 @@ def toggle_collapse(n, is_open):
     [Input("collapse-button4", "n_clicks")],
     [State("collapse4", "is_open")],
 )
-def toggle_collapse(n, is_open):
+def toggle_collapse4(n, is_open):
     if n:
         return not is_open
     return is_open
@@ -811,7 +789,7 @@ def toggle_collapse(n, is_open):
     [Input("open1", "n_clicks"), Input("close1", "n_clicks")],
     [State("modal1", "is_open")],
 )
-def toggle_modal(n1, n2, is_open):
+def toggle_modal1(n1, n2, is_open):
     if n1 or n2:
         return not is_open
     return is_open
@@ -843,7 +821,7 @@ def display_cadunico(w_municipios, w_municipios1):
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
-def display_cadunico(w_municipios, w_municipios1):
+def display_bpc(w_municipios, w_municipios1):
     bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].astype('int').sum()
     bpc_total = f'{bpc_total:_.0f}'.replace('.', ',').replace('_', '.')
     bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].astype('int').sum()
@@ -1207,24 +1185,91 @@ def display_escolaridade(w_municipios, w_municipios1):
 # DISTORÇÃO IDADE-SÉRIE, EVASÃO E REMUNERAÇÃO PROFESSORES
 @app.callback(
     Output('idade_serie', 'figure'),
+    Output('remuneracao_docentes', 'figure'),
     Output('evasao', 'figure'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
 def display_idade_serie(w_municipios, w_municipios1):
     remuneracao_brasil = df['remuneracao_docente_edbasica'].mean()
-    remuneracao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['remuneracao_docente_edbasica'].astype('float').sum()
+    remuneracao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['remuneracao_docente_edbasica'].sum()
 
     evasao_brasil = df['taxa_evasao_abandono'].mean()
-    evasao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['taxa_evasao_abandono'].astype('float').sum()
+    evasao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['taxa_evasao_abandono'].sum()
+
+    idade_serie_brasil = df['distorcao_idade_serie'].mean()
+    idade_serie = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['distorcao_idade_serie'].sum()
+
+    municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['municipio']
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=['Remuneração média nacional', 'Remuneração média na localidade'], y=[remuneracao_brasil, remuneracao_municipio]))
+    fig.add_trace(go.Bar(x=['Brasil', municipio], y=[evasao_brasil, evasao_municipio]))
+    fig.update_layout(
+        xaxis=dict(showline=True, showgrid=False, showticklabels=True, linecolor='rgb(204, 204, 204)',
+            linewidth=2, ticks='outside', tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),),
+        yaxis=dict(showgrid=False, zeroline=False, showline=False, showticklabels=False,),
+        autosize=True, margin=dict(autoexpand=True), plot_bgcolor='white')
+
+    annotations = []
+
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Taxa de evasão escolar',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'), showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top', text='Fonte: INEP, 2020',
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'), showarrow=False))
+
+    fig.update_layout(annotations=annotations)
 
     fig2 = go.Figure()
-    fig2.add_trace((go.Bar(x=['Taxa de evasão nacional', 'Taxa de evasão na localidade'], y=[remuneracao_brasil, remuneracao_municipio])))
+    fig2.add_trace(go.Bar(x=['Brasil', municipio], y=[remuneracao_brasil, remuneracao_municipio]))
 
-    return fig, fig2
+    fig2.update_layout(
+        xaxis=dict(showline=True, showgrid=False, showticklabels=True, linecolor='rgb(204, 204, 204)',
+            linewidth=2, ticks='outside', tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),),
+        yaxis=dict(showgrid=False, zeroline=False, showline=False, showticklabels=False,),
+        autosize=True, margin=dict(autoexpand=True), plot_bgcolor='white'
+    )
+
+    annotations = []
+
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom', text='Remuneração média dos docentes<br>da educação básica',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'), showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top', text='Fonte: INEP, 2020',
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'), showarrow=False))
+
+    fig2.update_layout(annotations=annotations)
+
+    fig3 = go.Figure()
+    fig3.add_trace(go.Bar(x=['Brasil', municipio], y=[idade_serie_brasil, idade_serie]))
+
+    fig3.update_layout(
+        xaxis=dict(showline=True, showgrid=False, showticklabels=True, linecolor='rgb(204, 204, 204)',
+            linewidth=2, ticks='outside', tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),),
+        yaxis=dict(showgrid=False, zeroline=False, showline=False, showticklabels=False,),
+        autosize=True, margin=dict(autoexpand=True), plot_bgcolor='white')
+
+    annotations = []
+
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom', text='Taxa de distorção idade-série',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'), showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top', text='Fonte: INEP, 2020',
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'), showarrow=False))
+
+    fig3.update_layout(annotations=annotations)
+
+    return fig, fig2, fig3
 
 # NÚMEROS SOBRE EMPRESAS E ESTOQUE DE EMPREGOS
 @app.callback(
@@ -1232,7 +1277,7 @@ def display_idade_serie(w_municipios, w_municipios1):
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
-def display_content(w_municipios, w_municipios1):
+def display_estoque_empregos(w_municipios, w_municipios1):
     pessoal = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['estoque_empregos_abr2021'].sum()
     pessoal = f'{pessoal:_.0f}'.replace('_', '.')
 
@@ -1243,7 +1288,7 @@ def display_content(w_municipios, w_municipios1):
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
-def display_content(w_municipios, w_municipios1):
+def display_pib_setorial(w_municipios, w_municipios1):
     agropecuaria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]["pib_agropecuaria"].sum()
     industria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_industria'].sum()
     servicos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_servicos'].sum()
@@ -1277,7 +1322,7 @@ def display_content(w_municipios, w_municipios1):
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
-def display_content(w_municipios, w_municipios1):
+def display_empresas(w_municipios, w_municipios1):
     setores = ['Agropecuária', 'Indústria<br>Extrativa', 'Indústria de<br>Transformação', 'Construção', 'Comércio', 'Transporte', 'Alojamento e<br>Alimentação', 'Informação e<br>Comunicação',
                'Atividades Científicas<br>e Técnicas', 'Atividades< >Administrativas',
                'Educação', 'Saúde', 'Arte, Cultura e<br>Esportes', 'Outras Atividades']
@@ -1354,7 +1399,7 @@ def display_content(w_municipios, w_municipios1):
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
-def display_content(w_municipios, w_municipios1):
+def display_sine(w_municipios, w_municipios1):
     vagas_sine = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['vagas_sine'].sum()
     return vagas_sine
 
@@ -1366,7 +1411,7 @@ def display_content(w_municipios, w_municipios1):
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
-def display_content1(w_municipios, w_municipios1):
+def display_saldo_empregos_recente(w_municipios, w_municipios1):
     df1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2021'].sum()
     df1 = f'{df1:_.0f}'.replace('.', ',').replace('_', '.')
     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
@@ -1380,7 +1425,7 @@ def display_content1(w_municipios, w_municipios1):
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
-def display_content(w_municipios, w_municipios1):
+def display_ev_saldo_empregos(w_municipios, w_municipios1):
     anos = ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009',
             '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019']
     saldo_empregos2002 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2002'].sum()
@@ -1459,7 +1504,7 @@ def display_content(w_municipios, w_municipios1):
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
-def display_escolaridade(w_municipios, w_municipios1):
+def display_cad_funcao(w_municipios, w_municipios1):
     funcao_principal = ['Autônomo', 'Temporário na<br>Área Rural', 'Emprego sem<br>Carteira', 'Emprego com<br>Carteira', 'Trabalho Doméstico<br>sem Carteira',
              'Trabalho Doméstico<br>com Carteira', 'Trabalho não<br>Remunerado', 'Militar/Servidor<br>Público', 'Empregador', 'Estagiário', 'Aprendiz']
     trab_autonomo = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_autonomo'].sum()
@@ -1590,7 +1635,7 @@ def display_escolaridade(w_municipios, w_municipios1):
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
-def display_content(w_municipios, w_municipios1):
+def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     result = pd.merge(df_remuneracao, df, on=['uf', 'municipio'])
     df2 = result[(result['municipio'] == w_municipios1) & (result['uf'] == w_municipios)].copy()
     df3 = df2.groupby('ano')['Total'].sum()
@@ -1645,7 +1690,7 @@ def display_content(w_municipios, w_municipios1):
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
-def update_top_vinculos2(w_municipios, w_municipios1):
+def update_remuneracao_table(w_municipios, w_municipios1):
     df1 = df_remuneracao.melt(id_vars=["uf", "municipio", "ano"], var_name="Ocupação", value_name="Remuneração")
     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
     df2 = df2.iloc[1:, :]
@@ -1665,7 +1710,7 @@ def update_top_vinculos2(w_municipios, w_municipios1):
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
-def display_content(w_municipios, w_municipios1):
+def display_mei(w_municipios, w_municipios1):
     mei_cadunico = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_cadunico'].astype('int').sum()
     mei_cadunico = f'{mei_cadunico:_.0f}'.replace('.', ',').replace('_', '.')
     mei_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['mei_pbf'].astype('int').sum()
@@ -1769,13 +1814,13 @@ def update_top_vinculos(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
     return fig
 
-# PLANILHA COM TODOS AS OCUPAÇÕES POR QUANTODADE DE VÍNCULOS
+# PLANILHA COM TODOS AS OCUPAÇÕES POR QUANTIDADE DE VÍNCULOS
 @app.callback(
     Output('table', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
-def update_top_vinculos2(w_municipios, w_municipios1):
+def update_top_vinculos_table(w_municipios, w_municipios1):
     df1 = df_caged.melt(id_vars=["uf", "municipio", "ano"], var_name="Ocupação", value_name="Quantidade de Vínculos")
     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
     df2 = df2.iloc[1:, :]
@@ -1789,7 +1834,6 @@ def update_top_vinculos2(w_municipios, w_municipios1):
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
 
-
 # OCUPAÇÕES COM MAIORES VINCULOS
 @app.callback(
     Output('saldo_ocupacao', 'figure'),
@@ -1797,7 +1841,7 @@ def update_top_vinculos2(w_municipios, w_municipios1):
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
-def update_top_vinculos(w_municipios, w_municipios1):
+def update_saldo_vinculos(w_municipios, w_municipios1):
     df2 = df_saldo.melt(id_vars=["uf", "municipio", "ibge", 'ano'],
                           var_name="ocupation",
                           value_name="saldo")
@@ -1860,7 +1904,7 @@ def update_top_vinculos(w_municipios, w_municipios1):
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
-def update_top_vinculos2(w_municipios, w_municipios1):
+def update_saldo_vinculos_table(w_municipios, w_municipios1):
     df1 = df_saldo.melt(id_vars=["uf", "municipio", "ano"], var_name="Ocupação", value_name="Saldo de Empregos")
     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
     df2 = df2.iloc[1:, :]
@@ -1873,7 +1917,6 @@ def update_top_vinculos2(w_municipios, w_municipios1):
                                 style_cell={'backgroundColor': 'white', 'color': 'black', 'fontFamily':'Arial', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
-
 
 # # EVOLUCAO DOS VINCULOS POR OCUPAÇÃO
 # # @app.callback(
