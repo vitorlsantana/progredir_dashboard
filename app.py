@@ -221,7 +221,7 @@ app.layout = dbc.Container([
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
                 dbc.Tab(label="Iniciativas de Inclusão Produtiva", tab_id="servicos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
-                dbc.Tab(label="Estudos e Pesquisas", tab_id="servicos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
+                dbc.Tab(label="Estudos e Pesquisas", tab_id="estudos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
             ],
                 id="tabs",
@@ -558,9 +558,10 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Painel de Demandas por Qualificação Profissional", className="card-title"),
                                     html.P(
-                                        "Apresenta sugestões de oferta de cursos técnicos e de qualificação profissional, por unidades"
-                                        "da federação e respectivas mesorregiões, nos formatos painel interativo e relatórios em pdf.\n\n"
-                                        "A ferramenta foi desenvolvida pelo Ministério da Educação em parceria com o Governo do Estao de Minas Gerais",
+                                        "Quais ocupações devem empregar mais gente nos próximos anos no seu município? E quais cursos FIC podem "
+                                        "ser oferecidos para preparar as pessoas para entrar no mercado de trabalho? Veha as sugestões do Painel "
+                                        "de Demandas por Qualificação Profissional. A ferramenta foi desenvolvida pelo Ministério da Educação em "
+                                        "parceria com o Governo do Estado de Minas Gerais.",
                                         className="card-text",
                                     ),
                                     dbc.Button("Acesse o painel", color="primary",
@@ -773,6 +774,227 @@ def render_tab_content(active_tab):
                         ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="https://aliancaempreendedora.org.br/bar/logo-alianca.svg"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Aliança Empreendedora", className="card-title"),
+                                    html.P(
+                                        "Trata-se de uma iniciativa que busca apoiar empresas, organizações sociais e governos a desenvolver "
+                                        "modelos de negócios inclusivos e projetos de apoio a microempreendedores de baixa renda, "
+                                        "ampliando o acesso a conhecimento, redes, mercados e crédito para que desenvolvam ou iniciem seus empreendimentos",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse o site e conheça", color="primary",
+                                               href='https://aliancaempreendedora.org.br/', target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        html.Br(),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src="http://rme.net.br/wp-content/uploads/2018/11/esbo%C3%A7o-logo-irme-1-1024x545.png"),
+                            dbc.CardBody(
+                                [
+                                    html.H5("Instituto Rede Mulher Empreendedora (IRME", className="card-title"),
+                                    html.P(
+                                        "O IRME é uma organização que tua no fomento à geração de renda da mulher, através do empreendedorismo e empregabilidade. "
+                                        "Desenvolve projetos e capacitações para mulheres em todo o Brasil, tendo como objetivo principal garantir independência "
+                                        "financeira e de decisão sobre seus negócios e vidas.",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Acesse o site e conheça", color="primary",
+                                               href='https://institutorme.org.br/', target="_blank"),
+                                ]
+                            ),
+                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        html.Br(),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
+                ],
+                ),
+            ], fluid=True
+            )
+        elif active_tab == "estudos":
+            return dbc.Container(children=[
+                html.Br(),
+                dbc.Row(children=
+                [
+                    dbc.Col([
+                        html.Div(children=
+                        [
+                            html.Img(
+                                src='https://arymax.org.br/novosite/wp-content/themes/arymax-theme/img/logo-arymax-grande.png',
+                                style={'height': '100%', 'width': '120px', 'object-fit': 'cover'}),
+                            html.Div([
+                                html.H2("Inclusão Produtiva no Brasil",
+                                        style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
+                                        ),
+                                html.P(
+                                    "O estudo traz um panorama sobre o tema da inclusão produtiva no Brasil e no mundo, seus principais desafios, atores envolvidos, "
+                                    "assim como as mais promissoras soluções e grandes tendências.",
+                                    style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px',
+                                           'margin-top': '10px'}
+                                ),
+                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
+                                           href='https://arymax.org.br/conhecimento/inclusaoprodutivanobrasil/',
+                                           target="_blank"),
+                            ],
+                                style={'padding': '16px'}
+                            ),
+                        ], style={'overflow': 'hidden', 'background': 'white', 'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'border-radius':'5px',
+                                  'display': 'flex', 'align-items': 'center', 'margin-bottom': '20px', 'width': '100%'}
+                        ),
+                        html.Div(children=
+                        [
+                            html.Img(
+                                src='https://arymax.org.br/novosite/wp-content/themes/arymax-theme/img/logo-arymax-grande.png',
+                                style={'height': '100%', 'width': '120px',
+                                       'object-fit': 'cover'}),
+                            html.Div([
+                                html.H2("O futuro da inclusão produtiva no Brasil",
+                                        style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
+                                        ),
+                                html.P(
+                                    "O estudo nasceu do reconhecimento de que as ações emergenciais empreendidas para lidar com o desafio "
+                                    "social desencadeado pela pandemia deveriam ser complementadas com uma reflexão profunda sobre o período "
+                                    "que virá depois. Dessa forma, a publicação traz pensamentos que ajudam a compreender as características "
+                                    "da crise, para onde ela está nos levando e quais políticas foram criadas para combatê-la. Por fim, aponta "
+                                    "alternativas de enfrentamento desses desafios no pós-pandemia.",
+                                    style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px',
+                                           'margin-top': '8px'}
+                                    ),
+                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
+                                           href='https://arymax.org.br/conhecimento/inclusaoprodutivanobrasil/novo-estudo-inclusao-produtiva/',
+                                           target="_blank"),
+                            ],
+                                style={'padding': '16px'}
+                            ),
+                        ], style={'overflow': 'hidden', 'background': 'white', 'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'border-radius':'5px',
+                                  'display': 'flex', 'align-items': 'center', 'margin-bottom': '20px', 'width': '100%'}
+                        ),
+                        html.Div(children=
+                        [
+                            html.Img(
+                                src='https://lh3.googleusercontent.com/proxy/oiyeHOg-aw1ijJKRNuZS1jaVcNSNBTOuukq7zaRx42QqiWVux8-3ECG_fq9ht9pYFs-KxUZkIF-6lnFQw57IDBBJRdUuO3EnEBJDhf2QhzEXH9eZmvnn4hI',
+                                style={'height': '100%', 'width': '120px',
+                                       'object-fit': 'cover'}),
+                            html.Div([
+                                html.H2("Série de estudos de caso de inclusão produtiva urbana no Brasil, WWP",
+                                        style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
+                                        ),
+                                html.P(
+                                    "A série WWP de Estudos de Caso traz publicações dedicadas exclusivamente ao tema de inclusão produtiva, "
+                                    "mostrando iniciativas que colaboram para o aumento da autonomia de famílias brasileiras em diferentes partes do país, "
+                                    "de forma a enfrentar vulnerabilidades e aumentar a qualidade de vida.A série mostra também os desafios encarados "
+                                    "pelos gestores públicos na implementação dessas políticas, assim como os limites de cada programa e intervenção. "
+                                    "Cada documento acompanha um vídeo dinâmico e explicativo.",
+                                    style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px', 'margin-top': '8px'}
+                                    ),
+                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
+                                           href='https://wwp.org.br/politica-social/inclusao-produtiva/',
+                                           target="_blank"),
+                            ],
+                                style={'padding': '16px'}
+                            ),
+                        ], style={'overflow': 'hidden', 'background': 'white', 'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'border-radius':'5px',
+                                  'display': 'flex', 'align-items': 'center', 'margin-bottom': '20px', 'width': '100%'}
+                        ),
+                        ]
+                    ),
+                    dbc.Col([
+                        html.Div(children=
+                        [
+                            html.Img(
+                                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_sqsm9EW7NYtDqpbbWxCzs-zwZVWk_2a-1A&usqp=CAU',
+                                style={'height': '100%', 'width': '120px',
+                                       'object-fit': 'cover'}),
+                            html.Div([
+                                html.H2("The State of Economic Inclusion Report 2021",
+                                        style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
+                                        ),
+                                html.P(
+                                    "O Relatório lança luz sobre um dos maiores desafios enfrentados pelos formuladores de políticas de desenvolvimento:"
+                                    "transformar a vida econômica das pessoas mais pobres e vulneráveis do mundo. O relatório fornece uma avaliação global "
+                                    "sobre programas de inclusão econômica direcionados para os extremamente pobres e vulneráveis."
+                                    "Com base nas experiências de mais de 75 países, o relatório considera a viabilidade de se ampliar em escala programas de inclusão econômica."
+                                    "Este relatório estabelece uma linha de base para programas de inclusão econômica global.",
+                                    style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px', 'margin-top': '8px'}
+                                    ),
+                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
+                                           href='https://www.peiglobal.org/state-of-economic-inclusion-report-2021',
+                                           target="_blank"),
+                            ],
+                                style={'padding': '16px'}
+                            ),
+                        ], style={'overflow': 'hidden', 'background': 'white', 'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'border-radius':'5px',
+                                  'display': 'flex', 'align-items': 'center', 'margin-bottom': '20px', 'width': '100%'}
+                        ),
+                        html.Div(children=
+                        [
+                            html.Img(
+                                src='https://blogs.worldbank.org/sites/default/files/voices/okr_stack_logo_300px.jpg',
+                                style={'height': '100%', 'width': '120px',
+                                       'object-fit': 'cover'}),
+                            html.Div([
+                                html.H2("USAID State of the Field Report: Examining the Evidence in Youth Workforce Development",
+                                        style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
+                                        ),
+                                html.P("O Relatório lança luz sobre um dos desafios mais difíceis enfrentados pelos formuladores de políticas de desenvolvimento: transformar a vida "
+                                       "econômica das pessoas mais pobres e vulneráveis do mundo. O relatório apresenta dados e evidências de 219 programas de inclusão econômica, "
+                                       "que atingem mais de 90 milhões de beneficiários. O relatório oferece quatro contribuições importantes: 1) Uma análise detalhada da natureza desses programas, "
+                                       "das pessoas que vivem em extrema pobreza e vulnerabilidade a quem apoiam e dos desafios e oportunidades organizacionais "
+                                       "inerentes à sua concepção e liderança; 2) Uma revisão de evidências de 80 avaliações quantitativas e qualitativas de "
+                                       "programas de inclusão econômica em 37 países; 3) O primeiro estudo de custo de vários países, incluindo programas liderados "
+                                       "pelo governo e outros programas de inclusão econômica, indicando que os programas mostram potencial para eficiência de custos "
+                                       "quando integrados aos sistemas nacionais; e 4) Quatro estudos de caso detalhados sobre programas em andamento em Bangladesh, "
+                                       "Índia, Peru e Sahel, que destacam as adaptações programáticas e institucionais necessárias para dar escalar em contextos bastante diversos.",
+                                       style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px',
+                                              'margin-top': '8px'}
+                                       ),
+                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
+                                           href='https://openknowledge.worldbank.org/bitstream/handle/10986/18031/9781464802027.pdf?sequence=1&isAllowed=y ',
+                                           target="_blank"),
+                            ],
+                                style={'padding': '16px'}
+                            ),
+                        ], style={'overflow': 'hidden', 'background': 'white',
+                                  'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'margin-bottom': '20px', 'width': '100%', 'border-radius':'5px',
+                                  'display': 'flex', 'align-items': 'center'}
+                        ),
+                        html.Div(children=
+                        [
+                            html.Img(
+                                src='https://openknowledge.worldbank.org/bitstream/handle/10986/18031/9781464802027.pdf.jpg?sequence=4&isAllowed=y',
+                                style={'height': '100%', 'width': '120px', 'object-fit': 'cover'}),
+                            html.Div([
+                                html.H2("Entrepreneurship Education and Training Programs around the World",
+                                        style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
+                                        ),
+                                html.P("O estudo analisa um conjunto de intervenções relacionadas a qualificação empreendedora, que inclui atividades "
+                                       "de transmissão de mentalidades e habilidades específicas associadas ao empreendedorismo, bem como programas de "
+                                       "educação e formação que visem gerar resultados de empreendedorismo. O objetivo deste estudo é identificar e "
+                                       "organizar o cenário da qualificação empreendedora, tipos de programa, bem como as dimensões que moldam os resultados. "
+                                       "O estudo descreve um conjunto de ideias práticas sobre o desenho e implementação de programas, resultados pretendidos, e contextos.",
+                                       style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px', 'margin-top': '8px'}
+                                       ),
+                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
+                                           href='https://openknowledge.worldbank.org/handle/10986/34917',
+                                           target="_blank"),
+                            ],
+                                style={'padding': '16px'}
+                            ),
+                        ], style={'overflow': 'hidden', 'background': 'white',
+                                  'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'margin-bottom': '20px', 'width': '100%', 'border-radius':'5px',
+                                  'display': 'flex', 'align-items': 'center'}
+                        ),
+                    ]
                     ),
                 ],
                 ),
@@ -1513,6 +1735,7 @@ def display_saldo_empregos_recente(w_municipios, w_municipios1):
     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
     df2 = f'{df2:_.0f}'.replace('.', ',').replace('_', '.')
     df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum().round(2)
+    df3 = f'{df3:_.2f}%'.replace('.', ',').replace('_', '.')
 
     return df2, df1, df3
 
@@ -1740,7 +1963,6 @@ def display_cad_funcao(w_municipios, w_municipios1):
               Input('w_municipios1', 'value')
               )
 def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
-    # result = pd.merge(df_remuneracao, df_geral, on=['uf', 'municipio'])
     uf3 = df_remuneracao.groupby(by=["uf", 'ano']).mean().reset_index()
     uf3['municipio'] = ' Todos os Municípios'
     regiao3 = df_remuneracao.groupby(by=['regiao', 'ano']).mean().reset_index()
