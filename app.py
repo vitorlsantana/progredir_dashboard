@@ -8,10 +8,9 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import dash_table
 
-app = dash.Dash(update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP],
+app = dash.Dash(title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP],
                 meta_tags=[{'name': 'viewport', 'content': 'width=device-width, initial-scale=1.0'}],
                 suppress_callback_exceptions=True, )
-app.title = 'Painel da Inclusão Produtiva'
 server = app.server
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
