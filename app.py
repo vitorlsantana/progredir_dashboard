@@ -98,68 +98,8 @@ df_cad = pd.read_csv(data2, sep=';', encoding='latin1', low_memory=False)
 data3 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
 df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1', low_memory=False)
 
-df_remuneracao2 = df_remuneracao.melt(id_vars=["uf", "municipio", "regiao", "pais", "ano"], var_name="ocupation",
-                           value_name="remuneração")
-
 data4 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/saldo_empregos_ocupacao_subgruposprincipais_2015_2019.csv'
 df_saldo = pd.read_csv(data4, sep=';', encoding='latin1', low_memory=False)
-
-# data4 = 'C:\\Users\\Vitor Santana\\PycharmProjects\\painelProgredir\\cnes localizacao e regiao saude.csv'
-# df5 = pd.read_csv(data4, sep=',', error_bad_lines=False)
-
-# CONFIGURAÇÃO DE TABS
-tabs_styles = {
-    # 'height': '40px',
-    'height': '100%',
-    'align-items': 'center',
-    'justifyContent':'center',
-    'textAlign':'center',
-    # 'borderBottom': '0px solid transparent',
-    'width': '100%',
-    'font-size': '200%',
-    'marginBottom':'-1px'
-}
-tab_style = {
-    # 'borderBottom': '0px solid #d6d6d6',
-    'color':'#586069',
-    'height': '100%',
-    'align-items': 'center',
-    'fontWeight': 'bold',
-    'border-radius': '3px',
-    'background-color': 'white',
-    'padding': '0px',
-    'line-height': '3vh',
-    'box-shadow': '1px 0px 1px 1px lightgrey',
-    'justifyContent': 'center',
-    'textAlign': 'center',
-    'width': '20%',
-}
-tab_selected_style = {
-    'borderTop': '2px solid #5992ED',
-    'height': '100%',
-    # 'borderBottom': '0px solid #d6d6d6',
-    'background-color': '#5992ED',
-    'color': '#ffba08',
-    'padding': '0px',
-    'align-items': 'center',
-    'borderRadius': '2px',
-    'justifyContent': 'center',
-    'textAlign': 'center',
-    'width':'20%'
-}
-active_label_style = {
-    'height':'75px',
-    # 'fontColor': 'black'
-}
-label_style = {
-    # 'color':'black',
-    'height':'5rem',
-    'marginTop': 'auto',
-    'marginBottom': 'auto',
-    # 'margin-right': 'auto',
-    'textAlign': 'center',
-    'justifyContent':'center'
-}
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
@@ -171,7 +111,7 @@ app.layout = dbc.Container([
     dbc.Row(
         [
             dbc.Col([], className='col-3'),
-            dbc.Col(html.H1('Painel da Inclusão Produtiva Urbana', style={'color':'white', 'textAlign':'center', 'fontSize':45}),
+            dbc.Col(html.H1('Painel da Inclusão Produtiva Urbana', style={'color':'white', 'fontFamily':'Arial', 'textAlign':'center', 'fontSize':45}),
                     className='col-6', style={'align':'center', 'padding':'30px'}, xs=12, sm=12, md=12, lg=12, xl=12),
             dbc.Col([], className='col-3'),
         ], className='row', align='center', style={'backgroundColor':'#071D41',
@@ -183,7 +123,7 @@ app.layout = dbc.Container([
     dbc.Row([
         # SIDEBAR
         dbc.Col([
-            html.Label('Selecione a Região', style={'display': True, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
+            html.Label('Selecione a Região', style={'fontFamily':'Arial', 'fontSize':15, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
                    className='mt-3'),
             dcc.Dropdown(
                 id='w_municipios',
@@ -193,10 +133,10 @@ app.layout = dbc.Container([
                 options=[{'label': i, 'value': i} for i in sorted(df['uf'].unique())],
                 value='Brasil',
                 placeholder="Selecione a região",
-                style={'display': True, "width": "100%", 'height': '40px', 'color':'primary', 'outline':True}
+                style={'display': True, "width": "100%", 'height': '40px', 'outline':True}
             ),
             html.Br(),
-            html.Label('Selecione o Município', style={'color': 'white', 'fontWeight': 'bold'}),
+            html.Label('Selecione o Município', style={'color': 'white', 'fontSize':15, 'fontFamily':'Arial', 'fontWeight': 'bold'}),
             dcc.Dropdown(
                 id='w_municipios1',
                 multi=False,
@@ -210,7 +150,7 @@ app.layout = dbc.Container([
             html.Br(),
             dbc.Card(children=[
                 dbc.CardBody(children=[
-                    html.H5('População', style={'textAlign':'center', 'margin-top':'10px', }),
+                    html.H5('População', style={'textAlign':'center', 'margin-top':'10px'}),
                     html.H4(id="populacao", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
                     html.H5('Produto Interno Bruto', style={'textAlign':'center'}),
                     html.H4(id="pib_total", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
@@ -225,7 +165,7 @@ app.layout = dbc.Container([
                 className="mr-5",
                 outline=True,
                 color="light",
-                style={"width": "100%", 'fontWeight': 'bold'}
+                style={"width": "100%", 'fontWeight': 'bold', 'fontSize':15, 'fontFamily':'Arial'}
             ),
             html.Br(),
             dbc.Modal(
@@ -246,10 +186,11 @@ app.layout = dbc.Container([
                 ],
                 id="modal",
                 centered=True,
-                style={"width":"100%", 'whiteSpace': 'pre-wrap'},
+                style={"width":"100%", 'whiteSpace': 'pre-wrap', 'fontFamily':'Arial'},
             ),
             html.Br(),
-            dbc.Button("Saiba mais sobre o Cadastro Único", id='open1', className="mr-5", outline=True, color="light", style={"width": "100%", 'fontWeight': 'bold'}),
+            dbc.Button("Saiba mais sobre o Cadastro Único", id='open1', className="mr-5", outline=True, color="light",
+                       style={"width": "100%", 'fontSize':15, 'fontFamily':'Arial', 'fontWeight': 'bold'}),
             dbc.Modal(
                 [
                     dbc.ModalHeader("Cadastro Único"),
@@ -262,7 +203,7 @@ app.layout = dbc.Container([
                 ],
                 id="modal1",
                 centered=True,
-                style={"width":"100%", 'whiteSpace': 'pre-wrap'},
+                style={"width":"100%", 'whiteSpace': 'pre-wrap', 'fontFamily':'Arial'},
             ),
         ], xs=12, sm=12, md=2, lg=2, xl=2, style={'backgroundColor':'#071D41', 'marginBottom':'20px'}
         ),
@@ -279,7 +220,10 @@ app.layout = dbc.Container([
                 dbc.Tab(label="Contexto econômico", tab_id="economia", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
                 dbc.Tab(label="Iniciativas de Inclusão Produtiva", tab_id="servicos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
-                        labelClassName='flex-sm-fill text-sm-center rounded text-white')],
+                        labelClassName='flex-sm-fill text-sm-center rounded text-white'),
+                dbc.Tab(label="Estudos e Pesquisas", tab_id="servicos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
+                        labelClassName='flex-sm-fill text-sm-center rounded text-white'),
+            ],
                 id="tabs",
                 active_tab="social"
             ),
@@ -465,8 +409,8 @@ def render_tab_content(active_tab):
                                 [
                                     html.H6("Pessoas com carteira assinada", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='empregos', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
-                                    html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 15}),
+                                    html.P(id='empregos', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
+                                    html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 10}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -477,16 +421,18 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Vagas abertas no SINE (jun/2021)", className="card-title",
+                                    html.H6("Variação de empregos formais em 12 meses", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='sine', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
-                                    dbc.Button("Buscar vagas no SINE", outline=True, color="dark", style={"width": "100%"},
-                                               href='https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine',
-                                               target="_blank"),
+                                    html.P(id='var_emprego',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
+                                                  'fontWeight': 'bold'}),
+                                    html.P("Fonte: Ministério da Economia (jan/2020)",
+                                           style={'textAlign': 'center', 'fontSize': 10}),
                                 ]
                                 ),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
-                            )
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
                         [
@@ -496,8 +442,8 @@ def render_tab_content(active_tab):
                                 [
                                     html.H6("Saldo de empregos formais em 12 meses", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='saldo_empregos12', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
-                                    html.P(id='var_emprego', style={'textAlign': 'center', 'fontSize': 15}),
+                                    html.P(id='saldo_empregos12', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
+                                    html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 10}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'})
@@ -509,8 +455,8 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H6("Saldo de empregos formais em 2021", className="card-title", style={'textAlign': 'center'}),
-                                    html.P(id='saldo_empregos2021', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 30, 'fontWeight': 'bold'}),
-                                    html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 15}),
+                                    html.P(id='saldo_empregos2021', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
+                                    html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 10}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -626,6 +572,25 @@ def render_tab_content(active_tab):
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
+                    dbc.Col([dbc.Card(
+                        [
+                            dbc.CardImg(
+                                src='http://portalfat.mte.gov.br/wp-content/uploads/2017/01/MARCA_SISTEMA-NACIONAL-DE-EMPREGO-SINE-01.jpg'),
+                            dbc.CardBody(
+                                [
+                                    html.H5('SINE', className="card-title"),
+                                    html.P(
+                                        "Serviço de busca de vagas de emprego no Sistema Nacional de Emprego (Sine) e agendamento de entrevista com possíveis empregadores."
+                                        "Pode acessar o serviço ppessoas, acima de 14 anos, que possuem CPF e Carteira de Trabalho e Previdência Social (CTPS).",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button("Buscar vagas no SINE", color="primary",
+                                               href='https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine',
+                                               target="_blank"),
+                                ]
+                            )
+                        ]
+                    )]),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
@@ -1547,7 +1512,7 @@ def display_saldo_empregos_recente(w_municipios, w_municipios1):
     df1 = f'{df1:_.0f}'.replace('.', ',').replace('_', '.')
     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
     df2 = f'{df2:_.0f}'.replace('.', ',').replace('_', '.')
-    df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].mean()
+    df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum().round(2)
 
     return df2, df1, df3
 
@@ -1652,14 +1617,12 @@ def display_cad_funcao(w_municipios, w_municipios1):
 
     trab_12_meses = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_12_meses'].sum()
     nao_trab_12_meses = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_12_meses'].sum()
-
     populacao = trab_12_meses + nao_trab_12_meses
     perc_trab_12_meses = (trab_12_meses/populacao*100).round(2)
     perc_nao_trab_12_meses = (nao_trab_12_meses/populacao * 100).round(2)
 
     trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_semana_passada'].sum()
     nao_trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_semana_passada'].sum()
-
     perc_trab_last_week = (trab_last_week/populacao*100).round(2)
     perc_nao_trab_last_week = (nao_trab_last_week/populacao * 100).round(2)
 
