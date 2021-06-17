@@ -11,6 +11,7 @@ import dash_table
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP],
                 meta_tags=[{'name': 'viewport', 'content': 'width=device-width, initial-scale=1.0'}],
                 suppress_callback_exceptions=True, )
+app.title = 'Painel da Inclusão Produtiva'
 server = app.server
 
 # CARREGAR DADOS
@@ -274,7 +275,8 @@ def display_pop_pib_idh(w_municipios, w_municipios1):
     df['pib_total'] = df['pib_total'].astype(float)
     pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum() / 1000000
     pib = f'R$ {pib:_.2f} Bi'.replace('.', ',').replace('_', '.')
-    idhm = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['idhm'].round(3)
+    idhm = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['idhm'].sum()
+    idhm = f'{idhm:_.3f}'.replace('.', ',').replace('_', '.')
 
     return populacao, pib, idhm
 
