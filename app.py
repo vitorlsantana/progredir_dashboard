@@ -8,9 +8,10 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import dash_table
 
-app = dash.Dash(title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP],
+app = dash.Dash(title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP, '"https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"'],
                 meta_tags=[{'name': 'viewport', 'content': 'width=device-width, initial-scale=1.0'}],
                 suppress_callback_exceptions=True, )
+
 server = app.server
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
@@ -148,6 +149,8 @@ app.layout = dbc.Container([
                 options=[],
                 style={'display': True, "width": "100%", 'height': '40px'}
             ),
+            html.Br(),
+            dbc.Col(html.I(className="far fa-address-card"), width="2"),
             html.Br(),
             dbc.Card(children=[
                 dbc.CardBody(children=[
@@ -386,14 +389,15 @@ def render_tab_content(active_tab):
                 dbc.Row(
                     [
                     dbc.Col(dcc.Graph(id='funcao_principal'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=8),
-                    dbc.Col(dcc.Graph(id='trabalhou'), xs=12, sm=12, md=12, lg=6, xl=4)
+                    dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=6, xl=4)
                     ],
                     align='center', justify="center",
                 ),
                 html.Br(),
                 dbc.Row(
                     [
-                        dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='trabalho_12meses'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='trabalho_lastweek'), xs=12, sm=12, md=12, lg=6, xl=6),
                     ], align='center', justify="center",
                 ),
             ], fluid=True
@@ -471,12 +475,6 @@ def render_tab_content(active_tab):
                     [
                         dbc.Col(dcc.Graph(id='evolucao_empregos'), style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=7, xl=7),
                         dbc.Col([
-                            # dcc.Dropdown(
-                            #     id='ocupations',
-                            #     value='',
-                            #     options=[{'label': i, 'value': i} for i in sorted(df_remuneracao2['ocupation'].unique())],
-                            #     clearable=False
-                            # ),
                             dcc.Graph(id='top_vinculos'),
                             dbc.Button(
                                 "Abrir tabela com todas as ocupações",
@@ -555,66 +553,78 @@ def render_tab_content(active_tab):
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src="https://www.seduc.ce.gov.br/wp-content/uploads/sites/37/2020/02/Novos-Caminhos-Preto-1200x813.jpg"),
+                                src="https://www.seduc.ce.gov.br/wp-content/uploads/sites/37/2020/02/Novos-Caminhos-Preto-1200x813.jpg",
+                                style={'height':'10%', 'width': '100%', 'object-fit': 'auto'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Painel de Demandas por Qualificação Profissional", className="card-title"),
+                                    html.H5("Painel de Demandas por Qualificação Profissional", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "Quais ocupações devem empregar mais gente nos próximos anos no seu município? E quais cursos FIC podem "
                                         "ser oferecidos para preparar as pessoas para entrar no mercado de trabalho? Veha as sugestões do Painel "
                                         "de Demandas por Qualificação Profissional. A ferramenta foi desenvolvida pelo Ministério da Educação em "
-                                        "parceria com o Governo do Estado de Minas Gerais.",
-                                        className="card-text",
+                                        "parceria com o Governo do Estado de Minas Gerais.", className="card-text",
+                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Acesse o painel", color="primary",
+                                    dbc.Button("Acesse o painel", color="primary", size='sm',
                                                href='http://novoscaminhos.mec.gov.br/painel-de-demandas/demandas',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src='http://portalfat.mte.gov.br/wp-content/uploads/2017/01/MARCA_SISTEMA-NACIONAL-DE-EMPREGO-SINE-01.jpg'),
+                                src='http://portalfat.mte.gov.br/wp-content/uploads/2017/01/MARCA_SISTEMA-NACIONAL-DE-EMPREGO-SINE-01.jpg',
+                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5('SINE', className="card-title"),
+                                    html.H5('SINE', className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "Serviço de busca de vagas de emprego no Sistema Nacional de Emprego (Sine) e agendamento de entrevista com possíveis empregadores."
                                         "Pode acessar o serviço ppessoas, acima de 14 anos, que possuem CPF e Carteira de Trabalho e Previdência Social (CTPS).",
                                         className="card-text",
+                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Buscar vagas no SINE", color="primary",
+                                    dbc.Button("Buscar vagas no SINE", color="primary", size='sm',
                                                href='https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             )
-                        ]
-                    )]),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        html.Br(),
+                    ], xs=12, sm=12, md=12, lg=4, xl=4
+                    ),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fHlvdW5ncyUyMGxlYXJuaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"),
+                                src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fHlvdW5ncyUyMGxlYXJuaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Cursos de jovem aprendiz",
-                                            className="card-title"),
+                                    html.H5("Cursos de jovem aprendiz", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "Aprendizagem Profissional é o programa de qualificação profissional e inserção no mercado de trabalho voltado para"
                                         " jovens de 14 a 24 anos, e para pessoas com deficiência sem limite de idade.\n\n Trata-se de uma política que pode criar "
                                         "oportunidades tanto para os jovens, especialmente no que se refere à inserção no mercado de trabalho, quanto para "
                                         "as empresas, que têm a possibilidade de formar mão-de-obra qualificada.",
                                         className="card-text",
+                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Acesse a lista de instituições", color="primary",
+                                    dbc.Button("Acesse a lista de instituições", color="primary", size='sm',
                                                href='http://blog.mds.gov.br/redesuas/plano-progredir-divulga-lista-de-instituicoes-que-podem-ofertar-curso-de-jovem-aprendiz/',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -622,200 +632,225 @@ def render_tab_content(active_tab):
                         [
                             dbc.CardImg(
                                 src="https://www.gov.br/pt-br/apps/mei/view/++widget++form.widgets.imagem/@@download/MEI.png",
-                                style={'height': "350px"}),
+                                style={'height':'20%', 'width': '100%', 'object-fit': 'cover'}),
                             dbc.CardBody(
                                 [
-                                    html.H5("Microeempreendedorismo Individual (MEI)",
-                                            className="card-title"),
+                                    html.H5("Microeempreendedorismo Individual (MEI)", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "O governo federal disponibiliza um portal com informações para quem deseja se formalizar como microeempreendedor"
                                         "individual, para quem já está formalizado e deseja o acesso digital a produtos e serviços financeiros.\n\n Além"
                                         "disso, o portal apresenta a legislação aplicada, estatísticas e cursos gratuitos para quem pretende se formalizar",
                                         className="card-text",
+                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Saiba mais sobre o MEI", color="primary",
+                                    dbc.Button("Saiba mais sobre o MEI", color="primary", size='sm',
                                                href='https://www.gov.br/empresas-e-negocios/pt-br/empreendedor',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src="http://www.mds.gov.br/webarquivos/cidadania/marca_gov/progredir/Marca_Progredir.png"),
+                                src="http://www.mds.gov.br/webarquivos/cidadania/marca_gov/progredir/Marca_Progredir.png",
+                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Plano Progredir", className="card-title"),
+                                    html.H5("Plano Progredir", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "É um plano de ações do Governo Federal para gerar emprego, renda e promover a construção da autonomia das pessoas inscritas "
                                         "no CADASTRO ÚNICO para programas Sociais do Governo Federal. O Progredir possui um aplicativo de internet para as pessoas "
                                         "inscritas no CADUNICO, que conta com cursos de qualificação profissional, vagas de emprego, uma área para elaboração de currículo, "
                                         "e a possibilidade de acessar microcrédito para empreender. Todos ofertados por parceiros (empresas ou entes públicos) "
-                                        "em sua região de forma gratuita. ",
-                                        className="card-text",
+                                        "em sua região de forma gratuita. ", className="card-text",
+                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Acesse a plataforma do Progredir", color="primary",
+                                    dbc.Button("Acesse a plataforma do Progredir", color="primary", size='sm',
                                                href='http://cidadania.gov.br/progredir',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src="https://www.gov.br/pt-br/noticias/financas-impostos-e-gestao-publica/2020/03/governo-lanca-plataforma-para-oferta-de-produtos-e-servicos-gratuitos-a-populacao/todos-por-todos_govbr.png/@@images/9ddec400-0381-4d20-a751-28f7f2c1f2b6.png"),
+                                src="https://www.gov.br/pt-br/noticias/financas-impostos-e-gestao-publica/2020/03/governo-lanca-plataforma-para-oferta-de-produtos-e-servicos-gratuitos-a-populacao/todos-por-todos_govbr.png/@@images/9ddec400-0381-4d20-a751-28f7f2c1f2b6.png",
+                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Todos por Todos", className="card-title"),
+                                    html.H5("Todos por Todos", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "A página Todos por Todos é uma campanha do Governo Federal para estimular o movimento solidário, "
                                         "captando ofertas de serviços à população e propostas de doações aos governos, para o enfrentamento "
-                                        "à pandemia do novo coronavírus.",
-                                        className="card-text",
+                                        "à pandemia do novo coronavírus.", className="card-text",
+                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Conheça o Todos por Todos", color="primary",
+                                    dbc.Button("Conheça o Todos por Todos", color="primary", size='sm',
                                                href='http://www.gov.br/pt-br/todosportodos/cursos-ead',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src="https://static.wixstatic.com/media/eafbd4_ae1f1ee9b9924e2397246a5e609880bb~mv2.jpg/v1/fit/w_828%2Ch_371%2Cal_c%2Cq_80/file.jpg"),
+                                src="https://static.wixstatic.com/media/eafbd4_ae1f1ee9b9924e2397246a5e609880bb~mv2.jpg/v1/fit/w_828%2Ch_371%2Cal_c%2Cq_80/file.jpg",
+                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Escola do Trabalhador 4.0", className="card-title"),
+                                    html.H5("Escola do Trabalhador 4.0", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "A Escola do Trabalhador 4.0 é uma iniciativa do Ministério da Economia realizada em parceria com a Microsoft "
                                         "para promoção de qualificação e inserção profissional."
                                         "Trata-se de um programa de qualificação profissional que oferece cursos gratuitos em temas de tecnologia e produtividade. "
-                                        "Com o objetivo de ajudar o trabalhador brasileiro a se preparar para o mercado de trabalho.",
-                                        className="card-text",
+                                        "Com o objetivo de ajudar o trabalhador brasileiro a se preparar para o mercado de trabalho.", className="card-text",
+                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Acesse a plataforma", color="primary",
+                                    dbc.Button("Acesse a plataforma", color="primary", size='sm',
                                                href='https://empregamais.economia.gov.br/escoladotrabalhador40/',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src="http://utramig.mg.gov.br/wp-content/uploads/2021/03/Qualifica-_emprega-.png"),
+                                src="http://utramig.mg.gov.br/wp-content/uploads/2021/03/Qualifica-_emprega-.png",
+                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Qualifica Emprega +", className="card-title"),
+                                    html.H5("Qualifica Emprega +", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "Qualifica Mais é uma parceria com o Ministério da Educação para a oferta de cursos de qualificação profissional, "
-                                        "à distância, na área de Tecnologia da Informação e Comunicação.",
-                                        className="card-text",
+                                        "à distância, na área de Tecnologia da Informação e Comunicação.", className="card-text",
+                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Acesse o site", color="primary",
+                                    dbc.Button("Acesse o site", color="primary", size='sm',
                                                href='https://www.gov.br/mec/pt-br/acesso-a-informacao/institucional/secretarias/secretaria-de-educacao-profissional/projeto-piloto-qualifica-mais',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src="https://infosolda.com.br/wp-content/uploads/2021/01/senai.png"),
+                                src="https://infosolda.com.br/wp-content/uploads/2021/01/senai.png",
+                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Aprendizagem 4.0 / Mundo SENAI", className="card-title"),
+                                    html.H5("Aprendizagem 4.0 / Mundo SENAI", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "O Aprendizagem 4.0 é um programa que busca qualificar jovens de 14 a 24 anos por "
                                         "meio de um currículo que contempla as competências técnicas e socioemocionais exigidas pela Indústria 4.0, "
                                         "importantes no mundo do trabalho atual. A iniciativa é uma experiência do SENAI e conta com a "
                                         "parceria da Secretaria Especial de Produtividade, Emprego e Produtividade do Ministério da Economia, "
-                                        "com o objetivo de estruturar novos modelos de oferta de aprendizagem para a economia 4.0.",
-                                        className="card-text",
+                                        "com o objetivo de estruturar novos modelos de oferta de aprendizagem para a economia 4.0.", className="card-text",
+                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Acesse a plataforma", color="primary",
+                                    dbc.Button("Acesse a plataforma", color="primary", size='sm',
                                                href='https://mundosenai.com.br/aprendizagem40/',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
-                            dbc.CardImg(src="https://feiraodasoportunidades.com.br/wp-content/uploads/2021/03/plat-300x190.png"),
+                            dbc.CardImg(src="https://feiraodasoportunidades.com.br/wp-content/uploads/2021/03/plat-300x190.png",
+                                        style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                                        ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Iniciativa 1 Milhão de Oportunidades", className="card-title"),
+                                    html.H5("Iniciativa 1 Milhão de Oportunidades", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "A iniciativa Um Milhão de Oportunidades é a maior articulação pela juventude do Brasil reunindo Nações Unidas, "
                                         "empresas, sociedade civil e governos para gerar um milhão de oportunidades de formação e acesso ao mundo do "
                                         "trabalho para adolescentes e jovens de 14 a 24 anos em situação de vulnerabilidade nos próximos dois anos",
-                                        className="card-text",
+                                        className="card-text", style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Acesse a plataforma", color="primary",
+                                    dbc.Button("Acesse a plataforma", color="primary", size='sm',
                                                href='https://1mio.com.br/',
                                                target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src="https://aliancaempreendedora.org.br/bar/logo-alianca.svg"),
+                                src="https://aliancaempreendedora.org.br/bar/logo-alianca.svg",
+                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Aliança Empreendedora", className="card-title"),
+                                    html.H5("Aliança Empreendedora", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "Trata-se de uma iniciativa que busca apoiar empresas, organizações sociais e governos a desenvolver "
                                         "modelos de negócios inclusivos e projetos de apoio a microempreendedores de baixa renda, "
                                         "ampliando o acesso a conhecimento, redes, mercados e crédito para que desenvolvam ou iniciem seus empreendimentos",
-                                        className="card-text",
+                                        className="card-text", style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Acesse o site e conheça", color="primary",
+                                    dbc.Button("Acesse o site e conheça", color="primary", size='sm',
                                                href='https://aliancaempreendedora.org.br/', target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
                     dbc.Col([dbc.Card(
                         [
                             dbc.CardImg(
-                                src="http://rme.net.br/wp-content/uploads/2018/11/esbo%C3%A7o-logo-irme-1-1024x545.png"),
+                                src="http://rme.net.br/wp-content/uploads/2018/11/esbo%C3%A7o-logo-irme-1-1024x545.png",
+                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                            ),
                             dbc.CardBody(
                                 [
-                                    html.H5("Instituto Rede Mulher Empreendedora (IRME", className="card-title"),
+                                    html.H5("Instituto Rede Mulher Empreendedora (IRME)", className="card-title",
+                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
                                     html.P(
                                         "O IRME é uma organização que tua no fomento à geração de renda da mulher, através do empreendedorismo e empregabilidade. "
                                         "Desenvolve projetos e capacitações para mulheres em todo o Brasil, tendo como objetivo principal garantir independência "
                                         "financeira e de decisão sobre seus negócios e vidas.",
-                                        className="card-text",
+                                        className="card-text", style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
                                     ),
-                                    dbc.Button("Acesse o site e conheça", color="primary",
+                                    dbc.Button("Acesse o site e conheça", color="primary", size='sm',
                                                href='https://institutorme.org.br/', target="_blank"),
-                                ]
+                                ], style={'padding': '16px'}
                             ),
-                        ], style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
                         html.Br(),
                     ], xs=12, sm=12, md=12, lg=4, xl=4
                     ),
@@ -1085,7 +1120,7 @@ def display_bpc(w_municipios, w_municipios1):
                          y=[bpc_total, bpc_deficiencia, bpc_idosos], name='BPC', text=[bpc_total, bpc_deficiencia, bpc_idosos],
                          hovertemplate=
                          '<b>População</b>: %{y:.0f}',
-                         textfont={'family': "Arial"}, marker=dict(color='#1351B4')))
+                         textfont={'family': "Arial", 'size':14}, marker=dict(color='#1351B4')))
 
     fig.update_traces(texttemplate='%{text:.2s}', textposition='auto')
     fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
@@ -1106,7 +1141,6 @@ def display_bpc(w_municipios, w_municipios1):
             showline=False,
             showticklabels=False,
         ),
-        # autosize=True,
         margin=dict(autoexpand=True),
         plot_bgcolor='white'
     )
@@ -1143,6 +1177,7 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     pais2['municipio'] = ' Todos os Municípios'
     pais2 = pais2.rename(columns={"pais": "uf"})
     df_cad1 = df_cad.append([uf2, regiao2, pais2], ignore_index=True)
+    df_cad1 = df_cad1.sort_values(by=['mês_ano'])
 
     df2 = df_cad1[(df_cad1['municipio'] == w_municipios1) & (df_cad1['uf'] == w_municipios)]
     fig = go.Figure()
@@ -1156,7 +1191,6 @@ def display_ev_cadunico(w_municipios, w_municipios1):
             showgrid=False,
             showticklabels=True,
             linecolor='rgb(204, 204, 204)',
-            linewidth=1,
             ticks='outside',
             tickfont=dict(
                 family='Arial',
@@ -1170,12 +1204,19 @@ def display_ev_cadunico(w_municipios, w_municipios1):
             showline=False,
             showticklabels=False,
         ),
-        autosize=True,
+        # autosize=False,
         hovermode="x unified",
-        margin=dict(autoexpand=True),
         showlegend=True,
         plot_bgcolor='white',
+        margin=dict(
+            l=15,
+            r=15,
+            b=100,
+            t=100,
+            pad=0
+        ),
     )
+    fig.update_yaxes(automargin=True)
     fig.update_layout(legend=dict(
         orientation="h",
         yanchor="bottom",
@@ -1188,13 +1229,13 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.15,
                             xanchor='left', yanchor='bottom',
-                            text='Evolução do nº de pessoas inscritas no CadÚnico e de<br>beneficiárias do Bolsa Família (2018-2021)',
-                            font=dict(family='Arial', size=16, color='rgb(37,37,37)'),
+                            text='Pessoas inscritas no CadÚnico e beneficiárias<br>do Bolsa Família (2019-2021)',
+                            font=dict(family='Arial', size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Cadastro Único, abr/2021',
+                            text='Fonte: Ministério da Cidadania, abr/2021',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
     fig.update_layout(annotations=annotations)
@@ -1218,14 +1259,14 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     perc_fem = (fem_cad / populacao * 100).round(1)
 
     fig1 = go.Figure()
-    fig1.add_trace(go.Bar(x=['Masculino'], y=[masc_cad], text=[perc_masc], textposition='inside', textfont = {'family': "Arial"},
+    fig1.add_trace(go.Bar(x=['Masculino'], y=[masc_cad], text=[perc_masc], textposition='inside', textfont={'family': "Arial", 'size':14},
                           name='', marker=dict(color='#1351B4'),
                           showlegend=False,
                           hovertemplate=
                           '<b>População</b>: %{y:.0f}',
                           ))
-    fig1.add_trace(go.Bar(x=['Feminino'], y=[fem_cad], text=[perc_fem], textposition='inside', textfont = {'family': "Arial"},
-                          name='', marker=dict(color='#F08080'),
+    fig1.add_trace(go.Bar(x=['Feminino'], y=[fem_cad], text=[perc_fem], textposition='inside', textfont={'family': "Arial", 'size':14},
+                          name='', marker=dict(color='#FF8C00'),
                           hovertemplate=
                           '<b>População</b>: %{y:.0f}',
                           ))
@@ -1267,13 +1308,13 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico,<br>por sexo',
+                            text='População do CadÚnico,<br>por <b>sexo</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Cadastro Único, abr/2021',
+                            text='Fonte: Ministério da Cidadania, abr/2021',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -1281,9 +1322,10 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
 
     fig2 = go.Figure()
 
-    colors = ['#1351B4', '#f6bd60']
+    colors = ['#1351B4', '#FF8C00']
     fig2.add_trace(go.Pie(labels=['Urbano', 'Rural'], values=[urbano, rural], name='Domicílio',
-                          marker=dict(colors=colors), hole=.5, textfont={'family': "Arial", 'size': 15}))
+                          marker=dict(colors=colors), hole=.5, textfont={'family': "Arial", 'size': 15},
+                          hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
 
     fig2.update_layout(
         xaxis_tickfont_size=14,
@@ -1303,13 +1345,13 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico,<br>situação do domicílio',
+                            text='População do CadÚnico,<br><b>situação do domicílio</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Cadastro Único, abr/2021',
+                            text='Fonte: Ministério da Cidadania, abr/2021',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -1344,17 +1386,16 @@ def display_age(w_municipios, w_municipios1):
     faixa60_64 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_60_64_anos'].sum()
     perc_faixa60_64 = (faixa60_64 / populacao * 100).round(2)
 
-    colors = ['#1351B4', ] * 9
-    colors[1] = '#0C326F'
+    colors = ['#1351B4', '#FF8C00', '#FF8C00', '#1351B4', '#1351B4', '#1351B4', '#1351B4', '#1351B4', '#1351B4']
 
     fig = go.Figure()
     fig.add_trace(go.Bar(x=faixa, y=[faixa16_17, faixa18_24, faixa25_34, faixa35_39, faixa40_44, faixa45_49, faixa50_54, faixa55_59, faixa60_64],
                          showlegend=False, name='',
                          hovertemplate =
                          '<b>População</b>: %{y:.0f}'+
-                         '<br><b>Faixa Etária</b>: %{x}<br>',
+                         '<br><b>Faixa Etária</b>: %{x} anos<br>',
                          text=[perc_faixa16_17, perc_faixa18_24, perc_faixa25_34, perc_faixa35_39, perc_faixa40_44, perc_faixa45_49,
-                               perc_faixa50_54,perc_faixa55_59, perc_faixa60_64], textposition='inside', textfont = {'family': "Arial"},
+                               perc_faixa50_54,perc_faixa55_59, perc_faixa60_64], textposition='inside', textfont={'family': "Arial", 'size':14},
                          texttemplate="%{y:,.1f}",
                          marker=dict(color=colors)))
 
@@ -1366,7 +1407,7 @@ def display_age(w_municipios, w_municipios1):
             linecolor='rgb(204, 204, 204)',
             linewidth=2,
             ticks='outside',
-            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
             showgrid=False,
@@ -1375,7 +1416,13 @@ def display_age(w_municipios, w_municipios1):
             showticklabels=False,
         ),
         autosize=False,
-        margin=dict(autoexpand=True),
+        margin=dict(
+            l=20,
+            r=20,
+            b=100,
+            t=100,
+            pad=0
+        ),
         plot_bgcolor='white'
     )
 
@@ -1386,13 +1433,13 @@ def display_age(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do Cadastro Único,<br>por faixa etária',
+                            text='População do Cadastro Único,<br>por <b>faixa etária</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Cadastro Único, abr/2021',
+                            text='Fonte: Ministério da Cidadania, abr/2021',
                             font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -1422,6 +1469,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     perc_medio_completo = (medio_completo / populacao * 100).round(2)
     superior = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_superior_completo_incompleto'].sum()
     perc_superior = (superior / populacao * 100).round(2)
+    perc_abaixo_ensino_medio = ((sem_instrucao+fund_incompleto+fund_completo+medio_incompleto) / populacao * 100).round(2)
 
     sabe_ler_escrever = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['sabe_ler_escrever'].sum()
     nao_sabe_ler_escrever = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_sabe_ler_escrever'].sum()
@@ -1429,10 +1477,10 @@ def display_escolaridade(w_municipios, w_municipios1):
     fig = go.Figure()
     fig.add_trace(go.Bar(x=nivel, y=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior],
                          text=[perc_sem_instrucao, perc_fund_incompleto, perc_fund_completo, perc_medio_incompleto, perc_medio_completo,
-                               perc_superior], name='', marker=dict(color='#2670E8'), textposition='auto',
+                               perc_superior], name='', marker=dict(color='#1351B4'), textposition='auto', textfont={'family': "Arial, bold", 'size':14},
                          hovertemplate=
                          '<b>População</b>: %{y:.0f}' +
-                         '<br><b>Escolaridade</b>: %{x}<br>',
+                         '<br><b>Nível</b>: %{x}<br>',
                          ),
                   )
     fig.update_layout(
@@ -1452,7 +1500,13 @@ def display_escolaridade(w_municipios, w_municipios1):
             showticklabels=False,
         ),
         autosize=True,
-        margin=dict(autoexpand=True),
+        margin=dict(
+            l=20,
+            r=20,
+            b=100,
+            t=100,
+            pad=0
+        ),
         plot_bgcolor='white'
     )
 
@@ -1463,34 +1517,35 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do Cadastro Único, por<br>nível de escolaridade',
+                            text='População do Cadastro Único, por<br>nível de <b>escolaridade</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Cadastro Único, fev/2021',
+                            text='Fonte: Ministério da Cidadania, fev/2021',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
 
     fig2 = go.Figure()
-    colors = ['#f6bd60', '#1351B4']
+    colors = ['#1351B4', '#FF8C00']
     fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True,
-                         name='Analfabetismo', hole=.5, marker=dict(colors=colors), textfont={'family': "Arial", 'size': 15}))
+                          name='', hole=.5, marker=dict(colors=colors), textfont={'family': "Arial", 'size': 15},
+                          hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
 
     annotations = []
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico,<br>por alfabetização',
+                            text='População do CadÚnico,<br>por <b>alfabetização</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.7, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Cadastro Único, fev/2021',
+                            text='Fonte: Ministério da Cidadania, fev/2021',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -1519,13 +1574,48 @@ def display_idade_serie(w_municipios, w_municipios1):
     municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['municipio']
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=['Brasil'], y=[evasao_brasil], name='', marker=dict(color='#5992ED')))
-    fig.add_trace(go.Bar(x=[municipio], y=[evasao_municipio], name='', marker=dict(color='#0C326F')))
+    fig.add_trace(go.Bar(x=['Brasil'], y=[evasao_brasil], name='', marker=dict(color='#5992ED'),
+                         text=[evasao_brasil], textfont={'family': "Arial", 'size': 14},
+                         hovertemplate=
+                         '<b>%{x}</b>' +
+                         '<br><b>Taxa de evasão escolar</b>: %{y:.1f}%<br>',
+                         ))
+    fig.add_trace(go.Bar(x=[municipio], y=[evasao_municipio], name='', marker=dict(color='#0C326F'),
+                         text=[evasao_municipio], textfont={'family': "Arial", 'size': 14},
+                         hovertemplate=
+                         '<b>%{x}</b>' +
+                         '<br><b>Taxa de evasão escolar</b>: %{y:.1f}%<br>',
+                         ))
     fig.update_layout(
-        xaxis=dict(showline=True, showgrid=False, showticklabels=True, linecolor='rgb(204, 204, 204)',
-            linewidth=1, ticks='outside', tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),),
-        yaxis=dict(showgrid=False, zeroline=False, showline=False, showticklabels=True),
-        autosize=True, margin=dict(autoexpand=True), showlegend=True, plot_bgcolor='white')
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=False,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=False,
+        showlegend=False,
+        margin=dict(
+            l=20,
+            r=20,
+            b=100,
+            t=100,
+            pad=0
+        ),
+        plot_bgcolor='white'
+    )
+
+    fig.update_traces(texttemplate='%{text:.1f}%', textposition='auto', textfont={'family': "Arial", 'size': 14})
+    fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
 
     annotations = []
 
@@ -1542,15 +1632,48 @@ def display_idade_serie(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
 
     fig2 = go.Figure()
-    fig2.add_trace(go.Bar(x=['Brasil'], y=[remuneracao_brasil], name='', marker=dict(color='#5992ED')))
-    fig2.add_trace(go.Bar(x=[municipio], y=[remuneracao_municipio], name='', marker=dict(color='#0C326F')))
-
+    fig2.add_trace(go.Bar(x=['Brasil'], y=[remuneracao_brasil], name='', marker=dict(color='#5992ED'),
+                          text=[remuneracao_brasil], textfont={'family': "Arial", 'size': 14},
+                          hovertemplate=
+                          '<b>%{x}</b>' +
+                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+                          ))
+    fig2.add_trace(go.Bar(x=[municipio], y=[remuneracao_municipio], name='', marker=dict(color='#0C326F'),
+                          text=[remuneracao_municipio], textfont={'family': "Arial", 'size': 14},
+                          hovertemplate=
+                          '<b>%{x}</b>' +
+                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+                          ))
     fig2.update_layout(
-        xaxis=dict(showline=True, showgrid=False, showticklabels=True, linecolor='rgb(204, 204, 204)',
-            linewidth=2, ticks='outside', tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),),
-        yaxis=dict(showgrid=False, zeroline=False, showline=False, showticklabels=False,),
-        autosize=True, margin=dict(autoexpand=True), showlegend=False, plot_bgcolor='white'
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=False,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=False,
+        showlegend=False,
+        margin=dict(
+            l=20,
+            r=20,
+            b=100,
+            t=100,
+            pad=0
+        ),
+        plot_bgcolor='white'
     )
+
+    fig2.update_traces(texttemplate='R$ %{text:.2f}', textposition='auto', textfont={'family': "Arial", 'size': 14})
+    fig2.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
 
     annotations = []
 
@@ -1566,14 +1689,49 @@ def display_idade_serie(w_municipios, w_municipios1):
     fig2.update_layout(annotations=annotations)
 
     fig3 = go.Figure()
-    fig3.add_trace(go.Bar(x=['Brasil'], y=[idade_serie_brasil], name='', marker=dict(color='#5992ED')))
-    fig3.add_trace(go.Bar(x=[municipio], y=[idade_serie], name='', marker=dict(color='#0C326F')))
+    fig3.add_trace(go.Bar(x=['Brasil'], y=[idade_serie_brasil], name='', marker=dict(color='#5992ED'),
+                          text=[idade_serie_brasil], textfont={'family': "Arial", 'size': 14},
+                          hovertemplate=
+                          '<b>%{x}</b>' +
+                          '<br><b>Taxa de distorção</b>: %{y:.1f}%<br>',
+                          ))
+    fig3.add_trace(go.Bar(x=[municipio], y=[idade_serie], name='', marker=dict(color='#0C326F'),
+                          text=[idade_serie], textfont={'family': "Arial", 'size': 14},
+                          hovertemplate=
+                          '<b>%{x}</b>' +
+                          '<br><b>Taxa de distorção</b>: %{y:.1f}%<br>',
+                          ))
 
     fig3.update_layout(
-        xaxis=dict(showline=True, showgrid=False, showticklabels=True, linecolor='rgb(204, 204, 204)',
-            linewidth=2, ticks='outside', tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),),
-        yaxis=dict(showgrid=False, zeroline=False, showline=False, showticklabels=False,),
-        autosize=True, margin=dict(autoexpand=True), showlegend=False, plot_bgcolor='white')
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=False,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=False,
+        showlegend=False,
+        margin=dict(
+            l=20,
+            r=20,
+            b=100,
+            t=100,
+            pad=0
+        ),
+        plot_bgcolor='white'
+    )
+
+    fig3.update_traces(texttemplate='%{text:.1f}%', textposition='auto', textfont={'family': "Arial", 'size': 14})
+    fig3.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
 
     annotations = []
 
@@ -1615,7 +1773,8 @@ def display_pib_setorial(w_municipios, w_municipios1):
 
     fig = go.Figure()
     fig.add_trace(go.Pie(labels=['Agricultura', 'Indústria', 'Serviços', 'Administração'], values=[agropecuaria, industria, servicos, admpublica],
-                         showlegend=True, name='Setor', hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 15}))
+                         showlegend=True, name='Setor', hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 15},
+                         hovertemplate="<b>%{label} <br>PIB: R$ %{value:.2f}</br><b>"))
 
     annotations = []
     # Title
@@ -1670,7 +1829,10 @@ def display_empresas(w_municipios, w_municipios1):
     fig = go.Figure()
     fig.add_trace(go.Bar(x=setores, y=[agropecuaria, ind_extrativa, ind_transf, construcao, comercio, transporte,
                     aloj_alimentacao, info_comunic, ativ_prof, ativ_administrativas, educacao, saude, arte_cultura, outras_ativ],
-                         name='Atividade', marker=dict(color='#2670E8')))
+                         name='Setor', marker=dict(color='#2670E8'),
+                         hovertemplate=
+                         '<b>%{x}' + '<br>Número de empresas</b>: %{y}<b><br>',
+                         ))
 
     fig.update_layout(bargap=0.25, bargroupgap=0.2)
     fig.update_layout(
@@ -1774,7 +1936,6 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
                saldo_emprego2013, saldo_emprego2014, saldo_emprego2015, saldo_emprego2016, saldo_emprego2017, saldo_emprego2018, saldo_emprego2019],
                              marker=dict(size=10, color='#1351B4')
                              ))
-
     fig.update_layout(
         xaxis=dict(
             showline=True,
@@ -1784,7 +1945,7 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
             linewidth=1,
             ticks='outside',
             zerolinecolor='grey',
-            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
+            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)',
             ),
         ),
         yaxis=dict(
@@ -1796,7 +1957,13 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
         ),
         autosize=True,
         hovermode="x unified",
-        margin=dict(autoexpand=True),
+        margin=dict(
+            l=15,
+            r=15,
+            b=100,
+            t=100,
+            pad=0
+        ),
         showlegend=False,
         plot_bgcolor='white'
     )
@@ -1812,7 +1979,7 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -1821,7 +1988,8 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
 
 # POPULAÇÃO DO CADUNICO POR FUNÇÃO PRINCIPAL E TRABALHO
 @app.callback(Output('funcao_principal', 'figure'),
-              Output('trabalhou', 'figure'),
+              Output('trabalho_12meses', 'figure'),
+              Output('trabalho_lastweek', 'figure'),
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
@@ -1842,21 +2010,19 @@ def display_cad_funcao(w_municipios, w_municipios1):
 
     trab_12_meses = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_12_meses'].sum()
     nao_trab_12_meses = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_12_meses'].sum()
-    populacao = trab_12_meses + nao_trab_12_meses
-    perc_trab_12_meses = (trab_12_meses/populacao*100).round(2)
-    perc_nao_trab_12_meses = (nao_trab_12_meses/populacao * 100).round(2)
 
     trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_semana_passada'].sum()
     nao_trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_semana_passada'].sum()
-    perc_trab_last_week = (trab_last_week/populacao*100).round(2)
-    perc_nao_trab_last_week = (nao_trab_last_week/populacao * 100).round(2)
 
     fig1 = go.Figure()
 
     fig1.add_trace(go.Bar(x=funcao_principal,
-                         y=[trab_autonomo, trab_temp_area_rural, emprego_sem_carteira, emprego_com_carteira, trab_domestico_sem_carteira,
+                          y=[trab_autonomo, trab_temp_area_rural, emprego_sem_carteira, emprego_com_carteira, trab_domestico_sem_carteira,
                             trab_domestico_com_carteira, trabalhador_nao_remunerado, militar_servidor_publico, empregador, estagiario, aprendiz],
-                          textposition='inside', name='Função Principal', marker=dict(color='#0C326F')))
+                          hovertemplate=
+                          '<b>População</b>: %{y:.0f}' +
+                          '<br><b>Função principal</b>: %{x}<br>',
+                          textposition='inside', name='', marker=dict(color='#0C326F')))
     fig1.update_layout(bargap=0.25, bargroupgap=0.2)
     fig1.update_layout(
         xaxis=dict(
@@ -1875,7 +2041,13 @@ def display_cad_funcao(w_municipios, w_municipios1):
             showticklabels=False,
         ),
         autosize=True,
-        margin=dict(autoexpand=True),
+        margin=dict(
+            l=20,
+            r=20,
+            b=100,
+            t=100,
+            pad=0
+        ),
         showlegend=False,
         plot_bgcolor='white'
     )
@@ -1884,80 +2056,96 @@ def display_cad_funcao(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico, por função<br> principal e frequência do trabalho',
+                            text='População do CadÚnico, por <b><br>função principal</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.25,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.27,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Cadastro Único, fev/2021',
+                            text='Fonte: Ministério da Cidadania, fev/2021',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig1.update_layout(annotations=annotations)
 
-    fig2 = go.Figure()
-    fig2.add_trace(go.Bar(
-        y=[trab_12_meses, trab_last_week],
-        x=['Trabalhou nos últimos<br>12 meses', 'Trabalhou na<br>última semana'], text=[perc_trab_12_meses, perc_trab_last_week], textposition='auto',
-        name='Sim', textfont={'family': "Arial"},
-        marker=dict(
-            color='#0C326F',
-            line=dict(color='white', width=1)
-        )
-    ))
-    fig2.add_trace(go.Bar(
-        y=[nao_trab_12_meses, nao_trab_last_week],
-        x=['Trabalhou nos últimos<br>12 meses', 'Trabalhou na<br>última semana'], text=[perc_nao_trab_12_meses, perc_nao_trab_last_week], textposition='auto',
-        name='Não', textfont={'family': "Arial"},
-        marker=dict(
-            color='#f8961e',
-            line=dict(color='white', width=1)
-        )
-    ))
 
-    fig2.update_traces(texttemplate='%{text:.2s}%')
-    fig2.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
+    fig2 = go.Figure()
+
+    colors = ['#1351B4', '#FF8C00']
+    fig2.add_trace(go.Pie(labels=['Trabalhou', 'Não trabalhou'],
+                          values=[trab_12_meses, nao_trab_12_meses], name='',
+                          marker=dict(colors=colors), hole=.5, textfont={'family': "Arial", 'size': 14},
+                          hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
 
     fig2.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
-        ),
+        xaxis_tickfont_size=14,
         yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
+            titlefont_size=16,
+            tickfont_size=14,
         ),
-        autosize=False,
-        margin=dict(autoexpand=True),
-        showlegend=False,
-        plot_bgcolor='white',
-        # barmode = 'stack'
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=-0.13,
+            xanchor="right",
+            x=0.9
+        ),
     )
 
     annotations = []
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+    annotations.append(dict(xref='paper', yref='paper', x=-0.11, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Situação de trabalho nos últimos<br>12 meses e na última semana',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            text='População do CadÚnico, por situação de<br><b>trabalho nos últimos 12 meses</b>',
+                            font=dict(family='Arial', size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Cadastro Único, fev/2021',
-                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            text='Fonte: Ministério da Cidadania, abr/2021',
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig2.update_layout(annotations=annotations)
 
-    return fig1, fig2
+    fig3 = go.Figure()
+
+    colors = ['#1351B4', '#FF8C00']
+    fig3.add_trace(go.Pie(labels=['Trabalhou', 'Não trabalhou'], values=[trab_last_week, nao_trab_last_week], name='',
+                          marker=dict(colors=colors), hole=.5, textfont={'family': "Arial", 'size': 14},
+                          hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
+
+    fig3.update_layout(
+        xaxis_tickfont_size=14,
+        yaxis=dict(
+            titlefont_size=16,
+            tickfont_size=14,
+        ),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=-0.13,
+            xanchor="right",
+            x=0.9
+    ))
+
+    annotations = []
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=-0.11, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='População do CadÚnico, por situação de<br><b>trabalho na última semana</b>',
+                            font=dict(family='Arial', size=19, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Cidadania, abr/2021',
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig3.update_layout(annotations=annotations)
+
+    return fig1, fig2, fig3
 
 # EVOLUÇÃO DA REMUNERAÇÃO TOTAL
 @app.callback(Output('remuneracao', 'figure'),
@@ -1982,7 +2170,11 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     df3 = df3.reset_index()
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=df3['ano'], y=df3['Total'], marker=dict(color='#0C326F')))
+    fig.add_trace(go.Bar(x=df3['ano'], y=df3['Total'], marker=dict(color='#0C326F'), name='',
+                         hovertemplate=
+                         '<b>Remuneração média:</b> R$ %{y:.2f}' +
+                         '<br><b>Ano</b>: %{x}<br>',
+                         ))
     fig.update_layout(
         xaxis=dict(
             showline=True,
@@ -1998,7 +2190,7 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
             showgrid=False,
             zeroline=True,
             showline=False,
-            showticklabels=True,
+            showticklabels=False,
         ),
         autosize=True,
         margin=dict(autoexpand=True),
@@ -2103,7 +2295,7 @@ def display_mei(w_municipios, w_municipios1):
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
-        y=[mei_cadunico, mei_pbf], x=['Cadastro Único', 'Bolsa Família'], textposition='inside', name='MEI',
+        y=[mei_cadunico, mei_pbf], x=['Cadastro Único', 'Bolsa Família'], text=[mei_cadunico, mei_pbf], textposition='auto', name='MEI',
         marker=dict(color='#f8961e', line=dict(color='white', width=1)
         )
     ))
@@ -2131,7 +2323,7 @@ def display_mei(w_municipios, w_municipios1):
 
     annotations = []
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+    annotations.append(dict(xref='paper', yref='paper', x=-0.1, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Microeempreendedor Individual (MEI)',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
@@ -2140,7 +2332,7 @@ def display_mei(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania/Ministério da Economia, jul/2020',
-                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -2181,6 +2373,22 @@ def update_top_vinculos(w_municipios, w_municipios1):
 
     fig.add_trace(go.Pie(labels=df5['ocupation'], values=df5['vinculos'],
                           hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 12}))
+
+    fig.update_layout(
+        xaxis_tickfont_size=14,
+        yaxis=dict(
+            titlefont_size=16,
+            tickfont_size=14,
+        ),
+        showlegend=False,
+        margin=dict(
+            l=15,
+            r=15,
+            b=100,
+            t=100,
+            pad=1
+        ),
+    )
 
     annotations = []
 
@@ -2263,9 +2471,12 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     fig = go.Figure()
 
     fig.add_trace(go.Bar(
-        y=df3['saldo'], x=df3['ocupation'], textposition='inside', name='Saldo',
-        marker=dict(color='#f8961e', line=dict(color='white', width=1)
-        )))
+        y=df3['saldo'], x=df3['ocupation'], textposition='inside', name='',
+        marker=dict(color='#f8961e', line=dict(color='white', width=1)),
+        hovertemplate=
+        '<b>Saldo de empregos</b>: %{y:.0f}' +
+        '<br><b>Ocupação</b>: %{x} anos<br>',
+    ))
 
     fig.update_layout(
         xaxis=dict(
@@ -2274,7 +2485,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
             showticklabels=True,
             linewidth=2,
             ticks='outside',
-            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+            tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
             showgrid=False,
@@ -2283,7 +2494,13 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
             showticklabels=False,
         ),
         autosize=True,
-        margin=dict(autoexpand=True),
+        margin=dict(
+            l=15,
+            r=15,
+            b=100,
+            t=100,
+            pad=1
+        ),
         showlegend=False,
         plot_bgcolor='white',
     )
