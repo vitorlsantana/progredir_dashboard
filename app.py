@@ -8,7 +8,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import dash_table
 
-app = dash.Dash(title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP, '"https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"'],
+app = dash.Dash(title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP,
+                                                                                                          'https://use.fontawesome.com/releases/v5.12.1/css/all.css'],
                 meta_tags=[{'name': 'viewport', 'content': 'width=device-width, initial-scale=1.0'}],
                 suppress_callback_exceptions=True, )
 
@@ -149,8 +150,6 @@ app.layout = dbc.Container([
                 options=[],
                 style={'display': True, "width": "100%", 'height': '40px'}
             ),
-            html.Br(),
-            dbc.Col(html.I(className="far fa-address-card"), width="2"),
             html.Br(),
             dbc.Card(children=[
                 dbc.CardBody(children=[
@@ -513,6 +512,20 @@ def render_tab_content(active_tab):
                             ),
                         ], style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
                         dbc.Col([
+                            html.P(
+                                [
+                                    html.Span(
+                                        className="far fa-lightbulb",
+                                        id="tooltip-target",
+                                        style={'fontSize':25, "cursor": "pointer", 'padding':'2px'},
+                                    ),
+                                ], style={'background-color':'white', 'margin-bottom':0}
+                            ),
+                            dbc.Tooltip(
+                                "Veja as ocupações que vêm aborvendo mais gente no mercado de trabalho formal. "
+                                "Pode ser uma boa ideia investir na capacitação de pessoas para trabalhar nessas ocupações.",
+                                target="tooltip-target",
+                            ),
                             dcc.Graph(id='saldo_ocupacao'),
                             dbc.Button(
                                 "Abrir tabela com todas as ocupações",
