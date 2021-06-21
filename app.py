@@ -1191,7 +1191,7 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     pais2['municipio'] = ' Todos os Municípios'
     pais2 = pais2.rename(columns={"pais": "uf"})
     df_cad1 = df_cad.append([uf2, regiao2, pais2], ignore_index=True)
-    df_cad1 = df_cad1.sort_values(by=['mês_ano'])
+    # df_cad1 = df_cad1.sort_values(by=['mês_ano'])
 
     df2 = df_cad1[(df_cad1['municipio'] == w_municipios1) & (df_cad1['uf'] == w_municipios)]
     fig = go.Figure()
