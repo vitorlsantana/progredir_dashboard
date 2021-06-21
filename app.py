@@ -318,6 +318,9 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.P(id='perc_cad',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 15,
+                                                  'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -329,7 +332,11 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'})]
+                                    html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.P(id='perc_pbf',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 15,
+                                                  'fontWeight': 'bold'}),
+                                ]
                                 ),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
@@ -891,7 +898,7 @@ def render_tab_content(active_tab):
                         html.Div(children=
                         [
                             html.Img(
-                                src='https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/o%20futuro%20da%20inclus%C3%A3o%20produtiva%20no%20brasil.png',
+                                src='https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/o%20futuro%20da%20inclus%C3%A3o%20produtiva%20no%20brasil.png?raw=true',
                                 style={'height': '100%', 'width': '120px',
                                        'object-fit': 'cover'}),
                             html.Div([
@@ -919,11 +926,11 @@ def render_tab_content(active_tab):
                         html.Div(children=
                         [
                             html.Img(
-                                src='https://lh3.googleusercontent.com/proxy/oiyeHOg-aw1ijJKRNuZS1jaVcNSNBTOuukq7zaRx42QqiWVux8-3ECG_fq9ht9pYFs-KxUZkIF-6lnFQw57IDBBJRdUuO3EnEBJDhf2QhzEXH9eZmvnn4hI',
+                                src='https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/serie%20wwp.png?raw=true',
                                 style={'height': '100%', 'width': '120px',
                                        'object-fit': 'cover'}),
                             html.Div([
-                                html.H2("Série de estudos de caso de inclusão produtiva urbana no Brasil, WWP",
+                                html.H2("Série de estudos de caso de inclusão produtiva urbana no Brasil",
                                         style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
                                         ),
                                 html.P(
@@ -1086,6 +1093,8 @@ def toggle_modal1(n1, n2, is_open):
     Output('bolsa_familia', 'children'),
     Output('pobreza_extrema', 'children'),
     Output('catadores', 'children'),
+    Output('perc_cad', 'children'),
+    Output('perc_pbf', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
@@ -1094,12 +1103,17 @@ def display_cadunico(w_municipios, w_municipios1):
     pessoas_cad = f'{pessoas_cad:_.0f}'.replace('.', ',').replace('_', '.')
     pessoas_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_pbf'].sum()
     pessoas_pbf = f'{pessoas_pbf:_.0f}'.replace('.', ',').replace('_', '.')
+    pessoas_cad1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
+    pessoas_pbf1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_pbf'].sum()
     pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
     pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
     catadores = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_catadores_cad'].sum()
     catadores = f'{catadores:_.0f}'.replace('.', ',').replace('_', '.')
+    populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
+    perc_cad = ((pessoas_cad1/populacao)*100).round(2)
+    perc_pbf = ((pessoas_pbf1/populacao)*100).round(2)
 
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', catadores + ' famílias'
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', catadores + ' famílias', f'{perc_cad:.0f}% da população', f'{perc_pbf:.0f}% da população'
 
 # NÚMEROS CADASTRO ÚNICO E BOLSA FAMÍLIA
 @app.callback(
@@ -1256,7 +1270,7 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
 
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
     perc_masc = (masc_cad/populacao*100).round(1)
-    perc_fem = (fem_cad / populacao * 100).round(1)
+    perc_fem = (fem_cad/populacao * 100).round(1)
 
     fig1 = go.Figure()
     fig1.add_trace(go.Bar(x=['Masculino'], y=[masc_cad], text=[perc_masc], textposition='inside', textfont={'family': "Arial", 'size':14},
@@ -1525,6 +1539,13 @@ def display_escolaridade(w_municipios, w_municipios1):
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania, fev/2021',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    # Anotação
+    annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
+                            xanchor='left', yanchor='bottom',
+                            text=f'{perc_abaixo_ensino_medio:.0f}% não possui ensino<br>médio completo',
+                            font=dict(family='Arial', size=18, color='#f94144'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -1865,7 +1886,7 @@ def display_empresas(w_municipios, w_municipios1):
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.3,
                             xanchor='center', yanchor='top',
                             text='Fonte: IBGE/CEMPRE, 2018',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
@@ -2202,7 +2223,7 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Evolução da remuneração média mensal<br>(Em número de salários mínimo)',
+                            text='Evolução da remuneração média mensal',
                             font=dict(family='Arial', size=18, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -2514,10 +2535,10 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0.4, y=-0.7,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(family='Arial', size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
 
