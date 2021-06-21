@@ -303,10 +303,10 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                                    html.P(id='perc_cad',
-                                           style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
+                                    html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
+                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px',
+                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -317,11 +317,11 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                                    html.P(id='perc_pbf',
-                                           style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
+                                    html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
+                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
+                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -333,7 +333,8 @@ def render_tab_content(active_tab):
                                     html.H6("Pobreza e Extrema Pobreza (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='pobreza_extrema', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'})]
                                 ),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'})
+                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
+                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
                         [
@@ -344,7 +345,8 @@ def render_tab_content(active_tab):
                                     html.H6("Famílias de catadores (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='catadores', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                                 ]),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
+                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
+                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
@@ -532,11 +534,7 @@ def render_tab_content(active_tab):
                 dbc.Row(
                     [
                         dbc.Col(dcc.Graph(id='pib_setorial'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col(
-                            [
-                                html.H4(id='empresas', style={'color':'#1351B4', 'backgroundColor':'white', 'textAlign':'center',
-                                                              'marginBottom':'0px', 'paddingTop':'10px', 'fontSize':30, 'fontWeight':'bold'}),
-                                dcc.Graph(id='empresas_setorial', config={'responsive':True})], style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6)
+                        dbc.Col(dcc.Graph(id='empresas_setorial', config={'responsive':True})], style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6)
                     ], className='row flex-display'
                 ),
                 html.Br(),
@@ -1824,33 +1822,11 @@ def display_pib_setorial(w_municipios, w_municipios1):
 
 # NÚMERO DE EMPRESAS POR SETOR DE ATIVIDADE ECONÔMICA
 @app.callback(Output('empresas_setorial', 'figure'),
-              Output('empresas', 'children'),
+              # Output('empresas', 'children'),
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
 def display_empresas(w_municipios, w_municipios1):
-    setores = ['Agropecuária', 'Indústria<br>Extrativa', 'Indústria de<br>Transformação', 'Construção', 'Comércio', 'Transporte', 'Alojamento e<br>Alimentação', 'Informação e<br>Comunicação',
-               'Atividades Científicas<br>e Técnicas', 'Atividades< >Administrativas',
-               'Educação', 'Saúde', 'Arte, Cultura e<br>Esportes', 'Outras Atividades']
-    # agropecuaria = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_agropecuaria'].sum()
-    # ind_extrativa = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ind_extrativas'].sum()
-    # ind_transf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ind_transf'].sum()
-    # # eletric_gas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_eletric_gas'].sum()
-    # # saneamento = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_saneamento'].sum()
-    # construcao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_construcao'].sum()
-    # comercio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_comercio'].sum()
-    # transporte = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_transporte'].sum()
-    # aloj_alimentacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_alojamento_alimentacao'].sum()
-    # info_comunic = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_info_comunic'].sum()
-    # # financeiro = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_financeiro'].sum()
-    # # imobiliarias = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_imobiliarias'].sum()
-    # ativ_prof = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ativ_profissionais_cient_tecnicas'].sum()
-    # ativ_administrativas = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_ativ_administrativas'].sum()
-    # educacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_educacao'].sum()
-    # saude = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_saude_servicosocial'].sum()
-    # arte_cultura = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_arte_cultura'].sum()
-    # outras_ativ = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['empresas_outras_ativ_servicos'].sum()
-
     df_empresas = df[
         ['uf', 'municipio', 'empresas_agropecuaria', 'empresas_ind_extrativas', 'empresas_ind_transf', 'empresas_eletric_gas',
          'empresas_saneamento', 'empresas_construcao', 'empresas_comercio', 'empresas_transporte', 'empresas_alojamento_alimentacao',
@@ -1902,7 +1878,13 @@ def display_empresas(w_municipios, w_municipios1):
             showticklabels=False,
         ),
         autosize=True,
-        margin=dict(autoexpand=True),
+        margin=dict(
+            l=15,
+            r=15,
+            b=100,
+            t=100,
+            pad=0
+        ),
         plot_bgcolor='white'
     )
 
@@ -1915,15 +1897,22 @@ def display_empresas(w_municipios, w_municipios1):
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.20,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.30,
                             xanchor='center', yanchor='top',
                             text='Fonte: IBGE/CEMPRE, 2018',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
+    # Anotação
+    annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
+                            xanchor='left', yanchor='bottom',
+                            text=f'{empresas1} empresas',
+                            font=dict(family='Arial', size=20, color='#f94144'),
+                            showarrow=False))
+
     fig.update_layout(annotations=annotations)
 
-    return fig, empresas1 + ' empresas'
+    return fig
 
 # DISTORÇÃO IDADE-SÉRIE, EVASÃO E REMUNERAÇÃO PROFESSORES
 @app.callback(
