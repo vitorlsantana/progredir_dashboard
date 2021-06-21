@@ -867,7 +867,7 @@ def render_tab_content(active_tab):
                         html.Div(children=
                         [
                             html.Img(
-                                src='https://arymax.org.br/novosite/wp-content/themes/arymax-theme/img/logo-arymax-grande.png',
+                                src='https://aupa.com.br/wp-content/uploads/2020/03/arymax.jpg',
                                 style={'height': '100%', 'width': '120px', 'object-fit': 'cover'}),
                             html.Div([
                                 html.H2("Inclusão Produtiva no Brasil",
