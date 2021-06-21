@@ -1182,6 +1182,10 @@ def display_bpc(w_municipios, w_municipios1):
               Input('w_municipios1', 'value')
               )
 def display_ev_cadunico(w_municipios, w_municipios1):
+    # df_cad["date"] = pd.to_datetime(df_cad["mês_ano"])
+    # df_cad['ano'] = pd.DatetimeIndex(df_cad['mês_ano']).year
+    # df_cad['mes'] = pd.DatetimeIndex(df_cad['mês_ano']).month
+    # df_cad['mês_ano'] = pd.to_datetime(df_cad['mês_ano']).dt.to_period('M')
     uf2 = df_cad.groupby(['uf', 'mês_ano']).sum().reset_index()
     uf2['municipio'] = ' Todos os Municípios'
     regiao2 = df_cad.groupby(by=['regiao', 'mês_ano']).sum().reset_index()
@@ -1191,7 +1195,7 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     pais2['municipio'] = ' Todos os Municípios'
     pais2 = pais2.rename(columns={"pais": "uf"})
     df_cad1 = df_cad.append([uf2, regiao2, pais2], ignore_index=True)
-    # df_cad1 = df_cad1.sort_values(by=['mês_ano'])
+    df_cad1 = df_cad1.sort_values(by=['mês_ano'])
 
     df2 = df_cad1[(df_cad1['municipio'] == w_municipios1) & (df_cad1['uf'] == w_municipios)]
     fig = go.Figure()
