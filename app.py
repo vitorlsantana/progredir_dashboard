@@ -891,7 +891,7 @@ def render_tab_content(active_tab):
                         html.Div(children=
                         [
                             html.Img(
-                                src='https://arymax.org.br/novosite/wp-content/themes/arymax-theme/img/logo-arymax-grande.png',
+                                src='https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/o%20futuro%20da%20inclus%C3%A3o%20produtiva%20no%20brasil.png',
                                 style={'height': '100%', 'width': '120px',
                                        'object-fit': 'cover'}),
                             html.Div([
