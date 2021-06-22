@@ -40,7 +40,7 @@ uf = df1.groupby('uf').agg({'populacao': 'sum', 'pessoas_cad':'sum', 'pes_cad_ur
                                         'mei_cadunico':'sum', 'mei_pbf':'sum','cad_ensino_medio_completo':'sum', 'distorcao_idade_serie': 'mean', 'taxa_evasao_abandono': 'mean', 'remuneracao_docente_edbasica':'mean',
                                         'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean'
                                         }).reset_index()
-uf['municipio'] = 'Todos os Municípios'
+uf['municipio'] = ' Todos os Municípios'
 regiao = df1.groupby(by=['regiao']).agg({'populacao': 'sum', 'pessoas_cad':'sum', 'pes_cad_urbano':'sum', 'pes_cad_rural':'sum', 'cad_feminino':'sum', 'cad_masculino':'sum',
                                         'pessoas_pbf':'sum','pobreza_extremapob_cad':'sum','bpc_ben':'sum','bpc_pcd_ben':'sum','bpc_idoso_ben':'sum','familias_catadores_cad':'sum',
                                         'sabe_ler_escrever':'sum', 'não_sabe_ler_escrever':'sum', 'cad_ensino_fundamental_completo':'sum', 'cad_ensino_fundamental_incompleto':'sum',
@@ -63,7 +63,7 @@ regiao = df1.groupby(by=['regiao']).agg({'populacao': 'sum', 'pessoas_cad':'sum'
                                         'mei_cadunico':'sum', 'mei_pbf':'sum','cad_ensino_medio_completo':'sum', 'distorcao_idade_serie': 'mean', 'taxa_evasao_abandono': 'mean', 'remuneracao_docente_edbasica':'mean',
                                         'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean'
                                         }).reset_index()
-regiao['municipio'] = 'Todos os Municípios'
+regiao['municipio'] = ' Todos os Municípios'
 regiao['uf'] = regiao['regiao']
 pais = df1.groupby(by=["pais"]).agg({'populacao': 'sum', 'pessoas_cad':'sum', 'pes_cad_urbano':'sum', 'pes_cad_rural':'sum', 'cad_feminino':'sum', 'cad_masculino':'sum',
                                         'pessoas_pbf':'sum','pobreza_extremapob_cad':'sum','bpc_ben':'sum','bpc_pcd_ben':'sum','bpc_idoso_ben':'sum','familias_catadores_cad':'sum',
@@ -87,7 +87,7 @@ pais = df1.groupby(by=["pais"]).agg({'populacao': 'sum', 'pessoas_cad':'sum', 'p
                                         'mei_cadunico':'sum', 'mei_pbf':'sum','cad_ensino_medio_completo':'sum', 'distorcao_idade_serie': 'mean', 'taxa_evasao_abandono': 'mean', 'remuneracao_docente_edbasica':'mean',
                                         'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean'
                                         }).reset_index()
-pais['municipio'] = 'Todos os Municípios'
+pais['municipio'] = ' Todos os Municípios'
 pais['uf'] = pais['pais']
 df = df1.append([uf, regiao, pais], ignore_index=True)
 
@@ -137,7 +137,7 @@ app.layout = dbc.Container([
             html.Label('Selecione o Município', style={'color': 'white', 'fontSize':15, 'fontFamily':'Arial', 'fontWeight': 'bold', 'margin-top':'15px'}),
             dcc.Dropdown(
                 id='w_municipios1',
-                value='Todos os Municípios',
+                value=' Todos os Municípios',
                 placeholder ='Selecione o município',
                 options=[],
                 style={'display': True, "width": "100%", 'height': '40px'}
@@ -175,7 +175,7 @@ app.layout = dbc.Container([
                         "governamentais.\n\nA ferramenta foi desenvolvida pelo Departamento de Inclusão Produtiva Urbana da Secretaria Nacional de "
                         "Inclusão Social e Produtiva, vinculada à Secretaria Especial do Desenvolvimento Social do Ministério da Cidadania."),
                     dbc.ModalFooter(
-                        dbc.Button("Fechar", id="close", className="ml-auto")
+                        dbc.Button("Fechar", id="close-lg", className="ml-auto")
                     ),
                 ],
                 id="modal",
@@ -234,7 +234,7 @@ app.layout = dbc.Container([
 )
 def get_municipios_options(w_municipios):
     def1 = df[df['uf'] == w_municipios]
-    return [{'label': i, 'value': i} for i in def1['municipio'].unique()]
+    return [{'label': i, 'value': i} for i in sorted(def1['municipio'].unique())]
 
 @app.callback(
     Output('w_municipios1', 'value'),
@@ -276,7 +276,7 @@ def display_pop_pib_idh(w_municipios, w_municipios1):
 # MODAL SOBRE O PAINEL
 @app.callback(
     Output("modal", "is_open"),
-    [Input("open", "n_clicks"), Input("close", "n_clicks")],
+    [Input("open", "n_clicks"), Input("close-lg", "n_clicks")],
     [State("modal", "is_open")],
 )
 def toggle_modal(n1, n2, is_open):
@@ -470,13 +470,27 @@ def render_tab_content(active_tab):
                             dcc.Graph(id='top_vinculos'),
                             dbc.Button(
                                 "Abrir tabela com todas as ocupações",
-                                id="collapse-button2",
+                                id="open-body-scroll",
                                 className="mt-2",
                                 color="dark",
                             ),
-                            dbc.Collapse(
-                                html.Div(id="table"),
-                                id="collapse2",
+                            dbc.Modal(
+                                [
+                                    dbc.ModalHeader("Tabela"),
+                                    dbc.ModalBody(id="table"),
+                                    dbc.ModalFooter(
+                                        dbc.Button(
+                                            "Fechar",
+                                            id="close-body-scroll",
+                                            className="ml-auto",
+                                            n_clicks=0,
+                                        )
+                                    ),
+                                ],
+                                id="modal-body-scroll",
+                                scrollable=True,
+                                size="lg",
+                                is_open=False,
                             ),
                         ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=5, xl=5),
                     ], align='center', justify="center",
@@ -488,13 +502,27 @@ def render_tab_content(active_tab):
                             dcc.Graph(id='remuneracao'),
                             dbc.Button(
                                 "Abrir tabela com todas as ocupações",
-                                id="collapse-button3",
+                                id="open-body-scroll1", n_clicks=0,
                                 className="mt-2",
                                 color="dark",
                             ),
-                            dbc.Collapse(
-                                html.Div(id="table2"),
-                                id="collapse3",
+                            dbc.Modal(
+                                [
+                                    dbc.ModalHeader("Tabela"),
+                                    dbc.ModalBody(id="table2"),
+                                    dbc.ModalFooter(
+                                        dbc.Button(
+                                            "Fechar",
+                                            id="close-body-scroll1",
+                                            className="ml-auto",
+                                            n_clicks=0,
+                                        )
+                                    ),
+                                ],
+                                id="modal-body-scroll1",
+                                scrollable=True,
+                                size="lg",
+                                is_open=False,
                             ),
                         ], style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
                         dbc.Col([
@@ -515,14 +543,29 @@ def render_tab_content(active_tab):
                             dcc.Graph(id='saldo_ocupacao'),
                             dbc.Button(
                                 "Abrir tabela com todas as ocupações",
-                                id="collapse-button4",
+                                id="open-body-scroll2", n_clicks=0,
                                 className="mt-2",
                                 color="dark",
                             ),
-                            dbc.Collapse(
-                                html.Div(id="table3"),
-                                id="collapse4",
+                            dbc.Modal(
+                                [
+                                    dbc.ModalHeader("Tabela"),
+                                    dbc.ModalBody(id="table3"),
+                                    dbc.ModalFooter(
+                                        dbc.Button(
+                                            "Fechar",
+                                            id="close-body-scroll2",
+                                            className="ml-auto",
+                                            n_clicks=0,
+                                        )
+                                    ),
+                                ],
+                                id="modal-body-scroll2",
+                                scrollable=True,
+                                size="lg",
+                                is_open=False,
                             ),
+
                         ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=6, xl=6)
                     ], align='center', justify="center"),
                 html.Br(),
@@ -534,7 +577,7 @@ def render_tab_content(active_tab):
                 dbc.Row(
                     [
                         dbc.Col(dcc.Graph(id='pib_setorial'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col(dcc.Graph(id='empresas_setorial', config={'responsive':True})], style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6)
+                        dbc.Col(dcc.Graph(id='empresas_setorial', config={'responsive':True}), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6)
                     ], className='row flex-display'
                 ),
                 html.Br(),
@@ -556,7 +599,7 @@ def render_tab_content(active_tab):
                         [
                             dbc.CardImg(
                                 src="https://www.seduc.ce.gov.br/wp-content/uploads/sites/37/2020/02/Novos-Caminhos-Preto-1200x813.jpg",
-                                style={'height':'10%', 'width': '100%', 'object-fit': 'auto'}
+                                style={'height':'10%', 'width': '100%', 'object-fit': 'cover'}
                             ),
                             dbc.CardBody(
                                 [
@@ -1082,6 +1125,49 @@ def toggle_modal1(n1, n2, is_open):
         return not is_open
     return is_open
 
+#MODAL TABELAS RAIS
+
+@app.callback(
+    Output("modal-body-scroll", "is_open"),
+    [
+        Input("open-body-scroll", "n_clicks"),
+        Input("close-body-scroll", "n_clicks"),
+    ],
+    [State("modal-body-scroll", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
+
+@app.callback(
+    Output("modal-body-scroll1", "is_open"),
+    [
+        Input("open-body-scroll1", "n_clicks"),
+        Input("close-body-scroll1", "n_clicks"),
+    ],
+    [State("modal-body-scroll1", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
+
+@app.callback(
+    Output("modal-body-scroll2", "is_open"),
+    [
+        Input("open-body-scroll2", "n_clicks"),
+        Input("close-body-scroll2", "n_clicks"),
+    ],
+    [State("modal-body-scroll2", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
 # NÚMEROS CADASTRO ÚNICO / BOLSA FAMÍLIA / BPC
 @app.callback(
     Output('cadunico', 'children'),
@@ -1171,12 +1257,12 @@ def display_cadunico(w_municipios, w_municipios1):
               )
 def display_ev_cadunico(w_municipios, w_municipios1):
     uf2 = df_cad.groupby(['uf', 'mês_ano']).sum().reset_index()
-    uf2['municipio'] = 'Todos os Municípios'
+    uf2['municipio'] = ' Todos os Municípios'
     regiao2 = df_cad.groupby(by=['regiao', 'mês_ano']).sum().reset_index()
-    regiao2['municipio'] = 'Todos os Municípios'
+    regiao2['municipio'] = ' Todos os Municípios'
     regiao2 = regiao2.rename(columns={"regiao": "uf"})
     pais2 = df_cad.groupby(by=["pais", 'mês_ano']).sum().reset_index()
-    pais2['municipio'] = 'Todos os Municípios'
+    pais2['municipio'] = ' Todos os Municípios'
     pais2 = pais2.rename(columns={"pais": "uf"})
     df_cad1 = df_cad.append([uf2, regiao2, pais2], ignore_index=True)
     df_cad1 = df_cad1.sort_values(by=['mês_ano'])
@@ -1184,8 +1270,11 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     df2 = df_cad1[(df_cad1['municipio'] == w_municipios1) & (df_cad1['uf'] == w_municipios)]
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=df2['mês_ano'], y=df2['pessoas_pbf'], name='Bolsa Família', mode='lines+markers',
-                             marker=dict(size=10, color='black')))
+                             marker=dict(size=10, color='black'),
+                             hovertemplate="%{y:.2s}",
+                             ))
     fig.add_trace(go.Scatter(x=df2['mês_ano'], y=df2['pessoas_cad'], name='Cadastro Único', mode='lines+markers',
+                             hovertemplate="%{y:.2s}",
                              marker=dict(size=10, color='#f94144')))
     fig.update_layout(
         xaxis=dict(
@@ -1217,7 +1306,6 @@ def display_ev_cadunico(w_municipios, w_municipios1):
             pad=0
         ),
     )
-    fig.update_yaxes(automargin=True)
     fig.update_layout(legend=dict(
         orientation="h",
         yanchor="bottom",
@@ -1310,7 +1398,7 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico,<br>por <b>sexo</b>',
+                            text='População por <b>sexo</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1346,7 +1434,7 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico,<br><b>situação do domicílio</b>',
+                            text='População por <b>situação<br>do domicílio</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1430,7 +1518,7 @@ def display_age(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do Cadastro Único,<br>por <b>faixa etária</b>',
+                            text='População por <b>faixa etária</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1515,7 +1603,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do Cadastro Único, por<br>nível de <b>escolaridade</b>',
+                            text='População por nível de<br><b>escolaridade</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1529,8 +1617,10 @@ def display_escolaridade(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
                             xanchor='left', yanchor='bottom',
                             text=f'{perc_abaixo_ensino_medio:.0f}% não possui ensino<br>médio completo',
-                            font=dict(family='Arial', size=18, color='#f94144'),
-                            showarrow=False))
+                            font=dict(family='Arial', size=17, color='white'),
+                            showarrow=False, ax=20, ay=-30, bordercolor="#FF8C00", borderwidth=2, borderpad=6,
+                            bgcolor="#FF8C00", align="center",
+                            ))
 
     fig.update_layout(annotations=annotations)
 
@@ -1544,7 +1634,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico,<br>por <b>alfabetização</b>',
+                            text='População por <b>grau de<br>alfabetização</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1630,7 +1720,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico, por <b><br>função principal</b>',
+                            text='<b>Função principal</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1667,7 +1757,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=-0.11, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico, por situação de<br><b>trabalho nos últimos 12 meses</b>',
+                            text='Situação de<b>trabalhonos<br>últimos 12 meses</b>',
                             font=dict(family='Arial', size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1702,7 +1792,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=-0.11, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do CadÚnico, por situação de<br><b>trabalho na última semana</b>',
+                            text='Situação de <b>trabalho na<br>última semana</b>',
                             font=dict(family='Arial', size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1729,7 +1819,8 @@ def display_mei(w_municipios, w_municipios1):
     fig.add_trace(go.Bar(
         y=[mei_cadunico, mei_pbf], x=['Cadastro Único', 'Bolsa Família'],
         text=[mei_cadunico, mei_pbf], textfont={'family': "Arial", 'size': 14},
-        texttemplate='%{y:_.0f}'.replace('.', ',').replace('_', '.'),
+        texttemplate='%{y:_.0f}',
+        hovertemplate="<b>%{x} <br>População: %{y:.0f}</br><b>",
         textposition='auto', name='MEI',
         marker=dict(color='#f8961e')
     ))
@@ -1822,7 +1913,6 @@ def display_pib_setorial(w_municipios, w_municipios1):
 
 # NÚMERO DE EMPRESAS POR SETOR DE ATIVIDADE ECONÔMICA
 @app.callback(Output('empresas_setorial', 'figure'),
-              # Output('empresas', 'children'),
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
@@ -1923,11 +2013,11 @@ def display_empresas(w_municipios, w_municipios1):
     Input('w_municipios1', 'value')
 )
 def display_idade_serie(w_municipios, w_municipios1):
-    remuneracao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == 'Todos os Municípios')]['remuneracao_docente_edbasica'].sum().round(1)
+    remuneracao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['remuneracao_docente_edbasica'].sum().round(1)
     remuneracao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['remuneracao_docente_edbasica'].sum().round(1)
-    evasao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == 'Todos os Municípios')]['taxa_evasao_abandono'].sum().round(1)
+    evasao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['taxa_evasao_abandono'].sum().round(1)
     evasao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['taxa_evasao_abandono'].sum().round(1)
-    idade_serie_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == 'Todos os Municípios')]['distorcao_idade_serie'].sum().round(1)
+    idade_serie_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['distorcao_idade_serie'].sum().round(1)
     idade_serie = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['distorcao_idade_serie'].sum().round(1)
     municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['municipio']
 
@@ -2224,12 +2314,12 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
               )
 def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     uf3 = df_remuneracao.groupby(by=["uf", 'ano']).mean().reset_index()
-    uf3['municipio'] = 'Todos os Municípios'
+    uf3['municipio'] = ' Todos os Municípios'
     regiao3 = df_remuneracao.groupby(by=['regiao', 'ano']).mean().reset_index()
-    regiao3['municipio'] = 'Todos os Municípios'
+    regiao3['municipio'] = ' Todos os Municípios'
     regiao3 = regiao3.rename(columns={"regiao": "uf"})
     pais3 = df_remuneracao.groupby(by=["pais", 'ano']).mean().reset_index()
-    pais3['municipio'] = 'Todos os Municípios'
+    pais3['municipio'] = ' Todos os Municípios'
     pais3 = pais3.rename(columns={"pais": "uf"})
     df_remuneracao1 = df_remuneracao.append([uf3, regiao3, pais3], ignore_index=True)
     df_remuneracao1['ano'] = df_remuneracao1['ano'].astype('int')
@@ -2294,18 +2384,19 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
 )
 def update_remuneracao_table(w_municipios, w_municipios1):
     uf3 = df_remuneracao.groupby(by=["uf", 'ano']).mean().reset_index()
-    uf3['municipio'] = 'Todos os Municípios'
+    uf3['municipio'] = ' Todos os Municípios'
     regiao3 = df_remuneracao.groupby(by=['regiao', 'ano']).mean().reset_index()
-    regiao3['municipio'] = 'Todos os Municípios'
+    regiao3['municipio'] = ' Todos os Municípios'
     regiao3 = regiao3.rename(columns={"regiao": "uf"})
     pais3 = df_remuneracao.groupby(by=["pais", 'ano']).mean().reset_index()
-    pais3['municipio'] = 'Todos os Municípios'
+    pais3['municipio'] = ' Todos os Municípios'
     pais3 = pais3.rename(columns={"pais": "uf"})
     df_remuneracao1 = df_remuneracao.append([uf3, regiao3, pais3], ignore_index=True)
     df_remuneracao1['ano'] = df_remuneracao1['ano'].astype('int')
 
     df1 = df_remuneracao1.melt(id_vars=["uf", "municipio", "regiao", "pais", "ano"], var_name="Ocupação", value_name="Remuneração")
     df1['Remuneração'] = df1['Remuneração'].round(2) * 1100
+    df1['Remuneração'] = df1['Remuneração'].map('R$ {:,.2f}'.format)
     df1['Ocupação'] = df1['Ocupação'].str.capitalize()
     df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios) & (df1['ano'] == 2019)]
     df2 = df2.iloc[1:, :]
@@ -2327,12 +2418,12 @@ def update_remuneracao_table(w_municipios, w_municipios1):
 )
 def update_top_vinculos(w_municipios, w_municipios1):
     uf4 = df_caged.groupby(by=["uf", 'ano']).sum().reset_index()
-    uf4['municipio'] = 'Todos os Municípios'
+    uf4['municipio'] = ' Todos os Municípios'
     regiao4 = df_caged.groupby(by=['regiao', 'ano']).mean().reset_index()
-    regiao4['municipio'] = 'Todos os Municípios'
+    regiao4['municipio'] = ' Todos os Municípios'
     regiao4 = regiao4.rename(columns={"regiao": "uf"})
     pais4 = df_caged.groupby(by=["pais", 'ano']).mean().reset_index()
-    pais4['municipio'] = 'Todos os Municípios'
+    pais4['municipio'] = ' Todos os Municípios'
     pais4 = pais4.rename(columns={"pais": "uf"})
     df_caged1 = df_caged.append([uf4, regiao4, pais4], ignore_index=True)
     df_caged1['ano'] = df_caged1['ano'].astype('int')
@@ -2394,12 +2485,12 @@ def update_top_vinculos(w_municipios, w_municipios1):
 )
 def update_top_vinculos_table(w_municipios, w_municipios1):
     uf4 = df_caged.groupby(by=["uf", 'ano']).sum().reset_index()
-    uf4['municipio'] = 'Todos os Municípios'
+    uf4['municipio'] = ' Todos os Municípios'
     regiao4 = df_caged.groupby(by=['regiao', 'ano']).sum().reset_index()
-    regiao4['municipio'] = 'Todos os Municípios'
+    regiao4['municipio'] = ' Todos os Municípios'
     regiao4 = regiao4.rename(columns={"regiao": "uf"})
     pais4 = df_caged.groupby(by=["pais", 'ano']).sum().reset_index()
-    pais4['municipio'] = 'Todos os Municípios'
+    pais4['municipio'] = ' Todos os Municípios'
     pais4 = pais4.rename(columns={"pais": "uf"})
     df_caged1 = df_caged.append([uf4, regiao4, pais4], ignore_index=True)
     df_caged1['ano'] = df_caged1['ano'].astype('int')
@@ -2426,12 +2517,12 @@ def update_top_vinculos_table(w_municipios, w_municipios1):
 )
 def update_saldo_vinculos(w_municipios, w_municipios1):
     uf5 = df_saldo.groupby(by=["uf", 'ano']).sum().reset_index()
-    uf5['municipio'] = 'Todos os Municípios'
+    uf5['municipio'] = ' Todos os Municípios'
     regiao5 = df_saldo.groupby(by=['regiao', 'ano']).mean().reset_index()
-    regiao5['municipio'] = 'Todos os Municípios'
+    regiao5['municipio'] = ' Todos os Municípios'
     regiao5 = regiao5.rename(columns={"regiao": "uf"})
     pais5 = df_saldo.groupby(by=["pais", 'ano']).mean().reset_index()
-    pais5['municipio'] = 'Todos os Municípios'
+    pais5['municipio'] = ' Todos os Municípios'
     pais5 = pais5.rename(columns={"pais": "uf"})
     df_saldo1 = df_saldo.append([uf5, regiao5, pais5], ignore_index=True)
     df_saldo1['ano'] = df_saldo1['ano'].astype('int')
@@ -2509,12 +2600,12 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
 )
 def update_saldo_vinculos_table(w_municipios, w_municipios1):
     uf5 = df_saldo.groupby(by=["uf", 'ano']).sum().reset_index()
-    uf5['municipio'] = 'Todos os Municípios'
+    uf5['municipio'] = ' Todos os Municípios'
     regiao5 = df_saldo.groupby(by=['regiao', 'ano']).sum().reset_index()
-    regiao5['municipio'] = 'Todos os Municípios'
+    regiao5['municipio'] = ' Todos os Municípios'
     regiao5 = regiao5.rename(columns={"regiao": "uf"})
     pais5 = df_saldo.groupby(by=["pais", 'ano']).sum().reset_index()
-    pais5['municipio'] = 'Todos os Municípios'
+    pais5['municipio'] = ' Todos os Municípios'
     pais5 = pais5.rename(columns={"pais": "uf"})
     df_saldo1 = df_saldo.append([uf5, regiao5, pais5], ignore_index=True)
     df_saldo1['ano'] = df_saldo1['ano'].astype('int')
