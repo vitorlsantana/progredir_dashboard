@@ -303,6 +303,7 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.P(id='fam_cad', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 12, 'fontWeight': 'bold'}),
                                     html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px',
@@ -317,6 +318,7 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.P(id='fam_pbf', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 12, 'fontWeight': 'bold'}),
                                     html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
@@ -1177,6 +1179,8 @@ def toggle_modal(n1, n2, is_open):
     Output('perc_cad', 'children'),
     Output('perc_pbf', 'children'),
     Output('bpc', 'figure'),
+    Output('fam_cad', 'children'),
+    Output('fam_pbf', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
@@ -1194,6 +1198,11 @@ def display_cadunico(w_municipios, w_municipios1):
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
     perc_cad = ((pessoas_cad1/populacao)*100).round(2)
     perc_pbf = ((pessoas_pbf1/populacao)*100).round(2)
+
+    familias_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_cad'].sum()
+    familias_cad = f'{familias_cad:_.0f}'.replace('.', ',').replace('_', '.')
+    familias_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_pbf'].sum()
+    familias_pbf = f'{familias_pbf:_.0f}'.replace('.', ',').replace('_', '.')
 
     bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].sum()
     bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].sum()
@@ -1248,7 +1257,8 @@ def display_cadunico(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
 
 
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', catadores + ' famílias', f'{perc_cad:.0f}% da população', f'{perc_pbf:.0f}% da população', fig
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', catadores + ' famílias', \
+           f'{perc_cad:.0f}% da população', f'{perc_pbf:.0f}% da população', fig, familias_cad, familias_pbf
 
 # EVOLUÇÃO DO CADUNICO E DO PBF
 @app.callback(Output('cad_pbf', 'figure'),
