@@ -146,10 +146,10 @@ app.layout = dbc.Container([
             ),
             html.Br(),
             dbc.Card(children=[
-                dbc.CardBody(children=[
-                    html.H5('População', style={'textAlign':'center', 'margin-top':'10px'}),
-                    html.H4(id="populacao", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
-                ], style={'padding':'0.30rem'}),
+                # dbc.CardBody(children=[
+                #     html.H5('População', style={'textAlign':'center', 'margin-top':'10px'}),
+                #     html.H4(id="populacao", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
+                # ], style={'padding':'0.30rem'}),
             ], id='data-box', color="#F8F8F8", style={"width": "100%", 'margin-bottom': '30px'}),
             dbc.Button(
                 "Saiba mais sobre o painel",
@@ -210,9 +210,11 @@ app.layout = dbc.Container([
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
                 dbc.Tab(label="Perfil das pessoas no Cadastro Único", tab_id="social", activeLabelClassName='flex-sm-fill text-sm-center bg-primary',
                         tabClassName='m-auto rounded text-sm-center', labelClassName='flex-sm-fill text-sm-center rounded text-white'),
-                dbc.Tab(label="Situação de trabalho das pessoas no Cadastro Único", tab_id="trabalho_cad", activeLabelClassName='flex-sm-fill text-sm-center bg-primary',
-                        tabClassName='m-auto rounded text-sm-center', labelClassName='flex-sm-fill text-sm-center rounded text-white'),
-                dbc.Tab(label="Situação de emprego", tab_id="trabalho_formal", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded text-sm-center',
+                dbc.Tab(label="Situação de trabalho e emprego", tab_id="trabalho", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded text-sm-center',
+                        labelClassName='flex-sm-fill text-sm-center rounded text-white'),
+                dbc.Tab(label="Perfil educacional", tab_id="educacao",
+                        activeLabelClassName='flex-sm-fill text-sm-center bg-primary',
+                        tabClassName='m-auto rounded text-sm-center',
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
                 dbc.Tab(label="Iniciativas de inclusão produtiva", tab_id="servicos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded text-sm-center',
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
@@ -359,19 +361,6 @@ def render_tab_content(active_tab):
                                        'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
-                    # dbc.Col(
-                    #     [
-                    #         dbc.Card(children=
-                    #         [
-                    #             dbc.CardBody(children=
-                    #             [
-                    #                 html.H6("Famílias de catadores (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                    #                 html.P(id='catadores', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                    #             ]),
-                    #         ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
-                    #                                                  'box-shadow': '1px 1px 1px 1px lightgrey'}
-                    #         )
-                    #     ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
                     align='center'
                 ),
@@ -390,34 +379,277 @@ def render_tab_content(active_tab):
                                 lg=3, xl=3),
                         dbc.Col(dcc.Graph(id='faixa_etaria'), xs=12, sm=12, md=12, lg=6, xl=6),
                     ]),
-                html.Br(),
-                dbc.Row([
-                        dbc.Col(dcc.Graph(id='escolaridade', config={'responsive':True}), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=7),
-                        dbc.Col(dcc.Graph(id='analfabetismo', config={'responsive':True}), xs=12, sm=12, md=12, lg=6, xl=5),
-                    ]
-                ),
             ], fluid=True
             )
-        elif active_tab == "trabalho_cad":
+        # elif active_tab == "trabalho_cad":
+        #     return dbc.Container(children=[
+        #         html.Br(),
+        #
+        #     ], fluid=True
+        #     )
+        elif active_tab == "trabalho":
             return dbc.Container(children=[
                 html.Br(),
-                dbc.Row(
+                dbc.Row(children=
                     [
-                    dbc.Col(dcc.Graph(id='funcao_principal'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=8),
-                    dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=6, xl=4)
+                        dbc.Col(
+                            [
+                            dbc.Row(children=
+                            [
+                                dbc.Col(
+                                    [
+                                        dbc.Card(children=
+                                        [
+                                            dbc.CardBody(children=
+                                            [
+                                                html.H5("Situação de emprego formal", className="card-title",
+                                                        style={'textAlign': 'center'}),
+                                                html.P(
+                                                    'Os dados de emprego formal dessa seção foram obtidos da Relação Anual de Informações Sociais (RAIS), que é um cadastro administrativo, '
+                                                    'instituído pelo Decreto nº 76.900, de 23 de dezembro de 1975, de âmbito nacional, periodicidade anual e de declaração obrigatória '
+                                                    'para todos os estabelecimentos do setor público e privado, inclusive para aqueles que não registraram vínculos empregatícios no exercício.',
+                                                    style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
+                                            ]),
+                                        ], color="#F8F8F8", outline=True,
+                                            style={"width": "100%", 'border': 'white', 'marginBottom': '15px',
+                                                   'box-shadow': '1px 1px 1px 1px lightgrey', 'heigth':'130px'}
+                                        )
+                                    ], xs=12, sm=12, md=12, lg=12, xl=12),
+                                dbc.Col(
+                                    [
+                                        dbc.Card(children=
+                                        [
+                                            dbc.CardBody(children=
+                                            [
+                                                html.H5("Pessoas com carteira assinada", className="card-title",
+                                                        style={'textAlign': 'center'}),
+                                                html.P(id='empregos',
+                                                       style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 45,
+                                                              'fontWeight': 'bold'}),
+                                            ]),
+                                        ], color="#F8F8F8", outline=True,
+                                            style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                                   'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
+                                        )
+                                    ], xs=12, sm=12, md=12, lg=6, xl=6),
+                                dbc.Col(
+                                    [
+                                        dbc.Card(children=
+                                        [
+                                            dbc.CardBody(children=
+                                            [
+                                                html.H6("Saldo empregos formais (12 meses)", className="card-title",
+                                                        style={'textAlign': 'center'}),
+                                                html.P(id='saldo_empregos12',
+                                                       style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
+                                                              'fontWeight': 'bold', 'margin-bottom': 0, 'margin-top':0}),
+                                                html.P(id='var_emprego',
+                                                       style={'color': '#f94144', 'textAlign': 'center',
+                                                              'margin-top':0, 'margin-bottom': 0, 'fontSize': 20,
+                                                              'fontWeight': 'bold'}),
+                                            ]
+                                            ),
+                                        ], color="#F8F8F8", outline=True,
+                                            style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                                   'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
+                                    ], xs=12, sm=12, md=12, lg=6, xl=6),
+                            ],
+                                align='center'
+                            ),
+                            html.Br(),
+                            dbc.Row(
+                                [
+                                    dbc.Col(dcc.Graph(id='evolucao_empregos'), style={'marginBottom': '10px'}, xs=12,
+                                            sm=12, md=12, lg=12, xl=12),
+                                    dbc.Col([
+                                        dcc.Graph(id='top_vinculos'),
+                                        dbc.Button(
+                                            "Abrir tabela com todas as ocupações",
+                                            id="open-body-scroll",
+                                            className="mt-2",
+                                            color="dark",
+                                        ),
+                                        dbc.Modal(
+                                            [
+                                                dbc.ModalHeader("Tabela"),
+                                                dbc.ModalBody(id="table"),
+                                                dbc.ModalFooter(
+                                                    dbc.Button(
+                                                        "Fechar",
+                                                        id="close-body-scroll",
+                                                        className="ml-auto",
+                                                        n_clicks=0,
+                                                    )
+                                                ),
+                                            ],
+                                            id="modal-body-scroll",
+                                            scrollable=True,
+                                            size="lg",
+                                            is_open=False,
+                                        ),
+                                    ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=12, xl=12),
+                                ], align='center', justify="center",
+                            ),
+                            html.Br(),
+                            dbc.Row(
+                                [
+                                    dbc.Col([
+                                        dcc.Graph(id='remuneracao'),
+                                        dbc.Button(
+                                            "Abrir tabela com todas as ocupações",
+                                            id="open-body-scroll1", n_clicks=0,
+                                            className="mt-2",
+                                            color="dark",
+                                        ),
+                                        dbc.Modal(
+                                            [
+                                                dbc.ModalHeader("Tabela"),
+                                                dbc.ModalBody(id="table2"),
+                                                dbc.ModalFooter(
+                                                    dbc.Button(
+                                                        "Fechar",
+                                                        id="close-body-scroll1",
+                                                        className="ml-auto",
+                                                        n_clicks=0,
+                                                    )
+                                                ),
+                                            ],
+                                            id="modal-body-scroll1",
+                                            scrollable=True,
+                                            size="lg",
+                                            is_open=False,
+                                        ),
+                                    ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=12, xl=12),
+                                    dbc.Col([
+                                        html.P(
+                                            [
+                                                html.Span(
+                                                    className="far fa-lightbulb",
+                                                    id="tooltip-target",
+                                                    style={'fontSize': 25, "cursor": "pointer", 'color': '#fb8500',
+                                                           'padding-left': '10px', 'padding-top': '5px'},
+                                                ),
+                                            ], style={'background-color': 'white', 'margin-bottom': 0}
+                                        ),
+                                        dbc.Tooltip(
+                                            "Veja as ocupações que vêm aborvendo mais gente no mercado de trabalho formal. "
+                                            "Pode ser uma boa ideia investir na capacitação de pessoas para trabalhar nessas ocupações.",
+                                            target="tooltip-target",
+                                        ),
+                                        dcc.Graph(id='saldo_ocupacao'),
+                                        dbc.Button(
+                                            "Abrir tabela com todas as ocupações",
+                                            id="open-body-scroll2", n_clicks=0,
+                                            className="mt-2",
+                                            color="dark",
+                                        ),
+                                        dbc.Modal(
+                                            [
+                                                dbc.ModalHeader("Tabela"),
+                                                dbc.ModalBody(id="table3"),
+                                                dbc.ModalFooter(
+                                                    dbc.Button(
+                                                        "Fechar",
+                                                        id="close-body-scroll2",
+                                                        className="ml-auto",
+                                                        n_clicks=0,
+                                                    )
+                                                ),
+                                            ],
+                                            id="modal-body-scroll2",
+                                            scrollable=True,
+                                            size="lg",
+                                            is_open=False,
+                                        ),
+
+                                    ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=12, xl=12)
+                                ], align='center', justify="center"),
+                            html.Br(),
+                                ], xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(
+                            [
+                                dbc.Row(children=
+                                [
+                                    dbc.Col(
+                                        [
+                                            dbc.Card(children=
+                                            [
+                                                dbc.CardBody(children=
+                                                [
+                                                    html.H5("Situação de trabalho das pessoas inscritas no Cadastro Único", className="card-title",
+                                                            style={'textAlign': 'center'}),
+                                                    html.P(
+                                                        'As informações sobre a situação de trabalho das pessoas inscritas no Cadastro Único são coletadas de pessoas '
+                                                        'de 14 anos de idade ou mais e, para os propósitos do Cadastro Único, é considerado trabalho tanto o exercício '
+                                                        'de atividades remuneradas quanto o exercício de atividades não remuneradas. Ressalta-se que também não é feita distinção '
+                                                        'entre emprego formal e informal.',
+                                                        style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
+                                                ]),
+                                            ], color="#F8F8F8", outline=True,
+                                                style={"width": "100%", 'border': 'white', 'marginBottom': '15px',
+                                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'heigth':'130px'}
+                                            )
+                                        ], xs=12, sm=12, md=12, lg=12, xl=12),
+                                    html.Br(),
+                                    dbc.Col(
+                                        [
+                                            dbc.Card(children=
+                                            [
+                                                dbc.CardBody(children=
+                                                [
+                                                    html.H5(id='trabalho_12meses',
+                                                           style={'color': '#1351B4', 'textAlign': 'center',
+                                                                  'fontSize': 50,
+                                                                  'fontWeight': 'bold'}),
+                                                    html.P("não trabalhou nos últimos 12 meses",
+                                                           style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
+                                                ]),
+                                            ], color="#F8F8F8", outline=True,
+                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
+                                            )
+                                        ], xs=12, sm=12, md=12, lg=6, xl=6),
+                                    dbc.Col(
+                                        [
+                                            dbc.Card(children=
+                                            [
+                                                dbc.CardBody(children=
+                                                [
+                                                    html.H5(id='trabalho_lastweek',
+                                                           style={'color': '#1351B4', 'textAlign': 'center',
+                                                                  'fontSize': 50,
+                                                                  'fontWeight': 'bold'}),
+                                                    html.P('não trabalhou na última semana',
+                                                           style={'color': '#f94144', 'textAlign': 'center',
+                                                                  'margin-top': '5px', 'margin-bottom': 0,
+                                                                  'fontSize': 15,
+                                                                  'fontWeight': 'bold'}),
+                                                ]
+                                                ),
+                                            ], color="#F8F8F8", outline=True,
+                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
+                                        ], xs=12, sm=12, md=12, lg=6, xl=6),
+                                ],
+                                    align='center'
+                                ),
+                                html.Br(),
+                                dbc.Row(
+                                    [
+                                        dbc.Col(dcc.Graph(id='funcao_principal'), style={'marginBottom': '10px'}, xs=12,
+                                                sm=12, md=12, lg=12, xl=12),
+                                        dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=12, xl=12)
+                                    ],
+                                    align='center', justify="center",
+                                ),
+                                html.Br(),
+                            ], xs=12, sm=12, md=12, lg=6, xl=6
+                        ),
                     ],
-                    align='center', justify="center",
-                ),
-                html.Br(),
-                dbc.Row(
-                    [
-                        dbc.Col(dcc.Graph(id='trabalho_12meses'), xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col(dcc.Graph(id='trabalho_lastweek'), xs=12, sm=12, md=12, lg=6, xl=6),
-                    ], align='center', justify="center",
                 ),
             ], fluid=True
             )
-        elif active_tab == "trabalho_formal":
+        elif active_tab == "educacao":
             return dbc.Container(children=[
                 html.Br(),
                 dbc.Row(children=
@@ -430,10 +662,48 @@ def render_tab_content(active_tab):
                                 [
                                     html.H6("Sobre os dados", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P('Os dados de empregos formais dessa seção foram obtidos da Relação Anual de Informações Sociais (RAIS), que é um cadastro administrativo, '
-                                           'instituído pelo Decreto nº 76.900, de 23 de dezembro de 1975, de âmbito nacional, periodicidade anual e de declaração obrigatória '
-                                           'para todos os estabelecimentos do setor público e privado, inclusive para aqueles que não registraram vínculos empregatícios no exercício',
-                                           style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
+                                    html.P(
+                                        'Os dados de empregos formais dessa seção foram obtidos da Relação Anual de Informações Sociais (RAIS), que é um cadastro administrativo, '
+                                        'instituído pelo Decreto nº 76.900, de 23 de dezembro de 1975, de âmbito nacional, periodicidade anual e de declaração obrigatória '
+                                        'para todos os estabelecimentos do setor público e privado, inclusive para aqueles que não registraram vínculos empregatícios no exercício',
+                                        style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
+                                ]),
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                            )
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    html.Br(),
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
+                            [
+                                dbc.CardBody(children=
+                                [
+                                    html.H5("Taxa de Distorção Idade-Série", className="card-title",
+                                            style={'textAlign': 'center'}),
+                                    html.P(id='idade_serie',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 45,
+                                                  'fontWeight': 'bold'}),
+                                    html.P(id='idade_serie_brasil',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
+                                                  'fontWeight': 'bold'}),
+                                    dbc.Button("Conheça o indicador", id="open_distorcao", n_clicks=0, color="primary", size='sm'),
+                                    dbc.Modal(
+                                        [
+                                            dbc.ModalHeader("Taxa de Distorção Idade-Série"),
+                                            dbc.ModalBody("A distorção idade-série é o indicador educacional que permite acompanhar o "
+                                           "percentual de alunos, em cada série, que têm idade acima da esperada "
+                                           "para o ano em que estão matriculados. Quanto menor a taxa, melhor a situação do sistema educacional."),
+                                            dbc.ModalFooter(
+                                                dbc.Button(
+                                                    "Fechar", id="close_distorcao", className="ml-auto", n_clicks=0
+                                                )
+                                            ),
+                                        ],
+                                        id="modal_distorcao",
+                                        is_open=False,
+                                    ),
                                 ]),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
@@ -446,169 +716,55 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Pessoas com carteira assinada*", className="card-title",
+                                    html.H5("Taxa de Evasão Escolar", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='empregos', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
-                                    html.P("*Estoque de empregos formais", style={'textAlign': 'center', 'fontSize': 20}),
-                                ]),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
-                            )
-                        ], xs=12, sm=12, md=12, lg=3, xl=3),
-                    # dbc.Col(
-                    #     [
-                    #         dbc.Card(children=
-                    #         [
-                    #             dbc.CardBody(children=
-                    #             [
-                    #                 html.H6("Variação de empregos formais em 12 meses", className="card-title",
-                    #                         style={'textAlign': 'center'}),
-                    #                 html.P(id='var_emprego',
-                    #                        style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
-                    #                               'fontWeight': 'bold'}),
-                    #                 html.P("Fonte: Ministério da Economia (jan/2020)",
-                    #                        style={'textAlign': 'center', 'fontSize': 10}),
-                    #             ]
-                    #             ),
-                    #         ], color="#F8F8F8", outline=True,
-                    #             style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
-                    #                    'box-shadow': '1px 1px 1px 1px lightgrey'})
-                    #     ], xs=12, sm=12, md=12, lg=3, xl=3),
-                    dbc.Col(
-                        [
-                            dbc.Card(children=
-                            [
-                                dbc.CardBody(children=
-                                [
-                                    html.H6("Saldo de empregos formais em 12 meses", className="card-title",
-                                            style={'textAlign': 'center'}),
-                                    html.P(id='saldo_empregos12', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
-                                    html.P(id='var_emprego', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                    html.P(id='evasao',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 45,
+                                                  'fontWeight': 'bold'}),
+                                    html.P(id='evasao_brasil',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
+                                                  'fontWeight': 'bold'}),
+                                    dbc.Button("Conheça o indicador", id="open_evasao", n_clicks=0, color="primary", size='sm'),
+                                    dbc.Modal(
+                                        [
+                                            dbc.ModalHeader("Taxa de Evasão Escolar"),
+                                            dbc.ModalBody("A taxa de evasão é um indicador de fluxo escolar de estudantes da educação básica"
+                                                          "brasileira que avalia a permanência dos alunos no sistema educacional. Indicadores de fluxo escolar "
+                                                          "avaliam a transição do aluno entre dois anos consecutivos considerando os seguintes cenários "
+                                                          "possíveis: promoção, repetência, migração para EJA e evasão escolar."
+                                                          "No caso da taxa de evasão, quanto menor o indicador, menor o percentual de alunos que abandonaram o sistema educacional"),
+                                            dbc.ModalFooter(
+                                                dbc.Button(
+                                                    "Fechar", id="close_evasao", className="ml-auto", n_clicks=0
+                                                )
+                                            ),
+                                        ],
+                                        id="modal_evasao",
+                                        is_open=False,
+                                    ),
                                 ]
                                 ),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'})
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
-                    # dbc.Col(
-                    #     [
-                    #         dbc.Card(children=
-                    #         [
-                    #             dbc.CardBody(children=
-                    #             [
-                    #                 html.H6("Saldo de empregos formais em 2021", className="card-title", style={'textAlign': 'center'}),
-                    #                 html.P(id='saldo_empregos2021', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
-                    #                 html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 10}),
-                    #             ]),
-                    #         ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
-                    #         )
-                    #     ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
                     align='center'
                 ),
                 html.Br(),
                 dbc.Row(
                     [
-                        dbc.Col(dcc.Graph(id='evolucao_empregos'), style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=7, xl=7),
-                        dbc.Col([
-                            dcc.Graph(id='top_vinculos'),
-                            dbc.Button(
-                                "Abrir tabela com todas as ocupações",
-                                id="open-body-scroll",
-                                className="mt-2",
-                                color="dark",
-                            ),
-                            dbc.Modal(
-                                [
-                                    dbc.ModalHeader("Tabela"),
-                                    dbc.ModalBody(id="table"),
-                                    dbc.ModalFooter(
-                                        dbc.Button(
-                                            "Fechar",
-                                            id="close-body-scroll",
-                                            className="ml-auto",
-                                            n_clicks=0,
-                                        )
-                                    ),
-                                ],
-                                id="modal-body-scroll",
-                                scrollable=True,
-                                size="lg",
-                                is_open=False,
-                            ),
-                        ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=5, xl=5),
-                    ], align='center', justify="center",
+                        dbc.Col(dcc.Graph(id='remuneracao_docentes'), xs=12, sm=12, md=12, lg=4, xl=4),
+                    ]
                 ),
                 html.Br(),
-                dbc.Row(
-                    [
-                        dbc.Col([
-                            dcc.Graph(id='remuneracao'),
-                            dbc.Button(
-                                "Abrir tabela com todas as ocupações",
-                                id="open-body-scroll1", n_clicks=0,
-                                className="mt-2",
-                                color="dark",
-                            ),
-                            dbc.Modal(
-                                [
-                                    dbc.ModalHeader("Tabela"),
-                                    dbc.ModalBody(id="table2"),
-                                    dbc.ModalFooter(
-                                        dbc.Button(
-                                            "Fechar",
-                                            id="close-body-scroll1",
-                                            className="ml-auto",
-                                            n_clicks=0,
-                                        )
-                                    ),
-                                ],
-                                id="modal-body-scroll1",
-                                scrollable=True,
-                                size="lg",
-                                is_open=False,
-                            ),
-                        ], style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col([
-                            html.P(
-                                [
-                                    html.Span(
-                                        className="far fa-lightbulb",
-                                        id="tooltip-target",
-                                        style={'fontSize':25, "cursor": "pointer", 'color': '#fb8500', 'padding-left':'10px', 'padding-top':'5px'},
-                                    ),
-                                ], style={'background-color':'white', 'margin-bottom':0}
-                            ),
-                            dbc.Tooltip(
-                                "Veja as ocupações que vêm aborvendo mais gente no mercado de trabalho formal. "
-                                "Pode ser uma boa ideia investir na capacitação de pessoas para trabalhar nessas ocupações.",
-                                target="tooltip-target",
-                            ),
-                            dcc.Graph(id='saldo_ocupacao'),
-                            dbc.Button(
-                                "Abrir tabela com todas as ocupações",
-                                id="open-body-scroll2", n_clicks=0,
-                                className="mt-2",
-                                color="dark",
-                            ),
-                            dbc.Modal(
-                                [
-                                    dbc.ModalHeader("Tabela"),
-                                    dbc.ModalBody(id="table3"),
-                                    dbc.ModalFooter(
-                                        dbc.Button(
-                                            "Fechar",
-                                            id="close-body-scroll2",
-                                            className="ml-auto",
-                                            n_clicks=0,
-                                        )
-                                    ),
-                                ],
-                                id="modal-body-scroll2",
-                                scrollable=True,
-                                size="lg",
-                                is_open=False,
-                            ),
-
-                        ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=6, xl=6)
-                    ], align='center', justify="center"),
+                dbc.Row([
+                    dbc.Col(dcc.Graph(id='escolaridade', config={'responsive': True}), style={'marginBottom': '10px'},
+                            xs=12, sm=12, md=12, lg=6, xl=7),
+                    dbc.Col(dcc.Graph(id='analfabetismo', config={'responsive': True}), xs=12, sm=12, md=12, lg=6,
+                            xl=5),
+                ]
+                ),
                 html.Br(),
             ], fluid=True
             )
@@ -623,14 +779,28 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
+                                    html.H6("População estimada", className="card-title",
+                                            style={'textAlign': 'center'}),
+                                    html.P(id='populacao',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
+                                                  'fontWeight': 'bold'}),
+                                ]),
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                            )
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
+                            [
+                                dbc.CardBody(children=
+                                [
                                     html.H6("PIB Total", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='pib_total',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
                                                   'fontWeight': 'bold'}),
-                                    html.P(id='perc_pib',
-                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
-                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
@@ -687,13 +857,6 @@ def render_tab_content(active_tab):
                     ], className='row flex-display'
                 ),
                 html.Br(),
-                dbc.Row(
-                    [
-                        dbc.Col(dcc.Graph(id='evasao'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=4, xl=4),
-                        dbc.Col(dcc.Graph(id='idade_serie'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=4, xl=4),
-                        dbc.Col(dcc.Graph(id='remuneracao_docentes'), xs=12, sm=12, md=12, lg=4, xl=4),
-                    ]
-                ),
             ], fluid=True
             )
         elif active_tab == "servicos":
@@ -1231,6 +1394,27 @@ def toggle_modal1(n1, n2, is_open):
         return not is_open
     return is_open
 
+# MODAL EDUCAÇÃO
+@app.callback(
+    Output("modal_evasao", "is_open"),
+    [Input("open_evasao", "n_clicks"), Input("close_evasao", "n_clicks")],
+    [State("modal_evasao", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
+@app.callback(
+    Output("modal_distorcao", "is_open"),
+    [Input("open_distorcao", "n_clicks"), Input("close_distorcao", "n_clicks")],
+    [State("modal_distorcao", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
 #MODAL TABELAS RAIS
 
 @app.callback(
@@ -1278,22 +1462,21 @@ def toggle_modal(n1, n2, is_open):
 @app.callback(
     Output('populacao', 'children'),
     Output('pib_total', 'children'),
-    Output('perc_pib', 'children'),
+    # Output('perc_pib', 'children'),
     Output('idhm', 'children'),
     Output('idhm_brasil', 'children'),
     Output('ivs', 'children'),
     Output('ivs_brasil', 'children'),
+    # Output('perc_pop', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
 def display_pop_pib_idh(w_municipios, w_municipios1):
+    df['pib_total'] = df['pib_total'].astype(float)
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
     populacao = f'{populacao:_.0f}'.replace('_', '.')
-    df['pib_total'] = df['pib_total'].astype(float)
-    pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum()
-    pib1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum() / 1000000
-    pib1 = f'R$ {pib1:_.2f} bi'.replace('.', ',').replace('_', '.')
-    pib_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == 'Todos os Municípios')]['pib_total'].sum()
+    pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum() / 1000000
+    pib = f'R$ {pib:_.2f} bi'.replace('.', ',').replace('_', '.')
     idhm = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['idhm'].sum()
     idhm = f'{idhm:_.3f}'.replace('.', ',').replace('_', '.')
     idhm_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['idhm'].sum()
@@ -1302,9 +1485,8 @@ def display_pop_pib_idh(w_municipios, w_municipios1):
     ivs = f'{ivs:_.3f}'.replace('.', ',').replace('_', '.')
     ivs_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['ivs'].sum()
     ivs_brasil = f'{ivs_brasil:_.3f}'.replace('.', ',').replace('_', '.')
-    perc_pib = (pib/pib_brasil)
 
-    return populacao, pib1, f'{perc_pib}% do PIB do país', idhm, 'Brasil - ' + idhm_brasil, ivs, 'Brasil - ' + ivs_brasil
+    return populacao, pib, idhm, 'Brasil - ' + idhm_brasil, ivs, 'Brasil - ' + ivs_brasil
 
 # NÚMEROS CADASTRO ÚNICO / BOLSA FAMÍLIA / BPC
 @app.callback(
@@ -1476,7 +1658,6 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     urbano = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_urbano'].sum()
     urbano1 = f'{urbano:_.0f}'.replace('.', ',').replace('_', '.')
     rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_rural'].sum()
-    rural1 = f'{rural:_.0f}'.replace('.', ',').replace('_', '.')
     masc_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_masculino'].sum()
     masc_cad1 = f'{masc_cad:_.0f}'.replace('.', ',').replace('_', '.')
     fem_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_feminino'].sum()
@@ -1790,8 +1971,8 @@ def display_escolaridade(w_municipios, w_municipios1):
 
 # POPULAÇÃO DO CADUNICO POR FUNÇÃO PRINCIPAL E TRABALHO
 @app.callback(Output('funcao_principal', 'figure'),
-              Output('trabalho_12meses', 'figure'),
-              Output('trabalho_lastweek', 'figure'),
+              Output('trabalho_12meses', 'children'),
+              Output('trabalho_lastweek', 'children'),
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
@@ -1815,9 +1996,11 @@ def display_cad_funcao(w_municipios, w_municipios1):
 
     trab_12_meses = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_12_meses'].sum()
     nao_trab_12_meses = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_12_meses'].sum()
+    sem_trab_12_meses = ((nao_trab_12_meses/(trab_12_meses+nao_trab_12_meses))*100).round(2)
 
     trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['trab_semana_passada'].sum()
     nao_trab_last_week = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_trab_semana_passada'].sum()
+    sem_trab_last_week = ((nao_trab_last_week / (trab_last_week + nao_trab_last_week)) * 100).round(1)
 
     fig1 = go.Figure()
     fig1.add_trace(go.Bar(x=df2['variable'],
@@ -1944,7 +2127,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
 
     fig3.update_layout(annotations=annotations)
 
-    return fig1, fig2, fig3
+    return fig1, f'{sem_trab_12_meses:.0f}%', f'{sem_trab_last_week:.0f}%'
 
 # EMPREENDEDORISMO
 @app.callback(Output('mei', 'figure'),
@@ -2146,34 +2329,41 @@ def display_empresas(w_municipios, w_municipios1):
 
 # DISTORÇÃO IDADE-SÉRIE, EVASÃO E REMUNERAÇÃO PROFESSORES
 @app.callback(
-    Output('idade_serie', 'figure'),
     Output('remuneracao_docentes', 'figure'),
-    Output('evasao', 'figure'),
+    Output('idade_serie', 'children'),
+    Output('idade_serie_brasil', 'children'),
+    Output('evasao', 'children'),
+    Output('evasao_brasil', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
 def display_idade_serie(w_municipios, w_municipios1):
+    idade_serie = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['distorcao_idade_serie'].sum()
+    idade_serie = f'{idade_serie:_.2f}%'.replace('.', ',').replace('_', '.')
+    idade_serie_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['distorcao_idade_serie'].sum()
+    idade_serie_brasil = f'{idade_serie_brasil:_.2f}% é a média nacional'.replace('.', ',').replace('_', '.')
+    evasao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['taxa_evasao_abandono'].sum()
+    evasao_municipio = f'{evasao_municipio:_.2f}%'.replace('.', ',').replace('_', '.')
+    evasao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['taxa_evasao_abandono'].sum()
+    evasao_brasil = f'{evasao_brasil:_.2f}% é a média nacional'.replace('.', ',').replace('_', '.')
     remuneracao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['remuneracao_docente_edbasica'].sum().round(1)
     remuneracao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['remuneracao_docente_edbasica'].sum().round(1)
-    evasao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['taxa_evasao_abandono'].sum().round(1)
-    evasao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['taxa_evasao_abandono'].sum().round(1)
-    idade_serie_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['distorcao_idade_serie'].sum().round(1)
-    idade_serie = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['distorcao_idade_serie'].sum().round(1)
+
     municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['municipio']
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=['Brasil'], y=[evasao_brasil], name='', marker=dict(color='#5992ED'),
-                         text=[evasao_brasil], textfont={'family': "Arial", 'size': 14},
-                         hovertemplate=
-                         '<b>%{x}</b>' +
-                         '<br><b>Taxa de evasão escolar</b>: %{y:.1f}%<br>',
-                         ))
-    fig.add_trace(go.Bar(x=[municipio], y=[evasao_municipio], name='', marker=dict(color='#0C326F'),
-                         text=[evasao_municipio], textfont={'family': "Arial", 'size': 14},
-                         hovertemplate=
-                         '<b>%{x}</b>' +
-                         '<br><b>Taxa de evasão escolar</b>: %{y:.1f}%<br>',
-                         ))
+    fig.add_trace(go.Bar(x=['Brasil'], y=[remuneracao_brasil], name='', marker=dict(color='#5992ED'),
+                          text=[remuneracao_brasil], textfont={'family': "Arial", 'size': 14},
+                          hovertemplate=
+                          '<b>%{x}</b>' +
+                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+                          ))
+    fig.add_trace(go.Bar(x=[municipio], y=[remuneracao_municipio], name='', marker=dict(color='#0C326F'),
+                          text=[remuneracao_municipio], textfont={'family': "Arial", 'size': 14},
+                          hovertemplate=
+                          '<b>%{x}</b>' +
+                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+                          ))
     fig.update_layout(
         xaxis=dict(
             showline=True,
@@ -2201,67 +2391,8 @@ def display_idade_serie(w_municipios, w_municipios1):
         ),
         plot_bgcolor='white'
     )
-
-    fig.update_traces(texttemplate='%{text:.1f}%', textposition='auto', textfont={'family': "Arial", 'size': 14})
+    fig.update_traces(texttemplate='R$ %{text:.2f}', textposition='auto', textfont={'family': "Arial", 'size': 14})
     fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-
-    annotations = []
-
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Taxa de Evasão Escolar',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'), showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top', text='Fonte: INEP, 2020',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'), showarrow=False))
-
-    fig.update_layout(annotations=annotations)
-
-    fig2 = go.Figure()
-    fig2.add_trace(go.Bar(x=['Brasil'], y=[remuneracao_brasil], name='', marker=dict(color='#5992ED'),
-                          text=[remuneracao_brasil], textfont={'family': "Arial", 'size': 14},
-                          hovertemplate=
-                          '<b>%{x}</b>' +
-                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
-                          ))
-    fig2.add_trace(go.Bar(x=[municipio], y=[remuneracao_municipio], name='', marker=dict(color='#0C326F'),
-                          text=[remuneracao_municipio], textfont={'family': "Arial", 'size': 14},
-                          hovertemplate=
-                          '<b>%{x}</b>' +
-                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
-                          ))
-    fig2.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=False,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=False,
-        showlegend=False,
-        margin=dict(
-            l=20,
-            r=20,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        plot_bgcolor='white'
-    )
-
-    fig2.update_traces(texttemplate='R$ %{text:.2f}', textposition='auto', textfont={'family': "Arial", 'size': 14})
-    fig2.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
 
     annotations = []
 
@@ -2274,67 +2405,9 @@ def display_idade_serie(w_municipios, w_municipios1):
                             xanchor='center', yanchor='top', text='Fonte: INEP, 2020',
                             font=dict(family='Arial', size=13, color='rgb(150,150,150)'), showarrow=False))
 
-    fig2.update_layout(annotations=annotations)
+    fig.update_layout(annotations=annotations)
 
-    fig3 = go.Figure()
-    fig3.add_trace(go.Bar(x=['Brasil'], y=[idade_serie_brasil], name='', marker=dict(color='#5992ED'),
-                          text=[idade_serie_brasil], textfont={'family': "Arial", 'size': 14},
-                          hovertemplate=
-                          '<b>%{x}</b>' +
-                          '<br><b>Taxa de distorção</b>: %{y:.1f}%<br>',
-                          ))
-    fig3.add_trace(go.Bar(x=[municipio], y=[idade_serie], name='', marker=dict(color='#0C326F'),
-                          text=[idade_serie], textfont={'family': "Arial", 'size': 14},
-                          hovertemplate=
-                          '<b>%{x}</b>' +
-                          '<br><b>Taxa de distorção</b>: %{y:.1f}%<br>',
-                          ))
-
-    fig3.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=False,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=False,
-        showlegend=False,
-        margin=dict(
-            l=20,
-            r=20,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        plot_bgcolor='white'
-    )
-
-    fig3.update_traces(texttemplate='%{text:.1f}%', textposition='auto', textfont={'family': "Arial", 'size': 14})
-    fig3.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-
-    annotations = []
-
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom', text='Taxa de distorção idade-série',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'), showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top', text='Fonte: INEP, 2020',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'), showarrow=False))
-
-    fig3.update_layout(annotations=annotations)
-
-    return fig, fig2, fig3
+    return fig, idade_serie, idade_serie_brasil, evasao_municipio, evasao_brasil
 
 # VAGAS ABERTAS NO SINE
 @app.callback(Output('sine', 'children'),
@@ -2465,16 +2538,41 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     df_remuneracao1['ano'] = df_remuneracao1['ano'].astype('int')
     df_remuneracao1['Total'] = df_remuneracao1['Total'].round(2)*1100
 
-    df2 = df_remuneracao1[(df_remuneracao1['municipio'] == w_municipios1) & (df_remuneracao1['uf'] == w_municipios)]
-    df3 = df2.groupby('ano')['Total'].mean()
-    df3 = df3.reset_index()
+    # df2 = df_remuneracao1[(df_remuneracao1['municipio'] == w_municipios1) & (df_remuneracao1['uf'] == w_municipios) & (df_remuneracao1['ano'] == 2019)]['Total'].sum()
+    # df3 = df2.groupby(by=['Total']).mean()
+    # df3 = df3.reset_index()
+
+    rem_brasil = df_remuneracao1[(df_remuneracao1['municipio'] == ' Todos os Municípios') & (df_remuneracao1['uf'] == 'Brasil') & (df_remuneracao1['ano'] == 2019)]['Total'].sum().round(1)
+    rem_municipio = df_remuneracao1[(df_remuneracao1['municipio'] == w_municipios1) & (df_remuneracao1['uf'] == w_municipios) & (df_remuneracao1['ano'] == 2019)]['Total'].sum().round(1)
+    municipio = df_remuneracao1[
+        (df_remuneracao1['municipio'] == w_municipios1) & (df_remuneracao1['uf'] == w_municipios) & (
+                    df_remuneracao1['ano'] == 2019)]['municipio']
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=df3['ano'], y=df3['Total'], marker=dict(color='#0C326F'), name='',
-                         hovertemplate=
-                         '<b>Remuneração média:</b> R$ %{y:.2f}' +
-                         '<br><b>Ano</b>: %{x}<br>',
-                         ))
+    fig.add_trace(go.Bar(x=['Brasil'], y=[rem_brasil], name='', marker=dict(color='#5992ED'),
+                          text=[rem_brasil], textfont={'family': "Arial", 'size': 14},
+                          hovertemplate=
+                          '<b>%{x}</b>' +
+                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+                          ))
+    fig.add_trace(go.Bar(x=municipio, y=[rem_municipio], name='', marker=dict(color='#0C326F'),
+                          text=[rem_municipio], textfont={'family': "Arial", 'size': 14},
+                          hovertemplate=
+                          '<b>%{x}</b>' +
+                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+                          ))
+
+    # fig = go.Figure()
+    # fig.add_trace(go.Bar(x=['Município'], y=df3['Total'], marker=dict(color='#0C326F'), name='',
+    #                      hovertemplate=
+    #                      '<b>Remuneração média:</b> R$ %{y:.2f}' +
+    #                      '%{x}<br>',
+    #                      ))
+    # fig.add_trace(go.Bar(x=['Brasil'], y=df3_brasil['Total'], marker=dict(color='#0C326F'), name='',
+    #                      hovertemplate=
+    #                      '<b>Remuneração média:</b> R$ %{y:.2f}' +
+    #                      '<br><b>Ano</b>: %{x}<br>',
+    #                      ))
     fig.update_layout(
         xaxis=dict(
             showline=True,
@@ -2493,6 +2591,7 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
             showticklabels=False,
         ),
         autosize=True,
+        barmode='group',
         margin=dict(autoexpand=True),
         showlegend=False,
         plot_bgcolor='white'
@@ -2502,7 +2601,7 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Evolução da remuneração<br>média mensal',
+                            text='Remuneração média mensal dos empregos formais',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
