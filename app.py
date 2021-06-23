@@ -38,7 +38,7 @@ uf = df1.groupby('uf').agg({'populacao': 'sum', 'pessoas_cad':'sum', 'pes_cad_ur
                                         'empresas_imobiliarias':'sum', 'empresas_ativ_profissionais_cient_tecnicas':'sum', 'empresas_ativ_administrativas':'sum', 'empresas_admpublica':'sum',
                                         'empresas_educacao':'sum', 'empresas_saude_servicosocial':'sum', 'empresas_arte_cultura':'sum', 'empresas_outras_ativ_servicos':'sum',
                                         'mei_cadunico':'sum', 'mei_pbf':'sum','cad_ensino_medio_completo':'sum', 'distorcao_idade_serie': 'mean', 'taxa_evasao_abandono': 'mean', 'remuneracao_docente_edbasica':'mean',
-                                        'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean'
+                                        'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean', 'familias_cad':'sum', 'familias_pbf':'sum'
                                         }).reset_index()
 uf['municipio'] = ' Todos os Municípios'
 regiao = df1.groupby(by=['regiao']).agg({'populacao': 'sum', 'pessoas_cad':'sum', 'pes_cad_urbano':'sum', 'pes_cad_rural':'sum', 'cad_feminino':'sum', 'cad_masculino':'sum',
@@ -61,7 +61,7 @@ regiao = df1.groupby(by=['regiao']).agg({'populacao': 'sum', 'pessoas_cad':'sum'
                                         'empresas_imobiliarias':'sum', 'empresas_ativ_profissionais_cient_tecnicas':'sum', 'empresas_ativ_administrativas':'sum', 'empresas_admpublica':'sum',
                                         'empresas_educacao':'sum', 'empresas_saude_servicosocial':'sum', 'empresas_arte_cultura':'sum', 'empresas_outras_ativ_servicos':'sum',
                                         'mei_cadunico':'sum', 'mei_pbf':'sum','cad_ensino_medio_completo':'sum', 'distorcao_idade_serie': 'mean', 'taxa_evasao_abandono': 'mean', 'remuneracao_docente_edbasica':'mean',
-                                        'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean'
+                                        'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean', 'familias_cad':'sum', 'familias_pbf':'sum'
                                         }).reset_index()
 regiao['municipio'] = ' Todos os Municípios'
 regiao['uf'] = regiao['regiao']
@@ -85,7 +85,7 @@ pais = df1.groupby(by=["pais"]).agg({'populacao': 'sum', 'pessoas_cad':'sum', 'p
                                         'empresas_imobiliarias':'sum', 'empresas_ativ_profissionais_cient_tecnicas':'sum', 'empresas_ativ_administrativas':'sum', 'empresas_admpublica':'sum',
                                         'empresas_educacao':'sum', 'empresas_saude_servicosocial':'sum', 'empresas_arte_cultura':'sum', 'empresas_outras_ativ_servicos':'sum',
                                         'mei_cadunico':'sum', 'mei_pbf':'sum','cad_ensino_medio_completo':'sum', 'distorcao_idade_serie': 'mean', 'taxa_evasao_abandono': 'mean', 'remuneracao_docente_edbasica':'mean',
-                                        'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean'
+                                        'idhm':'mean', 'var_saldo_empregos_12meses':'mean', 'ivs':'mean', 'taxa_homicidios ':'mean', 'familias_cad':'sum', 'familias_pbf':'sum'
                                         }).reset_index()
 pais['municipio'] = ' Todos os Municípios'
 pais['uf'] = pais['pais']
@@ -303,8 +303,8 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                                    html.P(id='fam_cad', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 12, 'fontWeight': 'bold'}),
-                                    html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
+                                    html.P(id='fam_cad', style={'color':'#495057', 'textAlign': 'center', 'margin-top':'5px', 'fontSize': 15, 'fontWeight': 'bold'}),
+                                    html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px',
                                                                      'box-shadow': '1px 1px 1px 1px lightgrey'}
@@ -318,8 +318,8 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                                    html.P(id='fam_pbf', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 12, 'fontWeight': 'bold'}),
-                                    html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
+                                    html.P(id='fam_pbf', style={'color':'#495057', 'textAlign': 'center', 'margin-top':'5px', 'fontSize': 15, 'fontWeight': 'bold'}),
+                                    html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
@@ -332,11 +332,22 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Pobreza e Extrema Pobreza (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='pobreza_extrema', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'})]
+                                    html.H5("Cadastro Único - Urbano", className="card-title",
+                                            style={'textAlign': 'center'}),
+                                    html.P(id='urbano_cad',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 25,
+                                                  'fontWeight': 'bold'}),
+                                    html.H5("Família de catadores", className="card-title",
+                                            style={'textAlign': 'center'}),
+                                    html.P(id='catadores',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
+                                                  'margin-bottom': 0, 'fontSize': 25, 'fontWeight': 'bold'}),
+                                ]
                                 ),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
-                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'})
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                            )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
                         [
@@ -344,13 +355,42 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Famílias de catadores (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='catadores', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                                ]),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
-                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                    dbc.Row(
+                                        [
+                                            html.H5(className="fas fa-male", style={'fontSize': 40, 'margin-left':'30px'}),
+                                            html.P(id='urbano_cad',
+                                                   style={'color': '#1351B4', 'fontSize': 25, 'margin-top': '5px',
+                                                          'fontWeight': 'bold', 'margin-left':'30px'}),
+                                        ],
+                                    ),
+                                    dbc.Row(
+                                        [
+                                            html.H5(className="fas fa-female", style={'fontSize': 40, 'margin-left':'30px'}),
+                                            html.P(id='catadores',
+                                                   style={'color': '#f94144', 'margin-top': '5px', 'margin-left':'30px',
+                                                          'margin-bottom': 0, 'fontSize': 25, 'fontWeight': 'bold'}),
+                                        ],
+                                    ),
+                                ]
+                                ),
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    # dbc.Col(
+                    #     [
+                    #         dbc.Card(children=
+                    #         [
+                    #             dbc.CardBody(children=
+                    #             [
+                    #                 html.H6("Famílias de catadores (abr/2021)", className="card-title", style={'textAlign':'center'}),
+                    #                 html.P(id='catadores', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                    #             ]),
+                    #         ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
+                    #                                                  'box-shadow': '1px 1px 1px 1px lightgrey'}
+                    #         )
+                    #     ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
                     align='center'
                 ),
@@ -358,8 +398,8 @@ def render_tab_content(active_tab):
                 dbc.Row(
                     [
                     dbc.Col(dcc.Graph(id='cad_pbf'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=12, xl=8),
-                    dbc.Col(dcc.Graph(id='bpc'), xs=12, sm=12, md=12, lg=12, xl=4),
-                        ]
+                    dbc.Col(dcc.Graph(id='bpc'), xs=12, sm = 12, md = 12, lg = 12, xl = 4),
+                        ],
                 ),
                 html.Br(),
                 dbc.Row(
@@ -1174,7 +1214,7 @@ def toggle_modal(n1, n2, is_open):
 @app.callback(
     Output('cadunico', 'children'),
     Output('bolsa_familia', 'children'),
-    Output('pobreza_extrema', 'children'),
+    # Output('pobreza_extrema', 'children'),
     Output('catadores', 'children'),
     Output('perc_cad', 'children'),
     Output('perc_pbf', 'children'),
@@ -1191,8 +1231,8 @@ def display_cadunico(w_municipios, w_municipios1):
     pessoas_pbf = f'{pessoas_pbf:_.0f}'.replace('.', ',').replace('_', '.')
     pessoas_cad1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
     pessoas_pbf1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_pbf'].sum()
-    pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
-    pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
+    # pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
+    # pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
     catadores = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_catadores_cad'].sum()
     catadores = f'{catadores:_.0f}'.replace('.', ',').replace('_', '.')
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
@@ -1257,8 +1297,8 @@ def display_cadunico(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
 
 
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', pobreza_extrema + ' pessoas', catadores + ' famílias', \
-           f'{perc_cad:.0f}% da população', f'{perc_pbf:.0f}% da população', fig, familias_cad, familias_pbf
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', catadores + ' famílias', \
+           f'{perc_cad:.0f}% da população', f'{perc_pbf:.0f}% da população', fig, familias_cad + ' famílias', familias_pbf + ' famílias'
 
 # EVOLUÇÃO DO CADUNICO E DO PBF
 @app.callback(Output('cad_pbf', 'figure'),
@@ -1344,11 +1384,13 @@ def display_ev_cadunico(w_municipios, w_municipios1):
 # POPULAÇÃO DO CADUNICO POR SITUAÇÃO DO DOMICÍLIO E SEXO
 @app.callback(Output('cad_domicilio', 'figure'),
               Output('cad_sexo', 'figure'),
+              Output('urbano_cad', 'children'),
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
 def display_domicilio_sexo(w_municipios, w_municipios1):
     urbano = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_urbano'].sum()
+    urbano1 = f'{urbano:_.0f}'.replace('.', ',').replace('_', '.')
     rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_rural'].sum()
     masc_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_masculino'].sum()
     fem_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_feminino'].sum()
@@ -1456,7 +1498,7 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
 
     fig2.update_layout(annotations=annotations)
 
-    return fig1, fig2
+    return fig1, fig2, urbano1
 
 # POPULAÇÃO DO CADUNICO POR FAIXA ETÁRIA
 @app.callback(Output('faixa_etaria', 'figure'),
