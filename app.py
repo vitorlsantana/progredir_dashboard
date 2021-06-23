@@ -125,8 +125,10 @@ app.layout = dbc.Container([
     dbc.Row([
         # SIDEBAR
         dbc.Col([
-            html.Label('Selecione a Região', style={'fontFamily':'Arial', 'fontSize':15, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
+            html.Label('Consulta', style={'fontFamily':'Arial', 'fontSize':20, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
                    className='mt-3'),
+            html.Label('Selecione a Região', style={'fontFamily':'Arial', 'fontSize':15, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
+                   className='mt-1'),
             dcc.Dropdown(
                 id='w_municipios',
                 options=[{'label': i, 'value': i} for i in sorted(df['uf'].unique())],
@@ -147,10 +149,6 @@ app.layout = dbc.Container([
                 dbc.CardBody(children=[
                     html.H5('População', style={'textAlign':'center', 'margin-top':'10px'}),
                     html.H4(id="populacao", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
-                    html.H5('Produto Interno Bruto', style={'textAlign':'center'}),
-                    html.H4(id="pib_total", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'30px'}),
-                    html.H5('Índice de Desenvolvimento Humano', style={'textAlign':'center'}),
-                    html.H4(id="idhm", style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'10px'}),
                 ], style={'padding':'0.30rem'}),
             ], id='data-box', color="#F8F8F8", style={"width": "100%", 'margin-bottom': '30px'}),
             dbc.Button(
@@ -183,15 +181,16 @@ app.layout = dbc.Container([
                 style={"width":"100%", 'whiteSpace': 'pre-wrap', 'fontFamily':'Arial'},
             ),
             html.Br(),
-            dbc.Button("Saiba mais sobre o Cadastro Único", id='open1', className="mr-5", outline=True, color="light",
+            dbc.Button("Saiba mais sobre os dados", id='open1', className="mr-5", outline=True, color="light",
                        style={"width": "100%", 'fontSize':15, 'fontFamily':'Arial', 'fontWeight': 'bold'}),
             dbc.Modal(
                 [
-                    dbc.ModalHeader("Cadastro Único"),
+                    dbc.ModalHeader("Dados utilizados no painel"),
                     dbc.ModalBody(
-                        "O Cadastro Único para Programas Sociais do Governo Federal (Cadastro Único) é um instrumento "
-                        "que identifica e caracteriza as famílias de baixa renda, permitindo que o governo conheça melhor a realidade socioeconômica dessa população.\n\n"
-                        "Nele são registradas informações como: características da residência, identificação de cada pessoa, escolaridade, situação de trabalho e renda, entre outras."),
+                        "População - população estimada - Fonte: IBGE, 2019"
+                        "IDHM - Índice de Desenvolvimento Humano - Fonte:"
+                        "Cadastro Único - pessoas inscritas no Cadastro Único - Fonte: Ministério da Cidadania, abril/2021"
+                        ""),
                     dbc.ModalFooter(
                         dbc.Button("Fechar", id="close1", className="ml-auto")),
                 ],
@@ -205,17 +204,19 @@ app.layout = dbc.Container([
         html.Br(),
         dbc.Col(children=[
             dbc.Tabs([
+                dbc.Tab(label="Contexto socioeconômico", tab_id="economia",
+                        activeLabelClassName='flex-sm-fill text-sm-center bg-primary',
+                        tabClassName='m-auto rounded text-sm-center',
+                        labelClassName='flex-sm-fill text-sm-center rounded text-white'),
                 dbc.Tab(label="Perfil das pessoas no Cadastro Único", tab_id="social", activeLabelClassName='flex-sm-fill text-sm-center bg-primary',
-                        tabClassName='m-auto rounded', labelClassName='flex-sm-fill text-sm-center rounded text-white'),
+                        tabClassName='m-auto rounded text-sm-center', labelClassName='flex-sm-fill text-sm-center rounded text-white'),
                 dbc.Tab(label="Situação de trabalho das pessoas no Cadastro Único", tab_id="trabalho_cad", activeLabelClassName='flex-sm-fill text-sm-center bg-primary',
-                        tabClassName='m-auto rounded', labelClassName='flex-sm-fill text-sm-center rounded text-white'),
-                dbc.Tab(label="Situação de emprego formal", tab_id="trabalho_formal", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
+                        tabClassName='m-auto rounded text-sm-center', labelClassName='flex-sm-fill text-sm-center rounded text-white'),
+                dbc.Tab(label="Situação de emprego", tab_id="trabalho_formal", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded text-sm-center',
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
-                dbc.Tab(label="Contexto econômico", tab_id="economia", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
+                dbc.Tab(label="Iniciativas de inclusão produtiva", tab_id="servicos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded text-sm-center',
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
-                dbc.Tab(label="Iniciativas de Inclusão Produtiva", tab_id="servicos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
-                        labelClassName='flex-sm-fill text-sm-center rounded text-white'),
-                dbc.Tab(label="Estudos e Pesquisas", tab_id="estudos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded',
+                dbc.Tab(label="Estudos e pesquisas", tab_id="estudos", activeLabelClassName='flex-sm-fill text-sm-center bg-primary', tabClassName='m-auto rounded text-sm-center',
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
             ],
                 id="tabs",
@@ -254,25 +255,6 @@ def toggle_collapse(n, is_open):
         return not is_open
     return is_open
 
-# POPULAÇÃO, PIB TOTAL E IDHM
-@app.callback(
-    Output('populacao', 'children'),
-    Output('pib_total', 'children'),
-    Output('idhm', 'children'),
-    Input('w_municipios', 'value'),
-    Input('w_municipios1', 'value')
-)
-def display_pop_pib_idh(w_municipios, w_municipios1):
-    populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
-    populacao = f'{populacao:_.0f}'.replace('_', '.')
-    df['pib_total'] = df['pib_total'].astype(float)
-    pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum() / 1000000
-    pib = f'R$ {pib:_.2f} Bi'.replace('.', ',').replace('_', '.')
-    idhm = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['idhm'].sum()
-    idhm = f'{idhm:_.3f}'.replace('.', ',').replace('_', '.')
-
-    return populacao, pib, idhm
-
 # MODAL SOBRE O PAINEL
 @app.callback(
     Output("modal", "is_open"),
@@ -303,7 +285,6 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                                    html.P(id='fam_cad', style={'color':'#495057', 'textAlign': 'center', 'margin-top':'5px', 'fontSize': 15, 'fontWeight': 'bold'}),
                                     html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px',
@@ -318,7 +299,6 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                                    html.P(id='fam_pbf', style={'color':'#495057', 'textAlign': 'center', 'margin-top':'5px', 'fontSize': 15, 'fontWeight': 'bold'}),
                                     html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
@@ -332,20 +312,22 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H5("Cadastro Único - Urbano", className="card-title",
+                                    html.H5("Situação do domicílio", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='urbano_cad',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 25,
-                                                  'fontWeight': 'bold'}),
-                                    html.H5("Família de catadores", className="card-title",
-                                            style={'textAlign': 'center'}),
-                                    html.P(id='catadores',
-                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
-                                                  'margin-bottom': 0, 'fontSize': 25, 'fontWeight': 'bold'}),
+                                    dbc.Row(
+                                        [
+                                            html.H5(className="fas fa-city",
+                                                    style={'color':'#1351B4', 'textAlign':'center', 'align-items':'center', 'fontSize':25}),
+                                            html.P(id='urbano_cad',
+                                                   style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-left':'20px'}),
+                                        ], style={'align-items':'center'},
+                                    ),
+                                    html.P(id='perc_urbano',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'align-items':'center',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -355,26 +337,25 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
+                                    html.H5("Distribuição por sexo", className="card-title", style={'textAlign': 'center'}),
                                     dbc.Row(
                                         [
-                                            html.H5(className="fas fa-male", style={'fontSize': 40, 'margin-left':'30px'}),
-                                            html.P(id='urbano_cad',
-                                                   style={'color': '#1351B4', 'fontSize': 25, 'margin-top': '5px',
-                                                          'fontWeight': 'bold', 'margin-left':'30px'}),
+                                            html.H5(className="fas fa-male", style={'fontSize': 35, 'textAlign': 'center', 'color':'#0077b6'}),
+                                            html.P(id='masc_cad',
+                                                   style={'fontSize': 24, 'margin-top': '1px', 'fontWeight': 'bold', 'margin-left':'30px'}),
                                         ],
                                     ),
                                     dbc.Row(
                                         [
-                                            html.H5(className="fas fa-female", style={'fontSize': 40, 'margin-left':'30px'}),
-                                            html.P(id='catadores',
-                                                   style={'color': '#f94144', 'margin-top': '5px', 'margin-left':'30px',
-                                                          'margin-bottom': 0, 'fontSize': 25, 'fontWeight': 'bold'}),
-                                        ],
+                                            html.H5(className="fas fa-female", style={'fontSize': 35, 'textAlign': 'center', 'align-items':'center', 'color':'#ffafcc'}),
+                                            html.P(id='fem_cad',
+                                                   style={'margin-top': '1px', 'margin-left':'30px', 'margin-bottom':0, 'fontSize': 24, 'fontWeight': 'bold'}),
+                                        ], style={'margin-top': '1px', 'margin-bottom':0},
                                     ),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'align-items':'center',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -447,12 +428,16 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Pessoas com carteira assinada", className="card-title",
+                                    html.H6("Sobre os dados", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='empregos', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
-                                    html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 10}),
+                                    html.P('Os dados de empregos formais dessa seção foram obtidos da Relação Anual de Informações Sociais (RAIS), que é um cadastro administrativo, '
+                                           'instituído pelo Decreto nº 76.900, de 23 de dezembro de 1975, de âmbito nacional, periodicidade anual e de declaração obrigatória '
+                                           'para todos os estabelecimentos do setor público e privado, inclusive para aqueles que não registraram vínculos empregatícios no exercício',
+                                           style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
                                 ]),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -461,19 +446,33 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Variação de empregos formais em 12 meses", className="card-title",
+                                    html.H6("Pessoas com carteira assinada*", className="card-title",
                                             style={'textAlign': 'center'}),
-                                    html.P(id='var_emprego',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
-                                                  'fontWeight': 'bold'}),
-                                    html.P("Fonte: Ministério da Economia (jan/2020)",
-                                           style={'textAlign': 'center', 'fontSize': 10}),
-                                ]
-                                ),
-                            ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
+                                    html.P(id='empregos', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
+                                    html.P("*Estoque de empregos formais", style={'textAlign': 'center', 'fontSize': 20}),
+                                ]),
+                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
+                            )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    # dbc.Col(
+                    #     [
+                    #         dbc.Card(children=
+                    #         [
+                    #             dbc.CardBody(children=
+                    #             [
+                    #                 html.H6("Variação de empregos formais em 12 meses", className="card-title",
+                    #                         style={'textAlign': 'center'}),
+                    #                 html.P(id='var_emprego',
+                    #                        style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
+                    #                               'fontWeight': 'bold'}),
+                    #                 html.P("Fonte: Ministério da Economia (jan/2020)",
+                    #                        style={'textAlign': 'center', 'fontSize': 10}),
+                    #             ]
+                    #             ),
+                    #         ], color="#F8F8F8", outline=True,
+                    #             style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                    #                    'box-shadow': '1px 1px 1px 1px lightgrey'})
+                    #     ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
                         [
                             dbc.Card(children=
@@ -483,24 +482,24 @@ def render_tab_content(active_tab):
                                     html.H6("Saldo de empregos formais em 12 meses", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='saldo_empregos12', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
-                                    html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 10}),
+                                    html.P(id='var_emprego', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
-                    dbc.Col(
-                        [
-                            dbc.Card(children=
-                            [
-                                dbc.CardBody(children=
-                                [
-                                    html.H6("Saldo de empregos formais em 2021", className="card-title", style={'textAlign': 'center'}),
-                                    html.P(id='saldo_empregos2021', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
-                                    html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 10}),
-                                ]),
-                            ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
-                            )
-                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    # dbc.Col(
+                    #     [
+                    #         dbc.Card(children=
+                    #         [
+                    #             dbc.CardBody(children=
+                    #             [
+                    #                 html.H6("Saldo de empregos formais em 2021", className="card-title", style={'textAlign': 'center'}),
+                    #                 html.P(id='saldo_empregos2021', style={'color':'#1351B4', 'textAlign': 'center', 'fontSize': 35, 'fontWeight': 'bold'}),
+                    #                 html.P("Fonte: Ministério da Economia (jan/2020)", style={'textAlign': 'center', 'fontSize': 10}),
+                    #             ]),
+                    #         ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px', 'box-shadow': '1px 1px 1px 1px lightgrey'}
+                    #         )
+                    #     ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
                     align='center'
                 ),
@@ -616,6 +615,71 @@ def render_tab_content(active_tab):
         elif active_tab == "economia":
             return dbc.Container(children=[
                 html.Br(),
+                dbc.Row(children=
+                [
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
+                            [
+                                dbc.CardBody(children=
+                                [
+                                    html.H6("PIB Total", className="card-title",
+                                            style={'textAlign': 'center'}),
+                                    html.P(id='pib_total',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
+                                                  'fontWeight': 'bold'}),
+                                    html.P(id='perc_pib',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
+                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                ]),
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                            )
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
+                            [
+                                dbc.CardBody(children=
+                                [
+                                    html.H6("Índice Vulnerabilidade Social", className="card-title",
+                                            style={'textAlign': 'center'}),
+                                    html.P(id='ivs',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
+                                                  'fontWeight': 'bold'}),
+                                    html.P(id='ivs_brasil',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
+                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                ]
+                                ),
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
+                            [
+                                dbc.CardBody(children=
+                                [
+                                    html.H6("Índice de Desenvolvimento Humano", className="card-title",
+                                            style={'textAlign': 'center'}),
+                                    html.P(id='idhm',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
+                                                  'fontWeight': 'bold'}),
+                                    html.P(id='idhm_brasil',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
+                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                ]
+                                ),
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                ],
+                    align='center'
+                ),
                 dbc.Row(
                     [
                         dbc.Col(dcc.Graph(id='pib_setorial'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
@@ -1210,17 +1274,45 @@ def toggle_modal(n1, n2, is_open):
         return not is_open
     return is_open
 
+# POPULAÇÃO, PIB TOTAL E IDHM
+@app.callback(
+    Output('populacao', 'children'),
+    Output('pib_total', 'children'),
+    Output('perc_pib', 'children'),
+    Output('idhm', 'children'),
+    Output('idhm_brasil', 'children'),
+    Output('ivs', 'children'),
+    Output('ivs_brasil', 'children'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
+def display_pop_pib_idh(w_municipios, w_municipios1):
+    populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
+    populacao = f'{populacao:_.0f}'.replace('_', '.')
+    df['pib_total'] = df['pib_total'].astype(float)
+    pib = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum()
+    pib1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pib_total'].sum() / 1000000
+    pib1 = f'R$ {pib1:_.2f} bi'.replace('.', ',').replace('_', '.')
+    pib_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == 'Todos os Municípios')]['pib_total'].sum()
+    idhm = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['idhm'].sum()
+    idhm = f'{idhm:_.3f}'.replace('.', ',').replace('_', '.')
+    idhm_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['idhm'].sum()
+    idhm_brasil = f'{idhm_brasil:_.3f}'.replace('.', ',').replace('_', '.')
+    ivs = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['ivs'].sum()
+    ivs = f'{ivs:_.3f}'.replace('.', ',').replace('_', '.')
+    ivs_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['ivs'].sum()
+    ivs_brasil = f'{ivs_brasil:_.3f}'.replace('.', ',').replace('_', '.')
+    perc_pib = (pib/pib_brasil)
+
+    return populacao, pib1, f'{perc_pib}% do PIB do país', idhm, 'Brasil - ' + idhm_brasil, ivs, 'Brasil - ' + ivs_brasil
+
 # NÚMEROS CADASTRO ÚNICO / BOLSA FAMÍLIA / BPC
 @app.callback(
     Output('cadunico', 'children'),
     Output('bolsa_familia', 'children'),
-    # Output('pobreza_extrema', 'children'),
-    Output('catadores', 'children'),
     Output('perc_cad', 'children'),
     Output('perc_pbf', 'children'),
     Output('bpc', 'figure'),
-    Output('fam_cad', 'children'),
-    Output('fam_pbf', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
@@ -1231,18 +1323,9 @@ def display_cadunico(w_municipios, w_municipios1):
     pessoas_pbf = f'{pessoas_pbf:_.0f}'.replace('.', ',').replace('_', '.')
     pessoas_cad1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
     pessoas_pbf1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_pbf'].sum()
-    # pobreza_extrema = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pobreza_extremapob_cad'].sum()
-    # pobreza_extrema = f'{pobreza_extrema:_.0f}'.replace('.', ',').replace('_', '.')
-    catadores = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_catadores_cad'].sum()
-    catadores = f'{catadores:_.0f}'.replace('.', ',').replace('_', '.')
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
     perc_cad = ((pessoas_cad1/populacao)*100).round(2)
     perc_pbf = ((pessoas_pbf1/populacao)*100).round(2)
-
-    familias_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_cad'].sum()
-    familias_cad = f'{familias_cad:_.0f}'.replace('.', ',').replace('_', '.')
-    familias_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_pbf'].sum()
-    familias_pbf = f'{familias_pbf:_.0f}'.replace('.', ',').replace('_', '.')
 
     bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].sum()
     bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].sum()
@@ -1296,9 +1379,7 @@ def display_cadunico(w_municipios, w_municipios1):
                             showarrow=False))
     fig.update_layout(annotations=annotations)
 
-
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', catadores + ' famílias', \
-           f'{perc_cad:.0f}% da população', f'{perc_pbf:.0f}% da população', fig, familias_cad + ' famílias', familias_pbf + ' famílias'
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', f'{perc_cad:.0f}% da população', f'{perc_pbf:.0f}% da população', fig
 
 # EVOLUÇÃO DO CADUNICO E DO PBF
 @app.callback(Output('cad_pbf', 'figure'),
@@ -1385,6 +1466,9 @@ def display_ev_cadunico(w_municipios, w_municipios1):
 @app.callback(Output('cad_domicilio', 'figure'),
               Output('cad_sexo', 'figure'),
               Output('urbano_cad', 'children'),
+              Output('perc_urbano', 'children'),
+              Output('masc_cad', 'children'),
+              Output('fem_cad', 'children'),
               Input('w_municipios', 'value'),
               Input('w_municipios1', 'value')
               )
@@ -1392,10 +1476,14 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     urbano = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_urbano'].sum()
     urbano1 = f'{urbano:_.0f}'.replace('.', ',').replace('_', '.')
     rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_rural'].sum()
+    rural1 = f'{rural:_.0f}'.replace('.', ',').replace('_', '.')
     masc_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_masculino'].sum()
+    masc_cad1 = f'{masc_cad:_.0f}'.replace('.', ',').replace('_', '.')
     fem_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_feminino'].sum()
+    fem_cad1 = f'{fem_cad:_.0f}'.replace('.', ',').replace('_', '.')
 
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
+    perc_urbano = (urbano/populacao*100).round(1)
     perc_masc = (masc_cad/populacao*100).round(1)
     perc_fem = (fem_cad/populacao * 100).round(1)
 
@@ -1498,7 +1586,7 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
 
     fig2.update_layout(annotations=annotations)
 
-    return fig1, fig2, urbano1
+    return fig1, fig2, urbano1, f'{perc_urbano:.0f}% da população', masc_cad1 + f' ({perc_masc:.0f}%)', fem_cad1 + f' ({perc_fem:.0f}%)'
 
 # POPULAÇÃO DO CADUNICO POR FAIXA ETÁRIA
 @app.callback(Output('faixa_etaria', 'figure'),
@@ -2261,20 +2349,20 @@ def display_sine(w_municipios, w_municipios1):
 # SALDO E VARIAÇÃO DE EMPREGOS
 @app.callback(
     Output('saldo_empregos12', 'children'),
-    Output('saldo_empregos2021', 'children'),
+    # Output('saldo_empregos2021', 'children'),
     Output('var_emprego', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
 def display_saldo_empregos_recente(w_municipios, w_municipios1):
-    df1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2021'].sum()
-    df1 = f'{df1:_.0f}'.replace('.', ',').replace('_', '.')
+    # df1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos2021'].sum()
+    # df1 = f'{df1:_.0f}'.replace('.', ',').replace('_', '.')
     df2 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['saldo_empregos_12meses'].sum()
     df2 = f'{df2:_.0f}'.replace('.', ',').replace('_', '.')
     df3 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['var_saldo_empregos_12meses'].sum().round(2)
-    df3 = f'{df3:_.2f}%'.replace('.', ',').replace('_', '.')
+    df3 = f'Variação de {df3:_.2f}%'.replace('.', ',').replace('_', '.')
 
-    return df2, df1, df3
+    return df2, df3
 
 # EVOLUÇÃO DO SALDO DE EMPREGOS
 @app.callback(Output('evolucao_empregos', 'figure'),
