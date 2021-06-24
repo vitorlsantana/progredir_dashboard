@@ -103,10 +103,6 @@ df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1', low_memory=False
 data4 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/saldo_empregos_ocupacao_subgruposprincipais_2015_2019.csv'
 df_saldo = pd.read_csv(data4, sep=';', encoding='latin1', low_memory=False)
 
-data5 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/remuneracao_SM_setor_IBGE_RAIS_2015_2019.csv'
-df_rem_setor_ibge = pd.read_csv(data5, sep=';', encoding='latin1', low_memory=False)
-df_rem_setor_ibge = df_rem_setor_ibge.drop(['Município'], axis=1)
-
 data6 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/vinculos_ativos_subsetor_IBGE_2019_RAIS.csv'
 df_vinculos_subsetor_ibge = pd.read_csv(data6, sep=';', encoding='latin1', low_memory=False)
 df_vinculos_subsetor_ibge = df_vinculos_subsetor_ibge.drop(['Município'], axis=1)
@@ -2319,64 +2315,6 @@ def display_idade_serie(w_municipios, w_municipios1):
     remuneracao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['remuneracao_docente_edbasica'].sum().round(1)
     remuneracao_municipio = f'R$ {remuneracao_municipio:_.2f}'.replace('.', ',').replace('_', '.')
 
-    # municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['municipio']
-    #
-    # fig = go.Figure()
-    # fig.add_trace(go.Bar(x=['Brasil'], y=[remuneracao_brasil], name='', marker=dict(color='#5992ED'),
-    #                       text=[remuneracao_brasil], textfont={'family': "Arial", 'size': 14},
-    #                       hovertemplate=
-    #                       '<b>%{x}</b>' +
-    #                       '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
-    #                       ))
-    # fig.add_trace(go.Bar(x=[municipio], y=[remuneracao_municipio], name='', marker=dict(color='#0C326F'),
-    #                       text=[remuneracao_municipio], textfont={'family': "Arial", 'size': 14},
-    #                       hovertemplate=
-    #                       '<b>%{x}</b>' +
-    #                       '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
-    #                       ))
-    # fig.update_layout(
-    #     xaxis=dict(
-    #         showline=True,
-    #         showgrid=False,
-    #         showticklabels=False,
-    #         linecolor='rgb(204, 204, 204)',
-    #         linewidth=2,
-    #         ticks='outside',
-    #         tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
-    #     ),
-    #     yaxis=dict(
-    #         showgrid=False,
-    #         zeroline=False,
-    #         showline=False,
-    #         showticklabels=False,
-    #     ),
-    #     autosize=False,
-    #     showlegend=False,
-    #     margin=dict(
-    #         l=20,
-    #         r=20,
-    #         b=100,
-    #         t=100,
-    #         pad=0
-    #     ),
-    #     plot_bgcolor='white'
-    # )
-    # fig.update_traces(texttemplate='R$ %{text:.2f}', textposition='auto', textfont={'family': "Arial", 'size': 14})
-    # fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-    #
-    # annotations = []
-    #
-    # # Title
-    # annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-    #                         xanchor='left', yanchor='bottom', text='Remuneração média dos docentes<br>da educação básica',
-    #                         font=dict(family='Arial', size=20, color='rgb(37,37,37)'), showarrow=False))
-    # # Source
-    # annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-    #                         xanchor='center', yanchor='top', text='Fonte: INEP, 2020',
-    #                         font=dict(family='Arial', size=13, color='rgb(150,150,150)'), showarrow=False))
-    #
-    # fig.update_layout(annotations=annotations)
-
     return remuneracao_brasil, remuneracao_municipio, idade_serie, idade_serie_brasil, evasao_municipio, evasao_brasil
 
 # VAGAS ABERTAS NO SINE
@@ -2532,17 +2470,6 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
                           '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
                           ))
 
-    # fig = go.Figure()
-    # fig.add_trace(go.Bar(x=['Município'], y=df3['Total'], marker=dict(color='#0C326F'), name='',
-    #                      hovertemplate=
-    #                      '<b>Remuneração média:</b> R$ %{y:.2f}' +
-    #                      '%{x}<br>',
-    #                      ))
-    # fig.add_trace(go.Bar(x=['Brasil'], y=df3_brasil['Total'], marker=dict(color='#0C326F'), name='',
-    #                      hovertemplate=
-    #                      '<b>Remuneração média:</b> R$ %{y:.2f}' +
-    #                      '<br><b>Ano</b>: %{x}<br>',
-    #                      ))
     fig.update_layout(
         xaxis=dict(
             showline=True,
@@ -2683,62 +2610,6 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
     return fig
 
-    # fig = go.Figure()
-    #
-    # fig.add_trace(go.Bar(
-    #     y=df3['vinculos'], x=df3['subsetor'], textposition='auto', name='',
-    #     marker=dict(color='#f8961e'),
-    #     hovertemplate=
-    #     '<b>Saldo de empregos</b>: %{y:.2s}' +
-    #     '<br><b>Subsetor</b>: %{x}<br>',
-    # ))
-    #
-    # fig.update_layout(
-    #     xaxis=dict(
-    #         showline=True,
-    #         showgrid=False,
-    #         showticklabels=True,
-    #         linewidth=2,
-    #         ticks='outside',
-    #         tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),
-    #     ),
-    #     yaxis=dict(
-    #         showgrid=False,
-    #         zeroline=False,
-    #         showline=False,
-    #         showticklabels=False,
-    #     ),
-    #     autosize=True,
-    #     margin=dict(
-    #         l=15,
-    #         r=15,
-    #         b=100,
-    #         t=100,
-    #         pad=1
-    #     ),
-    #     showlegend=False,
-    #     plot_bgcolor='white',
-    # )
-    #
-    # annotations = []
-    #
-    # # Title
-    # annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-    #                         xanchor='left', yanchor='bottom',
-    #                         text='Setores da economia com maior quantidade<br> de vínculos de empregos formais',
-    #                         font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-    #                         showarrow=False))
-    # # Source
-    # annotations.append(dict(xref='paper', yref='paper', x=0.4, y=-0.7,
-    #                         xanchor='center', yanchor='top',
-    #                         text='Fonte: Ministério da Economia/RAIS, 2020',
-    #                         font=dict(family='Arial', size=12, color='rgb(150,150,150)'),
-    #                         showarrow=False))
-    #
-    # fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-    # fig.update_layout(annotations=annotations)
-    return fig
-
 # OCUPAÇÕES COM MAIOR QUANTIDADE DE VINCULOS
 @app.callback(
     Output('top_vinculos', 'figure'),
@@ -2838,7 +2709,6 @@ def update_top_vinculos_table(w_municipios, w_municipios1):
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
 
-
 # SUBSETORES COM MAIOR SALDO DE EMPREGOS
 @app.callback(
     Output('saldo_subsetor', 'figure'),
@@ -2885,41 +2755,6 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
             pad=1
         ),
     )
-
-    # fig.add_trace(go.Bar(
-    #     y=df3['subsetor'], x=df3['saldo'], textposition='auto', name='',
-    #     marker=dict(color='#f8961e'), orientation='h',
-    #     hovertemplate=
-    #     '<b>Saldo de empregos</b>: %{y:.2s}' +
-    #     '<br><b>Subsetor</b>: %{x}<br>',
-    # ))
-    #
-    # fig.update_layout(
-    #     xaxis=dict(
-    #         showline=True,
-    #         showgrid=False,
-    #         showticklabels=True,
-    #         linewidth=2,
-    #         ticks='outside',
-    #         tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),
-    #     ),
-    #     yaxis=dict(
-    #         showgrid=False,
-    #         zeroline=False,
-    #         showline=False,
-    #         showticklabels=True,
-    #     ),
-    #     autosize=True,
-    #     margin=dict(
-    #         l=15,
-    #         r=15,
-    #         b=100,
-    #         t=100,
-    #         pad=1
-    #     ),
-    #     showlegend=False,
-    #     plot_bgcolor='white',
-    # )
 
     annotations = []
 
