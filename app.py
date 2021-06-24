@@ -784,10 +784,13 @@ def render_tab_content(active_tab):
                                     html.P(id='populacao',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
                                                   'fontWeight': 'bold'}),
+                                    html.P('de pessoas',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
+                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -801,10 +804,13 @@ def render_tab_content(active_tab):
                                     html.P(id='pib_total',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
                                                   'fontWeight': 'bold'}),
+                                    html.P('bi',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
+                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -825,7 +831,7 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
+                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
                         [
@@ -845,15 +851,16 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
+                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
                     align='center'
                 ),
+                html.Br(),
                 dbc.Row(
                     [
-                        dbc.Col(dcc.Graph(id='pib_setorial'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
-                        dbc.Col(dcc.Graph(id='empresas_setorial', config={'responsive':True}), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6)
+                        dbc.Col(dcc.Graph(id='pib_setorial'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=4),
+                        dbc.Col(dcc.Graph(id='empresas_setorial', config={'responsive':True}), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=8)
                     ], className='row flex-display'
                 ),
                 html.Br(),
