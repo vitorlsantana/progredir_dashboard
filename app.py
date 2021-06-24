@@ -331,9 +331,9 @@ def render_tab_content(active_tab):
                                     dbc.Row(
                                         [
                                             html.H5(className="fas fa-city",
-                                                    style={'color':'#1351B4', 'textAlign':'center', 'fontSize':25}),
+                                                    style={'color':'#1351B4', 'textAlign': 'center', 'margin-right':'35px', 'fontSize':25}),
                                             html.P(id='urbano_cad',
-                                                   style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-left':'20px'}),
+                                                   style={'color':'#1351B4', 'fontSize':30, 'textAlign': 'center', 'fontWeight':'bold'}),
                                         ], style={'align-items':'center'},
                                     ),
                                     html.P(id='perc_urbano',
@@ -414,7 +414,7 @@ def render_tab_content(active_tab):
                                                     style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
                                             ]),
                                         ], color="#F8F8F8", outline=True,
-                                            style={"width": "100%", 'border': 'white', 'marginBottom': '15px',
+                                            style={"width": "100%", 'border': 'white', 'marginBottom': '30px',
                                                    'box-shadow': '1px 1px 1px 1px lightgrey', 'heigth':'130px'}
                                         )
                                     ], xs=12, sm=12, md=12, lg=12, xl=12),
@@ -444,7 +444,7 @@ def render_tab_content(active_tab):
                                                 html.H6("Saldo empregos formais (12 meses)", className="card-title",
                                                         style={'textAlign': 'center'}),
                                                 html.P(id='saldo_empregos12',
-                                                       style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
+                                                       style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 40,
                                                               'fontWeight': 'bold', 'margin-bottom': 0, 'margin-top':0}),
                                                 html.P(id='var_emprego',
                                                        style={'color': '#f94144', 'textAlign': 'center',
@@ -496,12 +496,10 @@ def render_tab_content(active_tab):
                             html.Br(),
                             dbc.Row(
                                 [
-                                    dbc.Col(
-                                        [
-                                            dcc.Graph(id='vinculos_subsetor'),
-                                            dcc.Graph(id='saldo_subsetor'),
-                                        ]
-                                    ),
+                                    dbc.Col(dcc.Graph(id='vinculos_subsetor'), style={'marginBottom': '10px'}, xs=12,
+                                            sm=12, md=12, lg=12, xl=12),
+                                    dbc.Col(dcc.Graph(id='saldo_subsetor'), style={'marginBottom': '10px'}, xs=12,
+                                            sm=12, md=12, lg=12, xl=12),
                                     dbc.Col([
                                         dcc.Graph(id='remuneracao'),
                                         dbc.Button(
@@ -595,11 +593,10 @@ def render_tab_content(active_tab):
                                                         style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
                                                 ]),
                                             ], color="#F8F8F8", outline=True,
-                                                style={"width": "100%", 'border': 'white', 'marginBottom': '15px',
+                                                style={"width": "100%", 'border': 'white', 'marginBottom': '30px',
                                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'heigth':'130px'}
                                             )
                                         ], xs=12, sm=12, md=12, lg=12, xl=12),
-                                    html.Br(),
                                     dbc.Col(
                                         [
                                             dbc.Card(children=
@@ -611,7 +608,7 @@ def render_tab_content(active_tab):
                                                                   'fontSize': 50,
                                                                   'fontWeight': 'bold'}),
                                                     html.P("não trabalhou nos últimos 12 meses",
-                                                           style={'color': '#f94144', 'textAlign': 'center', 'fontSize': 20, 'fontWeight': 'bold'}),
+                                                           style={'textAlign': 'center', 'fontSize': 22, 'fontWeight': 'bold'}),
                                                 ]),
                                             ], color="#F8F8F8", outline=True,
                                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
@@ -629,10 +626,8 @@ def render_tab_content(active_tab):
                                                                   'fontSize': 50,
                                                                   'fontWeight': 'bold'}),
                                                     html.P('não trabalhou na última semana',
-                                                           style={'color': '#f94144', 'textAlign': 'center',
-                                                                  'margin-top': '5px', 'margin-bottom': 0,
-                                                                  'fontSize': 15,
-                                                                  'fontWeight': 'bold'}),
+                                                           style={'textAlign': 'center', 'margin-top': '5px', 'margin-bottom': 0,
+                                                                  'fontSize': 22, 'fontWeight': 'bold'}),
                                                 ]
                                                 ),
                                             ], color="#F8F8F8", outline=True,
@@ -672,9 +667,9 @@ def render_tab_content(active_tab):
                                     html.H6("Sobre os dados", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(
-                                        'Os dados de empregos formais dessa seção foram obtidos da Relação Anual de Informações Sociais (RAIS), que é um cadastro administrativo, '
-                                        'instituído pelo Decreto nº 76.900, de 23 de dezembro de 1975, de âmbito nacional, periodicidade anual e de declaração obrigatória '
-                                        'para todos os estabelecimentos do setor público e privado, inclusive para aqueles que não registraram vínculos empregatícios no exercício',
+                                        'Os dados de distorção idade-série, evasão escolar e de remuneração média dos docentes da educação'
+                                        'básica foram obtidos da página de indicadores educacionais do Instituto Nacional de Estudos e Pesquisas Educacionais'
+                                        'Anísio Teixeira (INEP). No portal é possível ter acesso aberta a um conjunto mais amplo de dados.',
                                         style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
@@ -771,24 +766,24 @@ def render_tab_content(active_tab):
                                     html.P(id='rem_docentes_brasil',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
                                                   'fontWeight': 'bold'}),
-                                    dbc.Button("Saiba mais", id="open_evasao", n_clicks=0, color="primary",
+                                    dbc.Button("Saiba mais", id="open_rem", n_clicks=0, color="primary",
                                                size='sm'),
                                     dbc.Modal(
                                         [
-                                            dbc.ModalHeader("Taxa de Evasão Escolar"),
+                                            dbc.ModalHeader("Remuneração média dos docentes"),
                                             dbc.ModalBody(
-                                                "A taxa de evasão é um indicador de fluxo escolar de estudantes da educação básica"
-                                                "brasileira que avalia a permanência dos alunos no sistema educacional. Indicadores de fluxo escolar "
-                                                "avaliam a transição do aluno entre dois anos consecutivos considerando os seguintes cenários "
-                                                "possíveis: promoção, repetência, migração para EJA e evasão escolar."
-                                                "No caso da taxa de evasão, quanto menor o indicador, menor o percentual de alunos que abandonaram o sistema educacional"),
+                                                "Para o cálculo da remuneração média dos docentes da educação básica foi utilizada uma metodologia de pareamento de dados do "
+                                                "Censo da Educação Básica e da Relação Anual de Informações Sociais (RAIS). Com isso, chegou-se à remuneração mensal bruta e padronizada para uma carga horária "
+                                                "de 40 horas semanais, dos docentes em exercício em sala de aula, por dependência administrativa (federal, estadual,"
+                                                "municipal e privada) e para diferentes níveis de agregação (município, UF, grandes regiões e Brasil)\n\n"
+                                                "Para maiores detalhes consulte a página do <a href=https://www.homehost.com.br/>INEP</a>"),
                                             dbc.ModalFooter(
                                                 dbc.Button(
-                                                    "Fechar", id="close_evasao", className="ml-auto", n_clicks=0
+                                                    "Fechar", id="close_rem", className="ml-auto", n_clicks=0
                                                 )
                                             ),
                                         ],
-                                        id="modal_evasao",
+                                        id="modal_rem",
                                         is_open=False,
                                     ),
                                 ]
@@ -1459,6 +1454,16 @@ def toggle_modal(n1, n2, is_open):
         return not is_open
     return is_open
 
+@app.callback(
+    Output("modal_rem", "is_open"),
+    [Input("open_rem", "n_clicks"), Input("close_rem", "n_clicks")],
+    [State("modal_rem", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
 #MODAL TABELAS RAIS
 
 @app.callback(
@@ -1605,7 +1610,7 @@ def display_cadunico(w_municipios, w_municipios1):
                             showarrow=False))
     fig.update_layout(annotations=annotations)
 
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', f'{perc_cad:.0f}% da população', f'{perc_pbf:.0f}% da população', fig
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', f'{perc_cad:.0f}% da população total', f'{perc_pbf:.0f}% da população total', fig
 
 # EVOLUÇÃO DO CADUNICO E DO PBF
 @app.callback(Output('cad_pbf', 'figure'),
@@ -1867,7 +1872,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População do Cadastro Único por nível<br>de<b>escolaridade</b>',
+                            text='População do Cadastro Único por nível<br>de<b> escolaridade</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -2291,9 +2296,9 @@ def display_idade_serie(w_municipios, w_municipios1):
     evasao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['taxa_evasao_abandono'].sum()
     evasao_brasil = f'{evasao_brasil:_.2f}% é a média nacional'.replace('.', ',').replace('_', '.')
     remuneracao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['remuneracao_docente_edbasica'].sum().round(1)
-    remuneracao_brasil = f'R$ {remuneracao_brasil:_.2f} bi'.replace('.', ',').replace('_', '.')
+    remuneracao_brasil = f'R$ {remuneracao_brasil:_.2f} é a média nacional'.replace('.', ',').replace('_', '.')
     remuneracao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['remuneracao_docente_edbasica'].sum().round(1)
-    remuneracao_municipio = f'R$ {remuneracao_municipio:_.2f} bi'.replace('.', ',').replace('_', '.')
+    remuneracao_municipio = f'R$ {remuneracao_municipio:_.2f}'.replace('.', ',').replace('_', '.')
 
     # municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['municipio']
     #
