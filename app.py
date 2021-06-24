@@ -103,6 +103,18 @@ df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1', low_memory=False
 data4 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/saldo_empregos_ocupacao_subgruposprincipais_2015_2019.csv'
 df_saldo = pd.read_csv(data4, sep=';', encoding='latin1', low_memory=False)
 
+data5 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/remuneracao_SM_setor_IBGE_RAIS_2015_2019.csv'
+df_rem_setor_ibge = pd.read_csv(data5, sep=';', encoding='latin1', low_memory=False)
+df_rem_setor_ibge = df_rem_setor_ibge.drop(['Município'], axis=1)
+
+data6 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/vinculos_ativos_subsetor_IBGE_2019_RAIS.csv'
+df_vinculos_subsetor_ibge = pd.read_csv(data6, sep=';', encoding='latin1', low_memory=False)
+df_vinculos_subsetor_ibge = df_vinculos_subsetor_ibge.drop(['Município'], axis=1)
+
+data7 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/saldo_empregos_subsetor_IBGE_2019_RAIS.csv'
+df_saldo_subsetor_ibge = pd.read_csv(data7, sep=';', encoding='latin1', low_memory=False)
+df_saldo_subsetor_ibge = df_saldo_subsetor_ibge.drop(['Município'], axis=1)
+
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
 logo_progredir = "https://github.com/vitorlsantana/progredir_dashboard/blob/main/Marca_Progredir.png?raw=true"
@@ -314,12 +326,12 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H5("Situação do domicílio", className="card-title",
+                                    html.H5("Domicílio Urbano", className="card-title",
                                             style={'textAlign': 'center'}),
                                     dbc.Row(
                                         [
                                             html.H5(className="fas fa-city",
-                                                    style={'color':'#1351B4', 'textAlign':'center', 'align-items':'center', 'fontSize':25}),
+                                                    style={'color':'#1351B4', 'textAlign':'center', 'fontSize':25}),
                                             html.P(id='urbano_cad',
                                                    style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-left':'20px'}),
                                         ], style={'align-items':'center'},
@@ -374,19 +386,10 @@ def render_tab_content(active_tab):
                 html.Br(),
                 dbc.Row(
                     [
-                        dbc.Col(dcc.Graph(id='cad_sexo'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=3, xl=3),
-                        dbc.Col(dcc.Graph(id='cad_domicilio', config={'displayModeBar': 'hover'}), style={'marginBottom':'10px'}, xs=12, sm=12, md=12,
-                                lg=3, xl=3),
                         dbc.Col(dcc.Graph(id='faixa_etaria'), xs=12, sm=12, md=12, lg=6, xl=6),
                     ]),
             ], fluid=True
             )
-        # elif active_tab == "trabalho_cad":
-        #     return dbc.Container(children=[
-        #         html.Br(),
-        #
-        #     ], fluid=True
-        #     )
         elif active_tab == "trabalho":
             return dbc.Container(children=[
                 html.Br(),
@@ -493,6 +496,12 @@ def render_tab_content(active_tab):
                             html.Br(),
                             dbc.Row(
                                 [
+                                    dbc.Col(
+                                        [
+                                            dcc.Graph(id='vinculos_subsetor'),
+                                            dcc.Graph(id='saldo_subsetor'),
+                                        ]
+                                    ),
                                     dbc.Col([
                                         dcc.Graph(id='remuneracao'),
                                         dbc.Button(
@@ -748,14 +757,48 @@ def render_tab_content(active_tab):
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
+                    dbc.Col(
+                        [
+                            dbc.Card(children=
+                            [
+                                dbc.CardBody(children=
+                                [
+                                    html.H5("Remuneração média dos docentes", className="card-title",
+                                            style={'textAlign': 'center'}),
+                                    html.P(id='rem_docentes_munic',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 45,
+                                                  'fontWeight': 'bold'}),
+                                    html.P(id='rem_docentes_brasil',
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
+                                                  'fontWeight': 'bold'}),
+                                    dbc.Button("Saiba mais", id="open_evasao", n_clicks=0, color="primary",
+                                               size='sm'),
+                                    dbc.Modal(
+                                        [
+                                            dbc.ModalHeader("Taxa de Evasão Escolar"),
+                                            dbc.ModalBody(
+                                                "A taxa de evasão é um indicador de fluxo escolar de estudantes da educação básica"
+                                                "brasileira que avalia a permanência dos alunos no sistema educacional. Indicadores de fluxo escolar "
+                                                "avaliam a transição do aluno entre dois anos consecutivos considerando os seguintes cenários "
+                                                "possíveis: promoção, repetência, migração para EJA e evasão escolar."
+                                                "No caso da taxa de evasão, quanto menor o indicador, menor o percentual de alunos que abandonaram o sistema educacional"),
+                                            dbc.ModalFooter(
+                                                dbc.Button(
+                                                    "Fechar", id="close_evasao", className="ml-auto", n_clicks=0
+                                                )
+                                            ),
+                                        ],
+                                        id="modal_evasao",
+                                        is_open=False,
+                                    ),
+                                ]
+                                ),
+                            ], color="#F8F8F8", outline=True,
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
+                        ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
                     align='center'
-                ),
-                html.Br(),
-                dbc.Row(
-                    [
-                        dbc.Col(dcc.Graph(id='remuneracao_docentes'), xs=12, sm=12, md=12, lg=4, xl=4),
-                    ]
                 ),
                 html.Br(),
                 dbc.Row([
@@ -779,14 +822,11 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("População estimada", className="card-title",
+                                    html.H6("População estimada (2020)", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='populacao',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
-                                                  'fontWeight': 'bold'}),
-                                    html.P('de pessoas',
-                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
-                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                                  'fontWeight': 'bold', 'margin-bottom': '5px'}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
@@ -799,14 +839,11 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("PIB Total", className="card-title",
+                                    html.H6("PIB Total (2018)", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='pib_total',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
                                                   'fontWeight': 'bold'}),
-                                    html.P('bi',
-                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
-                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
@@ -823,10 +860,10 @@ def render_tab_content(active_tab):
                                             style={'textAlign': 'center'}),
                                     html.P(id='ivs',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
-                                                  'fontWeight': 'bold'}),
+                                                  'fontWeight': 'bold', 'margin-bottom': '0rem'}),
                                     html.P(id='ivs_brasil',
-                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
-                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                           style={'textAlign': 'center', 'margin-top': 0,
+                                                  'margin-bottom': '5px', 'fontSize': 25, 'fontWeight': 'bold'}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
@@ -843,10 +880,10 @@ def render_tab_content(active_tab):
                                             style={'textAlign': 'center'}),
                                     html.P(id='idhm',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
-                                                  'fontWeight': 'bold'}),
+                                                  'fontWeight': 'bold', 'margin-bottom': '0rem'}),
                                     html.P(id='idhm_brasil',
-                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top': '5px',
-                                                  'margin-bottom': 0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                           style={'textAlign': 'center', 'margin-top': 0,
+                                                  'margin-bottom': '5px', 'fontSize': 25, 'fontWeight': 'bold'}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
@@ -1493,7 +1530,7 @@ def display_pop_pib_idh(w_municipios, w_municipios1):
     ivs_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['ivs'].sum()
     ivs_brasil = f'{ivs_brasil:_.3f}'.replace('.', ',').replace('_', '.')
 
-    return populacao, pib, idhm, 'Brasil - ' + idhm_brasil, ivs, 'Brasil - ' + ivs_brasil
+    return populacao + ' de pessoas', pib, idhm, 'Brasil - ' + idhm_brasil, ivs, 'Brasil - ' + ivs_brasil
 
 # NÚMEROS CADASTRO ÚNICO / BOLSA FAMÍLIA / BPC
 @app.callback(
@@ -1601,6 +1638,7 @@ def display_ev_cadunico(w_municipios, w_municipios1):
             showline=True,
             showgrid=False,
             showticklabels=True,
+            tickformat='%b %Y',
             linecolor='rgb(204, 204, 204)',
             ticks='outside',
             tickfont=dict(
@@ -1652,9 +1690,7 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     return fig
 
 # POPULAÇÃO DO CADUNICO POR SITUAÇÃO DO DOMICÍLIO E SEXO
-@app.callback(Output('cad_domicilio', 'figure'),
-              Output('cad_sexo', 'figure'),
-              Output('urbano_cad', 'children'),
+@app.callback(Output('urbano_cad', 'children'),
               Output('perc_urbano', 'children'),
               Output('masc_cad', 'children'),
               Output('fem_cad', 'children'),
@@ -1664,7 +1700,6 @@ def display_ev_cadunico(w_municipios, w_municipios1):
 def display_domicilio_sexo(w_municipios, w_municipios1):
     urbano = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_urbano'].sum()
     urbano1 = f'{urbano:_.0f}'.replace('.', ',').replace('_', '.')
-    rural = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pes_cad_rural'].sum()
     masc_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_masculino'].sum()
     masc_cad1 = f'{masc_cad:_.0f}'.replace('.', ',').replace('_', '.')
     fem_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['cad_feminino'].sum()
@@ -1675,106 +1710,7 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     perc_masc = (masc_cad/populacao*100).round(1)
     perc_fem = (fem_cad/populacao * 100).round(1)
 
-    fig1 = go.Figure()
-    fig1.add_trace(go.Bar(x=['Masculino'], y=[masc_cad], text=[perc_masc], textposition='inside', textfont={'family': "Arial", 'size':14},
-                          name='', marker=dict(color='#1351B4'),
-                          showlegend=False,
-                          texttemplate='%{text:.0f}%',
-                          hovertemplate=
-                          '<b>População</b>: %{y:.0f}',
-                          ))
-    fig1.add_trace(go.Bar(x=['Feminino'], y=[fem_cad], text=[perc_fem], textposition='inside', textfont={'family': "Arial", 'size':14},
-                          name='', marker=dict(color='#FF8C00'),
-                          texttemplate='%{text:.0f}%',
-                          hovertemplate=
-                          '<b>População</b>: %{y:.0f}',
-                          ))
-    fig1.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=1,
-            ticks='outside',
-            tickfont=dict(
-                family='Arial',
-                size=12,
-                color='rgb(82, 82, 82)',
-            ),
-        ),
-        yaxis=dict(
-            tickfont=dict(
-                family='Arial',
-                size=12,
-                color='rgb(82, 82, 82)',
-            ),
-            titlefont_size=12,
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        plot_bgcolor='white',
-        showlegend=False,
-        barmode='group',
-    )
-
-    fig1.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='População por <b>sexo</b>',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, abr/2021',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
-
-    fig1.update_layout(annotations=annotations)
-
-    fig2 = go.Figure()
-    fig2.add_trace(go.Pie(labels=['Urbano', 'Rural'], values=[urbano, rural], name='Domicílio',
-                          marker=dict(colors=['#1351B4', '#FF8C00']), hole=.5,
-                          textfont={'family': "Arial", 'size': 15},
-                          hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
-
-    fig2.update_layout(
-        xaxis_tickfont_size=14,
-        yaxis=dict(
-            titlefont_size=16,
-            tickfont_size=14,
-        ),
-        legend=dict(
-            x=-0.3,
-            y=1.0,
-            bgcolor='rgba(255, 255, 255, 0)',
-            bordercolor='rgba(255, 255, 255, 0)'
-        ),
-    )
-
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='População por <b>situação<br>do domicílio</b>',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, abr/2021',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
-
-    fig2.update_layout(annotations=annotations)
-
-    return fig1, fig2, urbano1, f'{perc_urbano:.0f}% da população', masc_cad1 + f' ({perc_masc:.0f}%)', fem_cad1 + f' ({perc_fem:.0f}%)'
+    return urbano1, f'{perc_urbano:.0f}% da pop. do CadÚnico', masc_cad1 + f' ({perc_masc:.0f}%)', fem_cad1 + f' ({perc_fem:.0f}%)'
 
 # POPULAÇÃO DO CADUNICO POR FAIXA ETÁRIA
 @app.callback(Output('faixa_etaria', 'figure'),
@@ -1931,7 +1867,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População por nível de<br><b>escolaridade</b>',
+                            text='População do Cadastro Único por nível<br>de<b>escolaridade</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -1962,7 +1898,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='População por <b>grau de<br>alfabetização</b>',
+                            text='População do Cadastro Único por <b>grau de<br>alfabetização</b>',
                             font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -2336,7 +2272,8 @@ def display_empresas(w_municipios, w_municipios1):
 
 # DISTORÇÃO IDADE-SÉRIE, EVASÃO E REMUNERAÇÃO PROFESSORES
 @app.callback(
-    Output('remuneracao_docentes', 'figure'),
+    Output('rem_docentes_brasil', 'children'),
+    Output('rem_docentes_munic', 'children'),
     Output('idade_serie', 'children'),
     Output('idade_serie_brasil', 'children'),
     Output('evasao', 'children'),
@@ -2354,67 +2291,69 @@ def display_idade_serie(w_municipios, w_municipios1):
     evasao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['taxa_evasao_abandono'].sum()
     evasao_brasil = f'{evasao_brasil:_.2f}% é a média nacional'.replace('.', ',').replace('_', '.')
     remuneracao_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['remuneracao_docente_edbasica'].sum().round(1)
+    remuneracao_brasil = f'R$ {remuneracao_brasil:_.2f} bi'.replace('.', ',').replace('_', '.')
     remuneracao_municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['remuneracao_docente_edbasica'].sum().round(1)
+    remuneracao_municipio = f'R$ {remuneracao_municipio:_.2f} bi'.replace('.', ',').replace('_', '.')
 
-    municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['municipio']
+    # municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['municipio']
+    #
+    # fig = go.Figure()
+    # fig.add_trace(go.Bar(x=['Brasil'], y=[remuneracao_brasil], name='', marker=dict(color='#5992ED'),
+    #                       text=[remuneracao_brasil], textfont={'family': "Arial", 'size': 14},
+    #                       hovertemplate=
+    #                       '<b>%{x}</b>' +
+    #                       '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+    #                       ))
+    # fig.add_trace(go.Bar(x=[municipio], y=[remuneracao_municipio], name='', marker=dict(color='#0C326F'),
+    #                       text=[remuneracao_municipio], textfont={'family': "Arial", 'size': 14},
+    #                       hovertemplate=
+    #                       '<b>%{x}</b>' +
+    #                       '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+    #                       ))
+    # fig.update_layout(
+    #     xaxis=dict(
+    #         showline=True,
+    #         showgrid=False,
+    #         showticklabels=False,
+    #         linecolor='rgb(204, 204, 204)',
+    #         linewidth=2,
+    #         ticks='outside',
+    #         tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
+    #     ),
+    #     yaxis=dict(
+    #         showgrid=False,
+    #         zeroline=False,
+    #         showline=False,
+    #         showticklabels=False,
+    #     ),
+    #     autosize=False,
+    #     showlegend=False,
+    #     margin=dict(
+    #         l=20,
+    #         r=20,
+    #         b=100,
+    #         t=100,
+    #         pad=0
+    #     ),
+    #     plot_bgcolor='white'
+    # )
+    # fig.update_traces(texttemplate='R$ %{text:.2f}', textposition='auto', textfont={'family': "Arial", 'size': 14})
+    # fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
+    #
+    # annotations = []
+    #
+    # # Title
+    # annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+    #                         xanchor='left', yanchor='bottom', text='Remuneração média dos docentes<br>da educação básica',
+    #                         font=dict(family='Arial', size=20, color='rgb(37,37,37)'), showarrow=False))
+    # # Source
+    # annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+    #                         xanchor='center', yanchor='top', text='Fonte: INEP, 2020',
+    #                         font=dict(family='Arial', size=13, color='rgb(150,150,150)'), showarrow=False))
+    #
+    # fig.update_layout(annotations=annotations)
 
-    fig = go.Figure()
-    fig.add_trace(go.Bar(x=['Brasil'], y=[remuneracao_brasil], name='', marker=dict(color='#5992ED'),
-                          text=[remuneracao_brasil], textfont={'family': "Arial", 'size': 14},
-                          hovertemplate=
-                          '<b>%{x}</b>' +
-                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
-                          ))
-    fig.add_trace(go.Bar(x=[municipio], y=[remuneracao_municipio], name='', marker=dict(color='#0C326F'),
-                          text=[remuneracao_municipio], textfont={'family': "Arial", 'size': 14},
-                          hovertemplate=
-                          '<b>%{x}</b>' +
-                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
-                          ))
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=False,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=False,
-        showlegend=False,
-        margin=dict(
-            l=20,
-            r=20,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        plot_bgcolor='white'
-    )
-    fig.update_traces(texttemplate='R$ %{text:.2f}', textposition='auto', textfont={'family': "Arial", 'size': 14})
-    fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-
-    annotations = []
-
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom', text='Remuneração média dos docentes<br>da educação básica',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'), showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top', text='Fonte: INEP, 2020',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'), showarrow=False))
-
-    fig.update_layout(annotations=annotations)
-
-    return fig, idade_serie, idade_serie_brasil, evasao_municipio, evasao_brasil
+    return remuneracao_brasil, remuneracao_municipio, idade_serie, idade_serie_brasil, evasao_municipio, evasao_brasil
 
 # VAGAS ABERTAS NO SINE
 @app.callback(Output('sine', 'children'),
@@ -2656,7 +2595,127 @@ def update_remuneracao_table(w_municipios, w_municipios1):
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
 
-# OCUPAÇÕES COM MAIORES VINCULOS
+# SUBSETORES COM MAIOR QUANTIDADE DE VÍNCULOS
+@app.callback(
+    Output('vinculos_subsetor', 'figure'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
+def update_saldo_vinculos(w_municipios, w_municipios1):
+    uf = df_vinculos_subsetor_ibge.groupby(by=["uf"]).sum().reset_index()
+    uf['municipio'] = ' Todos os Municípios'
+    regiao = df_vinculos_subsetor_ibge.groupby(by=['regiao']).mean().reset_index()
+    regiao['municipio'] = ' Todos os Municípios'
+    regiao = regiao.rename(columns={"regiao": "uf"})
+    pais = df_vinculos_subsetor_ibge.groupby(by=["pais"]).mean().reset_index()
+    pais['municipio'] = ' Todos os Municípios'
+    pais = pais.rename(columns={"pais": "uf"})
+    df_saldo1 = df_vinculos_subsetor_ibge.append([uf, regiao, pais], ignore_index=True)
+
+    df2 = df_saldo1.melt(id_vars=["uf", "municipio", "ibge6", "regiao", "pais"],
+                          var_name="subsetor",
+                          value_name="vinculos")
+    df3 = df2[(df2['municipio'] == w_municipios1) & (df2['uf'] == w_municipios)]
+
+    df3 = df3.nlargest(6, 'vinculos')
+    df3 = df3.iloc[1: , :]
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Pie(labels=df3['subsetor'], values=df3['vinculos'],
+                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 12}))
+
+    fig.update_layout(
+        xaxis_tickfont_size=14,
+        yaxis=dict(
+            titlefont_size=16,
+            tickfont_size=14,
+        ),
+        showlegend=False,
+        margin=dict(
+            l=15,
+            r=15,
+            b=100,
+            t=100,
+            pad=1
+        ),
+    )
+
+    annotations = []
+
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Setores da economia com maior quantidade<br> de vínculos de empregos formais',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+    return fig
+
+    # fig = go.Figure()
+    #
+    # fig.add_trace(go.Bar(
+    #     y=df3['vinculos'], x=df3['subsetor'], textposition='auto', name='',
+    #     marker=dict(color='#f8961e'),
+    #     hovertemplate=
+    #     '<b>Saldo de empregos</b>: %{y:.2s}' +
+    #     '<br><b>Subsetor</b>: %{x}<br>',
+    # ))
+    #
+    # fig.update_layout(
+    #     xaxis=dict(
+    #         showline=True,
+    #         showgrid=False,
+    #         showticklabels=True,
+    #         linewidth=2,
+    #         ticks='outside',
+    #         tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),
+    #     ),
+    #     yaxis=dict(
+    #         showgrid=False,
+    #         zeroline=False,
+    #         showline=False,
+    #         showticklabels=False,
+    #     ),
+    #     autosize=True,
+    #     margin=dict(
+    #         l=15,
+    #         r=15,
+    #         b=100,
+    #         t=100,
+    #         pad=1
+    #     ),
+    #     showlegend=False,
+    #     plot_bgcolor='white',
+    # )
+    #
+    # annotations = []
+    #
+    # # Title
+    # annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+    #                         xanchor='left', yanchor='bottom',
+    #                         text='Setores da economia com maior quantidade<br> de vínculos de empregos formais',
+    #                         font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+    #                         showarrow=False))
+    # # Source
+    # annotations.append(dict(xref='paper', yref='paper', x=0.4, y=-0.7,
+    #                         xanchor='center', yanchor='top',
+    #                         text='Fonte: Ministério da Economia/RAIS, 2020',
+    #                         font=dict(family='Arial', size=12, color='rgb(150,150,150)'),
+    #                         showarrow=False))
+    #
+    # fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
+    # fig.update_layout(annotations=annotations)
+    return fig
+
+# OCUPAÇÕES COM MAIOR QUANTIDADE DE VINCULOS
 @app.callback(
     Output('top_vinculos', 'figure'),
     Input('w_municipios', 'value'),
@@ -2755,7 +2814,109 @@ def update_top_vinculos_table(w_municipios, w_municipios1):
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
 
-# OCUPAÇÕES COM MAIORES VINCULOS
+
+# SUBSETORES COM MAIOR SALDO DE EMPREGOS
+@app.callback(
+    Output('saldo_subsetor', 'figure'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
+def update_saldo_vinculos(w_municipios, w_municipios1):
+    uf = df_saldo_subsetor_ibge.groupby(by=["uf"]).sum().reset_index()
+    uf['municipio'] = ' Todos os Municípios'
+    regiao = df_saldo_subsetor_ibge.groupby(by=['regiao']).mean().reset_index()
+    regiao['municipio'] = ' Todos os Municípios'
+    regiao = regiao.rename(columns={"regiao": "uf"})
+    pais = df_saldo_subsetor_ibge.groupby(by=["pais"]).mean().reset_index()
+    pais['municipio'] = ' Todos os Municípios'
+    pais = pais.rename(columns={"pais": "uf"})
+    df_saldo1 = df_saldo_subsetor_ibge.append([uf, regiao, pais], ignore_index=True)
+
+    df2 = df_saldo1.melt(id_vars=["uf", "municipio", "ibge6", "regiao", "pais"],
+                          var_name="subsetor",
+                          value_name="saldo")
+    df2['saldo'] = df2['saldo'].astype('int')
+    df3 = df2[(df2['municipio'] == w_municipios1) & (df2['uf'] == w_municipios)]
+
+    df3 = df3.nlargest(6, 'saldo')
+    df3 = df3.iloc[1: , :]
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Pie(labels=df3['subsetor'], values=df3['saldo'],
+                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 12}))
+
+    fig.update_layout(
+        xaxis_tickfont_size=14,
+        yaxis=dict(
+            titlefont_size=16,
+            tickfont_size=14,
+        ),
+        showlegend=False,
+        margin=dict(
+            l=15,
+            r=15,
+            b=100,
+            t=100,
+            pad=1
+        ),
+    )
+
+    # fig.add_trace(go.Bar(
+    #     y=df3['subsetor'], x=df3['saldo'], textposition='auto', name='',
+    #     marker=dict(color='#f8961e'), orientation='h',
+    #     hovertemplate=
+    #     '<b>Saldo de empregos</b>: %{y:.2s}' +
+    #     '<br><b>Subsetor</b>: %{x}<br>',
+    # ))
+    #
+    # fig.update_layout(
+    #     xaxis=dict(
+    #         showline=True,
+    #         showgrid=False,
+    #         showticklabels=True,
+    #         linewidth=2,
+    #         ticks='outside',
+    #         tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),
+    #     ),
+    #     yaxis=dict(
+    #         showgrid=False,
+    #         zeroline=False,
+    #         showline=False,
+    #         showticklabels=True,
+    #     ),
+    #     autosize=True,
+    #     margin=dict(
+    #         l=15,
+    #         r=15,
+    #         b=100,
+    #         t=100,
+    #         pad=1
+    #     ),
+    #     showlegend=False,
+    #     plot_bgcolor='white',
+    # )
+
+    annotations = []
+
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Setores da economia com maior<br>saldo de empregos formais (2019)',
+                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.4, y=-0.7,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            font=dict(family='Arial', size=12, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
+    fig.update_layout(annotations=annotations)
+    return fig
+
+# OCUPAÇÕES COM MAIORES SALDO DE EMPREGOS
 @app.callback(
     Output('saldo_ocupacao', 'figure'),
     Input('w_municipios', 'value'),
@@ -2869,6 +3030,7 @@ def update_saldo_vinculos_table(w_municipios, w_municipios1):
                                 style_cell={'backgroundColor': 'white', 'color': 'black', 'fontFamily':'Arial', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
+
 
 # # MAPA COM UNIDADES DE SAÚDE
 # # fig10 = px.scatter_mapbox(df5, lat="nu_latitude", lon="nu_longitude", text='no_fantasia',
