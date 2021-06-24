@@ -115,6 +115,25 @@ data7 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/mai
 df_saldo_subsetor_ibge = pd.read_csv(data7, sep=';', encoding='latin1', low_memory=False)
 df_saldo_subsetor_ibge = df_saldo_subsetor_ibge.drop(['Município'], axis=1)
 
+table_header = [
+    html.Thead(html.Tr([html.Th("Indicador"), html.Th("Descrição"), html.Th("Fonte")]))]
+
+row1 = html.Tr([html.Td("População"), html.Td("População estimada em 2020, em número de pessoas"), html.Td("IBGE")])
+row2 = html.Tr([html.Td("PIB Total"), html.Td("Produto Interno Bruto, calculado em 2018"), html.Td("IBGE")])
+row3 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row4 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row5 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row6 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row7 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row8 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row9 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row10 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row11 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+
+table_body = [html.Tbody([row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11])]
+
+table = dbc.Table(table_header + table_body, bordered=True)
+
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
 logo_progredir = "https://github.com/vitorlsantana/progredir_dashboard/blob/main/Marca_Progredir.png?raw=true"
@@ -199,14 +218,13 @@ app.layout = dbc.Container([
                 [
                     dbc.ModalHeader("Dados utilizados no painel"),
                     dbc.ModalBody(
-                        "População - população estimada - Fonte: IBGE, 2019"
-                        "IDHM - Índice de Desenvolvimento Humano - Fonte:"
-                        "Cadastro Único - pessoas inscritas no Cadastro Único - Fonte: Ministério da Cidadania, abril/2021"
-                        ""),
+                        table
+                    ),
                     dbc.ModalFooter(
                         dbc.Button("Fechar", id="close1", className="ml-auto")),
                 ],
                 id="modal1",
+                size='xl',
                 centered=True,
                 style={"width":"100%", 'whiteSpace': 'pre-wrap', 'fontFamily':'Arial'},
             ),
@@ -379,14 +397,14 @@ def render_tab_content(active_tab):
                 html.Br(),
                 dbc.Row(
                     [
-                    dbc.Col(dcc.Graph(id='cad_pbf'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=12, xl=8),
-                    dbc.Col(dcc.Graph(id='bpc'), xs=12, sm = 12, md = 12, lg = 12, xl = 4),
+                    dbc.Col(dcc.Graph(id='cad_pbf'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
+                    dbc.Col(dcc.Graph(id='faixa_etaria'), xs=12, sm=12, md=12, lg=6, xl=6),
                         ],
                 ),
                 html.Br(),
                 dbc.Row(
                     [
-                        dbc.Col(dcc.Graph(id='faixa_etaria'), xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(dcc.Graph(id='bpc'), xs=12, sm = 12, md = 12, lg = 12, xl = 4),
                     ]),
             ], fluid=True
             )
@@ -771,12 +789,12 @@ def render_tab_content(active_tab):
                                     dbc.Modal(
                                         [
                                             dbc.ModalHeader("Remuneração média dos docentes"),
-                                            dbc.ModalBody(
+                                            dbc.ModalBody([
                                                 "Para o cálculo da remuneração média dos docentes da educação básica foi utilizada uma metodologia de pareamento de dados do "
                                                 "Censo da Educação Básica e da Relação Anual de Informações Sociais (RAIS). Com isso, chegou-se à remuneração mensal bruta e padronizada para uma carga horária "
                                                 "de 40 horas semanais, dos docentes em exercício em sala de aula, por dependência administrativa (federal, estadual,"
                                                 "municipal e privada) e para diferentes níveis de agregação (município, UF, grandes regiões e Brasil)\n\n"
-                                                "Para maiores detalhes consulte a página do <a href=https://www.homehost.com.br/>INEP</a>"),
+                                                "Para maiores detalhes consulte a página do, html.A('link', href='/link-location')"]),
                                             dbc.ModalFooter(
                                                 dbc.Button(
                                                     "Fechar", id="close_rem", className="ml-auto", n_clicks=0
@@ -820,7 +838,7 @@ def render_tab_content(active_tab):
                                     html.H6("População estimada (2020)", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='populacao',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 33,
                                                   'fontWeight': 'bold', 'margin-bottom': '5px'}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
@@ -2268,8 +2286,9 @@ def display_empresas(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
                             xanchor='left', yanchor='bottom',
                             text=f'{empresas1} empresas',
-                            font=dict(family='Arial', size=20, color='#f94144'),
-                            showarrow=False))
+                            font=dict(family='Arial', size=22, color='white'),
+                            showarrow=False, ax=20, ay=-30, bordercolor="#1351B4", borderwidth=2, borderpad=6,
+                            bgcolor="#1351B4", align="center",))
 
     fig.update_layout(annotations=annotations)
 
