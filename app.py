@@ -483,7 +483,7 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'align-items':'center',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'fontFamily':'Open Sans'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
@@ -492,8 +492,8 @@ def render_tab_content(active_tab):
                 html.Br(),
                 dbc.Row(
                     [
-                    dbc.Col(dcc.Graph(id='cad_pbf'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
-                    dbc.Col(dcc.Graph(id='faixa_etaria'), xs=12, sm=12, md=12, lg=6, xl=6),
+                    dbc.Col(dcc.Graph(id='cad_pbf'), style={'marginBottom':'10px', 'fontFamily':'Open Sans'}, xs=12, sm=12, md=12, lg=6, xl=6),
+                    dbc.Col(dcc.Graph(id='faixa_etaria', style={'fontFamily':'Open Sans'}), xs=12, sm=12, md=12, lg=6, xl=6),
                         ],
                 ),
                 html.Br(),
@@ -528,7 +528,7 @@ def render_tab_content(active_tab):
                                             ]),
                                         ], color="#F8F8F8", outline=True,
                                             style={"width": "100%", 'border': 'white', 'marginBottom': '30px',
-                                                   'box-shadow': '1px 1px 1px 1px lightgrey', 'heigth':'130px'}
+                                                   'box-shadow': '1px 1px 1px 1px lightgrey', 'heigth':'130px', 'fontFamily':'Open Sans'}
                                         )
                                     ], xs=12, sm=12, md=12, lg=12, xl=12),
                                 dbc.Col(
@@ -544,7 +544,7 @@ def render_tab_content(active_tab):
                                                               'fontWeight': 'bold'}),
                                             ]),
                                         ], color="#F8F8F8", outline=True,
-                                            style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                            style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                                    'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
                                         )
                                     ], xs=12, sm=12, md=12, lg=6, xl=6),
@@ -566,7 +566,7 @@ def render_tab_content(active_tab):
                                             ]
                                             ),
                                         ], color="#F8F8F8", outline=True,
-                                            style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                            style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                                    'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
                                     ], xs=12, sm=12, md=12, lg=6, xl=6),
                             ],
@@ -575,7 +575,7 @@ def render_tab_content(active_tab):
                             html.Br(),
                             dbc.Row(
                                 [
-                                    dbc.Col(dcc.Graph(id='evolucao_empregos'), style={'marginBottom': '10px'}, xs=12,
+                                    dbc.Col(dcc.Graph(id='evolucao_empregos'), style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12,
                                             sm=12, md=12, lg=12, xl=12),
                                     dbc.Col([
                                         dcc.Graph(id='top_vinculos'),
@@ -603,15 +603,15 @@ def render_tab_content(active_tab):
                                             size="lg",
                                             is_open=False,
                                         ),
-                                    ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=12, xl=12),
+                                    ], style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12, sm=12, md=12, lg=12, xl=12),
                                 ], align='center', justify="center",
                             ),
                             html.Br(),
                             dbc.Row(
                                 [
-                                    dbc.Col(dcc.Graph(id='vinculos_subsetor'), style={'marginBottom': '10px'}, xs=12,
+                                    dbc.Col(dcc.Graph(id='vinculos_subsetor'), style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12,
                                             sm=12, md=12, lg=12, xl=12),
-                                    dbc.Col(dcc.Graph(id='saldo_subsetor'), style={'marginBottom': '10px'}, xs=12,
+                                    dbc.Col(dcc.Graph(id='saldo_subsetor'), style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12,
                                             sm=12, md=12, lg=12, xl=12),
                                     dbc.Col([
                                         dcc.Graph(id='remuneracao'),
@@ -639,7 +639,7 @@ def render_tab_content(active_tab):
                                             size="lg",
                                             is_open=False,
                                         ),
-                                    ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=12, xl=12),
+                                    ], style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12, sm=12, md=12, lg=12, xl=12),
                                     dbc.Col([
                                         html.P(
                                             [
@@ -682,7 +682,7 @@ def render_tab_content(active_tab):
                                             is_open=False,
                                         ),
 
-                                    ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=12, xl=12)
+                                    ], style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12, sm=12, md=12, lg=12, xl=12)
                                 ], align='center', justify="center"),
                             html.Br(),
                                 ], xs=12, sm=12, md=12, lg=6, xl=6),
@@ -706,7 +706,7 @@ def render_tab_content(active_tab):
                                                         style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
                                                 ]),
                                             ], color="#F8F8F8", outline=True,
-                                                style={"width": "100%", 'border': 'white', 'marginBottom': '30px',
+                                                style={"width": "100%", 'border': 'white', 'marginBottom': '30px', 'fontFamily':'Open Sans',
                                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'heigth':'130px'}
                                             )
                                         ], xs=12, sm=12, md=12, lg=12, xl=12),
@@ -724,7 +724,7 @@ def render_tab_content(active_tab):
                                                            style={'textAlign': 'center', 'fontSize': 22, 'fontWeight': 'bold'}),
                                                 ]),
                                             ], color="#F8F8F8", outline=True,
-                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px','fontFamily':'Open Sans',
                                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
                                             )
                                         ], xs=12, sm=12, md=12, lg=6, xl=6),
@@ -744,7 +744,7 @@ def render_tab_content(active_tab):
                                                 ]
                                                 ),
                                             ], color="#F8F8F8", outline=True,
-                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
                                         ], xs=12, sm=12, md=12, lg=6, xl=6),
                                 ],
@@ -753,9 +753,9 @@ def render_tab_content(active_tab):
                                 html.Br(),
                                 dbc.Row(
                                     [
-                                        dbc.Col(dcc.Graph(id='funcao_principal'), style={'marginBottom': '10px'}, xs=12,
+                                        dbc.Col(dcc.Graph(id='funcao_principal'), style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12,
                                                 sm=12, md=12, lg=12, xl=12),
-                                        dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=12, xl=12)
+                                        dbc.Col(dcc.Graph(id='mei', style={'fontFamily':'Open Sans'}), xs=12, sm=12, md=12, lg=12, xl=12)
                                     ],
                                     align='center', justify="center",
                                 ),
@@ -786,7 +786,7 @@ def render_tab_content(active_tab):
                                         style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -823,7 +823,7 @@ def render_tab_content(active_tab):
                                     ),
                                 ]),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -862,7 +862,7 @@ def render_tab_content(active_tab):
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -902,7 +902,7 @@ def render_tab_content(active_tab):
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
@@ -910,9 +910,9 @@ def render_tab_content(active_tab):
                 ),
                 html.Br(),
                 dbc.Row([
-                    dbc.Col(dcc.Graph(id='escolaridade', config={'responsive': True}), style={'marginBottom': '10px'},
+                    dbc.Col(dcc.Graph(id='escolaridade', config={'responsive': True}), style={'marginBottom': '10px', 'fontFamily':'Open Sans'},
                             xs=12, sm=12, md=12, lg=6, xl=7),
-                    dbc.Col(dcc.Graph(id='analfabetismo', config={'responsive': True}), xs=12, sm=12, md=12, lg=6,
+                    dbc.Col(dcc.Graph(id='analfabetismo', config={'responsive': True}), style={'fontFamily':'Open Sans'}, xs=12, sm=12, md=12, lg=6,
                             xl=5),
                 ]
                 ),
@@ -961,7 +961,7 @@ def render_tab_content(active_tab):
                                     ),
                                 ]),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -1008,7 +1008,7 @@ def render_tab_content(active_tab):
                                     ),
                                 ]),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -1051,7 +1051,7 @@ def render_tab_content(active_tab):
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
