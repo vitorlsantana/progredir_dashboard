@@ -8,8 +8,10 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import dash_table
 
-app = dash.Dash(title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP,
-                                                                                                          'https://use.fontawesome.com/releases/v5.12.1/css/all.css'],
+app = dash.Dash(title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP, external_stylesheets,
+                                                                                                          'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
+                                                                                                          '//fonts.googleapis.com/css?family=Roboto|Lato',
+                                                                                                          'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'],
                 meta_tags=[{'name': 'viewport', 'content': 'width=device-width, initial-scale=1.0'}],
                 suppress_callback_exceptions=True, )
 server = app.server
@@ -111,34 +113,111 @@ data7 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/mai
 df_saldo_subsetor_ibge = pd.read_csv(data7, sep=';', encoding='latin1', low_memory=False)
 df_saldo_subsetor_ibge = df_saldo_subsetor_ibge.drop(['Município'], axis=1)
 
-table_header = [
-    html.Thead(html.Tr([html.Th("Indicador"), html.Th("Descrição"), html.Th("Fonte")]))]
+table_header = [html.Thead(html.Tr([html.Th("Indicador"), html.Th("Descrição"), html.Th("Ano de referência"), html.Th("Fonte")]))]
 
-row1 = html.Tr([html.Td("População"), html.Td("População estimada em 2020, em número de pessoas"), html.Td("IBGE")])
-row2 = html.Tr([html.Td("PIB"), html.Td("Produto Interno Bruto total e por setor de atividade econômica, calculado em 2018"), html.Td("IBGE")])
-row3 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row4 = html.Tr([html.Td("Índice de Desenvolvimento Humano"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row5 = html.Tr([html.Td("Número de empresas, total e por setor de atividade econômica"), html.Td("Beeblebrox"), html.Td("IBGE")])
-row6 = html.Tr([html.Td("Número de pessoas inscritas no Cadastro Único"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
-row7 = html.Tr([html.Td("Número de pessoas inscritas no Cadastro Único e beneficiárias do Bolsa Família"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
-row8 = html.Tr([html.Td("População do Cadastro Único por faixa etária"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
-row9 = html.Tr([html.Td("Beneficiários do Benefício de Prestação Continuada"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row10 = html.Tr([html.Td("Pessoas com carteira assinada"), html.Td("Estoque de empregos formais"), html.Td("RAIS, 2020")])
-row11 = html.Tr([html.Td("Quantidade de vínculos por tipo de ocupação (CBO, 2002)"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
-row12 = html.Tr([html.Td("Quantidade de vínculos por subsetor econômico (IBGE)"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
-row13 = html.Tr([html.Td("Saldo de empregos formais, por subsetor econômico (IBGE)"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
-row14 = html.Tr([html.Td("Saldo de empregos formais, por tipo de ocupação"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
-row15 = html.Tr([html.Td("Remuneração média total dos empregos formais"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
-row16 = html.Tr([html.Td("Pessoas inscritas no Cadastro Único por situação de trabalho"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
-row17 = html.Tr([html.Td("Pessoas inscritas no Cadastro Único por função principal"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
-row18 = html.Tr([html.Td("Taxa de distorção idade-série"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
-row19 = html.Tr([html.Td("Taxa de evasão escolar"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
-row20 = html.Tr([html.Td("Remuneração média dos docentes da educação básica"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
-row21 = html.Tr([html.Td("População do Cadastro Único, por nível de escolaridade"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
-row22 = html.Tr([html.Td("População do Cadastro Único, por grau de alfabetização"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
+row1 = html.Tr([html.Td("População"),
+                html.Td("População estimada, em número de pessoas"),
+                html.Td("2020"),
+                html.Td(html.A("IBGE", href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html?=&t=o-que-e", target="_blank"))])
+row2 = html.Tr([html.Td("PIB"),
+                html.Td("Produto Interno Bruto total e por setor de atividade econômica"),
+                html.Td("2018"),
+                html.Td(html.A("IBGE", href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html", target="_blank"))])
+row3 = html.Tr([html.Td("Índice de Vulnerabilidade Social"),
+                html.Td("o Índice é resultado da média aritmética de 3 subíndices, integrados pelas dimensões de infraestrutura urbana capital humano e renda e trabalho, "
+                        "que por sua vez são compostos por 16 indicadores."),
+                html.Td("2017"),
+                html.Td(html.A("IPEA", href="http://ivs.ipea.gov.br/index.php/pt/", target="_blank"))])
+row4 = html.Tr([html.Td("Índice de Desenvolvimento Humano"),
+                html.Td("O Índice de Desenvolvimento Humano Municipal (IDHM) é uma medida composta de indicadores de três dimensões do desenvolvimento humano: "
+                        "longevidade, educação e renda. O índice varia de 0 a 1"),
+                html.Td("2010"),
+                html.Td(html.A("IPEA Data", href="http://www.ipeadata.gov.br/Default.aspxe", target="_blank"))])
+row5 = html.Tr([html.Td("Número de empresas, total e por setor de atividade econômica"),
+                html.Td("Empresas e outras organizações e suas respectivas unidades locais formalmente constituídas, registradas no CNPJ - Cadastro Nacional de "
+                        "Pessoa Jurídica e ativas no Cadastro Central de Empresas no ano de referência. A atualização ocorre anualmente, a partir das pesquisas "
+                        "econômicas anuais do IBGE, nas áreas de Indústria, Comércio, Construção e Serviços, e de registros administrativos, como a Relação Anual de Informações Sociais - RAIS."),
+                html.Td("2019"),
+                html.Td(html.A("IBGE/Cadastro Central de Empresas(CEMPRE)", href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html", target="_blank"))])
+row6 = html.Tr([html.Td("Cadastro Único"),
+                html.Td("Total de pessoas inscritas no Cadastro Único"),
+                html.Td("2021 (abril)"),
+                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+row7 = html.Tr([html.Td("Bolsa Família"),
+                html.Td("Número de pessoas inscritas no Cadastro Único e beneficiárias do Bolsa Família"),
+                html.Td("2021 (abril)"),
+                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+row8 = html.Tr([html.Td("Domicílio Urbano"),
+                html.Td("Número de pessoas inscritas no Cadastro Único e situação de domicílio urbano"),
+                html.Td("2021 (abril)"),
+                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+row9 = html.Tr([html.Td("Distribuição por sexo"),
+                html.Td("Número de pessoas inscritas no Cadastro Único, por sexo"),
+                html.Td("2021 (abril)"),
+                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+row10 = html.Tr([html.Td("População por faixa etária"),
+                html.Td("Número de pessoas inscritas no Cadastro Único, por faixa etária"),
+                html.Td("2021 (abril)"),
+                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+row11 = html.Tr([html.Td("Benefício de Prestação Continuada"),
+                html.Td("Beneficiários do Benefício de Prestação Continuada (total, pessoas com deficiência e idosos)"),
+                html.Td("2021 (abril)"),
+                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+row12 = html.Tr([html.Td("Pessoas com carteira assinada"),
+                 html.Td("Estoque de empregos formais"),
+                 html.Td("2019"),
+                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
+row13 = html.Tr([html.Td("Vínculos de emprego formal por tipo de ocupação"),
+                 html.Td("Quantidade de vínculos de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002)"),
+                 html.Td("2019"),
+                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
+row14 = html.Tr([html.Td("Vínculos de emprego formal por subsetor econômico (IBGE)"),
+                 html.Td("Quantidade de vínculos de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE"),
+                 html.Td("2019"),
+                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
+row15 = html.Tr([html.Td("Saldo de emprego formal, por tipo de ocupação"),
+                 html.Td("Saldo de movimentações de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002)"),
+                 html.Td("2019"),
+                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
+row16 = html.Tr([html.Td("Saldo de emprego formal, por por subsetor econômico (IBGE)"),
+                 html.Td("Saldo de movimentações de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE"),
+                 html.Td("2019"),
+                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
+row17 = html.Tr([html.Td("Remuneração média total"),
+                 html.Td("Remuneração média mensal dos empregos formais, em salários mínimos, ajustado pelo valor do salário estabelecido em 2021 (R$ 1.100,00)"),
+                 html.Td("2019"),
+                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
+row18 = html.Tr([html.Td("População por situação de trabalho"),
+                html.Td("Pessoas inscritas no Cadastro Único por situação de trabalho nos últimos 12 meses e na última semana relativa a data do cadastro"),
+                html.Td("2021 (abril)"),
+                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+row19 = html.Tr([html.Td("População por função principal"),
+                 html.Td("Pessoas inscritas no Cadastro Único por função principal exercida no mundo do trabalho"),
+                 html.Td("2021 (abril)"),
+                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+row20 = html.Tr([html.Td("Taxa de distorção idade-série"),
+                 html.Td("Indicador educacional que permite acompanhar o percentual de alunos, em cada série, que têm idade acima da esperada para o ano em que estão matriculados"),
+                 html.Td("2020"),
+                 html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/taxas-de-distorcao-idade-serie", target="_blank"))])
+row21 = html.Tr([html.Td("Taxa de evasão escolar"),
+                 html.Td("Indicador que avalia a permanência/abandono dos alunos no sistema educacional"),
+                 html.Td("2020"),
+                 html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/taxas-de-rendimento", target="_blank"))])
+row22 = html.Tr([html.Td("Remuneração média dos docentes da educação básica"),
+                 html.Td("Remuneração mensal bruta e padronizada para uma carga horária de 40 horas semanais, dos docentes em exercício em sala de aula"),
+                 html.Td("2017"),
+                 html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/remuneracao-media-dos-docentes", target="_blank"))])
+row23 = html.Tr([html.Td("População por nível de escolaridade"),
+                 html.Td("Pessoas inscritas no Cadastro Único por grau de instrução"),
+                 html.Td("2021 (abril)"),
+                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+row24 = html.Tr([html.Td("População do Cadastro Único, por grau de alfabetização"),
+                 html.Td("Pessoas inscritas no Cadastro Único por grau de alfabetização (sabe ou não ler e escrever"),
+                 html.Td("2021 (abril)"),
+                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
 
 table_body = [html.Tbody([row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13,
-                          row14, row15, row16, row17, row18, row19, row20, row21, row22])]
+                          row14, row15, row16, row17, row18, row19, row20, row21, row22, row23, row24])]
 
 table = dbc.Table(table_header + table_body, bordered=True)
 
@@ -152,7 +231,7 @@ app.layout = dbc.Container([
     dbc.Row(
         [
             dbc.Col([], className='col-3'),
-            dbc.Col(html.H1('Painel da Inclusão Produtiva Urbana', style={'color':'white', 'fontFamily':'Arial', 'textAlign':'center', 'fontSize':45}),
+            dbc.Col(html.H1('Painel da Inclusão Produtiva Urbana', style={'color':'white', 'fontFamily':'Open Sans', 'textAlign':'center', 'fontSize':45}),
                     className='col-6', style={'align':'center', 'padding':'30px'}, xs=12, sm=12, md=12, lg=12, xl=12),
             dbc.Col([], className='col-3'),
         ], className='row', align='center', style={'backgroundColor':'#071D41',
@@ -164,9 +243,9 @@ app.layout = dbc.Container([
     dbc.Row([
         # SIDEBAR
         dbc.Col([
-            html.Label('Consulta', style={'fontFamily':'Arial', 'fontSize':20, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
+            html.Label('Consulta', style={'fontFamily':'Open Sans', 'fontSize':20, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
                    className='mt-3'),
-            html.Label('Selecione a Região', style={'fontFamily':'Arial', 'fontSize':15, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
+            html.Label('Selecione a Região', style={'fontFamily':'Open Sans', 'fontSize':15, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
                    className='mt-1'),
             dcc.Dropdown(
                 id='w_municipios',
@@ -175,7 +254,7 @@ app.layout = dbc.Container([
                 placeholder= "Selecione a região",
                 style={'display': True, "width": "100%", 'height': '40px', 'outline':True}
             ),
-            html.Label('Selecione o Município', style={'color': 'white', 'fontSize':15, 'fontFamily':'Arial', 'fontWeight': 'bold', 'margin-top':'15px'}),
+            html.Label('Selecione o Município', style={'color': 'white', 'fontSize':15, 'fontFamily':'Open Sans', 'fontWeight': 'bold', 'margin-top':'15px'}),
             dcc.Dropdown(
                 id='w_municipios1',
                 value=' Todos os Municípios',
@@ -196,13 +275,14 @@ app.layout = dbc.Container([
                 className="mr-5",
                 outline=True,
                 color="light",
-                style={"width": "100%", 'fontWeight': 'bold', 'fontSize':15, 'fontFamily':'Arial'}
+                style={"width": "100%", 'fontWeight': 'bold', 'fontSize':15, 'fontFamily':'Open Sans'}
             ),
             html.Br(),
             dbc.Modal(
                 [
                     dbc.ModalHeader("Sobre o painel"),
                     dbc.ModalBody(
+                        [
                         "O Painel da Inclusão Produtiva Urbana tem por objetivo reunir informações que possibilitem uma "
                         "compreensão ampla do cenário social e econômico nos níveis estadual e municipal.\n\nCom isso, espera-se auxiliar gestores públicos "
                         "em nível local e parceiros do setor empresarial e da sociedade civil a "
@@ -210,18 +290,23 @@ app.layout = dbc.Container([
                         "Para isso, foram agregados em uma única plataforma dados sobre o contexto social - população, serviços e ações disponíveis, "
                         "a atividade econômica, empreendedorismo, microcrédito, dentre outras, obtidos a partir de um conjunto de bases públicas "
                         "governamentais.\n\nA ferramenta foi desenvolvida pelo Departamento de Inclusão Produtiva Urbana da Secretaria Nacional de "
-                        "Inclusão Social e Produtiva, vinculada à Secretaria Especial do Desenvolvimento Social do Ministério da Cidadania."),
+                        "Inclusão Social e Produtiva, vinculada à Secretaria Especial do Desenvolvimento Social do Ministério da Cidadania. \n\n",
+                        html.A(
+                            "Conheça o portal do Progredir",
+                            href="cidadania.gov.br/progredir",
+                            target="_blank")
+                    ]),
                     dbc.ModalFooter(
                         dbc.Button("Fechar", id="close-lg", className="ml-auto")
                     ),
                 ],
                 id="modal",
                 centered=True,
-                style={"width":"100%", 'whiteSpace': 'pre-wrap', 'fontFamily':'Arial'},
+                style={"width":"100%", 'whiteSpace': 'pre-wrap', 'fontFamily':'Open Sans'},
             ),
             html.Br(),
             dbc.Button("Saiba mais sobre os dados", id='open1', className="mr-5", outline=True, color="light",
-                       style={"width": "100%", 'fontSize':15, 'fontFamily':'Arial', 'fontWeight': 'bold'}),
+                       style={"width": "100%", 'fontSize':15, 'fontFamily':'Open Sans', 'fontWeight': 'bold'}),
             dbc.Modal(
                 [
                     dbc.ModalHeader("Dados utilizados no painel"),
@@ -260,7 +345,8 @@ app.layout = dbc.Container([
                         labelClassName='flex-sm-fill text-sm-center rounded text-white'),
             ],
                 id="tabs",
-                active_tab="social"
+                active_tab="social",
+                style={'fontFamily':'Open Sans'}
             ),
             html.Div(id="tab-content", className="p-10"),
         ], xs=12, sm=12, md=10, lg=10, xl=10, className='mt-100'),
@@ -323,9 +409,10 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                                    html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                    html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center', 'fontFamily':'Open Sans'}),
+                                    html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'fontFamily':'Open Sans'}),
+                                    html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold',
+                                                                 'fontFamily':'Open Sans'}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px',
                                                                      'box-shadow': '1px 1px 1px 1px lightgrey'}
@@ -337,8 +424,8 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center', 'fontFamily':'Open Sans'}),
+                                    html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'fontFamily':'Open Sans'}),
                                     html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
@@ -412,8 +499,8 @@ def render_tab_content(active_tab):
                 html.Br(),
                 dbc.Row(
                     [
-                        dbc.Col(dcc.Graph(id='bpc'), xs=12, sm = 12, md = 12, lg = 12, xl = 4),
-                    ]),
+                        dbc.Col(id='outros_dados', style={'fontFamily': 'Open Sans'}, xs=12, sm=12, md=12, lg=6, xl=6),
+                    ], align='center'),
             ], fluid=True
             )
         elif active_tab == "trabalho":
@@ -848,6 +935,30 @@ def render_tab_content(active_tab):
                                     html.P(id='populacao',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 33,
                                                   'fontWeight': 'bold', 'margin-bottom': '5px'}),
+                                    dbc.Button("Saiba mais", id="open_pop", n_clicks=0, color="primary", size='sm'),
+                                    dbc.Modal(
+                                        [
+                                            dbc.ModalHeader("Sobre a estimativa da população"),
+                                            dbc.ModalBody([
+                                                "As estimativas de população são publicadas anualmente pelo IBGE. O método utiliza como insumos básicos as populações "
+                                                "obtidas das Projeções da População para o Brasil e as Unidades da Federação mais recentes, bem como o crescimento populacional "
+                                                "de cada Município na última década, delineado pelas respectivas populações recenseadas nos dois últimos Censos Demográficos realizados. "
+                                                "Essas populações recenseadas, que servem de base para o cálculo da tendência de crescimento populacional dos Municípios, "
+                                                "podem ser ajustadas em consonância com os ajustes da população adotados nas Projeções da População para o Brasil e as Unidades da Federação.\n\n"
+                                                "Saiba mais no site do ",
+                                            html.A('IBGE',
+                                                   href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html?=&t=o-que-e",
+                                                   target="_blank")]),
+                                            dbc.ModalFooter(
+                                                dbc.Button(
+                                                    "Fechar", id="close_pop", className="ml-auto", n_clicks=0
+                                                )
+                                            ),
+                                        ],
+                                        id="modal_pop",
+                                        is_open=False,
+                                        style={"width": "100%", 'whiteSpace': 'pre-wrap', 'fontFamily': 'Arial'},
+                                    ),
                                 ]),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
@@ -865,6 +976,36 @@ def render_tab_content(active_tab):
                                     html.P(id='pib_total',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
                                                   'fontWeight': 'bold'}),
+                                    dbc.Button("Saiba mais", id="open_pib", n_clicks=0, color="primary", size='sm'),
+                                    dbc.Modal(
+                                        [
+                                            dbc.ModalHeader("Sobre a estimativa da população"),
+                                            dbc.ModalBody([
+                                                "O PIB é a soma de todos os bens e serviços finais produzidos por um país, estado ou cidade, geralmente em um ano. "
+                                                "Todos os países calculam o seu PIB nas suas respectivas moedas.\n\n"
+                                                "O IBGE, em parceria com os Órgãos Estaduais de Estatística, as Secretarias Estaduais de Governo e a Superintendência da Zona Franca de Manaus - Suframa,"
+                                                " divulga as estimativas do Produto Interno Bruto - PIB dos Municípios - referência 2010, sendo o último dado disponível referente a 2018. "
+                                                "Os resultados são comparáveis entre si e estão completamente integrados às séries das Contas Nacionais e das Contas Regionais do Brasil, "
+                                                "em conformidade, portanto, com o novo manual System of national accounts 2008, SNA 2008, e com a Classificação Nacional de Atividades Econômicas - CNAE 2.0.\n\n"
+                                                "São apresentados, a preços correntes, os valores adicionados brutos dos três grandes setores de atividade econômica – Agropecuária, "
+                                                "Indústria e Serviços – bem como os impostos, líquidos de subsídios, o PIB e o PIB per capita. "
+                                                "Destaca-se o valor adicionado bruto da Administração, saúde e educação públicas e seguridade social, devido à relevância deste segmento "
+                                                "na economia municipal. A análise dos resultados, ilustrada por meio de tabelas, quadros, gráficos e cartogramas, "
+                                                "enfoca aspectos econômicos de abrangência nacional, regional e municipal"
+                                                "Saiba mais sobre o PIB no site do ",
+                                                html.A('IBGE',
+                                                       href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html?=&t=o-que-e",
+                                                       target="_blank")]),
+                                            dbc.ModalFooter(
+                                                dbc.Button(
+                                                    "Fechar", id="close_pib", className="ml-auto", n_clicks=0
+                                                )
+                                            ),
+                                        ],
+                                        id="modal_pib",
+                                        is_open=False,
+                                        style={"width": "100%", 'whiteSpace': 'pre-wrap', 'fontFamily': 'Arial'},
+                                    ),
                                 ]),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
@@ -885,6 +1026,28 @@ def render_tab_content(active_tab):
                                     html.P(id='ivs_brasil',
                                            style={'textAlign': 'center', 'margin-top': 0,
                                                   'margin-bottom': '5px', 'fontSize': 25, 'fontWeight': 'bold'}),
+                                    dbc.Button("Conheça o índice", id="open_ivs", n_clicks=0, color="primary", size='sm'),
+                                    dbc.Modal(
+                                        [
+                                            dbc.ModalHeader("Sobre o IVS"),
+                                            dbc.ModalBody([
+                                                "A partir do estudo do conceito de vulnerabilidade foram construídos 16 indicadores, que juntos forma o Índice de Vulnerabilidade Social. "
+                                                "Esses indicadores estão inseridos em 3 dimensões, sendo elas a 1) infraestrutura urbana; 2) capital humano e 3) renda e trabalho. \n\n"
+                                                "O índice varia de 0 a 1 e <b>quanto menor o valor, menor a vulnerabilidade social da localidade</b>. \n\n"
+                                                "Saiba mais sobre o Índice e tenha acesso ao Atlas da Vulnerabilidade na plataforma desenvolvida pelo ",
+                                                html.A('Instituto de Pesquisa Econômica Aplicada (IPEA)',
+                                                       href="http://ivs.ipea.gov.br/index.php/pt/",
+                                                       target="_blank")]),
+                                            dbc.ModalFooter(
+                                                dbc.Button(
+                                                    "Fechar", id="close_ivs", className="ml-auto", n_clicks=0
+                                                )
+                                            ),
+                                        ],
+                                        id="modal_ivs",
+                                        is_open=False,
+                                        style={"width": "100%", 'whiteSpace': 'pre-wrap', 'fontFamily': 'Arial'},
+                                    ),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
@@ -897,7 +1060,7 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Índice de Desenvolvimento Humano", className="card-title",
+                                    html.H6("Índice de Desenvolvimento Humano (2010)", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='idhm',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
@@ -905,6 +1068,33 @@ def render_tab_content(active_tab):
                                     html.P(id='idhm_brasil',
                                            style={'textAlign': 'center', 'margin-top': 0,
                                                   'margin-bottom': '5px', 'fontSize': 25, 'fontWeight': 'bold'}),
+                                    dbc.Button("Conheça o índice", id="open_idh", n_clicks=0, color="primary",
+                                               size='sm'),
+                                    dbc.Modal(
+                                        [
+                                            dbc.ModalHeader("Sobre o IDHM"),
+                                            dbc.ModalBody([
+                                                "O Índice de Desenvolvimento Humano Municipal (IDHM) é uma medida composta de indicadores de três dimensões do desenvolvimento humano: "
+                                                "longevidade, educação e renda. O índice varia de 0 a 1. Quanto mais próximo de 1, maior o desenvolvimento humano da localidade. \n\n"
+                                                "O IDHM brasileiro segue as mesmas três dimensões do IDH Global - longevidade, educação e renda, mas vai além: "
+                                                "adequa a metodologia global ao contexto brasileiro e à disponibilidade de indicadores nacionais. "
+                                                "Embora meçam os mesmos fenômenos, os indicadores levados em conta no IDHM são mais adequados para avaliar o "
+                                                "desenvolvimento dos municípios brasileiros. Assim, o IDHM - incluindo seus três componentes, IDHM Longevidade, "
+                                                "IDHM Educação e IDHM Renda - conta um pouco da história dos municípios em três importantes dimensões do desenvolvimento "
+                                                "humano durantes duas décadas da história brasileira. \n\n",
+                                                html.A('Saiba mais sobre o Índice e tenha acesso ao Atlas do Desenvolvimento Humano',
+                                                       href="https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html",
+                                                       target="_blank")]),
+                                            dbc.ModalFooter(
+                                                dbc.Button(
+                                                    "Fechar", id="close_idh", className="ml-auto", n_clicks=0
+                                                )
+                                            ),
+                                        ],
+                                        id="modal_idh",
+                                        is_open=False,
+                                        style={"width": "100%", 'whiteSpace': 'pre-wrap', 'fontFamily': 'Arial'},
+                                    ),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
@@ -1490,6 +1680,47 @@ def toggle_modal(n1, n2, is_open):
         return not is_open
     return is_open
 
+# MODAL CONTEXTO SOCIOECONOMICO
+@app.callback(
+    Output("modal_pop", "is_open"),
+    [Input("open_pop", "n_clicks"), Input("close_pop", "n_clicks")],
+    [State("modal_pop", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
+@app.callback(
+    Output("modal_pib", "is_open"),
+    [Input("open_pib", "n_clicks"), Input("close_pib", "n_clicks")],
+    [State("modal_pib", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
+@app.callback(
+    Output("modal_ivs", "is_open"),
+    [Input("open_ivs", "n_clicks"), Input("close_ivs", "n_clicks")],
+    [State("modal_ivs", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
+@app.callback(
+    Output("modal_idh", "is_open"),
+    [Input("open_idh", "n_clicks"), Input("close_idh", "n_clicks")],
+    [State("modal_idh", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
 #MODAL TABELAS RAIS
 
 @app.callback(
@@ -1561,7 +1792,7 @@ def display_pop_pib_idh(w_municipios, w_municipios1):
     ivs_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['ivs'].sum()
     ivs_brasil = f'{ivs_brasil:_.3f}'.replace('.', ',').replace('_', '.')
 
-    return populacao + ' de pessoas', pib, idhm, 'Brasil - ' + idhm_brasil, ivs, 'Brasil - ' + ivs_brasil
+    return populacao, pib, idhm, 'Brasil - ' + idhm_brasil, ivs, 'Brasil - ' + ivs_brasil
 
 # NÚMEROS CADASTRO ÚNICO / BOLSA FAMÍLIA / BPC
 @app.callback(
@@ -1569,7 +1800,7 @@ def display_pop_pib_idh(w_municipios, w_municipios1):
     Output('bolsa_familia', 'children'),
     Output('perc_cad', 'children'),
     Output('perc_pbf', 'children'),
-    Output('bpc', 'figure'),
+    # Output('bpc', 'figure'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
 )
@@ -1584,59 +1815,77 @@ def display_cadunico(w_municipios, w_municipios1):
     perc_cad = ((pessoas_cad1/populacao)*100).round(2)
     perc_pbf = ((pessoas_pbf1/populacao)*100).round(2)
 
-    bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].sum()
-    bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].sum()
-    bpc_idosos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_idoso_ben'].sum()
+    # bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].sum()
+    # bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].sum()
+    # bpc_idosos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_idoso_ben'].sum()
+    #
+    # fig = go.Figure()
+    # fig.add_trace(go.Bar(x=['Beneficiários', 'Portador deficiência', 'Idoso'],
+    #                      y=[bpc_total, bpc_deficiencia, bpc_idosos], name='BPC',
+    #                      text=[bpc_total, bpc_deficiencia, bpc_idosos],
+    #                      hovertemplate=
+    #                      '<b>População</b>: %{y:.0f}',
+    #                      texttemplate='%{text:.3s}',
+    #                      textposition='auto',
+    #                      textfont={'family': "Arial", 'size': 14},
+    #                      marker=dict(color='#1351B4')))
+    #
+    # fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
+    #
+    # fig.update_layout(
+    #     xaxis=dict(
+    #         showline=True,
+    #         showgrid=False,
+    #         showticklabels=True,
+    #         linecolor='rgb(204, 204, 204)',
+    #         linewidth=1,
+    #         ticks='outside',
+    #         tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
+    #     ),
+    #     yaxis=dict(
+    #         showgrid=False,
+    #         zeroline=False,
+    #         showline=False,
+    #         showticklabels=False,
+    #     ),
+    #     margin=dict(autoexpand=True),
+    #     plot_bgcolor='white'
+    # )
+    #
+    # annotations = []
+    # # Title
+    # annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+    #                         xanchor='left', yanchor='bottom',
+    #                         text='Beneficío de Prestação Continuada<br>(BPC)',
+    #                         font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+    #                         showarrow=False))
+    # # Source
+    # annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+    #                         xanchor='center', yanchor='top',
+    #                         text='Fonte: Ministério da Cidadania/Cadastro Único, fev/2021',
+    #                         font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+    #                         showarrow=False))
+    # fig.update_layout(annotations=annotations)
 
-    fig = go.Figure()
-    fig.add_trace(go.Bar(x=['Beneficiários', 'Portador deficiência', 'Idoso'],
-                         y=[bpc_total, bpc_deficiencia, bpc_idosos], name='BPC',
-                         text=[bpc_total, bpc_deficiencia, bpc_idosos],
-                         hovertemplate=
-                         '<b>População</b>: %{y:.0f}',
-                         texttemplate='%{text:.3s}',
-                         textposition='auto',
-                         textfont={'family': "Arial", 'size': 14},
-                         marker=dict(color='#1351B4')))
+    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', f'{perc_cad:.0f}% da população total', f'{perc_pbf:.0f}% da população total'
 
-    fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=1,
-            ticks='outside',
-            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        margin=dict(autoexpand=True),
-        plot_bgcolor='white'
-    )
-
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Beneficío de Prestação Continuada<br>(BPC)',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Cadastro Único, fev/2021',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
-    fig.update_layout(annotations=annotations)
-
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', f'{perc_cad:.0f}% da população total', f'{perc_pbf:.0f}% da população total', fig
+# DADOS EM TABELA
+@app.callback(Output('outros_dados', 'children'),
+              Input('w_municipios', 'value'),
+              Input('w_municipios1', 'value')
+              )
+def display_table(w_municipios, w_municipios1):
+    df1 = df[['uf', 'municipio', 'regiao', 'pais', 'pobreza_extremapob_cad', 'familias_cad', 'familias_pbf', 'bpc_ben', 'bpc_pcd_ben', 'bpc_idoso_ben', 'familias_catadores_cad', ]]
+    df1 = df1.rename(columns={"pobreza_extremapob_cad": "População do Cadastro Único em situação de pobreza ou extrema pobreza", "familias_cad": "Famílias inscritas no Cadastro Único",
+                       "familias_pbf":"Famílias beneficiárias do Programa Bolsa Famílias", "bpc_ben":"Total de Beneficiários do Benefício de Prestação Continuada (BPC)",
+                       "bpc_pcd_ben":"Beneficiários do BPC portadores de deficiência", "bpc_idoso_ben":"Beneficiários do BPC idosos",
+                       "familias_catadores_cad":"Famílias de catadores de material reciclável inscritas no Cadastro Único"})
+    df1 = df1.melt(id_vars=["uf", "municipio", "regiao", "pais"], var_name="Indicador", value_name="Quantidade")
+    df2 = df1[(df1['municipio'] == w_municipios1) & (df1['uf'] == w_municipios)]
+    df2 = df2.drop(['uf', 'municipio', 'regiao', 'pais'], axis=1)
+    # data = df2.to_dict('records')
+    # columns = [{"name": i, "id": i,} for i in df2[['Ocupação', 'Quantidade']]]
+    return dbc.Table.from_dataframe(df2, striped=True, bordered=True, hover=True, style={'background-color':'white'})
 
 # EVOLUÇÃO DO CADUNICO E DO PBF
 @app.callback(Output('cad_pbf', 'figure'),
