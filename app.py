@@ -115,18 +115,30 @@ table_header = [
     html.Thead(html.Tr([html.Th("Indicador"), html.Th("Descrição"), html.Th("Fonte")]))]
 
 row1 = html.Tr([html.Td("População"), html.Td("População estimada em 2020, em número de pessoas"), html.Td("IBGE")])
-row2 = html.Tr([html.Td("PIB Total"), html.Td("Produto Interno Bruto, calculado em 2018"), html.Td("IBGE")])
+row2 = html.Tr([html.Td("PIB"), html.Td("Produto Interno Bruto total e por setor de atividade econômica, calculado em 2018"), html.Td("IBGE")])
 row3 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row4 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row5 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row6 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row7 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row8 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row9 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row10 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
-row11 = html.Tr([html.Td("Índice de Vulnerabilidade Social"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row4 = html.Tr([html.Td("Índice de Desenvolvimento Humano"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row5 = html.Tr([html.Td("Número de empresas, total e por setor de atividade econômica"), html.Td("Beeblebrox"), html.Td("IBGE")])
+row6 = html.Tr([html.Td("Número de pessoas inscritas no Cadastro Único"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
+row7 = html.Tr([html.Td("Número de pessoas inscritas no Cadastro Único e beneficiárias do Bolsa Família"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
+row8 = html.Tr([html.Td("População do Cadastro Único por faixa etária"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
+row9 = html.Tr([html.Td("Beneficiários do Benefício de Prestação Continuada"), html.Td("Beeblebrox"), html.Td("IPEA")])
+row10 = html.Tr([html.Td("Pessoas com carteira assinada"), html.Td("Estoque de empregos formais"), html.Td("RAIS, 2020")])
+row11 = html.Tr([html.Td("Quantidade de vínculos por tipo de ocupação (CBO, 2002)"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
+row12 = html.Tr([html.Td("Quantidade de vínculos por subsetor econômico (IBGE)"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
+row13 = html.Tr([html.Td("Saldo de empregos formais, por subsetor econômico (IBGE)"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
+row14 = html.Tr([html.Td("Saldo de empregos formais, por tipo de ocupação"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
+row15 = html.Tr([html.Td("Remuneração média total dos empregos formais"), html.Td("Beeblebrox"), html.Td("RAIS, 2020")])
+row16 = html.Tr([html.Td("Pessoas inscritas no Cadastro Único por situação de trabalho"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
+row17 = html.Tr([html.Td("Pessoas inscritas no Cadastro Único por função principal"), html.Td("Beeblebrox"), html.Td("Cadastro Único, abril/2021")])
+row18 = html.Tr([html.Td("Taxa de distorção idade-série"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
+row19 = html.Tr([html.Td("Taxa de evasão escolar"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
+row20 = html.Tr([html.Td("Remuneração média dos docentes da educação básica"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
+row21 = html.Tr([html.Td("População do Cadastro Único, por nível de escolaridade"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
+row22 = html.Tr([html.Td("População do Cadastro Único, por grau de alfabetização"), html.Td("Beeblebrox"), html.Td("INEP, 2020")])
 
-table_body = [html.Tbody([row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11])]
+table_body = [html.Tbody([row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13,
+                          row14, row15, row16, row17, row18, row19, row20, row21, row22])]
 
 table = dbc.Table(table_header + table_body, bordered=True)
 
