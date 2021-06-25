@@ -9,6 +9,7 @@ from plotly.subplots import make_subplots
 import dash_table
 
 app = dash.Dash(title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP,
+                                                                                                          'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/assets/custom.css',
                                                                                                           'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
                                                                                                           '//fonts.googleapis.com/css?family=Roboto|Lato',
                                                                                                           'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'],
