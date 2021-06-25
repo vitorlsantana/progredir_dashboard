@@ -426,7 +426,7 @@ def render_tab_content(active_tab):
                                 [
                                     html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center', 'fontFamily':'Open Sans'}),
                                     html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'fontFamily':'Open Sans'}),
-                                    html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                    html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'fontFamily':'Open Sans', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
@@ -455,7 +455,7 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'align-items':'center',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'fontFamily':'Open Sans'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
