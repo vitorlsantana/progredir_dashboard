@@ -521,8 +521,8 @@ def render_tab_content(active_tab):
                                                 html.H5("Situação de emprego formal", className="card-title",
                                                         style={'textAlign': 'center'}),
                                                 html.P(
-                                                    'Os dados de emprego formal dessa seção foram obtidos da Relação Anual de Informações Sociais (RAIS), que é um cadastro administrativo, '
-                                                    'instituído pelo Decreto nº 76.900, de 23 de dezembro de 1975, de âmbito nacional, periodicidade anual e de declaração obrigatória '
+                                                    'Os dados de emprego formal foram obtidos da Relação Anual de Informações Sociais (RAIS), que é um cadastro administrativo, '
+                                                    'instituído pelo Decreto nº 76.900/1975, de âmbito nacional, periodicidade anual e de declaração obrigatória '
                                                     'para todos os estabelecimentos do setor público e privado, inclusive para aqueles que não registraram vínculos empregatícios no exercício.',
                                                     style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
                                             ]),
@@ -782,7 +782,7 @@ def render_tab_content(active_tab):
                                     html.P(
                                         'Os dados de distorção idade-série, evasão escolar e de remuneração média dos docentes da educação'
                                         'básica foram obtidos da página de indicadores educacionais do Instituto Nacional de Estudos e Pesquisas Educacionais'
-                                        'Anísio Teixeira (INEP). No portal é possível ter acesso aberta a um conjunto mais amplo de dados.',
+                                        'Anísio Teixeira (INEP).',
                                         style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
@@ -800,7 +800,7 @@ def render_tab_content(active_tab):
                                     html.H5("Taxa de Distorção Idade-Série", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='idade_serie',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 45,
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 40,
                                                   'fontWeight': 'bold'}),
                                     html.P(id='idade_serie_brasil',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
@@ -836,7 +836,7 @@ def render_tab_content(active_tab):
                                     html.H5("Taxa de Evasão Escolar", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='evasao',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 45,
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 40,
                                                   'fontWeight': 'bold'}),
                                     html.P(id='evasao_brasil',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
@@ -871,10 +871,10 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H5("Remuneração média dos docentes", className="card-title",
+                                    html.H6("Remuneração média dos docentes", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='rem_docentes_munic',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 45,
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 40,
                                                   'fontWeight': 'bold'}),
                                     html.P(id='rem_docentes_brasil',
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
@@ -1021,11 +1021,11 @@ def render_tab_content(active_tab):
                                     html.H6("Índice Vulnerabilidade Social", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='ivs',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
-                                                  'fontWeight': 'bold', 'margin-bottom': '0rem'}),
-                                    html.P(id='ivs_brasil',
-                                           style={'textAlign': 'center', 'margin-top': 0,
-                                                  'margin-bottom': '5px', 'fontSize': 25, 'fontWeight': 'bold'}),
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 30,
+                                                  'fontWeight': 'bold', 'marginBottom': '5px'}),
+                                    # html.P(id='ivs_brasil',
+                                    #        style={'textAlign': 'center', 'margin-top': 0,
+                                    #               'margin-bottom': '5px', 'fontSize': 25, 'fontWeight': 'bold'}),
                                     dbc.Button("Conheça o índice", id="open_ivs", n_clicks=0, color="primary", size='sm'),
                                     dbc.Modal(
                                         [
@@ -1063,11 +1063,11 @@ def render_tab_content(active_tab):
                                     html.H6("Índice de Desenvolvimento Humano (2010)", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='idhm',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
-                                                  'fontWeight': 'bold', 'margin-bottom': '0rem'}),
-                                    html.P(id='idhm_brasil',
-                                           style={'textAlign': 'center', 'margin-top': 0,
-                                                  'margin-bottom': '5px', 'fontSize': 25, 'fontWeight': 'bold'}),
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 30,
+                                                  'fontWeight': 'bold', 'marginBottom': '5px'}),
+                                    # html.P(id='idhm_brasil',
+                                    #        style={'textAlign': 'center', 'margin-top': 0,
+                                    #               'margin-bottom': '5px', 'fontSize': 25, 'fontWeight': 'bold'}),
                                     dbc.Button("Conheça o índice", id="open_idh", n_clicks=0, color="primary",
                                                size='sm'),
                                     dbc.Modal(
@@ -1770,9 +1770,9 @@ def toggle_modal(n1, n2, is_open):
     Output('pib_total', 'children'),
     # Output('perc_pib', 'children'),
     Output('idhm', 'children'),
-    Output('idhm_brasil', 'children'),
+    # Output('idhm_brasil', 'children'),
     Output('ivs', 'children'),
-    Output('ivs_brasil', 'children'),
+    # Output('ivs_brasil', 'children'),
     # Output('perc_pop', 'children'),
     Input('w_municipios', 'value'),
     Input('w_municipios1', 'value')
@@ -1792,7 +1792,7 @@ def display_pop_pib_idh(w_municipios, w_municipios1):
     ivs_brasil = df[(df['uf'] == 'Brasil') & (df['municipio'] == ' Todos os Municípios')]['ivs'].sum()
     ivs_brasil = f'{ivs_brasil:_.3f}'.replace('.', ',').replace('_', '.')
 
-    return populacao, pib, idhm, 'Brasil - ' + idhm_brasil, ivs, 'Brasil - ' + ivs_brasil
+    return populacao, pib, idhm + ' (Brasil - ' + f'{idhm_brasil})', ivs + ' (Brasil - ' + f'{ivs_brasil})'
 
 # NÚMEROS CADASTRO ÚNICO / BOLSA FAMÍLIA / BPC
 @app.callback(
