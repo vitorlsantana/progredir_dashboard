@@ -243,9 +243,9 @@ app.layout = dbc.Container([
     dbc.Row([
         # SIDEBAR
         dbc.Col([
-            html.Label('Consulta', style={'fontFamily':'Open Sans', 'fontSize':20, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
+            html.Label('Consulta', style={'fontSize':20, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
                    className='mt-3'),
-            html.Label('Selecione a Região', style={'fontFamily':'Open Sans', 'fontSize':15, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
+            html.Label('Selecione a Região', style={'fontSize':15, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
                    className='mt-1'),
             dcc.Dropdown(
                 id='w_municipios',
@@ -254,7 +254,7 @@ app.layout = dbc.Container([
                 placeholder= "Selecione a região",
                 style={'display': True, "width": "100%", 'height': '40px', 'outline':True}
             ),
-            html.Label('Selecione o Município', style={'color': 'white', 'fontSize':15, 'fontFamily':'Open Sans', 'fontWeight': 'bold', 'margin-top':'15px'}),
+            html.Label('Selecione o Município', style={'color': 'white', 'fontSize':15, 'fontWeight': 'bold', 'margin-top':'15px'}),
             dcc.Dropdown(
                 id='w_municipios1',
                 value=' Todos os Municípios',
@@ -275,7 +275,7 @@ app.layout = dbc.Container([
                 className="mr-5",
                 outline=True,
                 color="light",
-                style={"width": "100%", 'fontWeight': 'bold', 'fontSize':15, 'fontFamily':'Open Sans'}
+                style={"width": "100%", 'fontWeight': 'bold', 'fontSize':15}
             ),
             html.Br(),
             dbc.Modal(
@@ -302,7 +302,7 @@ app.layout = dbc.Container([
                 ],
                 id="modal",
                 centered=True,
-                style={"width":"100%", 'whiteSpace': 'pre-wrap', 'fontFamily':'Open Sans'},
+                style={"width":"100%", 'whiteSpace': 'pre-wrap'},
             ),
             html.Br(),
             dbc.Button("Saiba mais sobre os dados", id='open1', className="mr-5", outline=True, color="light",
@@ -346,7 +346,7 @@ app.layout = dbc.Container([
             ],
                 id="tabs",
                 active_tab="social",
-                style={'fontFamily':'Open Sans'}
+                style={'flex': '1 1 0px'}
             ),
             html.Div(id="tab-content", className="p-10"),
         ], xs=12, sm=12, md=10, lg=10, xl=10, className='mt-100'),
@@ -409,10 +409,9 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center', 'fontFamily':'Open Sans'}),
+                                    html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
                                     html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
-                                    html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold',
-                                                                 'fontFamily':'Open Sans'}),
+                                    html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px',
                                                                      'box-shadow': '1px 1px 1px 1px lightgrey'}
@@ -424,9 +423,9 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center', 'fontFamily':'Open Sans'}),
-                                    html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'fontFamily':'Open Sans'}),
-                                    html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'fontFamily':'Open Sans', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
+                                    html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
+                                    html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
@@ -455,7 +454,7 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'align-items':'center',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'fontFamily':'Open Sans'}
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -467,14 +466,14 @@ def render_tab_content(active_tab):
                                     html.H5("Distribuição por sexo", className="card-title", style={'textAlign': 'center'}),
                                     dbc.Row(
                                         [
-                                            html.H5(className="fas fa-male", style={'fontSize': 35, 'textAlign': 'center', 'color':'#0077b6'}),
+                                            html.H5(className="fas fa-male", style={'fontSize': 35, 'textAlign': 'center', 'color':'#FF8C00'}),
                                             html.P(id='masc_cad',
                                                    style={'fontSize': 24, 'margin-top': '1px', 'fontWeight': 'bold', 'margin-left':'30px'}),
                                         ],
                                     ),
                                     dbc.Row(
                                         [
-                                            html.H5(className="fas fa-female", style={'fontSize': 35, 'textAlign': 'center', 'align-items':'center', 'color':'#ffafcc'}),
+                                            html.H5(className="fas fa-female", style={'fontSize': 35, 'textAlign': 'center', 'align-items':'center', 'color':'#FF8C00'}),
                                             html.P(id='fem_cad',
                                                    style={'margin-top': '1px', 'margin-left':'30px', 'margin-bottom':0, 'fontSize': 24, 'fontWeight': 'bold'}),
                                         ], style={'margin-top': '1px', 'margin-bottom':0},
@@ -483,7 +482,7 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'align-items':'center',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'fontFamily':'Open Sans'}
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
@@ -492,14 +491,14 @@ def render_tab_content(active_tab):
                 html.Br(),
                 dbc.Row(
                     [
-                    dbc.Col(dcc.Graph(id='cad_pbf'), style={'marginBottom':'10px', 'fontFamily':'Open Sans'}, xs=12, sm=12, md=12, lg=6, xl=6),
-                    dbc.Col(dcc.Graph(id='faixa_etaria', style={'fontFamily':'Open Sans'}), xs=12, sm=12, md=12, lg=6, xl=6),
+                    dbc.Col(dcc.Graph(id='cad_pbf'), style={'marginBottom':'10px'}, xs=12, sm=12, md=12, lg=6, xl=6),
+                    dbc.Col(dcc.Graph(id='faixa_etaria'), xs=12, sm=12, md=12, lg=6, xl=6),
                         ],
                 ),
                 html.Br(),
                 dbc.Row(
                     [
-                        dbc.Col(id='outros_dados', style={'fontFamily': 'Open Sans'}, xs=12, sm=12, md=12, lg=6, xl=6),
+                        dbc.Col(id='outros_dados', xs=12, sm=12, md=12, lg=6, xl=6),
                     ], align='center'),
             ], fluid=True
             )
@@ -720,11 +719,11 @@ def render_tab_content(active_tab):
                                                            style={'color': '#1351B4', 'textAlign': 'center',
                                                                   'fontSize': 50,
                                                                   'fontWeight': 'bold'}),
-                                                    html.P("não trabalhou nos últimos 12 meses",
-                                                           style={'textAlign': 'center', 'fontSize': 22, 'fontWeight': 'bold'}),
+                                                    html.P("não trabalharam nos últimos 12 meses",
+                                                           style={'textAlign': 'center', 'fontSize': 21, 'fontWeight': 'bold'}),
                                                 ]),
                                             ], color="#F8F8F8", outline=True,
-                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px','fontFamily':'Open Sans',
+                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
                                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
                                             )
                                         ], xs=12, sm=12, md=12, lg=6, xl=6),
@@ -738,13 +737,13 @@ def render_tab_content(active_tab):
                                                            style={'color': '#1351B4', 'textAlign': 'center',
                                                                   'fontSize': 50,
                                                                   'fontWeight': 'bold'}),
-                                                    html.P('não trabalhou na última semana',
+                                                    html.P('não trabalharam na última semana',
                                                            style={'textAlign': 'center', 'margin-top': '5px', 'margin-bottom': 0,
-                                                                  'fontSize': 22, 'fontWeight': 'bold'}),
+                                                                  'fontSize': 21, 'fontWeight': 'bold'}),
                                                 ]
                                                 ),
                                             ], color="#F8F8F8", outline=True,
-                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
+                                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
                                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
                                         ], xs=12, sm=12, md=12, lg=6, xl=6),
                                 ],
@@ -753,9 +752,9 @@ def render_tab_content(active_tab):
                                 html.Br(),
                                 dbc.Row(
                                     [
-                                        dbc.Col(dcc.Graph(id='funcao_principal'), style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12,
+                                        dbc.Col(dcc.Graph(id='funcao_principal'), style={'marginBottom': '10px'}, xs=12,
                                                 sm=12, md=12, lg=12, xl=12),
-                                        dbc.Col(dcc.Graph(id='mei', style={'fontFamily':'Open Sans'}), xs=12, sm=12, md=12, lg=12, xl=12)
+                                        dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=12, xl=12)
                                     ],
                                     align='center', justify="center",
                                 ),
@@ -786,7 +785,7 @@ def render_tab_content(active_tab):
                                         style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
                                 ]),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -823,7 +822,7 @@ def render_tab_content(active_tab):
                                     ),
                                 ]),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -939,8 +938,8 @@ def render_tab_content(active_tab):
                                     html.H6("População estimada (2020)", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='populacao',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 33,
-                                                  'fontWeight': 'bold', 'margin-bottom': '5px'}),
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 30,
+                                                  'fontWeight': 'bold', 'marginBottom': '15px'}),
                                     dbc.Button("Saiba mais", id="open_pop", n_clicks=0, color="primary", size='sm'),
                                     dbc.Modal(
                                         [
@@ -967,7 +966,7 @@ def render_tab_content(active_tab):
                                     ),
                                 ]),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -980,8 +979,8 @@ def render_tab_content(active_tab):
                                     html.H6("PIB Total (2018)", className="card-title",
                                             style={'textAlign': 'center'}),
                                     html.P(id='pib_total',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 35,
-                                                  'fontWeight': 'bold'}),
+                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 30,
+                                                  'fontWeight': 'bold', 'marginBottom': '15px'}),
                                     dbc.Button("Saiba mais", id="open_pib", n_clicks=0, color="primary", size='sm'),
                                     dbc.Modal(
                                         [
@@ -1010,11 +1009,11 @@ def render_tab_content(active_tab):
                                         ],
                                         id="modal_pib",
                                         is_open=False,
-                                        style={"width": "100%", 'whiteSpace': 'pre-wrap', 'fontFamily': 'Open Sans'},
+                                        style={"width": "100%", 'whiteSpace': 'pre-wrap'},
                                     ),
                                 ]),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'}
                             )
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
@@ -1052,12 +1051,12 @@ def render_tab_content(active_tab):
                                         ],
                                         id="modal_ivs",
                                         is_open=False,
-                                        style={"width": "100%", 'whiteSpace': 'pre-wrap', 'fontFamily': 'Arial'},
+                                        style={"width": "100%", 'whiteSpace': 'pre-wrap'},
                                     ),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'fontFamily':'Open Sans',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
                                        'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
@@ -1821,57 +1820,6 @@ def display_cadunico(w_municipios, w_municipios1):
     perc_cad = ((pessoas_cad1/populacao)*100).round(2)
     perc_pbf = ((pessoas_pbf1/populacao)*100).round(2)
 
-    # bpc_total = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_ben'].sum()
-    # bpc_deficiencia = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_pcd_ben'].sum()
-    # bpc_idosos = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['bpc_idoso_ben'].sum()
-    #
-    # fig = go.Figure()
-    # fig.add_trace(go.Bar(x=['Beneficiários', 'Portador deficiência', 'Idoso'],
-    #                      y=[bpc_total, bpc_deficiencia, bpc_idosos], name='BPC',
-    #                      text=[bpc_total, bpc_deficiencia, bpc_idosos],
-    #                      hovertemplate=
-    #                      '<b>População</b>: %{y:.0f}',
-    #                      texttemplate='%{text:.3s}',
-    #                      textposition='auto',
-    #                      textfont={'family': "Arial", 'size': 14},
-    #                      marker=dict(color='#1351B4')))
-    #
-    # fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-    #
-    # fig.update_layout(
-    #     xaxis=dict(
-    #         showline=True,
-    #         showgrid=False,
-    #         showticklabels=True,
-    #         linecolor='rgb(204, 204, 204)',
-    #         linewidth=1,
-    #         ticks='outside',
-    #         tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
-    #     ),
-    #     yaxis=dict(
-    #         showgrid=False,
-    #         zeroline=False,
-    #         showline=False,
-    #         showticklabels=False,
-    #     ),
-    #     margin=dict(autoexpand=True),
-    #     plot_bgcolor='white'
-    # )
-    #
-    # annotations = []
-    # # Title
-    # annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-    #                         xanchor='left', yanchor='bottom',
-    #                         text='Beneficío de Prestação Continuada<br>(BPC)',
-    #                         font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
-    #                         showarrow=False))
-    # # Source
-    # annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-    #                         xanchor='center', yanchor='top',
-    #                         text='Fonte: Ministério da Cidadania/Cadastro Único, fev/2021',
-    #                         font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
-    #                         showarrow=False))
-    # fig.update_layout(annotations=annotations)
 
     return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', f'{perc_cad:.0f}% da população total', f'{perc_pbf:.0f}% da população total'
 
@@ -2112,7 +2060,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     fig = go.Figure()
     fig.add_trace(go.Bar(x=nivel, y=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior],
                          text=[perc_sem_instrucao, perc_fund_incompleto, perc_fund_completo, perc_medio_incompleto, perc_medio_completo,
-                               perc_superior], name='', marker=dict(color='#1351B4'), textposition='auto', textfont={'family': "Arial, bold", 'size':14},
+                               perc_superior], name='', marker=dict(color='#1351B4'), textposition='auto', textfont={'family': "Open Sans", 'size':14},
                          hovertemplate=
                          '<b>População</b>: %{y:.0f}' +
                          '<br><b>Nível</b>: %{x}<br>',
@@ -2127,7 +2075,7 @@ def display_escolaridade(w_municipios, w_municipios1):
             linecolor='rgb(204, 204, 204)',
             linewidth=2,
             ticks='outside',
-            tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),
+            tickfont=dict(family='Open Sans', size=10, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
             showgrid=False,
@@ -2154,20 +2102,20 @@ def display_escolaridade(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='População do Cadastro Único por nível<br>de<b> escolaridade</b>',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania, fev/2021',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     # Anotação
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
                             xanchor='left', yanchor='bottom',
                             text=f'{perc_abaixo_ensino_medio:.0f}% não possuem ensino<br>médio completo',
-                            font=dict(family='Arial', size=18, color='white'),
+                            font=dict(family='Open Sans', size=18, color='white'),
                             showarrow=False, ax=20, ay=-30, bordercolor="#FF8C00", borderwidth=2, borderpad=6,
                             bgcolor="#FF8C00", align="center",
                             ))
@@ -2177,7 +2125,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     fig2 = go.Figure()
     colors = ['#1351B4', '#FF8C00']
     fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True,
-                          name='', hole=.5, marker=dict(colors=colors), textfont={'family': "Arial", 'size': 15},
+                          name='', hole=.5, marker=dict(colors=colors), textfont={'family': "Open Sans", 'size': 15},
                           hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
 
     annotations = []
@@ -2185,13 +2133,13 @@ def display_escolaridade(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='População do Cadastro Único por <b>grau de<br>alfabetização</b>',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.7, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania, fev/2021',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig2.update_layout(annotations=annotations)
@@ -2248,7 +2196,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
             linecolor='rgb(204, 204, 204)',
             linewidth=1,
             ticks='outside',
-            tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),
+            tickfont=dict(family='Open Sans', size=10, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
             showgrid=False,
@@ -2273,13 +2221,13 @@ def display_cad_funcao(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='<b>Função principal</b>',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.27,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania, fev/2021',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig1.update_layout(annotations=annotations)
@@ -2287,7 +2235,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
     fig2 = go.Figure()
     fig2.add_trace(go.Pie(labels=['Trabalharam', 'Não trabalharam'],
                           values=[trab_12_meses, nao_trab_12_meses], name='',
-                          marker=dict(colors=['#1351B4', '#FF8C00']), hole=.5, textfont={'family': "Arial", 'size': 14},
+                          marker=dict(colors=['#1351B4', '#FF8C00']), hole=.5, textfont={'family': "Open Sans", 'size': 14},
                           hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
 
     fig2.update_layout(
@@ -2310,20 +2258,20 @@ def display_cad_funcao(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=-0.11, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Situação de<b>trabalho nos<br>últimos 12 meses</b>',
-                            font=dict(family='Arial', size=19, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania, abr/2021',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig2.update_layout(annotations=annotations)
 
     fig3 = go.Figure()
     fig3.add_trace(go.Pie(labels=['Trabalharam', 'Não trabalharam'], values=[trab_last_week, nao_trab_last_week], name='',
-                          marker=dict(colors=['#1351B4', '#FF8C00']), hole=.5, textfont={'family': "Arial", 'size': 14},
+                          marker=dict(colors=['#1351B4', '#FF8C00']), hole=.5, textfont={'family': "Open Sans", 'size': 14},
                           hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
 
     fig3.update_layout(
@@ -2345,13 +2293,13 @@ def display_cad_funcao(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=-0.11, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Situação de <b>trabalho na<br>última semana</b>',
-                            font=dict(family='Arial', size=19, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania, abr/2021',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig3.update_layout(annotations=annotations)
@@ -2370,7 +2318,7 @@ def display_mei(w_municipios, w_municipios1):
     fig = go.Figure()
     fig.add_trace(go.Bar(
         y=[mei_cadunico, mei_pbf], x=['Cadastro Único', 'Bolsa Família'],
-        text=[mei_cadunico, mei_pbf], textfont={'family': "Arial", 'size': 14},
+        text=[mei_cadunico, mei_pbf], textfont={'family': "Open Sans", 'size': 14},
         texttemplate='%{y:_.0f}',
         hovertemplate="<b>%{x} <br>População: %{y:.0f}</br><b>",
         textposition='auto', name='MEI',
@@ -2384,7 +2332,7 @@ def display_mei(w_municipios, w_municipios1):
             showticklabels=True,
             linewidth=2,
             ticks='outside',
-            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)'),
+            tickfont=dict(family='Open Sans', size=12, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
             showgrid=False,
@@ -2403,13 +2351,13 @@ def display_mei(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=-0.1, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Microeempreendedor Individual (MEI)',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania/Ministério da Economia, jul/2020',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -2450,13 +2398,13 @@ def display_pib_setorial(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='PIB por setor de<br>atividade econômica',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: IBGE, 2018',
-                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=15, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations, hovermode='closest')
@@ -2511,7 +2459,7 @@ def display_empresas(w_municipios, w_municipios1):
             linecolor='rgb(204, 204, 204)',
             linewidth=2,
             ticks='outside',
-            tickfont=dict(family='Arial', size=9, color='rgb(82, 82, 82)'),
+            tickfont=dict(size=9, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
             showgrid=False,
@@ -2536,20 +2484,20 @@ def display_empresas(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Número de empresas, por setor<br>de atividade econômica',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.30,
                             xanchor='center', yanchor='top',
                             text='Fonte: IBGE/CEMPRE, 2018',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     # Anotação
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
                             xanchor='left', yanchor='bottom',
                             text=f'{empresas1} empresas',
-                            font=dict(family='Arial', size=22, color='white'),
+                            font=dict(size=22, color='white'),
                             showarrow=False, ax=20, ay=-30, bordercolor="#1351B4", borderwidth=2, borderpad=6,
                             bgcolor="#1351B4", align="center",))
 
@@ -2654,7 +2602,7 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
             linewidth=1,
             ticks='outside',
             zerolinecolor='grey',
-            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)',
+            tickfont=dict(size=11, color='rgb(82, 82, 82)',
             ),
         ),
         yaxis=dict(
@@ -2682,13 +2630,13 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Evolução do <b>saldo de empregos formais</b><br>(2002-2019)',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -2725,13 +2673,13 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
 
     fig = go.Figure()
     fig.add_trace(go.Bar(x=['Brasil'], y=[rem_brasil], name='', marker=dict(color='#5992ED'),
-                          text=[rem_brasil], textfont={'family': "Arial", 'size': 14},
+                          text=[rem_brasil], textfont={'size': 14},
                           hovertemplate=
                           '<b>%{x}</b>' +
                           '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
                           ))
     fig.add_trace(go.Bar(x=municipio, y=[rem_municipio], name='', marker=dict(color='#0C326F'),
-                          text=[rem_municipio], textfont={'family': "Arial", 'size': 14},
+                          text=[rem_municipio], textfont={'size': 14},
                           hovertemplate=
                           '<b>%{x}</b>' +
                           '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
@@ -2745,7 +2693,7 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
             linecolor='rgb(204, 204, 204)',
             linewidth=2,
             ticks='outside',
-            tickfont=dict(family='Arial', size=12, color='rgb(82, 82, 82)',
+            tickfont=dict(size=12, color='rgb(82, 82, 82)',
             ),
         ),
         yaxis=dict(
@@ -2766,13 +2714,13 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Remuneração média mensal dos empregos formais',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(family='Arial', size=15, color='rgb(150,150,150)'),
+                            font=dict(size=15, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -2808,8 +2756,8 @@ def update_remuneracao_table(w_municipios, w_municipios1):
     export_format = "xlsx"
     return dash_table.DataTable(data=data, columns=columns, export_format=export_format, filter_action='native',
                                 page_action = "native", page_current=0, page_size=10, sort_action='native', export_headers="display",
-                                style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold', 'fontFamily':'Arial', 'fontSize':12},
-                                style_cell={'backgroundColor': 'white', 'color': 'black', 'fontFamily':'Arial', 'fonteSize':12,
+                                style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold','fontSize':12},
+                                style_cell={'backgroundColor': 'white', 'color': 'black', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
 
@@ -2841,7 +2789,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     fig = go.Figure()
 
     fig.add_trace(go.Pie(labels=df3['subsetor'], values=df3['vinculos'],
-                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 12}))
+                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'size': 12}))
 
     fig.update_layout(
         xaxis_tickfont_size=14,
@@ -2865,13 +2813,13 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Setores da economia com maior quantidade<br> de vínculos de empregos formais',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -2908,7 +2856,7 @@ def update_top_vinculos(w_municipios, w_municipios1):
     fig = go.Figure()
 
     fig.add_trace(go.Pie(labels=df5['ocupation'], values=df5['vinculos'],
-                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 12}))
+                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'size': 12}))
 
     fig.update_layout(
         xaxis_tickfont_size=14,
@@ -2932,13 +2880,13 @@ def update_top_vinculos(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Ocupações com maior quantidade<br>de vínculos',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(family='Arial', size=13, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -2972,7 +2920,7 @@ def update_top_vinculos_table(w_municipios, w_municipios1):
     return dash_table.DataTable(data=data, columns=columns, export_format=export_format, filter_action='native',
                                 page_action="native", page_current=0, page_size=10, sort_action='native', export_headers="display",
                                 style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold', 'fontFamily':'Arial', 'fontSize':12},
-                                style_cell={'backgroundColor': 'white', 'color': 'black', 'fontFamily':'Arial', 'fonteSize':12,
+                                style_cell={'backgroundColor': 'white', 'color': 'black', 'fontFamily':'Open Sans', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
 
@@ -3005,7 +2953,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     fig = go.Figure()
 
     fig.add_trace(go.Pie(labels=df3['subsetor'], values=df3['saldo'],
-                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Arial", 'size': 12}))
+                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'family': "Open Sans", 'size': 12}))
 
     fig.update_layout(
         xaxis_tickfont_size=14,
@@ -3029,13 +2977,13 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Setores da economia com maior<br>saldo de empregos formais (2019)',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=-0.7,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(family='Arial', size=12, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
@@ -3086,7 +3034,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
             showticklabels=True,
             linewidth=2,
             ticks='outside',
-            tickfont=dict(family='Arial', size=10, color='rgb(82, 82, 82)'),
+            tickfont=dict(family='Open Sans', size=10, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
             showgrid=False,
@@ -3112,13 +3060,13 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Ocupações com maior saldo<br>de empregos formais',
-                            font=dict(family='Arial', size=20, color='rgb(37,37,37)'),
+                            font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=-0.7,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(family='Arial', size=12, color='rgb(150,150,150)'),
+                            font=dict(family='Open Sans', size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
@@ -3152,7 +3100,7 @@ def update_saldo_vinculos_table(w_municipios, w_municipios1):
     export_format = "xlsx"
     return dash_table.DataTable(data=data, columns=columns, export_format=export_format, filter_action='native',
                                 page_action = "native", page_current=0, page_size=10, sort_action='native', export_headers="display",
-                                style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold', 'fontFamily':'Arial', 'fontSize':12},
+                                style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold', 'fontFamily':'Open Sans', 'fontSize':12},
                                 style_cell={'backgroundColor': 'white', 'color': 'black', 'fontFamily':'Arial', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
