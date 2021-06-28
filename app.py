@@ -7,8 +7,6 @@ import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import dash_table
-import locale
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 app = dash.Dash(__name__, title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP,
                                                                                                           'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
