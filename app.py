@@ -95,23 +95,23 @@ pais['municipio'] = ' Todos os Municípios'
 pais['uf'] = pais['pais']
 df = df1.append([uf, regiao, pais], ignore_index=True)
 
-data1 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/vinculos_ativos_ocupacao_subgruposprincipais_2019.csv'
+data1 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/vinculos_ativos_ocupacao_subgruposprincipais_2019.csv'
 df_caged = pd.read_csv(data1, sep=';', encoding='latin1', low_memory=False)
 
-data2 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/evolucao_pessoas_cad_pbf.csv'
+data2 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/evolucao_pessoas_cad_pbf.csv'
 df_cad = pd.read_csv(data2, sep=';', encoding='latin1', low_memory=False)
 
-data3 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
+data3 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/remuneracao_SM_ocupacao_subgruposprincipais_2015_2019.csv'
 df_remuneracao = pd.read_csv(data3, sep=';', encoding='latin1', low_memory=False)
 
-data4 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/saldo_empregos_ocupacao_subgruposprincipais_2019.csv'
+data4 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/saldo_empregos_ocupacao_subgruposprincipais_2019.csv'
 df_saldo = pd.read_csv(data4, sep=';', encoding='latin1', low_memory=False)
 
-data6 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/vinculos_ativos_subsetor_IBGE_2019_RAIS.csv'
+data6 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/vinculos_ativos_subsetor_IBGE_2019_RAIS.csv'
 df_vinculos_subsetor_ibge = pd.read_csv(data6, sep=';', encoding='latin1', low_memory=False)
 df_vinculos_subsetor_ibge = df_vinculos_subsetor_ibge.drop(['Município'], axis=1)
 
-data7 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/saldo_empregos_subsetor_IBGE_2019_RAIS.csv'
+data7 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/saldo_empregos_subsetor_IBGE_2019_RAIS.csv'
 df_saldo_subsetor_ibge = pd.read_csv(data7, sep=';', encoding='latin1', low_memory=False)
 df_saldo_subsetor_ibge = df_saldo_subsetor_ibge.drop(['Município'], axis=1)
 
