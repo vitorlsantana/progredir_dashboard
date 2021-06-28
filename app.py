@@ -20,7 +20,7 @@ server = app.server
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # CARREGAR DADOS#
-data = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/base_painel_inclus%C3%A3o_produtiva.csv'
+data = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/base_painel_inclus%C3%A3o_produtiva.csv'
 df1 = pd.read_csv(data, sep=';', encoding='latin1', low_memory=False)
 uf = df1.groupby('uf').agg({'populacao': 'sum', 'pessoas_cad':'sum', 'pes_cad_urbano':'sum', 'pes_cad_rural':'sum', 'cad_feminino':'sum', 'cad_masculino':'sum',
                                         'pessoas_pbf':'sum','pobreza_extremapob_cad':'sum','bpc_ben':'sum','bpc_pcd_ben':'sum','bpc_idoso_ben':'sum','familias_catadores_cad':'sum',
@@ -454,14 +454,14 @@ def render_tab_content(active_tab):
                                     html.H5("Distribuição por sexo", className="card-title", style={'textAlign': 'center'}),
                                     dbc.Row(
                                         [
-                                            html.H5(className="fas fa-male", style={'fontSize': 35, 'textAlign': 'center', 'color':'#FF8C00'}),
+                                            html.H5(className="fas fa-male", style={'fontSize': 35, 'textAlign': 'center', 'color':'#f77f00'}),
                                             html.P(id='masc_cad',
                                                    style={'fontSize': 24, 'margin-top': '1px', 'fontWeight': 'bold', 'margin-left':'30px'}),
                                         ],
                                     ),
                                     dbc.Row(
                                         [
-                                            html.H5(className="fas fa-female", style={'fontSize': 35, 'textAlign': 'center', 'align-items':'center', 'color':'#FF8C00'}),
+                                            html.H5(className="fas fa-female", style={'fontSize': 35, 'textAlign': 'center', 'align-items':'center', 'color':'#f77f00'}),
                                             html.P(id='fem_cad',
                                                    style={'margin-top': '1px', 'margin-left':'30px', 'margin-bottom':0, 'fontSize': 24, 'fontWeight': 'bold'}),
                                         ], style={'margin-top': '1px', 'margin-bottom':0},
@@ -876,10 +876,10 @@ def render_tab_content(active_tab):
                                             dbc.ModalBody([
                                                 "Para o cálculo da remuneração média dos docentes da educação básica foi utilizada uma metodologia de pareamento de dados do "
                                                 "Censo da Educação Básica e da Relação Anual de Informações Sociais (RAIS). Com isso, chegou-se à remuneração mensal bruta e padronizada para uma carga horária "
-                                                "de 40 horas semanais, dos docentes em exercício em sala de aula, por dependência administrativa (federal, estadual,"
-                                                "municipal e privada) e para diferentes níveis de agregação (município, UF, grandes regiões e Brasil)\n\n"
-                                                "Para maiores detalhes, consulte a página do ",
-                                                html.A('INEP.',
+                                                "de 40 horas semanais, dos docentes em exercício em sala de aula, por dependência administrativa (federal, estadual, "
+                                                "municipal e privada) e para diferentes níveis de agregação (município, UF, grandes regiões e Brasil)\n\n "
+                                                "Para maiores detalhes, consulte a ",
+                                                html.A('página do INEP.',
                                                        href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/remuneracao-media-dos-docentes",
                                                        target="_blank"),
                                             ]),
