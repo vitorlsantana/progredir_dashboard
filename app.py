@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import dash_table
 
-app = dash.Dash(title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP,
+app = dash.Dash(__name__, title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP,
                                                                                                           'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
                                                                                                           '//fonts.googleapis.com/css?family=Roboto|Lato',
                                                                                                           'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'],
@@ -293,7 +293,7 @@ app.layout = dbc.Container([
                         "Inclusão Social e Produtiva, vinculada à Secretaria Especial do Desenvolvimento Social do Ministério da Cidadania. \n\n",
                         html.A(
                             "Conheça o portal do Progredir",
-                            href="cidadania.gov.br/progredir",
+                            href="https://www.gov.br/cidadania/pt-br/acoes-e-programas/progredir",
                             target="_blank")
                     ]),
                     dbc.ModalFooter(
@@ -410,7 +410,7 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center', 'fontFamily':'Open Sans'}),
-                                    html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'fontFamily':'Open Sans'}),
+                                    html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
                                     html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold',
                                                                  'fontFamily':'Open Sans'}),
                                 ]),
@@ -652,7 +652,7 @@ def render_tab_content(active_tab):
                                             ], style={'background-color': 'white', 'margin-bottom': 0}
                                         ),
                                         dbc.Tooltip(
-                                            "Veja as ocupações que vêm aborvendo mais gente no mercado de trabalho formal. "
+                                            "Veja as ocupações que vêm absorvendo mais gente no mercado de trabalho formal. "
                                             "Pode ser uma boa ideia investir na capacitação de pessoas para trabalhar nessas ocupações.",
                                             target="tooltip-target",
                                         ),
@@ -803,7 +803,7 @@ def render_tab_content(active_tab):
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 40,
                                                   'fontWeight': 'bold'}),
                                     html.P(id='idade_serie_brasil',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
+                                           style={'textAlign': 'center', 'fontSize': 20,
                                                   'fontWeight': 'bold'}),
                                     dbc.Button("Conheça o indicador", id="open_distorcao", n_clicks=0, color="primary", size='sm'),
                                     dbc.Modal(
@@ -839,7 +839,7 @@ def render_tab_content(active_tab):
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 40,
                                                   'fontWeight': 'bold'}),
                                     html.P(id='evasao_brasil',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
+                                           style={'textAlign': 'center', 'fontSize': 20,
                                                   'fontWeight': 'bold'}),
                                     dbc.Button("Conheça o indicador", id="open_evasao", n_clicks=0, color="primary", size='sm'),
                                     dbc.Modal(
@@ -848,8 +848,8 @@ def render_tab_content(active_tab):
                                             dbc.ModalBody("A taxa de evasão é um indicador de fluxo escolar de estudantes da educação básica"
                                                           "brasileira que avalia a permanência dos alunos no sistema educacional. Indicadores de fluxo escolar "
                                                           "avaliam a transição do aluno entre dois anos consecutivos considerando os seguintes cenários "
-                                                          "possíveis: promoção, repetência, migração para EJA e evasão escolar."
-                                                          "No caso da taxa de evasão, quanto menor o indicador, menor o percentual de alunos que abandonaram o sistema educacional"),
+                                                          "possíveis: promoção, repetência, migração para EJA e evasão escolar.\n\n "
+                                                          "No caso da taxa de evasão, quanto menor o indicador, menor o percentual de alunos que abandonaram o sistema educacional."),
                                             dbc.ModalFooter(
                                                 dbc.Button(
                                                     "Fechar", id="close_evasao", className="ml-auto", n_clicks=0
@@ -858,6 +858,7 @@ def render_tab_content(active_tab):
                                         ],
                                         id="modal_evasao",
                                         is_open=False,
+                                        style={'whiteSpace': 'pre-wrap'},
                                     ),
                                 ]
                                 ),
@@ -877,7 +878,7 @@ def render_tab_content(active_tab):
                                            style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 40,
                                                   'fontWeight': 'bold'}),
                                     html.P(id='rem_docentes_brasil',
-                                           style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 20,
+                                           style={'textAlign': 'center', 'fontSize': 20,
                                                   'fontWeight': 'bold'}),
                                     dbc.Button("Saiba mais", id="open_rem", n_clicks=0, color="primary",
                                                size='sm'),
@@ -889,7 +890,11 @@ def render_tab_content(active_tab):
                                                 "Censo da Educação Básica e da Relação Anual de Informações Sociais (RAIS). Com isso, chegou-se à remuneração mensal bruta e padronizada para uma carga horária "
                                                 "de 40 horas semanais, dos docentes em exercício em sala de aula, por dependência administrativa (federal, estadual,"
                                                 "municipal e privada) e para diferentes níveis de agregação (município, UF, grandes regiões e Brasil)\n\n"
-                                                "Para maiores detalhes consulte a página do, html.A('link', href='/link-location')"]),
+                                                "Para maiores detalhes, consulte a página do ",
+                                                html.A('INEP.',
+                                                       href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/remuneracao-media-dos-docentes",
+                                                       target="_blank"),
+                                            ]),
                                             dbc.ModalFooter(
                                                 dbc.Button(
                                                     "Fechar", id="close_rem", className="ml-auto", n_clicks=0
@@ -897,6 +902,7 @@ def render_tab_content(active_tab):
                                             ),
                                         ],
                                         id="modal_rem",
+                                        style={'whiteSpace': 'pre-wrap'},
                                         is_open=False,
                                     ),
                                 ]
@@ -942,11 +948,11 @@ def render_tab_content(active_tab):
                                             dbc.ModalBody([
                                                 "As estimativas de população são publicadas anualmente pelo IBGE. O método utiliza como insumos básicos as populações "
                                                 "obtidas das Projeções da População para o Brasil e as Unidades da Federação mais recentes, bem como o crescimento populacional "
-                                                "de cada Município na última década, delineado pelas respectivas populações recenseadas nos dois últimos Censos Demográficos realizados. "
+                                                "de cada Município na última década, delineado pelas respectivas populações recenseadas nos dois últimos Censos Demográficos realizados.\n\n "
                                                 "Essas populações recenseadas, que servem de base para o cálculo da tendência de crescimento populacional dos Municípios, "
                                                 "podem ser ajustadas em consonância com os ajustes da população adotados nas Projeções da População para o Brasil e as Unidades da Federação.\n\n"
                                                 "Saiba mais no site do ",
-                                            html.A('IBGE',
+                                            html.A('IBGE.',
                                                    href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html?=&t=o-que-e",
                                                    target="_blank")]),
                                             dbc.ModalFooter(
@@ -988,12 +994,12 @@ def render_tab_content(active_tab):
                                                 "Os resultados são comparáveis entre si e estão completamente integrados às séries das Contas Nacionais e das Contas Regionais do Brasil, "
                                                 "em conformidade, portanto, com o novo manual System of national accounts 2008, SNA 2008, e com a Classificação Nacional de Atividades Econômicas - CNAE 2.0.\n\n"
                                                 "São apresentados, a preços correntes, os valores adicionados brutos dos três grandes setores de atividade econômica – Agropecuária, "
-                                                "Indústria e Serviços – bem como os impostos, líquidos de subsídios, o PIB e o PIB per capita. "
+                                                "Indústria e Serviços – bem como os impostos, líquidos de subsídios, o PIB e o PIB per capita.\n\n "
                                                 "Destaca-se o valor adicionado bruto da Administração, saúde e educação públicas e seguridade social, devido à relevância deste segmento "
                                                 "na economia municipal. A análise dos resultados, ilustrada por meio de tabelas, quadros, gráficos e cartogramas, "
-                                                "enfoca aspectos econômicos de abrangência nacional, regional e municipal"
+                                                "enfoca aspectos econômicos de abrangência nacional, regional e municipal.\n\n "
                                                 "Saiba mais sobre o PIB no site do ",
-                                                html.A('IBGE',
+                                                html.A('IBGE.',
                                                        href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html?=&t=o-que-e",
                                                        target="_blank")]),
                                             dbc.ModalFooter(
@@ -1035,7 +1041,7 @@ def render_tab_content(active_tab):
                                                 "Esses indicadores estão inseridos em 3 dimensões, sendo elas a 1) infraestrutura urbana; 2) capital humano e 3) renda e trabalho. \n\n"
                                                 "O índice varia de 0 a 1 e <b>quanto menor o valor, menor a vulnerabilidade social da localidade</b>. \n\n"
                                                 "Saiba mais sobre o Índice e tenha acesso ao Atlas da Vulnerabilidade na plataforma desenvolvida pelo ",
-                                                html.A('Instituto de Pesquisa Econômica Aplicada (IPEA)',
+                                                html.A('Instituto de Pesquisa Econômica Aplicada (IPEA).',
                                                        href="http://ivs.ipea.gov.br/index.php/pt/",
                                                        target="_blank")]),
                                             dbc.ModalFooter(
@@ -1082,7 +1088,7 @@ def render_tab_content(active_tab):
                                                 "desenvolvimento dos municípios brasileiros. Assim, o IDHM - incluindo seus três componentes, IDHM Longevidade, "
                                                 "IDHM Educação e IDHM Renda - conta um pouco da história dos municípios em três importantes dimensões do desenvolvimento "
                                                 "humano durantes duas décadas da história brasileira. \n\n",
-                                                html.A('Saiba mais sobre o Índice e tenha acesso ao Atlas do Desenvolvimento Humano',
+                                                html.A('Saiba mais sobre o Índice e tenha acesso ao Atlas do Desenvolvimento Humano.',
                                                        href="https://www.br.undp.org/content/brazil/pt/home/idh0/conceitos/o-que-e-o-idhm.html",
                                                        target="_blank")]),
                                             dbc.ModalFooter(
@@ -2160,8 +2166,8 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Anotação
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
                             xanchor='left', yanchor='bottom',
-                            text=f'{perc_abaixo_ensino_medio:.0f}% não possui ensino<br>médio completo',
-                            font=dict(family='Arial', size=17, color='white'),
+                            text=f'{perc_abaixo_ensino_medio:.0f}% não possuem ensino<br>médio completo',
+                            font=dict(family='Arial', size=18, color='white'),
                             showarrow=False, ax=20, ay=-30, bordercolor="#FF8C00", borderwidth=2, borderpad=6,
                             bgcolor="#FF8C00", align="center",
                             ))
@@ -2279,7 +2285,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
     fig1.update_layout(annotations=annotations)
 
     fig2 = go.Figure()
-    fig2.add_trace(go.Pie(labels=['Trabalhou', 'Não trabalhou'],
+    fig2.add_trace(go.Pie(labels=['Trabalharam', 'Não trabalharam'],
                           values=[trab_12_meses, nao_trab_12_meses], name='',
                           marker=dict(colors=['#1351B4', '#FF8C00']), hole=.5, textfont={'family': "Arial", 'size': 14},
                           hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
@@ -2303,7 +2309,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=-0.11, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Situação de<b>trabalhonos<br>últimos 12 meses</b>',
+                            text='Situação de<b>trabalho nos<br>últimos 12 meses</b>',
                             font=dict(family='Arial', size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -2316,7 +2322,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
     fig2.update_layout(annotations=annotations)
 
     fig3 = go.Figure()
-    fig3.add_trace(go.Pie(labels=['Trabalhou', 'Não trabalhou'], values=[trab_last_week, nao_trab_last_week], name='',
+    fig3.add_trace(go.Pie(labels=['Trabalharam', 'Não trabalharam'], values=[trab_last_week, nao_trab_last_week], name='',
                           marker=dict(colors=['#1351B4', '#FF8C00']), hole=.5, textfont={'family': "Arial", 'size': 14},
                           hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
 
