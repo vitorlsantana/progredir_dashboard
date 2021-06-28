@@ -1123,313 +1123,312 @@ def render_tab_content(active_tab):
         elif active_tab == "servicos":
             return dbc.Container(children=[
                 html.Br(),
-                dbc.Row(children=
-                [
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="https://www.seduc.ce.gov.br/wp-content/uploads/sites/37/2020/02/Novos-Caminhos-Preto-1200x813.jpg",
-                                style={'height':'10%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Painel de Demandas por Qualificação Profissional", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "Quais ocupações devem empregar mais gente nos próximos anos no seu município? E quais cursos FIC podem "
-                                        "ser oferecidos para preparar as pessoas para entrar no mercado de trabalho? Veha as sugestões do Painel "
-                                        "de Demandas por Qualificação Profissional. A ferramenta foi desenvolvida pelo Ministério da Educação em "
-                                        "parceria com o Governo do Estado de Minas Gerais.", className="card-text",
-                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Acesse o painel", color="primary", size='sm',
-                                               href='http://novoscaminhos.mec.gov.br/painel-de-demandas/demandas',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src='http://portalfat.mte.gov.br/wp-content/uploads/2017/01/MARCA_SISTEMA-NACIONAL-DE-EMPREGO-SINE-01.jpg',
-                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5('SINE', className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "Serviço de busca de vagas de emprego no Sistema Nacional de Emprego (Sine) e agendamento de entrevista com possíveis empregadores."
-                                        "Pode acessar o serviço ppessoas, acima de 14 anos, que possuem CPF e Carteira de Trabalho e Previdência Social (CTPS).",
-                                        className="card-text",
-                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Buscar vagas no SINE", color="primary", size='sm',
-                                               href='https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            )
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fHlvdW5ncyUyMGxlYXJuaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Cursos de jovem aprendiz", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "Aprendizagem Profissional é o programa de qualificação profissional e inserção no mercado de trabalho voltado para"
-                                        " jovens de 14 a 24 anos, e para pessoas com deficiência sem limite de idade.\n\n Trata-se de uma política que pode criar "
-                                        "oportunidades tanto para os jovens, especialmente no que se refere à inserção no mercado de trabalho, quanto para "
-                                        "as empresas, que têm a possibilidade de formar mão-de-obra qualificada.",
-                                        className="card-text",
-                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Acesse a lista de instituições", color="primary", size='sm',
-                                               href='http://blog.mds.gov.br/redesuas/plano-progredir-divulga-lista-de-instituicoes-que-podem-ofertar-curso-de-jovem-aprendiz/',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="https://www.gov.br/pt-br/apps/mei/view/++widget++form.widgets.imagem/@@download/MEI.png",
-                                style={'height':'20%', 'width': '100%', 'object-fit': 'cover'}),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Microeempreendedorismo Individual (MEI)", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "O governo federal disponibiliza um portal com informações para quem deseja se formalizar como microeempreendedor"
-                                        "individual, para quem já está formalizado e deseja o acesso digital a produtos e serviços financeiros.\n\n Além"
-                                        "disso, o portal apresenta a legislação aplicada, estatísticas e cursos gratuitos para quem pretende se formalizar",
-                                        className="card-text",
-                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Saiba mais sobre o MEI", color="primary", size='sm',
-                                               href='https://www.gov.br/empresas-e-negocios/pt-br/empreendedor',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="http://www.mds.gov.br/webarquivos/cidadania/marca_gov/progredir/Marca_Progredir.png",
-                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Plano Progredir", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "É um plano de ações do Governo Federal para gerar emprego, renda e promover a construção da autonomia das pessoas inscritas "
-                                        "no CADASTRO ÚNICO para programas Sociais do Governo Federal. O Progredir possui um aplicativo de internet para as pessoas "
-                                        "inscritas no CADUNICO, que conta com cursos de qualificação profissional, vagas de emprego, uma área para elaboração de currículo, "
-                                        "e a possibilidade de acessar microcrédito para empreender. Todos ofertados por parceiros (empresas ou entes públicos) "
-                                        "em sua região de forma gratuita. ", className="card-text",
-                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Acesse a plataforma do Progredir", color="primary", size='sm',
-                                               href='http://cidadania.gov.br/progredir',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="https://www.gov.br/pt-br/noticias/financas-impostos-e-gestao-publica/2020/03/governo-lanca-plataforma-para-oferta-de-produtos-e-servicos-gratuitos-a-populacao/todos-por-todos_govbr.png/@@images/9ddec400-0381-4d20-a751-28f7f2c1f2b6.png",
-                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Todos por Todos", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "A página Todos por Todos é uma campanha do Governo Federal para estimular o movimento solidário, "
-                                        "captando ofertas de serviços à população e propostas de doações aos governos, para o enfrentamento "
-                                        "à pandemia do novo coronavírus.", className="card-text",
-                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Conheça o Todos por Todos", color="primary", size='sm',
-                                               href='http://www.gov.br/pt-br/todosportodos/cursos-ead',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="https://static.wixstatic.com/media/eafbd4_ae1f1ee9b9924e2397246a5e609880bb~mv2.jpg/v1/fit/w_828%2Ch_371%2Cal_c%2Cq_80/file.jpg",
-                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Escola do Trabalhador 4.0", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "A Escola do Trabalhador 4.0 é uma iniciativa do Ministério da Economia realizada em parceria com a Microsoft "
-                                        "para promoção de qualificação e inserção profissional."
-                                        "Trata-se de um programa de qualificação profissional que oferece cursos gratuitos em temas de tecnologia e produtividade. "
-                                        "Com o objetivo de ajudar o trabalhador brasileiro a se preparar para o mercado de trabalho.", className="card-text",
-                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Acesse a plataforma", color="primary", size='sm',
-                                               href='https://empregamais.economia.gov.br/escoladotrabalhador40/',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="http://utramig.mg.gov.br/wp-content/uploads/2021/03/Qualifica-_emprega-.png",
-                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Qualifica Emprega +", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "Qualifica Mais é uma parceria com o Ministério da Educação para a oferta de cursos de qualificação profissional, "
-                                        "à distância, na área de Tecnologia da Informação e Comunicação.", className="card-text",
-                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Acesse o site", color="primary", size='sm',
-                                               href='https://www.gov.br/mec/pt-br/acesso-a-informacao/institucional/secretarias/secretaria-de-educacao-profissional/projeto-piloto-qualifica-mais',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="https://infosolda.com.br/wp-content/uploads/2021/01/senai.png",
-                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Aprendizagem 4.0 / Mundo SENAI", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "O Aprendizagem 4.0 é um programa que busca qualificar jovens de 14 a 24 anos por "
-                                        "meio de um currículo que contempla as competências técnicas e socioemocionais exigidas pela Indústria 4.0, "
-                                        "importantes no mundo do trabalho atual. A iniciativa é uma experiência do SENAI e conta com a "
-                                        "parceria da Secretaria Especial de Produtividade, Emprego e Produtividade do Ministério da Economia, "
-                                        "com o objetivo de estruturar novos modelos de oferta de aprendizagem para a economia 4.0.", className="card-text",
-                                        style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Acesse a plataforma", color="primary", size='sm',
-                                               href='https://mundosenai.com.br/aprendizagem40/',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(src="https://feiraodasoportunidades.com.br/wp-content/uploads/2021/03/plat-300x190.png",
-                                        style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
+                dbc.Row(
+                    [
+                        dbc.CardDeck(
+                            [
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="https://www.seduc.ce.gov.br/wp-content/uploads/sites/37/2020/02/Novos-Caminhos-Preto-1200x813.jpg",
+                                            className='card-img-top',
+                                            # style={'height':'30%', 'object-fit':'auto'},
                                         ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Iniciativa 1 Milhão de Oportunidades", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "A iniciativa Um Milhão de Oportunidades é a maior articulação pela juventude do Brasil reunindo Nações Unidas, "
-                                        "empresas, sociedade civil e governos para gerar um milhão de oportunidades de formação e acesso ao mundo do "
-                                        "trabalho para adolescentes e jovens de 14 a 24 anos em situação de vulnerabilidade nos próximos dois anos",
-                                        className="card-text", style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Acesse a plataforma", color="primary", size='sm',
-                                               href='https://1mio.com.br/',
-                                               target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="https://aliancaempreendedora.org.br/bar/logo-alianca.svg",
-                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Aliança Empreendedora", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "Trata-se de uma iniciativa que busca apoiar empresas, organizações sociais e governos a desenvolver "
-                                        "modelos de negócios inclusivos e projetos de apoio a microempreendedores de baixa renda, "
-                                        "ampliando o acesso a conhecimento, redes, mercados e crédito para que desenvolvam ou iniciem seus empreendimentos",
-                                        className="card-text", style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Acesse o site e conheça", color="primary", size='sm',
-                                               href='https://aliancaempreendedora.org.br/', target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                    dbc.Col([dbc.Card(
-                        [
-                            dbc.CardImg(
-                                src="http://rme.net.br/wp-content/uploads/2018/11/esbo%C3%A7o-logo-irme-1-1024x545.png",
-                                style={'height': '20%', 'width': '100%', 'object-fit': 'cover'}
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.H5("Instituto Rede Mulher Empreendedora (IRME)", className="card-title",
-                                            style={'font-size': '20px', 'font-weight': 'bold', 'margin-bottom': '10px'}),
-                                    html.P(
-                                        "O IRME é uma organização que tua no fomento à geração de renda da mulher, através do empreendedorismo e empregabilidade. "
-                                        "Desenvolve projetos e capacitações para mulheres em todo o Brasil, tendo como objetivo principal garantir independência "
-                                        "financeira e de decisão sobre seus negócios e vidas.",
-                                        className="card-text", style={'font-size': '14px', 'opacity': .7, 'margin-bottom': '10px'}
-                                    ),
-                                    dbc.Button("Acesse o site e conheça", color="primary", size='sm',
-                                               href='https://institutorme.org.br/', target="_blank"),
-                                ], style={'padding': '16px'}
-                            ),
-                        ], className='overflow-hidden', style={"width": "100%", 'box-shadow': '1px 1px 1px 1px lightgrey'}),
-                        html.Br(),
-                    ], xs=12, sm=12, md=12, lg=4, xl=4
-                    ),
-                ],
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Painel de Demandas por Qualificação Profissional",
+                                                        className="card-title"),
+                                                html.P(
+                                                    "Quais ocupações devem empregar mais gente nos próximos anos no seu município? E quais cursos FIC podem "
+                                                    "ser oferecidos para preparar as pessoas para entrar no mercado de trabalho? Veha as sugestões do Painel "
+                                                    "de Demandas por Qualificação Profissional. A ferramenta foi desenvolvida pelo Ministério da Educação em "
+                                                    "parceria com o Governo do Estado de Minas Gerais.",
+                                                    className="card-text",
+                                                ),
+                                            ]
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Acesse o painel", color="primary", size='sm',
+                                                       href='http://novoscaminhos.mec.gov.br/painel-de-demandas/demandas',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden',
+                                    style={'box-shadow': '1px 1px 1px 1px lightgrey'},
+                                ),
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src='http://portalfat.mte.gov.br/wp-content/uploads/2017/01/MARCA_SISTEMA-NACIONAL-DE-EMPREGO-SINE-01.jpg',
+                                            className='card-img-top',
+                                            # style={'height':'30%', 'object-fit':'auto'},
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5('SINE', className="card-title"),
+                                                html.P(
+                                                    "Serviço de busca de vagas de emprego no Sistema Nacional de Emprego (Sine) e agendamento de entrevista com possíveis empregadores."
+                                                    "Pode acessar o serviço ppessoas, acima de 14 anos, que possuem CPF e Carteira de Trabalho e Previdência Social (CTPS).",
+                                                    className="card-text",
+                                                ),
+                                            ],
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Buscar vagas no SINE", color="primary", size='sm',
+                                                       href='https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden',
+                                    style={'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fHlvdW5ncyUyMGxlYXJuaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                                            className='card-img-top',
+                                            # style={'height':'30%', 'object-fit':'auto'},
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Cursos de jovem aprendiz", className="card-title"),
+                                                html.P(
+                                                    "Aprendizagem Profissional é o programa de qualificação profissional e inserção no mercado de trabalho voltado para"
+                                                    " jovens de 14 a 24 anos, e para pessoas com deficiência sem limite de idade.\n\n Trata-se de uma política que pode criar "
+                                                    "oportunidades tanto para os jovens, especialmente no que se refere à inserção no mercado de trabalho, quanto para "
+                                                    "as empresas, que têm a possibilidade de formar mão-de-obra qualificada.",
+                                                    className="card-text",
+                                                ),
+                                            ],
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Acesse a lista de instituições", color="primary", size='sm',
+                                                       href='http://blog.mds.gov.br/redesuas/plano-progredir-divulga-lista-de-instituicoes-que-podem-ofertar-curso-de-jovem-aprendiz/',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden',
+                                    style={'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                ),
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="http://www.mds.gov.br/webarquivos/cidadania/marca_gov/progredir/Marca_Progredir.png",
+                                            className='card-img-top',
+                                            # style={'height':'30%', 'object-fit':'auto'},
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Plano Progredir", className="card-title"),
+                                                html.P(
+                                                    "É um plano de ações do Governo Federal para gerar emprego, renda e promover a construção da autonomia das pessoas inscritas "
+                                                    "no Cadastro Único para Programas Sociais. O Progredir possui um aplicativo que conta com cursos de qualificação profissional, "
+                                                    "vagas de emprego, uma área para elaboração de currículo, e a possibilidade de acessar microcrédito para empreender. "
+                                                    "Todos ofertados por parceiros (empresas ou entes públicos) de forma gratuita.", className="card-text",
+                                                ),
+                                            ]
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Acesse a plataforma do Progredir", color="primary", size='sm',
+                                                       href='http://cidadania.gov.br/progredir',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden',
+                                    style={'box-shadow': '1px 1px 1px 1px lightgrey'})
+                            ]
+                        ),
+                    ]
+                ),
+                html.Br(),
+                dbc.Row(
+                    [
+                        dbc.CardDeck(
+                            [
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="https://www.gov.br/pt-br/apps/mei/view/++widget++form.widgets.imagem/@@download/MEI.png",
+                                            className='card-img-top',
+                                            # style={'height': '30%', 'object-fit': 'auto'}
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Microeempreendedorismo Individual (MEI)",
+                                                        className="card-title"),
+                                                html.P(
+                                                    "O governo federal disponibiliza um portal com informações para quem deseja se formalizar como microeempreendedor"
+                                                    "individual, para quem já está formalizado e deseja o acesso digital a produtos e serviços financeiros.\n\n Além"
+                                                    "disso, o portal apresenta a legislação aplicada, estatísticas e cursos gratuitos para quem pretende se formalizar",
+                                                    className="card-text",
+                                                ),
+                                            ],
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Saiba mais sobre o MEI", color="primary", size='sm',
+                                                       href='https://www.gov.br/empresas-e-negocios/pt-br/empreendedor',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden',
+                                    style={'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                ),
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="https://www.gov.br/pt-br/noticias/financas-impostos-e-gestao-publica/2020/03/governo-lanca-plataforma-para-oferta-de-produtos-e-servicos-gratuitos-a-populacao/todos-por-todos_govbr.png/@@images/9ddec400-0381-4d20-a751-28f7f2c1f2b6.png",
+                                            className='card-img-top',
+                                            # style={'height': '30%', 'object-fit': 'auto'}
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Todos por Todos", className="card-title"),
+                                                html.P(
+                                                    "A página Todos por Todos é uma campanha do Governo Federal para estimular o movimento solidário, "
+                                                    "captando ofertas de serviços à população e propostas de doações aos governos, para o enfrentamento "
+                                                    "à pandemia do novo coronavírus.", className="card-text",
+                                                ),
+                                            ],
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Conheça o Todos por Todos", color="primary", size='sm',
+                                                       href='http://www.gov.br/pt-br/todosportodos/cursos-ead',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden',
+                                    style={'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                ),
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="https://static.wixstatic.com/media/eafbd4_ae1f1ee9b9924e2397246a5e609880bb~mv2.jpg/v1/fit/w_828%2Ch_371%2Cal_c%2Cq_80/file.jpg",
+                                            className='card-img-top',
+                                            # style={'height': '30%', 'object-fit': 'auto'}
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Escola do Trabalhador 4.0", className="card-title"),
+                                                html.P(
+                                                    "A Escola do Trabalhador 4.0 é uma iniciativa do Ministério da Economia realizada em parceria com a Microsoft "
+                                                    "para promoção de qualificação e inserção profissional."
+                                                    "Trata-se de um programa de qualificação profissional que oferece cursos gratuitos em temas de tecnologia e produtividade. "
+                                                    "Com o objetivo de ajudar o trabalhador brasileiro a se preparar para o mercado de trabalho.",
+                                                    className="card-text",
+                                                ),
+                                            ],
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Acesse a plataforma", color="primary", size='sm',
+                                                       href='https://empregamais.economia.gov.br/escoladotrabalhador40/',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden', style={'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                ),
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="http://utramig.mg.gov.br/wp-content/uploads/2021/03/Qualifica-_emprega-.png",
+                                            className='card-img-top',
+                                            # style={'height': '30%', 'object-fit': 'auto'}
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Qualifica Emprega +", className="card-title"),
+                                                html.P(
+                                                    "Qualifica Mais é uma parceria com o Ministério da Educação para a oferta de cursos de qualificação profissional, "
+                                                    "à distância, na área de Tecnologia da Informação e Comunicação.",
+                                                    className="card-text",
+                                                ),
+                                            ],
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Acesse o site", color="primary", size='sm',
+                                                       href='https://www.gov.br/mec/pt-br/acesso-a-informacao/institucional/secretarias/secretaria-de-educacao-profissional/projeto-piloto-qualifica-mais',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden', style={'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                ),
+                            ]
+                        ),
+                    ]
+                ),
+                html.Br(),
+                dbc.Row(
+                    [
+                        dbc.CardDeck(
+                            [
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="https://infosolda.com.br/wp-content/uploads/2021/01/senai.png",
+                                            className='card-img-top',
+                                            # style={'height': '30%', 'object-fit': 'auto'}
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Aprendizagem 4.0 / Mundo SENAI", className="card-title"),
+                                                html.P(
+                                                    "O Aprendizagem 4.0 é um programa que busca qualificar jovens de 14 a 24 anos por "
+                                                    "meio de um currículo que contempla as competências técnicas e socioemocionais exigidas pela Indústria 4.0, "
+                                                    "importantes no mundo do trabalho atual. A iniciativa é uma experiência do SENAI e conta com a "
+                                                    "parceria da Secretaria Especial de Produtividade, Emprego e Produtividade do Ministério da Economia, "
+                                                    "com o objetivo de estruturar novos modelos de oferta de aprendizagem para a economia 4.0.",
+                                                    className="card-text",
+                                                ),
+                                            ],
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Acesse a plataforma", color="primary", size='sm',
+                                                       href='https://mundosenai.com.br/aprendizagem40/',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden', style={'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                ),
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="https://aliancaempreendedora.org.br/bar/logo-alianca.svg",
+                                            className='card-img-top',
+                                            # style={'height': '30%', 'object-fit': 'auto'}
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Aliança Empreendedora", className="card-title"),
+                                                html.P(
+                                                    "Trata-se de uma iniciativa que busca apoiar empresas, organizações sociais e governos a desenvolver "
+                                                    "modelos de negócios inclusivos e projetos de apoio a microempreendedores de baixa renda, "
+                                                    "ampliando o acesso a conhecimento, redes, mercados e crédito para que desenvolvam ou iniciem seus empreendimentos",
+                                                    className="card-text",
+                                                ),
+                                            ],
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Acesse o site e conheça", color="primary", size='sm',
+                                                       href='https://aliancaempreendedora.org.br/',
+                                                       target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden', style={'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                ),
+                                dbc.Card(
+                                    [
+                                        dbc.CardImg(
+                                            src="http://rme.net.br/wp-content/uploads/2018/11/esbo%C3%A7o-logo-irme-1-1024x545.png",
+                                            className='card-img-top',
+                                            # style={'height': '30%', 'object-fit': 'auto'}
+                                        ),
+                                        dbc.CardBody(
+                                            [
+                                                html.H5("Instituto Rede Mulher Empreendedora (IRME)", className="card-title"),
+                                                html.P(
+                                                    "O IRME é uma organização que tua no fomento à geração de renda da mulher, através do empreendedorismo e empregabilidade. "
+                                                    "Desenvolve projetos e capacitações para mulheres em todo o Brasil, tendo como objetivo principal garantir independência "
+                                                    "financeira e de decisão sobre seus negócios e vidas.",
+                                                    className="card-text",
+                                                ),
+                                            ],
+                                        ),
+                                        dbc.CardFooter(
+                                            dbc.Button("Acesse o site e conheça", color="primary", size='sm',
+                                                       href='https://institutorme.org.br/', target="_blank"), style={'background-color':'white'}
+                                        )
+                                    ], className='card overflow-hidden', style={'box-shadow': '1px 1px 1px 1px lightgrey'}),
+                            ]
+                        ),
+                    ]
                 ),
             ], fluid=True
             )
@@ -1518,6 +1517,35 @@ def render_tab_content(active_tab):
                         ], style={'overflow': 'hidden', 'background': 'white', 'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'border-radius':'5px',
                                   'display': 'flex', 'align-items': 'center', 'margin-bottom': '20px', 'width': '100%'}
                         ),
+                        html.Div(children=
+                        [
+                            html.Img(
+                                src='https://openknowledge.worldbank.org/bitstream/handle/10986/18031/9781464802027.pdf.jpg?sequence=4&isAllowed=y',
+                                style={'height': '100%', 'width': '120px', 'object-fit': 'cover'}),
+                            html.Div([
+                                html.H2("Entrepreneurship Education and Training Programs around the World",
+                                        style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
+                                        ),
+                                html.P(
+                                    "O estudo analisa um conjunto de intervenções relacionadas a qualificação empreendedora, que inclui atividades "
+                                    "de transmissão de mentalidades e habilidades específicas associadas ao empreendedorismo, bem como programas de "
+                                    "educação e formação que visem gerar resultados de empreendedorismo. O objetivo deste estudo é identificar e "
+                                    "organizar o cenário da qualificação empreendedora, tipos de programa, bem como as dimensões que moldam os resultados. "
+                                    "O estudo descreve um conjunto de ideias práticas sobre o desenho e implementação de programas, resultados pretendidos, e contextos.",
+                                    style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px',
+                                           'margin-top': '8px'}
+                                    ),
+                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
+                                           href='https://openknowledge.worldbank.org/handle/10986/34917',
+                                           target="_blank"),
+                            ],
+                                style={'padding': '16px'}
+                            ),
+                        ], style={'overflow': 'hidden', 'background': 'white',
+                                  'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'margin-bottom': '20px', 'width': '100%',
+                                  'border-radius': '5px',
+                                  'display': 'flex', 'align-items': 'center'}
+                        ),
                         ]
                     ),
                     dbc.Col([
@@ -1572,32 +1600,6 @@ def render_tab_content(active_tab):
                                        ),
                                 dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
                                            href='https://openknowledge.worldbank.org/bitstream/handle/10986/18031/9781464802027.pdf?sequence=1&isAllowed=y ',
-                                           target="_blank"),
-                            ],
-                                style={'padding': '16px'}
-                            ),
-                        ], style={'overflow': 'hidden', 'background': 'white',
-                                  'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'margin-bottom': '20px', 'width': '100%', 'border-radius':'5px',
-                                  'display': 'flex', 'align-items': 'center'}
-                        ),
-                        html.Div(children=
-                        [
-                            html.Img(
-                                src='https://openknowledge.worldbank.org/bitstream/handle/10986/18031/9781464802027.pdf.jpg?sequence=4&isAllowed=y',
-                                style={'height': '100%', 'width': '120px', 'object-fit': 'cover'}),
-                            html.Div([
-                                html.H2("Entrepreneurship Education and Training Programs around the World",
-                                        style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
-                                        ),
-                                html.P("O estudo analisa um conjunto de intervenções relacionadas a qualificação empreendedora, que inclui atividades "
-                                       "de transmissão de mentalidades e habilidades específicas associadas ao empreendedorismo, bem como programas de "
-                                       "educação e formação que visem gerar resultados de empreendedorismo. O objetivo deste estudo é identificar e "
-                                       "organizar o cenário da qualificação empreendedora, tipos de programa, bem como as dimensões que moldam os resultados. "
-                                       "O estudo descreve um conjunto de ideias práticas sobre o desenho e implementação de programas, resultados pretendidos, e contextos.",
-                                       style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px', 'margin-top': '8px'}
-                                       ),
-                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
-                                           href='https://openknowledge.worldbank.org/handle/10986/34917',
                                            target="_blank"),
                             ],
                                 style={'padding': '16px'}
