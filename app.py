@@ -608,37 +608,6 @@ def render_tab_content(active_tab):
                             html.Br(),
                             dbc.Row(
                                 [
-                                    dbc.Col(dcc.Graph(id='vinculos_subsetor'), style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12,
-                                            sm=12, md=12, lg=12, xl=12),
-                                    dbc.Col(dcc.Graph(id='saldo_subsetor'), style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12,
-                                            sm=12, md=12, lg=12, xl=12),
-                                    dbc.Col([
-                                        dcc.Graph(id='remuneracao'),
-                                        dbc.Button(
-                                            "Abrir tabela com todas as ocupações",
-                                            id="open-body-scroll1", n_clicks=0,
-                                            className="mt-2",
-                                            color="dark",
-                                        ),
-                                        dbc.Modal(
-                                            [
-                                                dbc.ModalHeader("Tabela"),
-                                                dbc.ModalBody(id="table2"),
-                                                dbc.ModalFooter(
-                                                    dbc.Button(
-                                                        "Fechar",
-                                                        id="close-body-scroll1",
-                                                        className="ml-auto",
-                                                        n_clicks=0,
-                                                    )
-                                                ),
-                                            ],
-                                            id="modal-body-scroll1",
-                                            scrollable=True,
-                                            size="lg",
-                                            is_open=False,
-                                        ),
-                                    ], style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12, sm=12, md=12, lg=12, xl=12),
                                     dbc.Col([
                                         html.P(
                                             [
@@ -681,7 +650,39 @@ def render_tab_content(active_tab):
                                             is_open=False,
                                         ),
 
-                                    ], style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12, sm=12, md=12, lg=12, xl=12)
+                                    ], style={'marginBottom': '10px', 'fontFamily': 'Open Sans'}, xs=12, sm=12, md=12,
+                                        lg=12, xl=12),
+                                    dbc.Col(dcc.Graph(id='vinculos_subsetor'), style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12,
+                                            sm=12, md=12, lg=12, xl=12),
+                                    dbc.Col(dcc.Graph(id='saldo_subsetor'), style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12,
+                                            sm=12, md=12, lg=12, xl=12),
+                                    dbc.Col([
+                                        dcc.Graph(id='remuneracao'),
+                                        dbc.Button(
+                                            "Abrir tabela com todas as ocupações",
+                                            id="open-body-scroll1", n_clicks=0,
+                                            className="mt-2",
+                                            color="dark",
+                                        ),
+                                        dbc.Modal(
+                                            [
+                                                dbc.ModalHeader("Tabela"),
+                                                dbc.ModalBody(id="table2"),
+                                                dbc.ModalFooter(
+                                                    dbc.Button(
+                                                        "Fechar",
+                                                        id="close-body-scroll1",
+                                                        className="ml-auto",
+                                                        n_clicks=0,
+                                                    )
+                                                ),
+                                            ],
+                                            id="modal-body-scroll1",
+                                            scrollable=True,
+                                            size="lg",
+                                            is_open=False,
+                                        ),
+                                    ], style={'marginBottom': '10px', 'fontFamily':'Open Sans'}, xs=12, sm=12, md=12, lg=12, xl=12),
                                 ], align='center', justify="center"),
                             html.Br(),
                                 ], xs=12, sm=12, md=12, lg=6, xl=6),
@@ -776,10 +777,10 @@ def render_tab_content(active_tab):
                             [
                                 dbc.CardBody(children=
                                 [
-                                    html.H6("Sobre os dados", className="card-title",
-                                            style={'textAlign': 'center'}),
+                                    html.H5("Sobre os dados", className="card-title",
+                                            style={'textAlign': 'center', 'fontWeight':'bold'}),
                                     html.P(
-                                        'Os dados de distorção idade-série, evasão escolar e de remuneração média dos docentes da educação'
+                                        'Os dados de distorção idade-série, evasão escolar e de remuneração média dos docentes da educação '
                                         'básica foram obtidos da página de indicadores educacionais do Instituto Nacional de Estudos e Pesquisas Educacionais'
                                         'Anísio Teixeira (INEP).',
                                         style={'textAlign': 'justify', 'opacity': .7, 'fontSize': 15}),
@@ -2057,14 +2058,26 @@ def display_escolaridade(w_municipios, w_municipios1):
     sabe_ler_escrever = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['sabe_ler_escrever'].sum()
     nao_sabe_ler_escrever = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['não_sabe_ler_escrever'].sum()
 
+    municipio = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['municipio']
+
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=nivel, y=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior],
-                         text=[perc_sem_instrucao, perc_fund_incompleto, perc_fund_completo, perc_medio_incompleto, perc_medio_completo,
-                               perc_superior], name='', marker=dict(color='#1351B4'), textposition='auto', textfont={'family': "Open Sans", 'size':14},
+    fig.add_trace(go.Bar(x=nivel, y=[perc_sem_instrucao, perc_fund_incompleto, perc_fund_completo, perc_medio_incompleto, perc_medio_completo,
+                               perc_superior],
+                         text=[sem_instrucao, fund_incompleto, fund_completo, medio_incompleto, medio_completo, superior],
+                         name='Cadastro Único', marker=dict(color='#FF8C00'), textposition='auto', textfont={'size':14},
                          hovertemplate=
-                         '<b>População</b>: %{y:.0f}' +
+                         '<b>População</b>: %{text:.0f}' +
                          '<br><b>Nível</b>: %{x}<br>',
-                         texttemplate='%{text:.0f}%'
+                         texttemplate='%{y:.0f}%'
+                         ),
+                  )
+    fig.add_trace(go.Bar(x=nivel, y=[7.2, 33.5, 8.0, 6.7, 25.1, 19.5],
+                         text=[14140000, 67252000, 16122000, 13394000, 50513000, 39268000],
+                         name='Geral', marker=dict(color='#1351B4'), textposition='auto', textfont={'size':14},
+                         hovertemplate=
+                         '<b>População</b>: %{text:.0f}' +
+                         '<br><b>Nível</b>: %{x}<br>',
+                         texttemplate='%{y:.0f}%',
                          ),
                   )
     fig.update_layout(
@@ -2091,7 +2104,9 @@ def display_escolaridade(w_municipios, w_municipios1):
             t=100,
             pad=0
         ),
-        plot_bgcolor='white'
+        plot_bgcolor='white',
+        barmode='group',
+        showlegend=True
     )
 
     fig.update_traces()
@@ -2107,7 +2122,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, fev/2021',
+                            text='Fonte: Ministério da Cidadania, fev/2021<br>IBGE/PNAD Contínua, abril/2021',
                             font=dict(family='Open Sans', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -2122,23 +2137,37 @@ def display_escolaridade(w_municipios, w_municipios1):
 
     fig.update_layout(annotations=annotations)
 
-    fig2 = go.Figure()
     colors = ['#1351B4', '#FF8C00']
-    fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True,
-                          name='', hole=.5, marker=dict(colors=colors), textfont={'family': "Open Sans", 'size': 15},
-                          hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
+
+    fig2 = make_subplots(1, 2, specs=[[{'type': 'domain'}, {'type': 'domain'}]],
+                        subplot_titles=['Cadastro Único', 'Geral'])
+    fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], hole=.5,
+                          marker=dict(colors=colors), scalegroup='one', name=""), 1, 1)
+    fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[154232294, 11253000], hole=.5, scalegroup='one',
+                         name="Brasil"), 1, 2)
+
+    fig2.update_layout(
+        margin=dict(
+            l=20,
+            r=20,
+            b=100,
+            t=100,
+            pad=0
+        ),
+    )
 
     annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+
+    # # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.15,
                             xanchor='left', yanchor='bottom',
-                            text='População do Cadastro Único por <b>grau de<br>alfabetização</b>',
+                            text='População por <b>taxa de analfabetismo</b>',
                             font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.1,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, fev/2021',
+                            text='Fonte: Ministério da Cidadania, fev/2021<br>IBGE/PNAD Contínua, 2018',
                             font=dict(family='Open Sans', size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -2879,7 +2908,7 @@ def update_top_vinculos(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Ocupações com maior quantidade<br>de vínculos',
+                            text='Ocupações com maior quantidade<br>de vínculos ativos',
                             font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
@@ -2980,7 +3009,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
                             font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.4, y=-0.7,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
                             font=dict(family='Open Sans', size=12, color='rgb(150,150,150)'),
@@ -3101,7 +3130,7 @@ def update_saldo_vinculos_table(w_municipios, w_municipios1):
     return dash_table.DataTable(data=data, columns=columns, export_format=export_format, filter_action='native',
                                 page_action = "native", page_current=0, page_size=10, sort_action='native', export_headers="display",
                                 style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold', 'fontFamily':'Open Sans', 'fontSize':12},
-                                style_cell={'backgroundColor': 'white', 'color': 'black', 'fontFamily':'Arial', 'fonteSize':12,
+                                style_cell={'backgroundColor': 'white', 'color': 'black', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
 
