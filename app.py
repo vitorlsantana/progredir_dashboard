@@ -504,7 +504,7 @@ def render_tab_content(active_tab):
                                             dbc.CardBody(children=
                                             [
                                                 html.H5("Situação de emprego formal", className="card-title",
-                                                        style={'textAlign': 'center'}),
+                                                        style={'textAlign': 'center', 'fontWeight':'bold'}),
                                                 html.P(
                                                     'Os dados de emprego formal foram obtidos da Relação Anual de Informações Sociais (RAIS), que é um cadastro administrativo, '
                                                     'instituído pelo Decreto nº 76.900/1975, de âmbito nacional, periodicidade anual e de declaração obrigatória '
@@ -600,8 +600,8 @@ def render_tab_content(active_tab):
                                                 html.Span(
                                                     className="far fa-lightbulb",
                                                     id="tooltip-target",
-                                                    style={'fontSize': 25, "cursor": "pointer", 'color': '#fb8500',
-                                                           'padding-left': '10px', 'padding-top': '5px'},
+                                                    style={'fontSize': 20, "cursor": "pointer", 'color': '#fb8500',
+                                                           'padding-left': '10px', 'padding-top': '7px'},
                                                 ),
                                             ], style={'background-color': 'white', 'margin-bottom': 0}
                                         ),
@@ -610,7 +610,7 @@ def render_tab_content(active_tab):
                                             "Pode ser uma boa ideia investir na capacitação de pessoas para trabalhar nessas ocupações.",
                                             target="tooltip-target",
                                         ),
-                                        dcc.Graph(id='saldo_ocupacao'),
+                                        dcc.Graph(id='saldo_ocupacao', config={'responsive': True}),
                                         dbc.Button(
                                             "Abrir tabela com todas as ocupações",
                                             id="open-body-scroll2", n_clicks=0,
@@ -643,7 +643,7 @@ def render_tab_content(active_tab):
                                     dbc.Col(dcc.Graph(id='saldo_subsetor'), style={'marginBottom': '10px'}, xs=12,
                                             sm=12, md=12, lg=12, xl=12),
                                     dbc.Col([
-                                        dcc.Graph(id='remuneracao'),
+                                        dcc.Graph(id='remuneracao', config={'responsive': True}),
                                         dbc.Button(
                                             "Abrir tabela com todas as ocupações",
                                             id="open-body-scroll1", n_clicks=0,
@@ -683,7 +683,7 @@ def render_tab_content(active_tab):
                                                 dbc.CardBody(children=
                                                 [
                                                     html.H5("Situação de trabalho das pessoas inscritas no Cadastro Único", className="card-title",
-                                                            style={'textAlign': 'center'}),
+                                                            style={'textAlign': 'center', 'fontWeight':'bold'}),
                                                     html.P(
                                                         'As informações sobre a situação de trabalho das pessoas inscritas no Cadastro Único são coletadas de pessoas '
                                                         'de 14 anos de idade ou mais e, para os propósitos do Cadastro Único, é considerado trabalho tanto o exercício '
@@ -741,7 +741,7 @@ def render_tab_content(active_tab):
                                     [
                                         dbc.Col(dcc.Graph(id='funcao_principal'), style={'marginBottom': '10px'}, xs=12,
                                                 sm=12, md=12, lg=12, xl=12),
-                                        dbc.Col(dcc.Graph(id='mei'), xs=12, sm=12, md=12, lg=12, xl=12)
+                                        dbc.Col(dcc.Graph(id='mei', config={'responsive': True}), xs=12, sm=12, md=12, lg=12, xl=12)
                                     ],
                                     align='center', justify="center",
                                 ),
@@ -1162,7 +1162,6 @@ def render_tab_content(active_tab):
                                         dbc.CardImg(
                                             src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fHlvdW5ncyUyMGxlYXJuaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
                                             className='card-img-top',
-                                            # style={'height':'30%', 'object-fit':'auto'},
                                         ),
                                         dbc.CardBody(
                                             [
@@ -2329,14 +2328,20 @@ def display_mei(w_municipios, w_municipios1):
             showticklabels=False,
         ),
         autosize=True,
-        margin=dict(autoexpand=True),
+        margin=dict(
+            l=15,
+            r=15,
+            b=100,
+            t=100,
+            pad=0
+        ),
         showlegend=False,
         plot_bgcolor='white',
     )
 
     annotations = []
     # Title
-    annotations.append(dict(xref='paper', yref='paper', x=-0.1, y=1.10,
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Microeempreendedor Individual (MEI)',
                             font=dict(size=20, color='rgb(37,37,37)'),
@@ -2345,7 +2350,7 @@ def display_mei(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania/Ministério da Economia, jul/2020',
-                            font=dict(size=13, color='rgb(150,150,150)'),
+                            font=dict(size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -2673,7 +2678,12 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
         ),
         autosize=True,
         barmode='group',
-        margin=dict(autoexpand=True),
+        margin=dict(
+            l=20,
+            r=20,
+            b=100,
+            t=100,
+            pad=0),
         showlegend=False,
         plot_bgcolor='white'
     )
@@ -2682,14 +2692,14 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
-                            text='Remuneração média mensal dos empregos formais',
-                            font=dict(size=20, color='rgb(37,37,37)'),
+                            text='Remuneração média mensal dos<br>empregos formais',
+                            font=dict(size=18, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(size=15, color='rgb(150,150,150)'),
+                            font=dict(size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -2778,8 +2788,8 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
         ),
         autosize=True,
         margin=dict(
-            l=15,
-            r=15,
+            l=20,
+            r=20,
             b=100,
             t=100,
             pad=0
@@ -2793,13 +2803,13 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='Setores da economia com maior quantidade<br> de vínculos de empregos formais',
-                            font=dict(size=20, color='rgb(37,37,37)'),
+                            font=dict(size=18, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.25,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
-                            font=dict(size=13, color='rgb(150,150,150)'),
+                            font=dict(size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -3024,8 +3034,8 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
         ),
         autosize=True,
         margin=dict(
-            l=15,
-            r=15,
+            l=20,
+            r=20,
             b=100,
             t=100,
             pad=1
@@ -3042,7 +3052,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
                             font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.4, y=-0.7,
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.7,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
                             font=dict(size=12, color='rgb(150,150,150)'),
