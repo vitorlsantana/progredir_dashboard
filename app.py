@@ -1517,6 +1517,32 @@ def render_tab_content(active_tab):
                                   'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'margin-bottom': '20px', 'width': '100%',
                                   'border-radius': '5px', 'display': 'flex', 'align-items': 'center'}
                         ),
+                        html.Div(children=
+                        [
+                            html.Img(
+                                src='http://www.grade.org.pe/wp-content/uploads/hakuwinay_perspective2-600x352.jpg',
+                                style={'height': '100%', 'width': '120px', 'object-fit': 'cover'}),
+                            html.Div([
+                                html.H2("Combinando protección social con generación de oportunidades económicas: una evaluación de los avances del programa Haku Wiñay",
+                                        style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
+                                        ),
+                                html.P(
+                                    "O objetivo do estudo é fornecer evidências dos impactos iniciais que o projeto Mi Chacra Emprendedora-Haku Wiñay, no Peru, teve em "
+                                    "uma amostra representativa de suas áreas de intervenção na zona rural. O trabalho situa o projeto no marco de "
+                                    "intervenções que combinam programas de desenvolvimento produtivo com política social.",
+                                    style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px',
+                                           'margin-top': '8px'}
+                                ),
+                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
+                                           href='http://www.grade.org.pe/wp-content/uploads/LIBROGRADE_FORDHakuWinay.pdf',
+                                           target="_blank"),
+                            ],
+                                style={'padding': '16px'}
+                            ),
+                        ], style={'overflow': 'hidden', 'background': 'white',
+                                  'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'margin-bottom': '20px', 'width': '100%',
+                                  'border-radius': '5px', 'display': 'flex', 'align-items': 'center'}
+                        ),
                         ]
                     ),
                     dbc.Col([
@@ -1577,6 +1603,37 @@ def render_tab_content(active_tab):
                             ),
                         ], style={'overflow': 'hidden', 'background': 'white',
                                   'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'margin-bottom': '20px', 'width': '100%', 'border-radius':'5px',
+                                  'display': 'flex', 'align-items': 'center'}
+                        ),
+                        html.Div(children=
+                        [
+                            html.Img(
+                                src='https://i.pinimg.com/originals/20/ae/71/20ae718e7da5583f22ab4a325a988124.png',
+                                style={'height': '100%', 'width': '120px',
+                                       'object-fit': 'cover'}),
+                            html.Div([
+                                html.H2(
+                                    "The Impact of an Adolescent Girls Employment Program",
+                                    style={'font-size': '20px', 'font-weight': 'bold', 'margin': 0}
+                                    ),
+                                html.P(
+                                    "O artigo apresenta resultados da avaliação de impacto do projeto de Empoderamento Econômico de Meninas Adolescentes e Mulheres Jovens (EPAG) na Libéria. "
+                                    "O projeto EPAG foi lançado pelo Ministério de Gênero e Desenvolvimento da Libéria em 2009 com o objetivo de aumentar o emprego e a renda de 2.500 jovens "
+                                    "mulheres liberianas, proporcionando meios de subsistência e treinamento em habilidades para a vida e facilitando sua transição para o trabalho produtivo. "
+                                    "O estudo mostra que o programa aumentou o emprego em 47% e os ganhos em 80%. Além disso, a avaliação de impacto documenta efeitos positivos em uma "
+                                    "variedade de medidas de empoderamento, incluindo acesso a dinheiro, autoconfiança e ansiedade sobre as circunstâncias e o futuro.",
+                                    style={'font-size': '15px', 'opacity': .7, 'margin-bottom': '10px',
+                                           'margin-top': '8px'}
+                                    ),
+                                dbc.Button("Acesse o estudo", outline=True, color="info", size='sm',
+                                           href='https://documents.worldbank.org/en/publication/documents-reports/documentdetail/610391468299085610/the-impact-of-an-adolescent-girls-employment-program-the-epag-project-in-liberia',
+                                           target="_blank"),
+                            ],
+                                style={'padding': '16px'}
+                            ),
+                        ], style={'overflow': 'hidden', 'background': 'white',
+                                  'box-shadow': '0 0 15px rgba(0,0,0,0.2)', 'margin-bottom': '20px', 'width': '100%',
+                                  'border-radius': '5px',
                                   'display': 'flex', 'align-items': 'center'}
                         ),
                     ]
