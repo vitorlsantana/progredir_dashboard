@@ -2149,18 +2149,23 @@ def display_escolaridade(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
                             xanchor='left', yanchor='bottom',
                             text=f'{perc_abaixo_ensino_medio:.0f}% não possuem ensino<br>médio completo',
-                            font=dict(size=18, color='white'),
+                            font=dict(size=16, color='white'),
                             showarrow=False, ax=20, ay=-30, bordercolor="#FF8C00", borderwidth=2, borderpad=6,
                             bgcolor="#FF8C00", align="center",
                             ))
 
     fig.update_layout(annotations=annotations)
 
-    fig2 = make_subplots(1, 2, specs=[[{'type': 'domain'}, {'type': 'domain'}]], subplot_titles=('Cadastro Único', 'Total - Brasil'))
-    fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], hole=.5,
-                          marker=dict(colors=['#1351B4', '#FF8C00']), name=""), 1, 1)
+    fig2 = make_subplots(
+        rows=1, cols=2, subplot_titles=("Cadastro Único", "Total Brasil"), specs=[[{'type': 'domain'}, {'type': 'domain'}]],
+        )
+
+    fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True, hole=.5,
+                          marker=dict(colors=['#1351B4', '#FF8C00']), hoverinfo='label+value', textinfo='percent', name="Região Selecionada",
+                          hovertemplate="<b>%{label}<b> <br>%{value:.0f} pessoas</br>"
+                          ), 1, 1)
     fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[154232294, 11253000], hole=.5,
-                         name="Brasil"), 1, 2)
+                         name="Brasil", hoverinfo='label+value', textinfo='percent', hovertemplate="<b>%{label}<b> <br>%{value:.0f} pessoas</br>"), 1, 2)
 
     fig2.update_layout(
         margin=dict(
@@ -2186,7 +2191,7 @@ def display_escolaridade(w_municipios, w_municipios1):
                             text='Fonte: Ministério da Cidadania, fev/2021<br>IBGE/PNAD Contínua, 2018',
                             font=dict(size=13, color='rgb(150,150,150)'),
                             showarrow=False))
-
+    #
     fig2.update_layout(annotations=annotations)
 
     return fig, fig2
