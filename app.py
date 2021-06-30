@@ -562,6 +562,8 @@ def render_tab_content(active_tab):
                                 [
                                     dbc.Col(dcc.Graph(id='evolucao_empregos'), style={'marginBottom': '10px'}, xs=12,
                                             sm=12, md=12, lg=12, xl=12),
+                                    dbc.Col(dcc.Graph(id='rem_setor'), style={'marginBottom': '10px'}, xs=12,
+                                            sm=12, md=12, lg=12, xl=12),
                                     dbc.Col([
                                         dcc.Graph(id='top_vinculos'),
                                         dbc.Button(
@@ -591,7 +593,6 @@ def render_tab_content(active_tab):
                                     ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12, lg=12, xl=12),
                                 ], align='center', justify="center",
                             ),
-                            html.Br(),
                             dbc.Row(
                                 [
                                     dbc.Col([
@@ -2869,6 +2870,105 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.25,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            font=dict(size=12, color='rgb(150,150,150)'),
+                            showarrow=False))
+
+    fig.update_layout(annotations=annotations)
+    return fig
+
+# EVOLUÇÃO DA REMUNERAÇÃO POR SETOR DE ATIVIDADE ECONÔMICA
+@app.callback(
+    Output('rem_setor', 'figure'),
+    Input('w_municipios', 'value'),
+    Input('w_municipios1', 'value')
+)
+def rem_setor(w_municipios, w_municipios1):
+    data = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/remuneracao_SM_setor_IBGE_RAIS_2015_2019.csv'
+    df = pd.read_csv(data, sep=';', encoding='latin1', decimal=',')
+    df = df.drop(['Município'], axis=1)
+    df['ano'] = df['ano'].astype('str')
+
+    uf = df.groupby(by=["uf", 'ano']).mean().reset_index()
+    uf['municipio'] = ' Todos os Municípios'
+    regiao = df.groupby(by=['regiao', 'ano']).mean().reset_index()
+    regiao['municipio'] = ' Todos os Municípios'
+    regiao = regiao.rename(columns={"regiao": "uf"})
+    pais = df.groupby(by=["pais", 'ano']).mean().reset_index()
+    pais['municipio'] = ' Todos os Municípios'
+    pais = pais.rename(columns={"pais": "uf"})
+    df = df.append([uf, regiao, pais], ignore_index=True)
+
+    df['Total Região'] = df['Total'].round(2)*1100
+    df['Indústria'] = df['Indústria'].round(2) * 1100
+    df['Construção Civil'] = df['Construção Civil'].round(2) * 1100
+    df['Comércio'] = df['Comércio'].round(2) * 1100
+    df['Serviços'] = df['Serviços'].round(2) * 1100
+    df['Agropecuária'] = df['Agropecuária'].round(2) * 1100
+
+    df1 = df[(df['municipio'] == w_municipios1) & (df['uf'] == w_municipios)]
+    df2 = df[(df['municipio'] == ' Todos os Municípios') & (df['uf'] == 'Brasil')]
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Indústria'], mode='lines+markers', name='Indústria',
+                             hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
+    fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Construção Civil'], mode='lines+markers', name='Construção Civil',
+                             hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
+    fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Comércio'], mode='lines+markers', name='Comércio',
+                             hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
+    fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Serviços'], mode='lines+markers', name='Serviços',
+                             hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
+    fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Agropecuária'], mode='lines+markers', name='Agropecuária',
+                             hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
+    fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Total Região'], mode='lines+markers', name='Total',
+                             hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
+    fig.add_trace(go.Scatter(x=df2['ano'], y=df2['Total'], mode='lines+markers', name='Total Brasil',
+                             hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
+
+    fig.update_layout(
+        xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=1,
+            ticks='outside',
+            zerolinecolor='grey',
+            tickfont=dict(size=10, color='rgb(82, 82, 82)',
+                          ),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            showline=True,
+            showticklabels=True,
+            zerolinecolor='grey',
+            tickfont=dict(size=8, color='rgb(82, 82, 82)',
+                          ),
+        ),
+        autosize=True,
+        margin=dict(
+            l=20,
+            r=10,
+            b=100,
+            t=100,
+            pad=0
+        ),
+        showlegend=True,
+        plot_bgcolor='white'
+    )
+
+    annotations = []
+
+    # Title
+    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
+                            xanchor='left', yanchor='bottom',
+                            text='Evolução da remuneração média, por setor <br>de atividade econômica (2015-2019)',
+                            font=dict(size=18, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Source
+    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Economia/RAIS, 2020',
                             font=dict(size=12, color='rgb(150,150,150)'),
