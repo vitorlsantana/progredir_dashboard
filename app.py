@@ -1,12 +1,12 @@
+import pandas as pd
 import dash
 from dash.dependencies import Input, Output, State
 import dash_html_components as html
-import pandas as pd
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
+import dash_table
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-import dash_table
 
 app = dash.Dash(__name__, title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP,
                                                                                                           'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
@@ -16,7 +16,6 @@ app = dash.Dash(__name__, title='Painel da Inclusão Produtiva', update_title='C
                 suppress_callback_exceptions=True)
 server = app.server
 
-# --------------------------------------------------------------------------------------------------------------------------------------------
 # CARREGAR DADOS#
 data = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/base_painel_inclus%C3%A3o_produtiva.csv'
 df1 = pd.read_csv(data, sep=';', encoding='latin1', low_memory=False)
@@ -135,8 +134,7 @@ row4 = html.Tr([html.Td("Índice de Desenvolvimento Humano"),
                 html.Td(html.A("IPEA Data", href="http://www.ipeadata.gov.br/Default.aspxe", target="_blank"))])
 row5 = html.Tr([html.Td("Número de empresas, total e por setor de atividade econômica"),
                 html.Td("Empresas e outras organizações e suas respectivas unidades locais formalmente constituídas, registradas no CNPJ - Cadastro Nacional de "
-                        "Pessoa Jurídica e ativas no Cadastro Central de Empresas no ano de referência. A atualização ocorre anualmente, a partir das pesquisas "
-                        "econômicas anuais do IBGE, nas áreas de Indústria, Comércio, Construção e Serviços, e de registros administrativos, como a Relação Anual de Informações Sociais - RAIS."),
+                        "Pessoa Jurídica e ativas no Cadastro Central de Empresas no ano de referência."),
                 html.Td("2019"),
                 html.Td(html.A("IBGE/Cadastro Central de Empresas(CEMPRE)", href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html", target="_blank"))])
 row6 = html.Tr([html.Td("Cadastro Único"),
@@ -231,7 +229,7 @@ app.layout = dbc.Container([
         [
             dbc.Col([], className='col-3'),
             dbc.Col(html.H1('Painel da Inclusão Produtiva Urbana', style={'color':'white', 'textAlign':'center', 'fontWeight': 'bold', 'fontSize':45}),
-                    className='col-6', style={'align':'center', 'padding':'30px'}, xs=12, sm=12, md=12, lg=12, xl=12),
+                    className='col-6', style={'align':'center', 'padding':'40px'}, xs=12, sm=12, md=12, lg=12, xl=12),
             dbc.Col([], className='col-3'),
         ], className='row', align='center', style={'backgroundColor':'#071D41'}
     ),
