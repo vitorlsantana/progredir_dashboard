@@ -2890,7 +2890,7 @@ def rem_setor(w_municipios, w_municipios1):
     df = df.drop(['Município'], axis=1)
     df['ano'] = df['ano'].astype('str')
 
-    uf = df.groupby(by=["uf", 'ano']).mean().reset_index()
+    uf = df.groupby(by=["uf", 'ano']).sum().reset_index()
     uf['municipio'] = ' Todos os Municípios'
     regiao = df.groupby(by=['regiao', 'ano']).mean().reset_index()
     regiao['municipio'] = ' Todos os Municípios'
