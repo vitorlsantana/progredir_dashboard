@@ -218,7 +218,7 @@ row24 = html.Tr([html.Td("População do Cadastro Único, por grau de alfabetiza
 
 table_body = [html.Tbody([row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13,
                           row14, row15, row16, row17, row18, row19, row20, row21, row22, row23, row24])]
-table = dbc.Table(table_header + table_body, bordered=True)
+table = dbc.Table(table_header + table_body, bordered=True, style={'fontSize':14})
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
@@ -230,7 +230,7 @@ app.layout = dbc.Container([
     dbc.Row(
         [
             dbc.Col([], className='col-3'),
-            dbc.Col(html.H1('Painel da Inclusão Produtiva Urbana', style={'color':'white', 'textAlign':'center', 'fontSize':45}),
+            dbc.Col(html.H1('Painel da Inclusão Produtiva Urbana', style={'color':'white', 'textAlign':'center', 'fontWeight': 'bold', 'fontSize':45}),
                     className='col-6', style={'align':'center', 'padding':'30px'}, xs=12, sm=12, md=12, lg=12, xl=12),
             dbc.Col([], className='col-3'),
         ], className='row', align='center', style={'backgroundColor':'#071D41'}
@@ -1221,9 +1221,8 @@ def render_tab_content(active_tab):
                                 dbc.Card(
                                     [
                                         dbc.CardImg(
-                                            src="https://www.gov.br/pt-br/apps/mei/view/++widget++form.widgets.imagem/@@download/MEI.png",
+                                            src="https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/mei.png?raw=true",
                                             className='card-img-top',
-                                            # style={'height': '30%', 'object-fit': 'auto'}
                                         ),
                                         dbc.CardBody(
                                             [
@@ -1274,7 +1273,6 @@ def render_tab_content(active_tab):
                                         dbc.CardImg(
                                             src="https://static.wixstatic.com/media/eafbd4_ae1f1ee9b9924e2397246a5e609880bb~mv2.jpg/v1/fit/w_828%2Ch_371%2Cal_c%2Cq_80/file.jpg",
                                             className='card-img-top',
-                                            # style={'height': '30%', 'object-fit': 'auto'}
                                         ),
                                         dbc.CardBody(
                                             [
@@ -1996,7 +1994,7 @@ def display_age(w_municipios, w_municipios1):
     faixa60_64 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['faixa_etaria_pessoas_60_64_anos'].sum()
     perc_faixa60_64 = (faixa60_64 / populacao * 100).round(2)
 
-    colors = ['#1351B4', '#FF8C00', '#FF8C00', '#1351B4', '#1351B4', '#1351B4', '#1351B4', '#1351B4', '#1351B4']
+    colors = ['#1351B4', '#fb8500', '#fb8500', '#1351B4', '#1351B4', '#1351B4', '#1351B4', '#1351B4', '#1351B4']
 
     fig = go.Figure()
     fig.add_trace(go.Bar(x=faixa, y=[faixa16_17, faixa18_24, faixa25_34, faixa35_39, faixa40_44, faixa45_49, faixa50_54, faixa55_59, faixa60_64],
@@ -2046,7 +2044,7 @@ def display_age(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: Ministério da Cidadania, abr/2021',
-                            font=dict(size=15, color='rgb(150,150,150)'),
+                            font=dict(size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations)
@@ -2158,7 +2156,7 @@ def display_escolaridade(w_municipios, w_municipios1):
     fig.update_layout(annotations=annotations)
 
     fig2 = make_subplots(
-        rows=1, cols=2, subplot_titles=("Cadastro Único", "Total Brasil"), specs=[[{'type': 'domain'}, {'type': 'domain'}]],
+        rows=1, cols=2, specs=[[{'type': 'domain'}, {'type': 'domain'}]],
         )
 
     fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True, hole=.5,
@@ -2172,19 +2170,31 @@ def display_escolaridade(w_municipios, w_municipios1):
         margin=dict(
             l=20,
             r=20,
-            b=120,
-            t=120,
+            b=100,
+            t=100,
             pad=0
         ),
     )
 
     annotations = []
 
-    # # Title
+    # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.15,
                             xanchor='left', yanchor='bottom',
                             text='População por <b>taxa de analfabetismo</b>',
                             font=dict(size=20, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Subtitle 1
+    annotations.append(dict(xref='paper', yref='paper', x=0.08, y=0.93,
+                            xanchor='left', yanchor='bottom',
+                            text='Cadastro Único',
+                            font=dict(size=15, color='rgb(37,37,37)'),
+                            showarrow=False))
+    # Subtitle 1
+    annotations.append(dict(xref='paper', yref='paper', x=0.65, y=0.93,
+                            xanchor='left', yanchor='bottom',
+                            text='Geral Brasil',
+                            font=dict(size=15, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.1,
@@ -2192,7 +2202,6 @@ def display_escolaridade(w_municipios, w_municipios1):
                             text='Fonte: Ministério da Cidadania, fev/2021<br>IBGE/PNAD Contínua, 2018',
                             font=dict(size=13, color='rgb(150,150,150)'),
                             showarrow=False))
-    #
     fig2.update_layout(annotations=annotations)
 
     return fig, fig2
@@ -2501,7 +2510,7 @@ def display_empresas(w_municipios, w_municipios1):
 
     fig = go.Figure()
     fig.add_trace(go.Bar(x=df2['variable'], y=df2['value'],
-                         name='Setor', marker=dict(color='#2670E8'),
+                         name='Setor', marker=dict(color='#1351B4'),
                          hovertemplate=
                          '<b>%{x}' + '<br>Número de empresas</b>: %{y}<b><br>',
                          ))
@@ -2908,7 +2917,6 @@ def rem_setor(w_municipios, w_municipios1):
     df['Agropecuária'] = df['Agropecuária'].round(2) * 1100
 
     df1 = df[(df['municipio'] == w_municipios1) & (df['uf'] == w_municipios)]
-    df2 = df[(df['municipio'] == ' Todos os Municípios') & (df['uf'] == 'Brasil')]
 
     fig = go.Figure()
 
@@ -2923,8 +2931,6 @@ def rem_setor(w_municipios, w_municipios1):
     fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Agropecuária'], mode='lines+markers', name='Agropecuária',
                              hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
     fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Total'], mode='lines+markers', name='Total',
-                             hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
-    fig.add_trace(go.Scatter(x=df2['ano'], y=df2['Total'], mode='lines+markers', name='Total Brasil',
                              hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
 
     fig.update_layout(
@@ -3255,25 +3261,6 @@ def update_saldo_vinculos_table(w_municipios, w_municipios1):
                                 style_cell={'backgroundColor': 'white', 'color': 'black', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
-
-# # MAPA COM UNIDADES DE SAÚDE
-# # fig10 = px.scatter_mapbox(df5, lat="nu_latitude", lon="nu_longitude", text='no_fantasia',
-# #                           color_continuous_scale=px.colors.cyclical.IceFire, size_max=200, zoom=0)
-# #
-# # fig10.update_layout(
-# #     hovermode='closest',
-# #     mapbox=dict(
-# #         style='open-street-map',
-# #         domain={'x': [1, 1], 'y': [1, 1]},
-# #         bearing=0,
-# #         center=dict(
-# #             lat=-14,
-# #             lon=-53
-# #         ),
-# #         pitch=0,
-# #         zoom=5
-# #     ),
-# # )
 
 if __name__ == '__main__':
     app.run_server(debug=True)
