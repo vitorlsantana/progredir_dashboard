@@ -2900,7 +2900,7 @@ def rem_setor(w_municipios, w_municipios1):
     pais = pais.rename(columns={"pais": "uf"})
     df = df.append([uf, regiao, pais], ignore_index=True)
 
-    df['Total Região'] = df['Total'].round(2)*1100
+    df['Total'] = df['Total'].round(2)*1100
     df['Indústria'] = df['Indústria'].round(2) * 1100
     df['Construção Civil'] = df['Construção Civil'].round(2) * 1100
     df['Comércio'] = df['Comércio'].round(2) * 1100
@@ -2922,7 +2922,7 @@ def rem_setor(w_municipios, w_municipios1):
                              hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
     fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Agropecuária'], mode='lines+markers', name='Agropecuária',
                              hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
-    fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Total Região'], mode='lines+markers', name='Total',
+    fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Total'], mode='lines+markers', name='Total',
                              hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
     fig.add_trace(go.Scatter(x=df2['ano'], y=df2['Total'], mode='lines+markers', name='Total Brasil',
                              hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
