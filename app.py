@@ -112,111 +112,113 @@ data7 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/mai
 df_saldo_subsetor_ibge = pd.read_csv(data7, sep=';', encoding='latin1', low_memory=False)
 df_saldo_subsetor_ibge = df_saldo_subsetor_ibge.drop(['Município'], axis=1)
 
-table_header = [html.Thead(html.Tr([html.Th("Indicador"), html.Th("Descrição"), html.Th("Ano de referência"), html.Th("Fonte")]))]
+# table_header = [html.Thead(html.Tr([html.Th("Indicador"), html.Th("Descrição"), html.Th("Ano de referência"), html.Th("Fonte")]))]
+#
+# row1 = html.Tr([html.Td("População"),
+#                 html.Td("População estimada, em número de pessoas"),
+#                 html.Td("2020"),
+#                 html.Td(html.A("IBGE", href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html?=&t=o-que-e", target="_blank"))])
+# row2 = html.Tr([html.Td("PIB"),
+#                 html.Td("Produto Interno Bruto total e por setor de atividade econômica"),
+#                 html.Td("2018"),
+#                 html.Td(html.A("IBGE", href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html", target="_blank"))])
+# row3 = html.Tr([html.Td("Índice de Vulnerabilidade Social"),
+#                 html.Td("o Índice é resultado da média aritmética de 3 subíndices, integrados pelas dimensões de infraestrutura urbana capital humano e renda e trabalho, "
+#                         "que por sua vez são compostos por 16 indicadores."),
+#                 html.Td("2017"),
+#                 html.Td(html.A("IPEA", href="http://ivs.ipea.gov.br/index.php/pt/", target="_blank"))])
+# row4 = html.Tr([html.Td("Índice de Desenvolvimento Humano"),
+#                 html.Td("O Índice de Desenvolvimento Humano Municipal (IDHM) é uma medida composta de indicadores de três dimensões do desenvolvimento humano: "
+#                         "longevidade, educação e renda. O índice varia de 0 a 1"),
+#                 html.Td("2010"),
+#                 html.Td(html.A("IPEA Data", href="http://www.ipeadata.gov.br/Default.aspxe", target="_blank"))])
+# row5 = html.Tr([html.Td("Número de empresas, total e por setor de atividade econômica"),
+#                 html.Td("Empresas e outras organizações e suas respectivas unidades locais formalmente constituídas, registradas no CNPJ - Cadastro Nacional de "
+#                         "Pessoa Jurídica e ativas no Cadastro Central de Empresas no ano de referência."),
+#                 html.Td("2019"),
+#                 html.Td(html.A("IBGE/Cadastro Central de Empresas(CEMPRE)", href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html", target="_blank"))])
+# row6 = html.Tr([html.Td("Cadastro Único"),
+#                 html.Td("Total de pessoas inscritas no Cadastro Único"),
+#                 html.Td("2021 (abril)"),
+#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+# row7 = html.Tr([html.Td("Bolsa Família"),
+#                 html.Td("Número de pessoas inscritas no Cadastro Único e beneficiárias do Bolsa Família"),
+#                 html.Td("2021 (abril)"),
+#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+# row8 = html.Tr([html.Td("Domicílio Urbano"),
+#                 html.Td("Número de pessoas inscritas no Cadastro Único e situação de domicílio urbano"),
+#                 html.Td("2021 (abril)"),
+#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+# row9 = html.Tr([html.Td("Distribuição por sexo"),
+#                 html.Td("Número de pessoas inscritas no Cadastro Único, por sexo"),
+#                 html.Td("2021 (abril)"),
+#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+# row10 = html.Tr([html.Td("População por faixa etária"),
+#                 html.Td("Número de pessoas inscritas no Cadastro Único, por faixa etária"),
+#                 html.Td("2021 (abril)"),
+#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+# row11 = html.Tr([html.Td("Benefício de Prestação Continuada"),
+#                 html.Td("Beneficiários do Benefício de Prestação Continuada (total, pessoas com deficiência e idosos)"),
+#                 html.Td("2021 (abril)"),
+#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+# row12 = html.Tr([html.Td("Pessoas com carteira assinada"),
+#                  html.Td("Estoque de empregos formais"),
+#                  html.Td("2019"),
+#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
+# row13 = html.Tr([html.Td("Vínculos de emprego formal por tipo de ocupação"),
+#                  html.Td("Quantidade de vínculos de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002)"),
+#                  html.Td("2019"),
+#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
+# row14 = html.Tr([html.Td("Vínculos de emprego formal por subsetor econômico (IBGE)"),
+#                  html.Td("Quantidade de vínculos de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE"),
+#                  html.Td("2019"),
+#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
+# row15 = html.Tr([html.Td("Saldo de emprego formal, por tipo de ocupação"),
+#                  html.Td("Saldo de movimentações de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002)"),
+#                  html.Td("2019"),
+#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
+# row16 = html.Tr([html.Td("Saldo de emprego formal, por por subsetor econômico (IBGE)"),
+#                  html.Td("Saldo de movimentações de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE"),
+#                  html.Td("2019"),
+#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
+# row17 = html.Tr([html.Td("Remuneração média total"),
+#                  html.Td("Remuneração média mensal dos empregos formais, em salários mínimos, ajustado pelo valor do salário estabelecido em 2021 (R$ 1.100,00)"),
+#                  html.Td("2019"),
+#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
+# row18 = html.Tr([html.Td("População por situação de trabalho"),
+#                 html.Td("Pessoas inscritas no Cadastro Único por situação de trabalho nos últimos 12 meses e na última semana relativa a data do cadastro"),
+#                 html.Td("2021 (abril)"),
+#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+# row19 = html.Tr([html.Td("População por função principal"),
+#                  html.Td("Pessoas inscritas no Cadastro Único por função principal exercida no mundo do trabalho"),
+#                  html.Td("2021 (abril)"),
+#                  html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+# row20 = html.Tr([html.Td("Taxa de distorção idade-série"),
+#                  html.Td("Indicador educacional que permite acompanhar o percentual de alunos, em cada série, que têm idade acima da esperada para o ano em que estão matriculados"),
+#                  html.Td("2020"),
+#                  html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/taxas-de-distorcao-idade-serie", target="_blank"))])
+# row21 = html.Tr([html.Td("Taxa de evasão escolar"),
+#                  html.Td("Indicador que avalia a permanência/abandono dos alunos no sistema educacional"),
+#                  html.Td("2020"),
+#                  html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/taxas-de-rendimento", target="_blank"))])
+# row22 = html.Tr([html.Td("Remuneração média dos docentes da educação básica"),
+#                  html.Td("Remuneração mensal bruta e padronizada para uma carga horária de 40 horas semanais, dos docentes em exercício em sala de aula"),
+#                  html.Td("2017"),
+#                  html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/remuneracao-media-dos-docentes", target="_blank"))])
+# row23 = html.Tr([html.Td("População por nível de escolaridade"),
+#                  html.Td("Pessoas inscritas no Cadastro Único por grau de instrução"),
+#                  html.Td("2021 (abril)"),
+#                  html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+# row24 = html.Tr([html.Td("População do Cadastro Único, por grau de alfabetização"),
+#                  html.Td("Pessoas inscritas no Cadastro Único por grau de alfabetização (sabe ou não ler e escrever"),
+#                  html.Td("2021 (abril)"),
+#                  html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
+#
+# table_body = [html.Tbody([row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13,
+#                           row14, row15, row16, row17, row18, row19, row20, row21, row22, row23, row24])]
 
-row1 = html.Tr([html.Td("População"),
-                html.Td("População estimada, em número de pessoas"),
-                html.Td("2020"),
-                html.Td(html.A("IBGE", href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html?=&t=o-que-e", target="_blank"))])
-row2 = html.Tr([html.Td("PIB"),
-                html.Td("Produto Interno Bruto total e por setor de atividade econômica"),
-                html.Td("2018"),
-                html.Td(html.A("IBGE", href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html", target="_blank"))])
-row3 = html.Tr([html.Td("Índice de Vulnerabilidade Social"),
-                html.Td("o Índice é resultado da média aritmética de 3 subíndices, integrados pelas dimensões de infraestrutura urbana capital humano e renda e trabalho, "
-                        "que por sua vez são compostos por 16 indicadores."),
-                html.Td("2017"),
-                html.Td(html.A("IPEA", href="http://ivs.ipea.gov.br/index.php/pt/", target="_blank"))])
-row4 = html.Tr([html.Td("Índice de Desenvolvimento Humano"),
-                html.Td("O Índice de Desenvolvimento Humano Municipal (IDHM) é uma medida composta de indicadores de três dimensões do desenvolvimento humano: "
-                        "longevidade, educação e renda. O índice varia de 0 a 1"),
-                html.Td("2010"),
-                html.Td(html.A("IPEA Data", href="http://www.ipeadata.gov.br/Default.aspxe", target="_blank"))])
-row5 = html.Tr([html.Td("Número de empresas, total e por setor de atividade econômica"),
-                html.Td("Empresas e outras organizações e suas respectivas unidades locais formalmente constituídas, registradas no CNPJ - Cadastro Nacional de "
-                        "Pessoa Jurídica e ativas no Cadastro Central de Empresas no ano de referência."),
-                html.Td("2019"),
-                html.Td(html.A("IBGE/Cadastro Central de Empresas(CEMPRE)", href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html", target="_blank"))])
-row6 = html.Tr([html.Td("Cadastro Único"),
-                html.Td("Total de pessoas inscritas no Cadastro Único"),
-                html.Td("2021 (abril)"),
-                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-row7 = html.Tr([html.Td("Bolsa Família"),
-                html.Td("Número de pessoas inscritas no Cadastro Único e beneficiárias do Bolsa Família"),
-                html.Td("2021 (abril)"),
-                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-row8 = html.Tr([html.Td("Domicílio Urbano"),
-                html.Td("Número de pessoas inscritas no Cadastro Único e situação de domicílio urbano"),
-                html.Td("2021 (abril)"),
-                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-row9 = html.Tr([html.Td("Distribuição por sexo"),
-                html.Td("Número de pessoas inscritas no Cadastro Único, por sexo"),
-                html.Td("2021 (abril)"),
-                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-row10 = html.Tr([html.Td("População por faixa etária"),
-                html.Td("Número de pessoas inscritas no Cadastro Único, por faixa etária"),
-                html.Td("2021 (abril)"),
-                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-row11 = html.Tr([html.Td("Benefício de Prestação Continuada"),
-                html.Td("Beneficiários do Benefício de Prestação Continuada (total, pessoas com deficiência e idosos)"),
-                html.Td("2021 (abril)"),
-                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-row12 = html.Tr([html.Td("Pessoas com carteira assinada"),
-                 html.Td("Estoque de empregos formais"),
-                 html.Td("2019"),
-                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
-row13 = html.Tr([html.Td("Vínculos de emprego formal por tipo de ocupação"),
-                 html.Td("Quantidade de vínculos de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002)"),
-                 html.Td("2019"),
-                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
-row14 = html.Tr([html.Td("Vínculos de emprego formal por subsetor econômico (IBGE)"),
-                 html.Td("Quantidade de vínculos de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE"),
-                 html.Td("2019"),
-                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
-row15 = html.Tr([html.Td("Saldo de emprego formal, por tipo de ocupação"),
-                 html.Td("Saldo de movimentações de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002)"),
-                 html.Td("2019"),
-                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
-row16 = html.Tr([html.Td("Saldo de emprego formal, por por subsetor econômico (IBGE)"),
-                 html.Td("Saldo de movimentações de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE"),
-                 html.Td("2019"),
-                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
-row17 = html.Tr([html.Td("Remuneração média total"),
-                 html.Td("Remuneração média mensal dos empregos formais, em salários mínimos, ajustado pelo valor do salário estabelecido em 2021 (R$ 1.100,00)"),
-                 html.Td("2019"),
-                 html.Td("Relação Anual de Informações Sociais (RAIS)")])
-row18 = html.Tr([html.Td("População por situação de trabalho"),
-                html.Td("Pessoas inscritas no Cadastro Único por situação de trabalho nos últimos 12 meses e na última semana relativa a data do cadastro"),
-                html.Td("2021 (abril)"),
-                html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-row19 = html.Tr([html.Td("População por função principal"),
-                 html.Td("Pessoas inscritas no Cadastro Único por função principal exercida no mundo do trabalho"),
-                 html.Td("2021 (abril)"),
-                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-row20 = html.Tr([html.Td("Taxa de distorção idade-série"),
-                 html.Td("Indicador educacional que permite acompanhar o percentual de alunos, em cada série, que têm idade acima da esperada para o ano em que estão matriculados"),
-                 html.Td("2020"),
-                 html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/taxas-de-distorcao-idade-serie", target="_blank"))])
-row21 = html.Tr([html.Td("Taxa de evasão escolar"),
-                 html.Td("Indicador que avalia a permanência/abandono dos alunos no sistema educacional"),
-                 html.Td("2020"),
-                 html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/taxas-de-rendimento", target="_blank"))])
-row22 = html.Tr([html.Td("Remuneração média dos docentes da educação básica"),
-                 html.Td("Remuneração mensal bruta e padronizada para uma carga horária de 40 horas semanais, dos docentes em exercício em sala de aula"),
-                 html.Td("2017"),
-                 html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/remuneracao-media-dos-docentes", target="_blank"))])
-row23 = html.Tr([html.Td("População por nível de escolaridade"),
-                 html.Td("Pessoas inscritas no Cadastro Único por grau de instrução"),
-                 html.Td("2021 (abril)"),
-                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-row24 = html.Tr([html.Td("População do Cadastro Único, por grau de alfabetização"),
-                 html.Td("Pessoas inscritas no Cadastro Único por grau de alfabetização (sabe ou não ler e escrever"),
-                 html.Td("2021 (abril)"),
-                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-
-table_body = [html.Tbody([row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13,
-                          row14, row15, row16, row17, row18, row19, row20, row21, row22, row23, row24])]
-table = dbc.Table(table_header + table_body, bordered=True, style={'fontSize':14})
+df_data = ('')
+table = dbc.Table(df_data + table_body, bordered=True, style={'fontSize':14})
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR

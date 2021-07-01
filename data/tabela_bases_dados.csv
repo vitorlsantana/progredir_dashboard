@@ -1,0 +1,25 @@
+Indicador;Descrição;Ano de referência;Fonte
+População;População estimada, em número de pessoas;2020;IBGE
+PIB;Produto Interno Bruto total e por setor de atividade econômica;2018;IBGE
+Índice de Vulnerabilidade Social;o Índice é resultado da média aritmética de 3 subíndices, integrados pelas dimensões de infraestrutura urbana capital humano e renda e trabalho, que por sua vez são compostos por 16 indicadores.;2017;IPEA
+Índice de Desenvolvimento Humano;O Índice de Desenvolvimento Humano Municipal (IDHM) é uma medida composta de indicadores de três dimensões do desenvolvimento humano: longevidade, educação e renda. O índice varia de 0 a 1;2010;IPEA Data
+Número de empresas, total e por setor de atividade econômica;Empresas e outras organizações e suas respectivas unidades locais formalmente constituídas, registradas no CNPJ - Cadastro Nacional de Pessoa Jurídica e ativas no Cadastro Central de Empresas no ano de referência. A atualização ocorre anualmente, a partir das pesquisas econômicas anuais do IBGE, nas áreas de Indústria, Comércio, Construção e Serviços, e de registros administrativos, como a Relação Anual de Informações Sociais - RAIS.;2019;IBGE/Cadastro Central de Empresas(CEMPRE)
+Cadastro Único;Total de pessoas inscritas no Cadastro Único;2021 (abril);Ministério da Cidadania/Cadastro Único
+Bolsa Família;Número de pessoas inscritas no Cadastro Único e beneficiárias do Bolsa Família;2021 (abril);Ministério da Cidadania/Cadastro Único
+Domicílio Urbano;Número de pessoas inscritas no Cadastro Único e situação de domicílio urbano;2021 (abril);Ministério da Cidadania/Cadastro Único
+Distribuição por sexo;Número de pessoas inscritas no Cadastro Único, por sexo;2021 (abril);Ministério da Cidadania/Cadastro Único
+População por faixa etária;Número de pessoas inscritas no Cadastro Único, por faixa etária;2021 (abril);Ministério da Cidadania/Cadastro Único
+Benefício de Prestação Continuada (BPC);Beneficiários do Benefício de Prestação Continuada (total, pessoas com deficiência e idosos);2021 (abril);Ministério da Cidadania/Cadastro Único
+Pessoas com carteira assinada;Estoque de empregos formais;2019;Relação Anual de Informações Sociais (RAIS)
+Vínculos de emprego formal por tipo de ocupação;Quantidade de vínculos de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002);2019;Relação Anual de Informações Sociais (RAIS)
+Vínculos de emprego formal por subsetor econômico (IBGE);Quantidade de vínculos de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE;2019;Relação Anual de Informações Sociais (RAIS)
+Saldo de emprego formal, por tipo de ocupação;Saldo de movimentações de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002);2019;Relação Anual de Informações Sociais (RAIS)
+Saldo de emprego formal, por por subsetor econômico (IBGE);Saldo de movimentações de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE;2019;Relação Anual de Informações Sociais (RAIS)
+Remuneração média total;Remuneração média mensal dos empregos formais, em salários mínimos, ajustado pelo valor do salário estabelecido em 2021 (R$ 1.100,00);2019;Relação Anual de Informações Sociais (RAIS)
+População por situação de trabalho;Pessoas inscritas no Cadastro Único por situação de trabalho nos últimos 12 meses e na última semana relativa a data do cadastro;2021 (abril);Ministério da Cidadania/Cadastro Único
+População por função principal;Pessoas inscritas no Cadastro Único por função principal exercida no mundo do trabalho;2021 (abril);Ministério da Cidadania/Cadastro Único
+Taxa de distorção idade-série;Indicador educacional que permite acompanhar o percentual de alunos, em cada série, que têm idade acima da esperada para o ano em que estão matriculados;2020;INEP
+Taxa de evasão escolar;Indicador que avalia a permanência/abandono dos alunos no sistema educacional;2020;INEP
+Remuneração média dos docentes da educação básica;Remuneração mensal bruta e padronizada para uma carga horária de 40 horas semanais, dos docentes em exercício em sala de aula;2017;INEP
+População por nível de escolaridade;Pessoas inscritas no Cadastro Único por grau de instrução;2021 (abril);Ministério da Cidadania/Cadastro Único
+População do Cadastro Único, por grau de alfabetização;Pessoas inscritas no Cadastro Único por grau de alfabetização (sabe ou não ler e escrever;2021 (abril);Ministério da Cidadania/Cadastro Único
