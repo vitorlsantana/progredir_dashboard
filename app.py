@@ -112,113 +112,8 @@ data7 = 'https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/mai
 df_saldo_subsetor_ibge = pd.read_csv(data7, sep=';', encoding='latin1', low_memory=False)
 df_saldo_subsetor_ibge = df_saldo_subsetor_ibge.drop(['Município'], axis=1)
 
-# table_header = [html.Thead(html.Tr([html.Th("Indicador"), html.Th("Descrição"), html.Th("Ano de referência"), html.Th("Fonte")]))]
-#
-# row1 = html.Tr([html.Td("População"),
-#                 html.Td("População estimada, em número de pessoas"),
-#                 html.Td("2020"),
-#                 html.Td(html.A("IBGE", href="https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html?=&t=o-que-e", target="_blank"))])
-# row2 = html.Tr([html.Td("PIB"),
-#                 html.Td("Produto Interno Bruto total e por setor de atividade econômica"),
-#                 html.Td("2018"),
-#                 html.Td(html.A("IBGE", href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html", target="_blank"))])
-# row3 = html.Tr([html.Td("Índice de Vulnerabilidade Social"),
-#                 html.Td("o Índice é resultado da média aritmética de 3 subíndices, integrados pelas dimensões de infraestrutura urbana capital humano e renda e trabalho, "
-#                         "que por sua vez são compostos por 16 indicadores."),
-#                 html.Td("2017"),
-#                 html.Td(html.A("IPEA", href="http://ivs.ipea.gov.br/index.php/pt/", target="_blank"))])
-# row4 = html.Tr([html.Td("Índice de Desenvolvimento Humano"),
-#                 html.Td("O Índice de Desenvolvimento Humano Municipal (IDHM) é uma medida composta de indicadores de três dimensões do desenvolvimento humano: "
-#                         "longevidade, educação e renda. O índice varia de 0 a 1"),
-#                 html.Td("2010"),
-#                 html.Td(html.A("IPEA Data", href="http://www.ipeadata.gov.br/Default.aspxe", target="_blank"))])
-# row5 = html.Tr([html.Td("Número de empresas, total e por setor de atividade econômica"),
-#                 html.Td("Empresas e outras organizações e suas respectivas unidades locais formalmente constituídas, registradas no CNPJ - Cadastro Nacional de "
-#                         "Pessoa Jurídica e ativas no Cadastro Central de Empresas no ano de referência."),
-#                 html.Td("2019"),
-#                 html.Td(html.A("IBGE/Cadastro Central de Empresas(CEMPRE)", href="https://www.ibge.gov.br/estatisticas/economicas/contas-nacionais/9088-produto-interno-bruto-dos-municipios.html", target="_blank"))])
-# row6 = html.Tr([html.Td("Cadastro Único"),
-#                 html.Td("Total de pessoas inscritas no Cadastro Único"),
-#                 html.Td("2021 (abril)"),
-#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-# row7 = html.Tr([html.Td("Bolsa Família"),
-#                 html.Td("Número de pessoas inscritas no Cadastro Único e beneficiárias do Bolsa Família"),
-#                 html.Td("2021 (abril)"),
-#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-# row8 = html.Tr([html.Td("Domicílio Urbano"),
-#                 html.Td("Número de pessoas inscritas no Cadastro Único e situação de domicílio urbano"),
-#                 html.Td("2021 (abril)"),
-#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-# row9 = html.Tr([html.Td("Distribuição por sexo"),
-#                 html.Td("Número de pessoas inscritas no Cadastro Único, por sexo"),
-#                 html.Td("2021 (abril)"),
-#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-# row10 = html.Tr([html.Td("População por faixa etária"),
-#                 html.Td("Número de pessoas inscritas no Cadastro Único, por faixa etária"),
-#                 html.Td("2021 (abril)"),
-#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-# row11 = html.Tr([html.Td("Benefício de Prestação Continuada"),
-#                 html.Td("Beneficiários do Benefício de Prestação Continuada (total, pessoas com deficiência e idosos)"),
-#                 html.Td("2021 (abril)"),
-#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-# row12 = html.Tr([html.Td("Pessoas com carteira assinada"),
-#                  html.Td("Estoque de empregos formais"),
-#                  html.Td("2019"),
-#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
-# row13 = html.Tr([html.Td("Vínculos de emprego formal por tipo de ocupação"),
-#                  html.Td("Quantidade de vínculos de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002)"),
-#                  html.Td("2019"),
-#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
-# row14 = html.Tr([html.Td("Vínculos de emprego formal por subsetor econômico (IBGE)"),
-#                  html.Td("Quantidade de vínculos de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE"),
-#                  html.Td("2019"),
-#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
-# row15 = html.Tr([html.Td("Saldo de emprego formal, por tipo de ocupação"),
-#                  html.Td("Saldo de movimentações de emprego formal por tipo de ocupação, com base na classificação brasileira de ocupações (CBO, 2002)"),
-#                  html.Td("2019"),
-#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
-# row16 = html.Tr([html.Td("Saldo de emprego formal, por por subsetor econômico (IBGE)"),
-#                  html.Td("Saldo de movimentações de emprego formal por subsetor de atividade econômica, com base na classificação do IBGE"),
-#                  html.Td("2019"),
-#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
-# row17 = html.Tr([html.Td("Remuneração média total"),
-#                  html.Td("Remuneração média mensal dos empregos formais, em salários mínimos, ajustado pelo valor do salário estabelecido em 2021 (R$ 1.100,00)"),
-#                  html.Td("2019"),
-#                  html.Td("Relação Anual de Informações Sociais (RAIS)")])
-# row18 = html.Tr([html.Td("População por situação de trabalho"),
-#                 html.Td("Pessoas inscritas no Cadastro Único por situação de trabalho nos últimos 12 meses e na última semana relativa a data do cadastro"),
-#                 html.Td("2021 (abril)"),
-#                 html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-# row19 = html.Tr([html.Td("População por função principal"),
-#                  html.Td("Pessoas inscritas no Cadastro Único por função principal exercida no mundo do trabalho"),
-#                  html.Td("2021 (abril)"),
-#                  html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-# row20 = html.Tr([html.Td("Taxa de distorção idade-série"),
-#                  html.Td("Indicador educacional que permite acompanhar o percentual de alunos, em cada série, que têm idade acima da esperada para o ano em que estão matriculados"),
-#                  html.Td("2020"),
-#                  html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/taxas-de-distorcao-idade-serie", target="_blank"))])
-# row21 = html.Tr([html.Td("Taxa de evasão escolar"),
-#                  html.Td("Indicador que avalia a permanência/abandono dos alunos no sistema educacional"),
-#                  html.Td("2020"),
-#                  html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/taxas-de-rendimento", target="_blank"))])
-# row22 = html.Tr([html.Td("Remuneração média dos docentes da educação básica"),
-#                  html.Td("Remuneração mensal bruta e padronizada para uma carga horária de 40 horas semanais, dos docentes em exercício em sala de aula"),
-#                  html.Td("2017"),
-#                  html.Td(html.A("INEP", href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/indicadores-educacionais/remuneracao-media-dos-docentes", target="_blank"))])
-# row23 = html.Tr([html.Td("População por nível de escolaridade"),
-#                  html.Td("Pessoas inscritas no Cadastro Único por grau de instrução"),
-#                  html.Td("2021 (abril)"),
-#                  html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-# row24 = html.Tr([html.Td("População do Cadastro Único, por grau de alfabetização"),
-#                  html.Td("Pessoas inscritas no Cadastro Único por grau de alfabetização (sabe ou não ler e escrever"),
-#                  html.Td("2021 (abril)"),
-#                  html.Td(html.A("Ministério da Cidadania/Cadastro Único", href="https://cecad.cidadania.gov.br/tab_cad.php", target="_blank"))])
-#
-# table_body = [html.Tbody([row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13,
-#                           row14, row15, row16, row17, row18, row19, row20, row21, row22, row23, row24])]
-
 df_data = pd.read_csv('https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/tabela_bases_dados.csv', sep=';', encoding='latin1')
-table = dbc.Table(df_data, bordered=True, style={'fontSize':14})
+table = dbc.Table.from_dataframe(df_data, bordered=True, hover=True, style={'fontSize':14})
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
@@ -296,7 +191,7 @@ app.layout = dbc.Container([
             ),
             html.Br(),
             dbc.Button("Saiba mais sobre os dados", id='open1', className="mr-5", outline=True, color="light",
-                       style={"width": "100%", 'fontSize':15, 'fontFamily':'Open Sans', 'fontWeight': 'bold'}),
+                       style={"width": "100%", 'fontSize':15, 'fontWeight': 'bold'}),
             dbc.Modal(
                 [
                     dbc.ModalHeader("Dados utilizados no painel"),
@@ -309,7 +204,7 @@ app.layout = dbc.Container([
                 id="modal1",
                 size='xl',
                 centered=True,
-                style={"width":"100%", 'whiteSpace': 'pre-wrap', 'fontFamily':'Arial'},
+                style={"width":"100%", 'whiteSpace': 'pre-wrap'},
             ),
         ], xs=12, sm=12, md=2, lg=2, xl=2, style={'backgroundColor':'#071D41', 'marginBottom':'20px'}
         ),
@@ -406,7 +301,7 @@ def render_tab_content(active_tab):
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px',
                                                                      'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
-                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                        ], xs=12, sm=12, md=6, lg=3, xl=3),
                     dbc.Col(
                         [
                             dbc.Card(children=
@@ -421,7 +316,7 @@ def render_tab_content(active_tab):
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
                                                                      'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
-                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                        ], xs=12, sm=12, md=6, lg=3, xl=3),
                     dbc.Col(
                         [
                             dbc.Card(children=
@@ -434,15 +329,15 @@ def render_tab_content(active_tab):
                                            style={'color': '#1351B4', 'fontSize': 30, 'textAlign': 'center',
                                                   'fontWeight': 'bold'}),
                                     html.P(id='perc_urbano',
-                                           style={'color': '#f94144', 'textAlign': 'center', 'align-items':'center', 'margin-top':'5px',
+                                           style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px',
                                                   'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True,
-                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'align-items':'center',
+                                style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
-                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                        ], xs=12, sm=12, md=6, lg=3, xl=3),
                     dbc.Col(
                         [
                             dbc.Card(children=
@@ -470,7 +365,7 @@ def render_tab_content(active_tab):
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'align-items':'center',
                                        'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
-                        ], xs=12, sm=12, md=12, lg=3, xl=3),
+                        ], xs=12, sm=12, md=6, lg=3, xl=3),
                 ],
                     align='center'
                 ),
@@ -1797,6 +1692,38 @@ def toggle_modal(n1, n2, is_open):
         return not is_open
     return is_open
 
+# LAYOUTS GRAPHS
+layout_chart = dict(xaxis=dict(
+            showline=True,
+            showgrid=False,
+            showticklabels=True,
+            linecolor='rgb(204, 204, 204)',
+            linewidth=2,
+            ticks='outside',
+            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
+        ),
+        yaxis=dict(
+            showgrid=False,
+            zeroline=False,
+            showline=False,
+            showticklabels=False,
+        ),
+        autosize=False,
+        margin=dict(
+            l=20,
+            r=20,
+            b=100,
+            t=100,
+            pad=0
+        ),
+        plot_bgcolor='white')
+
+source_cidadania = dict(xref='paper', yref='paper', x=0.5, y=-0.2,
+                        xanchor='center', yanchor='top',
+                        text='Fonte: Ministério da Cidadania, abr/2021',
+                        font=dict(size=12, color='rgb(150,150,150)'),
+                        showarrow=False)
+
 # POPULAÇÃO, PIB TOTAL E IDHM
 @app.callback(
     Output('populacao', 'children'),
@@ -1888,36 +1815,13 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     fig.add_trace(go.Scatter(x=df2['mês_ano'], y=df2['pessoas_cad'], name='Cadastro Único', mode='lines+markers',
                              hovertemplate="%{y:.2s}",
                              marker=dict(size=10, color='#f94144')))
+    fig.update_layout(layout_chart)
     fig.update_layout(
         xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
             tickformat='%b %Y',
-            linecolor='rgb(204, 204, 204)',
-            ticks='outside',
-            tickfont=dict(
-                family='Arial',
-                size=10,
-                color='rgb(82, 82, 82)',
-            ),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
         ),
         hovermode="x unified",
         showlegend=True,
-        plot_bgcolor='white',
-        margin=dict(
-            l=15,
-            r=15,
-            b=100,
-            t=100,
-            pad=0
-        ),
     )
     fig.update_layout(legend=dict(
         orientation="h",
@@ -1935,11 +1839,7 @@ def display_ev_cadunico(w_municipios, w_municipios1):
                             font=dict(size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, abr/2021',
-                            font=dict(size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_cidadania)
     fig.update_layout(annotations=annotations)
 
     return fig
@@ -2006,32 +1906,8 @@ def display_age(w_municipios, w_municipios1):
                                perc_faixa50_54,perc_faixa55_59, perc_faixa60_64], textposition='inside', textfont={'size':14},
                          texttemplate="%{text:.0f}%",
                          marker=dict(color=colors)))
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=False,
-        margin=dict(
-            l=20,
-            r=20,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        plot_bgcolor='white'
-    )
+
+    fig.update_layout(layout_chart)
 
     annotations = []
     # Title
@@ -2041,11 +1917,7 @@ def display_age(w_municipios, w_municipios1):
                             font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, abr/2021',
-                            font=dict(size=12, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_cidadania)
 
     fig.update_layout(annotations=annotations)
 
@@ -2098,31 +1970,8 @@ def display_escolaridade(w_municipios, w_municipios1):
                          texttemplate='%{y:.0f}%',
                          ),
                   )
+    fig.update_layout(layout_chart)
     fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(family='Open Sans', size=10, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=True,
-        margin=dict(
-            l=20,
-            r=20,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        plot_bgcolor='white',
         barmode='group',
         showlegend=True
     )
@@ -2143,7 +1992,6 @@ def display_escolaridade(w_municipios, w_municipios1):
                             text='Fonte: Ministério da Cidadania, fev/2021<br>IBGE/PNAD Contínua, abril/2021',
                             font=dict(size=13, color='rgb(150,150,150)'),
                             showarrow=False))
-
     # Anotação
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
                             xanchor='left', yanchor='bottom',
@@ -2241,39 +2089,13 @@ def display_cad_funcao(w_municipios, w_municipios1):
 
     fig1 = go.Figure()
     fig1.add_trace(go.Bar(x=df2['variable'],
-                          y=df2['value'],
+                          y=df2['value'], showlegend=False,
                           hovertemplate=
                           '<b>População</b>: %{y:.0f}' +
                           '<br><b>Função principal</b>: %{x}<br>',
                           texttemplate='%{y:_.0f}'.replace('.', ',').replace('_', '.'),
                           textposition='auto', name='', marker=dict(color='#0C326F')))
-    fig1.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=1,
-            ticks='outside',
-            tickfont=dict(size=10, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=True,
-        margin=dict(
-            l=20,
-            r=20,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        showlegend=False,
-        plot_bgcolor='white'
-    )
+    fig1.update_layout(layout_chart)
 
     annotations = []
     # Title
@@ -2283,11 +2105,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
                             font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.27,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, fev/2021',
-                            font=dict(size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_cidadania)
 
     fig1.update_layout(annotations=annotations)
 
@@ -2320,11 +2138,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
                             font=dict(size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, abr/2021',
-                            font=dict(size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_cidadania)
 
     fig2.update_layout(annotations=annotations)
 
@@ -2355,11 +2169,7 @@ def display_cad_funcao(w_municipios, w_municipios1):
                             font=dict(size=19, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, abr/2021',
-                            font=dict(size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_cidadania)
 
     fig3.update_layout(annotations=annotations)
 
@@ -2378,38 +2188,13 @@ def display_mei(w_municipios, w_municipios1):
     fig.add_trace(go.Bar(
         y=[mei_cadunico, mei_pbf], x=['Cadastro Único', 'Bolsa Família'],
         text=[mei_cadunico, mei_pbf], textfont={'size': 14},
-        texttemplate='%{y:_.0f}',
+        texttemplate='%{y:_.0f}', showlegend=False,
         hovertemplate="<b>%{x} <br>População: %{y:.0f}</br><b>",
         textposition='auto', name='MEI',
         marker=dict(color='#f8961e')
     ))
 
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(size=12, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=True,
-        margin=dict(
-            l=15,
-            r=15,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        showlegend=False,
-        plot_bgcolor='white',
-    )
+    fig.update_layout(layout_chart)
 
     annotations = []
     # Title
@@ -2419,14 +2204,9 @@ def display_mei(w_municipios, w_municipios1):
                             font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania/Ministério da Economia, jul/2020',
-                            font=dict(size=12, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_cidadania)
 
     fig.update_layout(annotations=annotations)
-
 
     return fig
 
@@ -2463,13 +2243,13 @@ def display_pib_setorial(w_municipios, w_municipios1):
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
                             xanchor='left', yanchor='bottom',
                             text='PIB por setor de<br>atividade econômica',
-                            font=dict(family='Open Sans', size=20, color='rgb(37,37,37)'),
+                            font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
                             text='Fonte: IBGE, 2018',
-                            font=dict(family='Open Sans', size=15, color='rgb(150,150,150)'),
+                            font=dict(size=15, color='rgb(150,150,150)'),
                             showarrow=False))
 
     fig.update_layout(annotations=annotations, hovermode='closest')
@@ -2514,32 +2294,7 @@ def display_empresas(w_municipios, w_municipios1):
                          hovertemplate=
                          '<b>%{x}' + '<br>Número de empresas</b>: %{y}<b><br>',
                          ))
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(size=9, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=True,
-        margin=dict(
-            l=15,
-            r=15,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        plot_bgcolor='white'
-    )
+    fig.update_layout(layout_chart)
 
     annotations = []
 
@@ -2685,7 +2440,7 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            text='Fonte: Ministério da Economia/RAIS, 2019',
                             font=dict(size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -2770,7 +2525,7 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            text='Fonte: Ministério da Economia/RAIS, 2019',
                             font=dict(size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -2880,7 +2635,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.25,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            text='Fonte: Ministério da Economia/RAIS, 2019',
                             font=dict(size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -2976,7 +2731,7 @@ def rem_setor(w_municipios, w_municipios1):
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            text='Fonte: Ministério da Economia/RAIS, 2019',
                             font=dict(size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -3043,7 +2798,7 @@ def update_top_vinculos(w_municipios, w_municipios1):
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            text='Fonte: Ministério da Economia/RAIS, 2019',
                             font=dict(size=13, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -3077,7 +2832,7 @@ def update_top_vinculos_table(w_municipios, w_municipios1):
     export_format = "xlsx"
     return dash_table.DataTable(data=data, columns=columns, export_format=export_format, filter_action='native',
                                 page_action="native", page_current=0, page_size=10, sort_action='native', export_headers="display",
-                                style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold', 'fontFamily':'Arial', 'fontSize':12},
+                                style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold', 'fontSize':12},
                                 style_cell={'backgroundColor': 'white', 'color': 'black', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
                                 )
@@ -3140,7 +2895,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            text='Fonte: Ministério da Economia/RAIS, 2019',
                             font=dict(size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
@@ -3192,7 +2947,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
             showticklabels=True,
             linewidth=2,
             ticks='outside',
-            tickfont=dict(family='Open Sans', size=10, color='rgb(82, 82, 82)'),
+            tickfont=dict(size=10, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
             showgrid=False,
@@ -3222,7 +2977,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     # Source
     annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.7,
                             xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2020',
+                            text='Fonte: Ministério da Economia/RAIS, 2019',
                             font=dict(size=12, color='rgb(150,150,150)'),
                             showarrow=False))
 
