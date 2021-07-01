@@ -417,7 +417,7 @@ def render_tab_content(active_tab):
                                         [
                                             dbc.CardBody(children=
                                             [
-                                                html.H5("Pessoas com carteira assinada", className="card-title",
+                                                html.H5("Pessoas com carteira assinada (abr/2021)", className="card-title",
                                                         style={'textAlign': 'center'}),
                                                 html.P(id='empregos',
                                                        style={'color': '#1351B4', 'textAlign': 'center', 'fontSize': 45,
