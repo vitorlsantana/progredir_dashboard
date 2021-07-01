@@ -217,8 +217,8 @@ df_saldo_subsetor_ibge = df_saldo_subsetor_ibge.drop(['Município'], axis=1)
 # table_body = [html.Tbody([row1, row2, row3, row4, row5, row6, row7, row8, row9, row10, row11, row12, row13,
 #                           row14, row15, row16, row17, row18, row19, row20, row21, row22, row23, row24])]
 
-df_data = ('')
-table = dbc.Table(df_data + table_body, bordered=True, style={'fontSize':14})
+df_data = pd.read_csv('https://raw.githubusercontent.com/vitorlsantana/progredir_dashboard/main/data/tabela_bases_dados.csv', sep=';', encoding='latin1')
+table = dbc.Table(df_data, bordered=True, style={'fontSize':14})
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 # NAVBAR
