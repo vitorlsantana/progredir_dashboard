@@ -171,7 +171,7 @@ app.layout = dbc.Container([
                         "O Painel da Inclusão Produtiva Urbana tem por objetivo reunir informações que possibilitem uma "
                         "compreensão ampla do cenário social e econômico nos níveis estadual e municipal.\n\nCom isso, espera-se auxiliar gestores públicos "
                         "em nível local e parceiros do setor empresarial e da sociedade civil a "
-                        "desenharem estratégias de inclusão produtiva para a população de baixa renda, em especial daquela localizada no meio urbano."
+                        "desenharem estratégias de inclusão produtiva para a população de baixa renda, em especial daquela localizada no meio urbano. "
                         "Para isso, foram agregados em uma única plataforma dados sobre o contexto social - população, serviços e ações disponíveis, "
                         "a atividade econômica, empreendedorismo, microcrédito, dentre outras, obtidos a partir de um conjunto de bases públicas "
                         "governamentais.\n\nA ferramenta foi desenvolvida pelo Departamento de Inclusão Produtiva Urbana da Secretaria Nacional de "
@@ -1724,6 +1724,12 @@ source_cidadania = dict(xref='paper', yref='paper', x=0.5, y=-0.2,
                         font=dict(size=12, color='rgb(150,150,150)'),
                         showarrow=False)
 
+source_economia = dict(xref='paper', yref='paper', x=0.5, y=-0.25,
+                            xanchor='center', yanchor='top',
+                            text='Fonte: Ministério da Economia/RAIS, 2019',
+                            font=dict(size=12, color='rgb(150,150,150)'),
+                            showarrow=False)
+
 # POPULAÇÃO, PIB TOTAL E IDHM
 @app.callback(
     Output('populacao', 'children'),
@@ -2438,11 +2444,7 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
                             font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2019',
-                            font=dict(size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_economia)
 
     fig.update_layout(annotations=annotations)
 
@@ -2486,34 +2488,7 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
                           '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
                           ))
 
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(size=12, color='rgb(82, 82, 82)',
-            ),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=True,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=True,
-        barmode='group',
-        margin=dict(
-            l=20,
-            r=20,
-            b=100,
-            t=100,
-            pad=0),
-        showlegend=False,
-        plot_bgcolor='white'
-    )
+    fig.update_layout(layout_chart, barmode='group', showlegend=False)
 
     annotations = []
     # Title
@@ -2523,11 +2498,7 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
                             font=dict(size=18, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2019',
-                            font=dict(size=12, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_economia)
 
     fig.update_layout(annotations=annotations)
 
@@ -2597,32 +2568,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     fig.add_trace(go.Bar(x=df3['subsetor'], y=df3['vinculos'], textfont={'size': 12}, textposition='auto', name='', marker=dict(color='#1351B4'),
                          hovertemplate='<b>%{x}' + '<br>Quantidade de Vínculos</b>: %{y}<b><br>'))
 
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(size=9, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=True,
-        margin=dict(
-            l=20,
-            r=20,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        plot_bgcolor='white'
-    )
+    fig.update_layout(layout_chart)
 
     annotations = []
 
@@ -2633,11 +2579,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
                             font=dict(size=18, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.25,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2019',
-                            font=dict(size=12, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_economia)
 
     fig.update_layout(annotations=annotations)
     return fig
@@ -2688,37 +2630,7 @@ def rem_setor(w_municipios, w_municipios1):
     fig.add_trace(go.Scatter(x=df1['ano'], y=df1['Total'], mode='lines+markers', name='Total',
                              hovertemplate='<b>Remuneração média</b>: R$ %{y:.2f}<br>'))
 
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linecolor='rgb(204, 204, 204)',
-            linewidth=1,
-            ticks='outside',
-            zerolinecolor='grey',
-            tickfont=dict(size=10, color='rgb(82, 82, 82)',
-                          ),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            showline=True,
-            showticklabels=True,
-            zerolinecolor='grey',
-            tickfont=dict(size=8, color='rgb(82, 82, 82)',
-                          ),
-        ),
-        autosize=True,
-        margin=dict(
-            l=20,
-            r=10,
-            b=100,
-            t=100,
-            pad=0
-        ),
-        showlegend=True,
-        plot_bgcolor='white'
-    )
+    fig.update_layout(layout_chart, showlegend=True)
 
     annotations = []
 
@@ -2729,11 +2641,7 @@ def rem_setor(w_municipios, w_municipios1):
                             font=dict(size=18, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2019',
-                            font=dict(size=12, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_economia)
 
     fig.update_layout(annotations=annotations)
     return fig
@@ -2796,11 +2704,7 @@ def update_top_vinculos(w_municipios, w_municipios1):
                             font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2019',
-                            font=dict(size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_economia)
 
     fig.update_layout(annotations=annotations)
     return fig
@@ -2893,11 +2797,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
                             font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2019',
-                            font=dict(size=12, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_economia)
 
     fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
     fig.update_layout(annotations=annotations)
@@ -2940,32 +2840,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
         '<br><b>Ocupação</b>: %{x}<br>',
     ))
 
-    fig.update_layout(
-        xaxis=dict(
-            showline=True,
-            showgrid=False,
-            showticklabels=True,
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(size=10, color='rgb(82, 82, 82)'),
-        ),
-        yaxis=dict(
-            showgrid=False,
-            zeroline=False,
-            showline=False,
-            showticklabels=False,
-        ),
-        autosize=True,
-        margin=dict(
-            l=20,
-            r=20,
-            b=100,
-            t=100,
-            pad=1
-        ),
-        showlegend=False,
-        plot_bgcolor='white',
-    )
+    fig.update_layout(layout_chart)
 
     annotations = []
     # Title
@@ -2975,11 +2850,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
                             font=dict(size=20, color='rgb(37,37,37)'),
                             showarrow=False))
     # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.7,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2019',
-                            font=dict(size=12, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations.append(source_economia)
 
     fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
     fig.update_layout(annotations=annotations)
