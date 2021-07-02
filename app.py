@@ -162,7 +162,7 @@ app.layout = dbc.Container([
             html.Div(html.A(html.Img(
                 src='https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/Marca_Progredir.png?raw=true',
                 style={'height': '10%', 'width': '100%'}),
-                   href='https://www.gov.br/cidadania/pt-br/acoes-e-programas/progredir')),
+                   href='https://www.gov.br/cidadania/pt-br/acoes-e-programas/progredir', target="_blank")),
             dbc.Button(
                 "Saiba mais sobre o painel",
                 id="open",
