@@ -154,13 +154,18 @@ app.layout = dbc.Container([
                 style={'display': True, "width": "100%", 'height': '40px'}
             ),
             html.Br(),
+            html.P(
+                'O painel é parte da estratégia do Plano Progredir, e visa disponibilizar acesso a dados importantes para o diagnóstico '
+                'e o desenho de estratégias de inclusão produtiva mais efetivas em seu território.',
+                style={'fontSize': 15, "width": "100%", 'whiteSpace': 'pre-wrap', 'color': 'white',
+                       'border': '1px solid white', 'textAlign':'center', 'padding':'10px', 'margin-bottom':'30px'}),
             dbc.Button(
                 "Saiba mais sobre o painel",
                 id="open",
                 className="mr-5",
                 outline=True,
                 color="light",
-                style={"width": "100%", 'fontWeight': 'bold', 'fontSize':15}
+                style={"width": "100%", 'fontWeight': 'bold', 'fontSize':15, 'height': '40px'}
             ),
             html.Br(),
             dbc.Modal(
@@ -191,7 +196,7 @@ app.layout = dbc.Container([
             ),
             html.Br(),
             dbc.Button("Saiba mais sobre os dados", id='open1', className="mr-5", outline=True, color="light",
-                       style={"width": "100%", 'fontSize':15, 'fontWeight': 'bold'}),
+                       style={"width": "100%", 'fontWeight': 'bold', 'fontSize':15, 'height': '40px'}),
             dbc.Modal(
                 [
                     dbc.ModalHeader("Dados utilizados no painel"),
