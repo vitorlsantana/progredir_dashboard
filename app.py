@@ -158,7 +158,11 @@ app.layout = dbc.Container([
                 'O painel é parte da estratégia do Plano Progredir, e visa disponibilizar acesso a dados importantes para o diagnóstico '
                 'e o desenho de estratégias de inclusão produtiva mais efetivas em seu território.',
                 style={'fontSize': 15, "width": "100%", 'whiteSpace': 'pre-wrap', 'color': 'white',
-                       'border': '1px solid white', 'textAlign':'center', 'padding':'10px', 'margin-bottom':'30px'}),
+                       'border': '1px solid white', 'textAlign':'center', 'padding':'10px'}),
+            html.Div(html.A(html.Img(
+                src='https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/Marca_Progredir.png?raw=true',
+                style={'height': '10%', 'width': '100%'}),
+                   href='https://www.gov.br/cidadania/pt-br/acoes-e-programas/progredir')),
             dbc.Button(
                 "Saiba mais sobre o painel",
                 id="open",
