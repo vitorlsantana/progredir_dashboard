@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 import dash_table
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-import numpy as np
+from datetime import datetime as dt
 
 app = dash.Dash(__name__, title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP,
                                                                                                           'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
@@ -305,11 +305,12 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H5("Cadastro Único (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.P(id='cadunico', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'1px'}),
+                                    html.P(id='familias_cad', style={'color': 'grey', 'textAlign': 'center', 'fontSize': 15, 'margin-top':0}),
                                     html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px',
-                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                                                     'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'185px'}
                             )
                         ], xs=12, sm=12, md=6, lg=3, xl=3),
                     dbc.Col(
@@ -319,12 +320,13 @@ def render_tab_content(active_tab):
                                 dbc.CardBody(children=
                                 [
                                     html.H5("Bolsa Família (abr/2021)", className="card-title", style={'textAlign':'center'}),
-                                    html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold'}),
+                                    html.P(id='bolsa_familia', style={'color':'#1351B4', 'textAlign':'center', 'fontSize':30, 'fontWeight':'bold', 'margin-bottom':'1px'}),
+                                    html.P(id='familias_pbf', style={'color': 'grey', 'textAlign': 'center', 'fontSize': 15, 'margin-top': 0}),
                                     html.P(id='perc_pbf', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
-                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                                                     'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'185px'}
                             )
                         ], xs=12, sm=12, md=6, lg=3, xl=3),
                     dbc.Col(
@@ -345,7 +347,7 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'185px'}
                             )
                         ], xs=12, sm=12, md=6, lg=3, xl=3),
                     dbc.Col(
@@ -373,7 +375,7 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px', 'align-items':'center',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey'}
+                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'185px'}
                             )
                         ], xs=12, sm=12, md=6, lg=3, xl=3),
                 ],
@@ -469,10 +471,14 @@ def render_tab_content(active_tab):
                                             sm=12, md=12, lg=12, xl=12),
                                     dbc.Col(dcc.Graph(id='rem_setor'), style={'marginBottom': '10px'}, xs=12,
                                             sm=12, md=12, lg=12, xl=12),
+                                    dbc.Col(dcc.Graph(id='vinculos_subsetor'), style={'marginBottom': '10px'}, xs=12,
+                                            sm=12, md=12, lg=12, xl=12),
+                                    dbc.Col(dcc.Graph(id='saldo_subsetor'), style={'marginBottom': '10px'}, xs=12,
+                                            sm=12, md=12, lg=12, xl=12),
                                     dbc.Col([
                                         dcc.Graph(id='top_vinculos'),
                                         dbc.Button(
-                                            "Abrir tabela com todas as ocupações",
+                                            "Abrir tabela com quantidade de vínculos de todas as ocupações",
                                             id="open-body-scroll",
                                             className="mt-2",
                                             color="dark",
@@ -518,7 +524,7 @@ def render_tab_content(active_tab):
                                         ),
                                         dcc.Graph(id='saldo_ocupacao', config={'responsive': True}),
                                         dbc.Button(
-                                            "Abrir tabela com todas as ocupações",
+                                            "Abrir tabela com saldo de empregos formais de todas as ocupações",
                                             id="open-body-scroll2", n_clicks=0,
                                             className="mt-2",
                                             color="dark",
@@ -544,14 +550,10 @@ def render_tab_content(active_tab):
 
                                     ], style={'marginBottom': '10px'}, xs=12, sm=12, md=12,
                                         lg=12, xl=12),
-                                    dbc.Col(dcc.Graph(id='vinculos_subsetor'), style={'marginBottom': '10px'}, xs=12,
-                                            sm=12, md=12, lg=12, xl=12),
-                                    dbc.Col(dcc.Graph(id='saldo_subsetor'), style={'marginBottom': '10px'}, xs=12,
-                                            sm=12, md=12, lg=12, xl=12),
                                     dbc.Col([
-                                        dcc.Graph(id='remuneracao', config={'responsive': True}),
+                                        # dcc.Graph(id='remuneracao', config={'responsive': True}),
                                         dbc.Button(
-                                            "Abrir tabela com todas as ocupações",
+                                            "Abrir tabela com remuneração média de todas as ocupações",
                                             id="open-body-scroll1", n_clicks=0,
                                             className="mt-2",
                                             color="dark",
@@ -1757,7 +1759,9 @@ def display_pop_pib_idh(w_municipios, w_municipios1):
 # NÚMEROS CADASTRO ÚNICO / BOLSA FAMÍLIA / BPC
 @app.callback(
     Output('cadunico', 'children'),
+    Output('familias_cad', 'children'),
     Output('bolsa_familia', 'children'),
+    Output('familias_pbf', 'children'),
     Output('perc_cad', 'children'),
     Output('perc_pbf', 'children'),
     Input('w_municipios', 'value'),
@@ -1766,15 +1770,20 @@ def display_pop_pib_idh(w_municipios, w_municipios1):
 def display_cadunico(w_municipios, w_municipios1):
     pessoas_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
     pessoas_cad = f'{pessoas_cad:_.0f}'.replace('.', ',').replace('_', '.')
+    familias_cad = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_cad'].sum()
+    familias_cad = f'{familias_cad:_.0f}'.replace('.', ',').replace('_', '.')
     pessoas_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_pbf'].sum()
     pessoas_pbf = f'{pessoas_pbf:_.0f}'.replace('.', ',').replace('_', '.')
+    familias_pbf = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['familias_pbf'].sum()
+    familias_pbf = f'{familias_pbf:_.0f}'.replace('.', ',').replace('_', '.')
     pessoas_cad1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_cad'].sum()
     pessoas_pbf1 = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['pessoas_pbf'].sum()
     populacao = df[(df['uf'] == w_municipios) & (df['municipio'] == w_municipios1)]['populacao'].sum()
     perc_cad = ((pessoas_cad1/populacao)*100).round(2)
     perc_pbf = ((pessoas_pbf1/populacao)*100).round(2)
 
-    return pessoas_cad + ' pessoas', pessoas_pbf + ' pessoas', f'{perc_cad:.0f}% da população total', f'{perc_pbf:.0f}% da população total'
+    return pessoas_cad + ' pessoas', familias_cad + ' famílias', pessoas_pbf + ' pessoas', familias_pbf + ' famílias',\
+           f'{perc_cad:.0f}% da população total', f'{perc_pbf:.0f}% da população total'
 
 # DADOS EM TABELA
 @app.callback(Output('outros_dados', 'children'),
@@ -1782,9 +1791,8 @@ def display_cadunico(w_municipios, w_municipios1):
               Input('w_municipios1', 'value')
               )
 def display_table(w_municipios, w_municipios1):
-    df1 = df[['uf', 'municipio', 'regiao', 'pais', 'pobreza_extremapob_cad', 'familias_cad', 'familias_pbf', 'bpc_ben', 'bpc_pcd_ben', 'bpc_idoso_ben', 'familias_catadores_cad', ]]
-    df1 = df1.rename(columns={"pobreza_extremapob_cad": "População do Cadastro Único em situação de pobreza ou extrema pobreza", "familias_cad": "Famílias inscritas no Cadastro Único",
-                       "familias_pbf":"Famílias beneficiárias do Programa Bolsa Família", "bpc_ben":"Total de Beneficiários do Benefício de Prestação Continuada (BPC)",
+    df1 = df[['uf', 'municipio', 'regiao', 'pais', 'bpc_ben', 'bpc_pcd_ben', 'bpc_idoso_ben', 'familias_catadores_cad', ]]
+    df1 = df1.rename(columns={"bpc_ben":"Total de Beneficiários do Benefício de Prestação Continuada (BPC)",
                        "bpc_pcd_ben":"Beneficiários do BPC portadores de deficiência", "bpc_idoso_ben":"Beneficiários do BPC idosos",
                        "familias_catadores_cad":"Famílias de catadores de material reciclável inscritas no Cadastro Único"})
     df1 = df1.melt(id_vars=["uf", "municipio", "regiao", "pais"], var_name="Indicador", value_name="Quantidade")
@@ -1799,6 +1807,8 @@ def display_table(w_municipios, w_municipios1):
               Input('w_municipios1', 'value')
               )
 def display_ev_cadunico(w_municipios, w_municipios1):
+    df_cad['mês_ano'] = pd.to_datetime(df_cad['mês_ano'], format='%d/%m/%Y')
+    df_cad['mês_ano'] = df_cad['mês_ano'].dt.date
     uf2 = df_cad.groupby(['uf', 'mês_ano']).sum().reset_index()
     uf2['municipio'] = ' Todos os Municípios'
     regiao2 = df_cad.groupby(by=['regiao', 'mês_ano']).sum().reset_index()
@@ -1808,17 +1818,20 @@ def display_ev_cadunico(w_municipios, w_municipios1):
     pais2['municipio'] = ' Todos os Municípios'
     pais2 = pais2.rename(columns={"pais": "uf"})
     df_cad1 = df_cad.append([uf2, regiao2, pais2], ignore_index=True)
-    df_cad1 = df_cad1.sort_values(by=['mês_ano'])
+    df_cad1 = df_cad1.sort_values(by=['mês_ano'], ascending=True)
 
     df2 = df_cad1[(df_cad1['municipio'] == w_municipios1) & (df_cad1['uf'] == w_municipios)]
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=df2['mês_ano'], y=df2['pessoas_pbf'], name='Bolsa Família', mode='lines+markers',
-                             marker=dict(size=10, color='black'),
+                             marker=dict(size=7, color='black'),
                              hovertemplate="%{y:.2s}",
                              ))
+    fig.add_trace(go.Scatter(x=df2['mês_ano'], y=df2['pessoas_pob_extremapob'], name='Pobreza e extrema pobreza', mode='lines+markers',
+                             hovertemplate="%{y:.2s}",
+                             marker=dict(size=7, color='#fb8500')))
     fig.add_trace(go.Scatter(x=df2['mês_ano'], y=df2['pessoas_cad'], name='Cadastro Único', mode='lines+markers',
                              hovertemplate="%{y:.2s}",
-                             marker=dict(size=10, color='#f94144')))
+                             marker=dict(size=7, color='#f94144')))
     fig.update_layout(layout_chart)
     title = 'Pessoas inscritas no CadÚnico e beneficiárias<br>do Bolsa Família (2019-2021)' \
             '<br><span style="font-size:10px"><i>Ministério da Cidadania, abril/2021</span></i>'
@@ -2078,10 +2091,8 @@ def display_cad_funcao(w_municipios, w_municipios1):
     fig1.add_trace(go.Bar(x=df2['variable'],
                           y=df2['value'], showlegend=False,
                           hovertemplate=
-                          '<b>População</b>: %{y:.0f}' +
-                          '<br><b>Função principal</b>: %{x}<br>',
-                          texttemplate='%{y:_.0f}'.replace('.', ',').replace('_', '.'),
-                          textposition='auto', name='', marker=dict(color='#0C326F')))
+                          '<b>População</b>: %{y}' +
+                          '<br><b>Função principal</b>: %{x}<br>', name='', marker=dict(color='#0C326F')))
     fig1.update_layout(layout_chart)
 
     title = 'Pessoas inscritas no Cadastro Único, por <br><b>função principal</b>' \
@@ -2344,54 +2355,54 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
     return fig
 
 # EVOLUÇÃO DA REMUNERAÇÃO TOTAL
-@app.callback(Output('remuneracao', 'figure'),
-              Input('w_municipios', 'value'),
-              Input('w_municipios1', 'value')
-              )
-def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
-    uf3 = df_remuneracao.groupby(by=["uf", 'ano']).mean().reset_index()
-    uf3['municipio'] = ' Todos os Municípios'
-    regiao3 = df_remuneracao.groupby(by=['regiao', 'ano']).mean().reset_index()
-    regiao3['municipio'] = ' Todos os Municípios'
-    regiao3 = regiao3.rename(columns={"regiao": "uf"})
-    pais3 = df_remuneracao.groupby(by=["pais", 'ano']).mean().reset_index()
-    pais3['municipio'] = ' Todos os Municípios'
-    pais3 = pais3.rename(columns={"pais": "uf"})
-    df_remuneracao1 = df_remuneracao.append([uf3, regiao3, pais3], ignore_index=True)
-    df_remuneracao1['ano'] = df_remuneracao1['ano'].astype('int')
-    df_remuneracao1['Total'] = df_remuneracao1['Total'].round(2)*1100
-
-    rem_brasil = df_remuneracao1[(df_remuneracao1['municipio'] == ' Todos os Municípios') & (df_remuneracao1['uf'] == 'Brasil') & (df_remuneracao1['ano'] == 2019)]['Total'].sum().round(1)
-    rem_municipio = df_remuneracao1[(df_remuneracao1['municipio'] == w_municipios1) & (df_remuneracao1['uf'] == w_municipios) & (df_remuneracao1['ano'] == 2019)]['Total'].sum().round(1)
-    municipio = df_remuneracao1[
-        (df_remuneracao1['municipio'] == w_municipios1) & (df_remuneracao1['uf'] == w_municipios) & (
-                    df_remuneracao1['ano'] == 2019)]['municipio']
-
-    fig = go.Figure()
-    fig.add_trace(go.Bar(x=['Brasil'], y=[rem_brasil], name='', marker=dict(color='#5992ED'),
-                          text=[rem_brasil], textfont={'size': 14},
-                          hovertemplate=
-                          '<b>%{x}</b>' +
-                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
-                          ))
-    fig.add_trace(go.Bar(x=municipio, y=[rem_municipio], name='', marker=dict(color='#0C326F'),
-                          text=[rem_municipio], textfont={'size': 14},
-                          hovertemplate=
-                          '<b>%{x}</b>' +
-                          '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
-                          ))
-
-    fig.update_layout(layout_chart, barmode='group', showlegend=False)
-
-    title = '<b>Remuneração média mensal</b> dos<br>empregos formais' \
-            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
-    fig.update_layout(
-        title_text=title,
-        title_font_color='#333333',
-        title_font_size=14,
-    )
-
-    return fig
+# @app.callback(Output('remuneracao', 'figure'),
+#               Input('w_municipios', 'value'),
+#               Input('w_municipios1', 'value')
+#               )
+# def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
+#     uf3 = df_remuneracao.groupby(by=["uf", 'ano']).mean().reset_index()
+#     uf3['municipio'] = ' Todos os Municípios'
+#     regiao3 = df_remuneracao.groupby(by=['regiao', 'ano']).mean().reset_index()
+#     regiao3['municipio'] = ' Todos os Municípios'
+#     regiao3 = regiao3.rename(columns={"regiao": "uf"})
+#     pais3 = df_remuneracao.groupby(by=["pais", 'ano']).mean().reset_index()
+#     pais3['municipio'] = ' Todos os Municípios'
+#     pais3 = pais3.rename(columns={"pais": "uf"})
+#     df_remuneracao1 = df_remuneracao.append([uf3, regiao3, pais3], ignore_index=True)
+#     df_remuneracao1['ano'] = df_remuneracao1['ano'].astype('int')
+#     df_remuneracao1['Total'] = df_remuneracao1['Total'].round(2)*1100
+#
+#     rem_brasil = df_remuneracao1[(df_remuneracao1['municipio'] == ' Todos os Municípios') & (df_remuneracao1['uf'] == 'Brasil') & (df_remuneracao1['ano'] == 2019)]['Total'].sum().round(1)
+#     rem_municipio = df_remuneracao1[(df_remuneracao1['municipio'] == w_municipios1) & (df_remuneracao1['uf'] == w_municipios) & (df_remuneracao1['ano'] == 2019)]['Total'].sum().round(1)
+#     municipio = df_remuneracao1[
+#         (df_remuneracao1['municipio'] == w_municipios1) & (df_remuneracao1['uf'] == w_municipios) & (
+#                     df_remuneracao1['ano'] == 2019)]['municipio']
+#
+#     fig = go.Figure()
+#     fig.add_trace(go.Bar(x=['Brasil'], y=[rem_brasil], name='', marker=dict(color='#5992ED'),
+#                           text=[rem_brasil], textfont={'size': 14},
+#                           hovertemplate=
+#                           '<b>%{x}</b>' +
+#                           '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+#                           ))
+#     fig.add_trace(go.Bar(x=municipio, y=[rem_municipio], name='', marker=dict(color='#0C326F'),
+#                           text=[rem_municipio], textfont={'size': 14},
+#                           hovertemplate=
+#                           '<b>%{x}</b>' +
+#                           '<br><b>Remuneração média</b>: R$ %{y:.2f}<br>',
+#                           ))
+#
+#     fig.update_layout(layout_chart, barmode='group', showlegend=False)
+#
+#     title = '<b>Remuneração média mensal</b> dos<br>empregos formais' \
+#             '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
+#     fig.update_layout(
+#         title_text=title,
+#         title_font_color='#333333',
+#         title_font_size=14,
+#     )
+#
+#     return fig
 
 # PLANILHA COM A REMUNERAÇÃO DE TODAS AS OCUPAÇÕES
 @app.callback(
@@ -2714,12 +2725,20 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     fig.update_layout(layout_chart)
 
     title = 'Ocupações com <b>maior saldo de<br>empregos formais</b> (2019)' \
-            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>' \
+            '<br><span style="font-size:20px", className="far fa-lightbulb"></span>'
     fig.update_layout(
         title_text=title,
         title_font_color='#333333',
         title_font_size=14,
     )
+
+    # html.Span(
+    #     className="far fa-lightbulb",
+    #     id="tooltip-target",
+    #     style={'fontSize': 20, "cursor": "pointer", 'color': '#fb8500',
+    #            'padding-left': '10px', 'padding-top': '7px'},
+    # ),
 
     return fig
 
