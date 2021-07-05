@@ -135,6 +135,10 @@ app.layout = dbc.Container([
     dbc.Row([
         # SIDEBAR
         dbc.Col([
+            html.Div(html.A(html.Img(
+                src='https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/Marca_Progredir.png?raw=true',
+                style={'height': '10%', 'width': '75%', 'display': 'block', 'margin-left': 'auto', 'margin-right': 'auto'}),
+                href='https://www.gov.br/cidadania/pt-br/acoes-e-programas/progredir', target="_blank")),
             html.Label('Consulta', style={'fontSize':20, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
                    className='mt-3'),
             html.Label('Selecione a Região', style={'fontSize':15, "width": "100%", 'color': 'white', 'fontWeight': 'bold'},
@@ -160,10 +164,6 @@ app.layout = dbc.Container([
                 'e o desenho de estratégias de inclusão produtiva mais efetivas em seu território.',
                 style={'fontSize': 15, "width": "100%", 'whiteSpace': 'pre-wrap', 'background-color':'white', 'border-radius':'3px',
                        'border': '1px solid white', 'fontWeight':'bold', 'textAlign':'center', 'padding':'10px', 'color':'#071D41'}),
-            html.Div(html.A(html.Img(
-                src='https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/Marca_Progredir.png?raw=true',
-                style={'height': '10%', 'width': '100%'}),
-                   href='https://www.gov.br/cidadania/pt-br/acoes-e-programas/progredir', target="_blank")),
             dbc.Button(
                 "Saiba mais sobre o painel",
                 id="open",
@@ -1878,7 +1878,7 @@ def display_domicilio_sexo(w_municipios, w_municipios1):
     perc_masc = (masc_cad/populacao*100).round(1)
     perc_fem = (fem_cad/populacao * 100).round(1)
 
-    return urbano1, f'{perc_urbano:.0f}% da pop. do CadÚnico', masc_cad1 + f' ({perc_masc:.0f}%)', fem_cad1 + f' ({perc_fem:.0f}%)'
+    return urbano1 + ' pessoas', f'{perc_urbano:.0f}% da pop. do CadÚnico', masc_cad1 + f' ({perc_masc:.0f}%)', fem_cad1 + f' ({perc_fem:.0f}%)'
 
 # POPULAÇÃO DO CADUNICO POR FAIXA ETÁRIA
 @app.callback(Output('faixa_etaria', 'figure'),
