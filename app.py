@@ -310,7 +310,7 @@ def render_tab_content(active_tab):
                                     html.P(id='perc_cad', style={'color': '#f94144', 'textAlign': 'center', 'margin-top':'5px', 'margin-bottom':0, 'fontSize': 20, 'fontWeight': 'bold'}),
                                 ]),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border':'white', 'marginBottom':'5px',
-                                                                     'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'185px'}
+                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=6, lg=3, xl=3),
                     dbc.Col(
@@ -326,7 +326,7 @@ def render_tab_content(active_tab):
                                 ]
                                 ),
                             ], color="#F8F8F8", outline=True, style={"width": "100%", 'border': 'white', 'marginBottom':'5px',
-                                                                     'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'185px'}
+                                                                     'box-shadow': '1px 1px 1px 1px lightgrey'}
                             )
                         ], xs=12, sm=12, md=6, lg=3, xl=3),
                     dbc.Col(
@@ -949,7 +949,7 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                     dbc.Col(
                         [
@@ -993,7 +993,7 @@ def render_tab_content(active_tab):
                                 ),
                             ], color="#F8F8F8", outline=True,
                                 style={"width": "100%", 'border': 'white', 'marginBottom': '5px',
-                                       'box-shadow': '1px 1px 1px 1px lightgrey', 'height':'160px'})
+                                       'box-shadow': '1px 1px 1px 1px lightgrey'})
                         ], xs=12, sm=12, md=12, lg=3, xl=3),
                 ],
                     align='center'
@@ -1808,7 +1808,7 @@ def display_table(w_municipios, w_municipios1):
               )
 def display_ev_cadunico(w_municipios, w_municipios1):
     df_cad['mês_ano'] = pd.to_datetime(df_cad['mês_ano'], format='%d/%m/%Y')
-    df_cad['mês_ano'] = df_cad['mês_ano'].dt.date
+    # df_cad['mês_ano'] = df_cad['mês_ano'].dt.date
     uf2 = df_cad.groupby(['uf', 'mês_ano']).sum().reset_index()
     uf2['municipio'] = ' Todos os Municípios'
     regiao2 = df_cad.groupby(by=['regiao', 'mês_ano']).sum().reset_index()
