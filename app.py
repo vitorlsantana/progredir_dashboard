@@ -7,6 +7,7 @@ import dash_bootstrap_components as dbc
 import dash_table
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import numpy as np
 
 app = dash.Dash(__name__, title='Painel da Inclusão Produtiva', update_title='Carregando...', external_stylesheets=[dbc.themes.BOOTSTRAP,
                                                                                                           'https://use.fontawesome.com/releases/v5.12.1/css/all.css',
@@ -157,8 +158,8 @@ app.layout = dbc.Container([
             html.P(
                 'O painel é parte da estratégia do Plano Progredir, e visa disponibilizar acesso a dados importantes para o diagnóstico '
                 'e o desenho de estratégias de inclusão produtiva mais efetivas em seu território.',
-                style={'fontSize': 15, "width": "100%", 'whiteSpace': 'pre-wrap', 'color': 'white',
-                       'border': '1px solid white', 'textAlign':'center', 'padding':'10px'}),
+                style={'fontSize': 15, "width": "100%", 'whiteSpace': 'pre-wrap', 'background-color':'white', 'border-radius':'3px',
+                       'border': '1px solid white', 'fontWeight':'bold', 'textAlign':'center', 'padding':'10px', 'color':'#071D41'}),
             html.Div(html.A(html.Img(
                 src='https://github.com/vitorlsantana/progredir_dashboard/blob/main/assets/Marca_Progredir.png?raw=true',
                 style={'height': '10%', 'width': '100%'}),
@@ -1707,9 +1708,9 @@ layout_chart = dict(xaxis=dict(
             showgrid=False,
             showticklabels=True,
             linecolor='rgb(204, 204, 204)',
-            linewidth=2,
+            linewidth=1,
             ticks='outside',
-            tickfont=dict(family='Arial', size=11, color='rgb(82, 82, 82)'),
+            tickfont=dict(size=11, color='rgb(82, 82, 82)'),
         ),
         yaxis=dict(
             showgrid=False,
@@ -1726,18 +1727,6 @@ layout_chart = dict(xaxis=dict(
             pad=0
         ),
         plot_bgcolor='white')
-
-source_cidadania = dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                        xanchor='center', yanchor='top',
-                        text='Fonte: Ministério da Cidadania, abr/2021',
-                        font=dict(size=12, color='rgb(150,150,150)'),
-                        showarrow=False)
-
-source_economia = dict(xref='paper', yref='paper', x=0.5, y=-0.25,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Economia/RAIS, 2019',
-                            font=dict(size=12, color='rgb(150,150,150)'),
-                            showarrow=False)
 
 # POPULAÇÃO, PIB TOTAL E IDHM
 @app.callback(
@@ -1831,12 +1820,20 @@ def display_ev_cadunico(w_municipios, w_municipios1):
                              hovertemplate="%{y:.2s}",
                              marker=dict(size=10, color='#f94144')))
     fig.update_layout(layout_chart)
+    title = 'Pessoas inscritas no CadÚnico e beneficiárias<br>do Bolsa Família (2019-2021)' \
+            '<br><span style="font-size:10px"><i>Ministério da Cidadania, abril/2021</span></i>'
     fig.update_layout(
         xaxis=dict(
             tickformat='%b %Y',
         ),
         hovermode="x unified",
         showlegend=True,
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+        title={
+            'y': 0.93,
+            'yanchor': 'top'},
     )
     fig.update_layout(legend=dict(
         orientation="h",
@@ -1845,18 +1842,6 @@ def display_ev_cadunico(w_municipios, w_municipios1):
         xanchor="right",
         x=1
     ))
-
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.15,
-                            xanchor='left', yanchor='bottom',
-                            text='Pessoas inscritas no CadÚnico e beneficiárias<br>do Bolsa Família (2019-2021)',
-                            font=dict(size=19, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_cidadania)
-    fig.update_layout(annotations=annotations)
-
     return fig
 
 # POPULAÇÃO DO CADUNICO POR SITUAÇÃO DO DOMICÍLIO E SEXO
@@ -1924,17 +1909,13 @@ def display_age(w_municipios, w_municipios1):
 
     fig.update_layout(layout_chart)
 
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='População por <b>faixa etária</b>',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_cidadania)
-
-    fig.update_layout(annotations=annotations)
+    title = 'Pessoas inscritas no CadÚnico, por <b>faixa etária</b>' \
+            '<br><span style="font-size:10px"><i>Ministério da Cidadania, abril/2021</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14
+    )
 
     return fig
 
@@ -1986,33 +1967,29 @@ def display_escolaridade(w_municipios, w_municipios1):
                          ),
                   )
     fig.update_layout(layout_chart)
+    title = 'Pessoas inscritas no Cadastro Único, por <br><b>nível de escolaridade</b>' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Cidadania (fev/2021) & IBGE/PNAD Contínua (abril/2021)</span></i>'
     fig.update_layout(
         barmode='group',
-        showlegend=True
+        showlegend=True,
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=-0.35,
+            xanchor="right",
+            x=0.6
+        )
     )
 
-    fig.update_traces()
-    fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-
     annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='População do Cadastro Único por nível<br>de<b> escolaridade</b>',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, fev/2021<br>IBGE/PNAD Contínua, abril/2021',
-                            font=dict(size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
-    # Anotação
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
                             xanchor='left', yanchor='bottom',
                             text=f'{perc_abaixo_ensino_medio:.0f}% não possuem ensino<br>médio completo',
-                            font=dict(size=16, color='white'),
-                            showarrow=False, ax=20, ay=-30, bordercolor="#FF8C00", borderwidth=2, borderpad=6,
+                            font=dict(size=15, color='white'),
+                            showarrow=False, ax=20, ay=-20, bordercolor="#FF8C00", borderwidth=2, borderpad=6,
                             bgcolor="#FF8C00", align="center",
                             ))
 
@@ -2044,26 +2021,21 @@ def display_escolaridade(w_municipios, w_municipios1):
     # Title
     annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.15,
                             xanchor='left', yanchor='bottom',
-                            text='População por <b>taxa de analfabetismo</b>',
-                            font=dict(size=20, color='rgb(37,37,37)'),
+                            text='População, por <b>taxa de analfabetismo</b>' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Cidadania (fev/2021) & IBGE/PNAD Contínua (2018)</span></i>',
+                            font=dict(size=14, color='#333333'),
                             showarrow=False))
     # Subtitle 1
     annotations.append(dict(xref='paper', yref='paper', x=0.08, y=0.93,
                             xanchor='left', yanchor='bottom',
                             text='Cadastro Único',
-                            font=dict(size=15, color='rgb(37,37,37)'),
+                            font=dict(size=13, color='rgb(37,37,37)'),
                             showarrow=False))
     # Subtitle 1
     annotations.append(dict(xref='paper', yref='paper', x=0.65, y=0.93,
                             xanchor='left', yanchor='bottom',
                             text='Geral Brasil',
-                            font=dict(size=15, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.1,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: Ministério da Cidadania, fev/2021<br>IBGE/PNAD Contínua, 2018',
-                            font=dict(size=13, color='rgb(150,150,150)'),
+                            font=dict(size=13, color='rgb(37,37,37)'),
                             showarrow=False))
     fig2.update_layout(annotations=annotations)
 
@@ -2112,81 +2084,13 @@ def display_cad_funcao(w_municipios, w_municipios1):
                           textposition='auto', name='', marker=dict(color='#0C326F')))
     fig1.update_layout(layout_chart)
 
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='<b>Função principal</b>',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_cidadania)
-
-    fig1.update_layout(annotations=annotations)
-
-    fig2 = go.Figure()
-    fig2.add_trace(go.Pie(labels=['Trabalharam', 'Não trabalharam'],
-                          values=[trab_12_meses, nao_trab_12_meses], name='',
-                          marker=dict(colors=['#1351B4', '#FF8C00']), hole=.5, textfont={'size': 14},
-                          hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
-
-    fig2.update_layout(
-        xaxis_tickfont_size=14,
-        yaxis=dict(
-            titlefont_size=16,
-            tickfont_size=14,
-        ),
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=-0.13,
-            xanchor="right",
-            x=0.9
-        ),
+    title = 'Pessoas inscritas no Cadastro Único, por <br><b>função principal</b>' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Cidadania (abril/2021)</span></i>'
+    fig1.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
     )
-
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=-0.11, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Situação de<b>trabalho nos<br>últimos 12 meses</b>',
-                            font=dict(size=19, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_cidadania)
-
-    fig2.update_layout(annotations=annotations)
-
-    fig3 = go.Figure()
-    fig3.add_trace(go.Pie(labels=['Trabalharam', 'Não trabalharam'], values=[trab_last_week, nao_trab_last_week], name='',
-                          marker=dict(colors=['#1351B4', '#FF8C00']), hole=.5, textfont={'size': 14},
-                          hovertemplate="<b>%{label} <br>População: %{value:.0f}</br><b>"))
-
-    fig3.update_layout(
-        xaxis_tickfont_size=14,
-        yaxis=dict(
-            titlefont_size=16,
-            tickfont_size=14,
-        ),
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=-0.13,
-            xanchor="right",
-            x=0.9
-    ))
-
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=-0.11, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Situação de <b>trabalho na<br>última semana</b>',
-                            font=dict(size=19, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_cidadania)
-
-    fig3.update_layout(annotations=annotations)
 
     return fig1, f'{sem_trab_12_meses:.0f}%', f'{sem_trab_last_week:.0f}%'
 
@@ -2211,17 +2115,13 @@ def display_mei(w_municipios, w_municipios1):
 
     fig.update_layout(layout_chart)
 
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Microeempreendedor Individual (MEI)',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_cidadania)
-
-    fig.update_layout(annotations=annotations)
+    title = 'Pessoas inscritas no MEI,<br><b>inscritas no CadÚnico</b> ou beneficiárias do <b>Bolsa Família</b>' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Cidadania (julho/2020)</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+    )
 
     return fig
 
@@ -2253,21 +2153,14 @@ def display_pib_setorial(w_municipios, w_municipios1):
                          showlegend=True, name='Setor', hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'size': 15},
                          hovertemplate="<b>%{label} <br>PIB: R$ %{value:.2f}</br><b>"))
 
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='PIB por setor de<br>atividade econômica',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.2,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: IBGE, 2018',
-                            font=dict(size=15, color='rgb(150,150,150)'),
-                            showarrow=False))
-
-    fig.update_layout(annotations=annotations, hovermode='closest')
+    title = 'PIB por setor de atividade econômica' \
+            '<br><span style="font-size:10px"><i>Fonte: IBGE, 2018</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+        hovermode='closest'
+    )
 
     return fig
 
@@ -2311,26 +2204,21 @@ def display_empresas(w_municipios, w_municipios1):
                          ))
     fig.update_layout(layout_chart)
 
-    annotations = []
+    title = 'Número de empresas, por setor de<br>atividade econômica</b>' \
+            '<br><span style="font-size:10px"><i>Fonte: IBGE/CEMPRE, 2018</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+    )
 
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Número de empresas, por setor<br>de atividade econômica',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(dict(xref='paper', yref='paper', x=0.5, y=-0.30,
-                            xanchor='center', yanchor='top',
-                            text='Fonte: IBGE/CEMPRE, 2018',
-                            font=dict(size=13, color='rgb(150,150,150)'),
-                            showarrow=False))
+    annotations = []
 
     # Anotação
     annotations.append(dict(xref='paper', yref='paper', x=0.4, y=0.6,
                             xanchor='left', yanchor='bottom',
                             text=f'{empresas1} empresas',
-                            font=dict(size=22, color='white'),
+                            font=dict(size=20, color='white'),
                             showarrow=False, ax=20, ay=-30, bordercolor="#1351B4", borderwidth=2, borderpad=6,
                             bgcolor="#1351B4", align="center",))
 
@@ -2445,17 +2333,13 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
         plot_bgcolor='white'
     )
 
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Evolução do <b>saldo de empregos formais</b><br>(2002-2019)',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_economia)
-
-    fig.update_layout(annotations=annotations)
+    title = 'Evolução do <b>saldo de empregos formais</b><br>(2002-2019)' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+    )
 
     return fig
 
@@ -2499,17 +2383,13 @@ def display_remuneracao_ocupacoes(w_municipios, w_municipios1):
 
     fig.update_layout(layout_chart, barmode='group', showlegend=False)
 
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Remuneração média mensal dos<br>empregos formais',
-                            font=dict(size=18, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_economia)
-
-    fig.update_layout(annotations=annotations)
+    title = '<b>Remuneração média mensal</b> dos<br>empregos formais' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+    )
 
     return fig
 
@@ -2541,7 +2421,7 @@ def update_remuneracao_table(w_municipios, w_municipios1):
     columns = [{"name": i, "id": i,} for i in df2[['Ocupação', 'Remuneração']]]
     export_format = "xlsx"
     return dash_table.DataTable(data=data, columns=columns, export_format=export_format, filter_action='native',
-                                page_action = "native", page_current=0, page_size=10, sort_action='native', export_headers="display",
+                                page_action="native", page_current=0, page_size=10, sort_action='native', export_headers="display",
                                 style_as_list_view=True, style_header={'backgroundColor': '#0C326F', 'color':'white', 'fontWeight': 'bold','fontSize':12},
                                 style_cell={'backgroundColor': 'white', 'color': 'black', 'fonteSize':12,
                                             'minWidth': 95, 'width': 95, 'maxWidth': 95},
@@ -2579,18 +2459,14 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
 
     fig.update_layout(layout_chart)
 
-    annotations = []
+    title = 'Setores da economia com maior quantidade<br> de <b>vínculos de empregos formais</b>' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+    )
 
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Setores da economia com maior quantidade<br> de vínculos de empregos formais',
-                            font=dict(size=18, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_economia)
-
-    fig.update_layout(annotations=annotations)
     return fig
 
 # EVOLUÇÃO DA REMUNERAÇÃO POR SETOR DE ATIVIDADE ECONÔMICA
@@ -2641,18 +2517,14 @@ def rem_setor(w_municipios, w_municipios1):
 
     fig.update_layout(layout_chart, showlegend=True)
 
-    annotations = []
+    title = '<b>Evolução da remuneração média</b>, por setor <br>de atividade econômica (2015-2019)' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+    )
 
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Evolução da remuneração média, por setor <br>de atividade econômica (2015-2019)',
-                            font=dict(size=18, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_economia)
-
-    fig.update_layout(annotations=annotations)
     return fig
 
 # OCUPAÇÕES COM MAIOR QUANTIDADE DE VINCULOS
@@ -2704,18 +2576,14 @@ def update_top_vinculos(w_municipios, w_municipios1):
         ),
     )
 
-    annotations = []
+    title = 'Ocupações com <b>maior quantidade<br>de vínculos ativos</b>' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+    )
 
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Ocupações com maior quantidade<br>de vínculos ativos',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_economia)
-
-    fig.update_layout(annotations=annotations)
     return fig
 
 # PLANILHA COM TODOS AS OCUPAÇÕES POR QUANTIDADE DE VÍNCULOS
@@ -2797,19 +2665,14 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
         ),
     )
 
-    annotations = []
+    title = 'Setores da economia com maior<br><b>saldo de empregos formais</b> (2019)' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+    )
 
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Setores da economia com maior<br>saldo de empregos formais (2019)',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_economia)
-
-    fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-    fig.update_layout(annotations=annotations)
     return fig
 
 # OCUPAÇÕES COM MAIORES SALDO DE EMPREGOS
@@ -2836,13 +2699,12 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     df2['ocupation'] = df2['ocupation'].str.capitalize()
     df3 = df2[(df2['municipio'] == w_municipios1) & (df2['uf'] == w_municipios) & (df2['ano'] == 2019)]
 
-    df3 = df3.nlargest(6, 'saldo')
+    df3 = df3.nlargest(8, 'saldo')
     df3 = df3.iloc[1: , :]
 
     fig = go.Figure()
-
     fig.add_trace(go.Bar(
-        y=df3['saldo'], x=df3['ocupation'], textposition='inside', name='',
+        y=df3['saldo'], x=df3['ocupation'], textposition='auto', name='',
         marker=dict(color='#f8961e'),
         hovertemplate=
         '<b>Saldo de empregos</b>: %{y:.2s}' +
@@ -2851,18 +2713,14 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
 
     fig.update_layout(layout_chart)
 
-    annotations = []
-    # Title
-    annotations.append(dict(xref='paper', yref='paper', x=0.0, y=1.10,
-                            xanchor='left', yanchor='bottom',
-                            text='Ocupações com maior saldo<br>de empregos formais',
-                            font=dict(size=20, color='rgb(37,37,37)'),
-                            showarrow=False))
-    # Source
-    annotations.append(source_economia)
+    title = 'Ocupações com <b>maior saldo de<br>empregos formais</b> (2019)' \
+            '<br><span style="font-size:10px"><i>Fonte: Ministério da Economia/RAIS, 2019</span></i>'
+    fig.update_layout(
+        title_text=title,
+        title_font_color='#333333',
+        title_font_size=14,
+    )
 
-    fig.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
-    fig.update_layout(annotations=annotations)
     return fig
 
 # PLANILHA COM TODOS AS OCUPAÇÕES POR QUANTIDADE DE VÍNCULOS
