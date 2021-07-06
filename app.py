@@ -930,7 +930,7 @@ def render_tab_content(active_tab):
                                             dbc.ModalBody([
                                                 "A partir do estudo do conceito de vulnerabilidade foram construídos 16 indicadores, que juntos forma o Índice de Vulnerabilidade Social. "
                                                 "Esses indicadores estão inseridos em 3 dimensões, sendo elas a 1) infraestrutura urbana; 2) capital humano e 3) renda e trabalho. \n\n"
-                                                "O índice varia de 0 a 1 e <b>quanto menor o valor, menor a vulnerabilidade social da localidade</b>. \n\n"
+                                                "O índice varia de 0 a 1 e quanto menor o valor, menor a vulnerabilidade social da localidade. \n\n"
                                                 "Saiba mais sobre o Índice e tenha acesso ao Atlas da Vulnerabilidade na plataforma desenvolvida pelo ",
                                                 html.A('Instituto de Pesquisa Econômica Aplicada (IPEA).',
                                                        href="http://ivs.ipea.gov.br/index.php/pt/",
@@ -2013,11 +2013,11 @@ def display_escolaridade(w_municipios, w_municipios1):
         )
 
     fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[sabe_ler_escrever, nao_sabe_ler_escrever], showlegend=True, hole=.5,
-                          marker=dict(colors=['#1351B4', '#FF8C00']), hoverinfo='label+value', textinfo='percent', name="Região Selecionada",
+                          marker=dict(colors=['#1351B4', '#FF8C00']), hoverinfo='label+value', texttemplate="%{percent:.0%f}", name="Região Selecionada",
                           hovertemplate="<b>%{label}<b> <br>%{value:.0f} pessoas</br>"
                           ), 1, 1)
     fig2.add_trace(go.Pie(labels=['Sabe ler e escrever', 'Não sabe ler e escrever'], values=[154232294, 11253000], hole=.5,
-                         name="Brasil", hoverinfo='label+value', textinfo='percent', hovertemplate="<b>%{label}<b> <br>%{value:.0f} pessoas</br>"), 1, 2)
+                         name="Brasil", hoverinfo='label+value', texttemplate="%{percent:.0%f}", hovertemplate="<b>%{label}<b> <br>%{value:.0f} pessoas</br>"), 1, 2)
 
     fig2.update_layout(
         margin=dict(
@@ -2161,7 +2161,9 @@ def display_pib_setorial(w_municipios, w_municipios1):
 
     fig = go.Figure()
     fig.add_trace(go.Pie(labels=['Agricultura', 'Indústria', 'Serviços', 'Administração'], values=[agropecuaria, industria, servicos, admpublica],
-                         showlegend=True, name='Setor', hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'size': 15},
+                         showlegend=True, name='Setor', hoverinfo='label+value',
+                         texttemplate="%{percent:.0%f}",
+                         hole=.5, textfont={'size': 15},
                          hovertemplate="<b>%{label} <br>PIB: R$ %{value:.2f}</br><b>"))
 
     title = 'PIB por setor de atividade econômica' \
@@ -2310,7 +2312,7 @@ def display_ev_saldo_empregos(w_municipios, w_municipios1):
     fig.add_trace(go.Scatter(x=anos, y=[saldo_empregos2002, saldo_emprego2003, saldo_emprego2004, saldo_emprego2005, saldo_emprego2006,
                saldo_emprego2007, saldo_emprego2008, saldo_emprego2009, saldo_emprego2010, saldo_emprego2011, saldo_emprego2012,
                saldo_emprego2013, saldo_emprego2014, saldo_emprego2015, saldo_emprego2016, saldo_emprego2017, saldo_emprego2018, saldo_emprego2019],
-                             marker=dict(size=10, color='#1351B4')
+                             marker=dict(size=8, color='#1351B4')
                              ))
     fig.update_layout(
         xaxis=dict(
@@ -2569,7 +2571,7 @@ def update_top_vinculos(w_municipios, w_municipios1):
     fig = go.Figure()
 
     fig.add_trace(go.Pie(labels=df5['ocupation'], values=df5['vinculos'],
-                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'size': 12}))
+                          hoverinfo='label+value', texttemplate="%{percent:.0%f}", hole=.5, textfont={'size': 12}))
 
     fig.update_layout(
         xaxis_tickfont_size=14,
@@ -2658,7 +2660,7 @@ def update_saldo_vinculos(w_municipios, w_municipios1):
     fig = go.Figure()
 
     fig.add_trace(go.Pie(labels=df3['subsetor'], values=df3['saldo'],
-                          hoverinfo='label+value', textinfo='percent', hole=.5, textfont={'size': 12}))
+                          hoverinfo='label+value', texttemplate="%{percent:.0%f}", hole=.5, textfont={'size': 12}))
 
     fig.update_layout(
         xaxis_tickfont_size=14,
